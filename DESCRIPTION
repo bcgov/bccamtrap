@@ -18,5 +18,7 @@ Imports:
 URL: https://github.com/ateucher/bccamtrap
 BugReports: https://github.com/ateucher/bccamtrap/issues
 Suggests: 
-    testthat (>= 3.0.0)
+    googledrive,
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
