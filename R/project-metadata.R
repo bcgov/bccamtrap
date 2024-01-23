@@ -11,17 +11,16 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 read_project_info <- function(path, ...) {
-  readxl::read_excel(
+  read_sheet_impl_(
     path,
     sheet = "Project Information",
     col_types = "text",
-    .name_repair = janitor::make_clean_names,
     ...
   )
 }
 
 read_sample_station_info <- function(path, ...) {
-  readxl::read_excel(
+  read_sheet_impl_(
     path,
     sheet = "Sample Station Information",
     col_types = c(
@@ -36,8 +35,6 @@ read_sample_station_info <- function(path, ...) {
       "date",
       "text"
     ),
-    na = c("NA", "N/A", ""),
-    .name_repair = janitor::make_clean_names,
     ...
   )
 
