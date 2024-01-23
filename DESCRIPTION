@@ -14,3 +14,5 @@ Imports:
     lubridate,
     readxl,
     sf
+URL: https://github.com/ateucher/bccamtrap
+BugReports: https://github.com/ateucher/bccamtrap/issues
