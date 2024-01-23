@@ -19,32 +19,30 @@ read_project_info <- function(path, ...) {
   )
 }
 
-read_sample_station_info <- function(path, ...) {
-  read_sheet_impl_(
+read_sample_station_info <- function(path, as_sf = TRUE, ...) {
+
+  sheet <- "Sample Station Information"
+  header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 0)
+  col_types <- sample_station_info_fields(header)
+
+  ss_info <- read_sheet_impl_(
     path,
-    sheet = "Sample Station Information",
-    col_types = c(
-      rep("text", 3),
-      rep("numeric", 5),
-      "text",
-      "numeric",
-      "date",
-      "text",
-      rep("numeric", 8),
-      rep("text", 6),
-      "date",
-      "text"
-    ),
+    sheet = sheet,
+    col_types = col_types,
     ...
-  )
+  ) |>
+    dplyr::mutate(set_date = excel_to_date(.data$set_date))
 
   # Read and join relevant info from Camera Information tab
+
+  if (as_sf) {
+    return(to_sf(ss_info))
+  }
 }
 
 read_cam_setup_checks <- function(path, ...) {
 
   sheet <- "Camera Setup and Checks"
-
   header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 0)
 
   col_types <- cam_setup_checks_fields(header)
@@ -105,6 +103,42 @@ cam_setup_checks_fields <- function(x) {
 
   col_types[intersect(names(col_types), names(x))]
 }
+
+sample_station_info_fields <- function(x) {
+  col_types <- c(
+    study_area_name = "text",
+    study_area_photos = "text",
+    sample_station_label = "text",
+    utm_zone_sample_station = "numeric",
+    easting_sample_station = "numeric",
+    northing_sample_station = "numeric",
+    latitude_sample_station_dd = "numeric",
+    longitude_sample_station_dd = "numeric",
+    station_status = "text",
+    number_of_cameras = "numeric",
+    set_date = "text",
+    general_location = "text",
+    elevation_m = "numeric",
+    slope_percent = "numeric",
+    aspect_degrees = "numeric",
+    crown_closure_percent = "numeric",
+    camera_bearing_degrees = "numeric",
+    camera_height_cm = "numeric",
+    distance_to_feature_m = "numeric",
+    visible_range_m = "numeric",
+    habitat_feature = "text",
+    lock = "text",
+    code = "text",
+    sample_station_comments = "text",
+    sample_station_photos = "text",
+    site_description_comments = "text",
+    site_description_date = "date",
+    access_notes = "text"
+  )
+
+  col_types[intersect(names(col_types), names(x))]
+}
+
 
 parse_cam_setup_checks_fields <- function(x) {
   dplyr::mutate(
@@ -175,5 +209,46 @@ excel_origin <- function() "1899-12-30"
 combine_dt_tm <- function(dt, tm) {
   tm_char <- format(tm, "%H:%M:%S")
   lubridate::ymd_hms(paste(as.character(dt), tm_char), quiet = TRUE)
+}
+
+to_sf <- function(x, ...) {
+
+  x_utm <- dplyr::filter(
+    x,
+    !is.na(.data$utm_zone_sample_station),
+    !is.na(.data$easting_sample_station),
+    !is.na(.data$northing_sample_station)
+  )
+
+  if (nrow(x_utm) > 0) {
+    x_utm <- sf::st_as_sf(
+      x_utm,
+      coords = c("easting_sample_station", "northing_sample_station"),
+      crs = "EPSG:32610" # TODO: Lookup column with bcmaps. This is hard coded zone 10
+    ) %>%
+      sf::st_transform("EPSG:4326")
+  }
+
+  x_ll <- dplyr::filter(
+    x,
+    !is.na(.data$latitude_sample_station_dd),
+    !is.na(.data$longitude_sample_station_dd)
+  )
+
+  if (nrow(x_ll) > 0) {
+    x_ll <- sf::st_as_sf(
+      x_ll,
+      coords = c("longitude_sample_station_dd", "latitude_sample_station_dd"),
+      crs = "EPSG:4326"
+    )
+  }
+
+  n_invalid_rows <- nrow(x) - (nrow(x_utm) + nrow(x_ll))
+  if (n_invalid_rows > 0) {
+    warning("Data has some entries with missing or invalid UTMs or Lat/Lon values",
+            call. = FALSE)
+  }
+
+  dplyr::bind_rows(Filter(\(x) nrow(x) > 0, list(x_utm, x_ll)))
 }
 
