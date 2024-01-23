@@ -12,9 +12,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-<!-- Add a project state badge
-See https://github.com/BCDevExchange/Our-Project-Docs/blob/master/discussion/projectstates.md
-If you have bcgovr installed and you use RStudio, click the 'Insert BCDevex Badge' Addin. -->
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml)
+[![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+<!-- badges: end -->
 
 # bccamtrap
 
