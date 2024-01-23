@@ -9,3 +9,8 @@ License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.0
+Imports: 
+    janitor,
+    lubridate,
+    readxl,
+    sf
