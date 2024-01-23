@@ -48,7 +48,7 @@ read_cam_setup_checks <- function(path, ...) {
 
   sheet <- "Camera Setup and Checks"
 
-  header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 1)
+  header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 0)
 
   col_types <- cam_setup_checks_fields(header)
 
@@ -121,29 +121,45 @@ parse_cam_setup_checks_fields <- function(x) {
     sampling_start = combine_dt_tm(.data$sampling_start_date, .data$start_time),
     sampling_end = combine_dt_tm(.data$sampling_end_date, .data$end_time),
     .after = .data$surveyors
-  )
+  ) %>%
+    dplyr::mutate(
+      timelapse_time = format(.data$timelapse_time, "%H:%M:%S")
+    ) %>%
+    dplyr::select(
+      -c("date_checked", "time_checked", "sampling_start_date", "start_time",
+         "sampling_end_date", "end_time")
+    )
 }
 
 excel_to_date <- function(x) {
   formats <- c("%d-%b-%Y", "%d/%b/%Y")
 
   # Fist convert date-ish characters to date
-  out_date <- suppressWarnings(lubridate::as_date(x, format = formats))
+  out_dateish <- suppressWarnings(lubridate::as_date(x, format = formats))
+  dateish <- !is.na(out_dateish)
 
   # Then try numerics
-  numeric_dates <- as.numeric(x[is.na(out_date)])
-  parsed_numeric_dates <- lubridate::as_date(numeric_dates, origin = excel_origin())
+  numberish <- !is.na(suppressWarnings(as.numeric(x)))
+  out_numberish <- lubridate::as_date(
+    as.numeric(x[numberish]),
+    origin = excel_origin()
+  )
 
-  # Fill them in
-  out_date[is.na(out_date)] <- parsed_numeric_dates
-  out_date
+  # Instantiate an empty POSIXct vector to hold the results
+  out_dt <- lubridate::POSIXct(length(x))
+  out_dt[] <- NA_real_
+
+  # Fill in the elements from above
+  out_dt <- out_dateish
+  out_dt[numberish] <- out_numberish
+  out_dt
 }
 
 excel_to_time <- function(x) {
-  timeish <- grep("[0-9]:[0-9]", x)
+  timeish <- grepl("[0-9]:[0-9]", x)
   out_timeish <- lubridate::as_datetime(paste0(excel_origin(), x[timeish]))
 
-  numberish <- which(!is.na(as.numeric(x)))
+  numberish <- !is.na(suppressWarnings(as.numeric(x)))
   out_numberish <- lubridate::as_datetime(excel_origin()) +
     as.numeric(x[numberish]) * 24 * 3600
 
@@ -161,6 +177,6 @@ excel_origin <- function() "1899-12-30"
 
 combine_dt_tm <- function(dt, tm) {
   tm_char <- format(tm, "%H:%M:%S")
-  lubridate::ymd_hms(paste(as.character(dt), tm_char))
+  lubridate::ymd_hms(paste(as.character(dt), tm_char), quiet = TRUE)
 }
 
