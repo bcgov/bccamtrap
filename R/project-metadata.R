@@ -10,9 +10,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-open_project <- function(path) {
-}
-
 read_project_info <- function(path, ...) {
   readxl::read_excel(
     path,
@@ -49,26 +46,26 @@ read_sample_station_info <- function(path, ...) {
 
 read_cam_setup_checks <- function(path, ...) {
 
-  header <- readxl::read_excel(
-    path,
-    sheet = "Camera Setup and Checks",
-    col_types = "text",
-    n_max = 1,
-    .name_repair = janitor::make_clean_names,
-    ...
-  )
+  sheet <- "Camera Setup and Checks"
+
+  header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 1)
 
   col_types <- cam_setup_checks_fields(header)
 
-  raw_inp <- readxl::read_excel(
-    path,
-    sheet = "Camera Setup and Checks",
+  raw_inp <- read_sheet_impl_(path, sheet, col_types = col_types)
+
+  parse_cam_setup_checks_fields(raw_inp)
+}
+
+read_sheet_impl_ <- function(path, sheet, col_types, ...) {
+  readxl::read_excel(
+    path = path,
+    sheet = sheet,
     col_types = col_types,
-    na = c("NA", "N/A", ""),
+    na = c("", "NA", "N/A"),
     .name_repair = janitor::make_clean_names,
     ...
   )
-  parse_cam_setup_checks_fields(raw_inp)
 }
 
 cam_setup_checks_fields <- function(x) {
@@ -79,11 +76,11 @@ cam_setup_checks_fields <- function(x) {
     camera_label = "text",
     surveyors = "text",
     date_checked = "text",
-    time_checked = "date",
+    time_checked = "text",
     sampling_start_date = "text",
-    start_time = "date",
+    start_time = "text",
     sampling_end_date = "text",
-    end_time = "date",
+    end_time = "text",
     total_visit_or_deployment_time = "numeric",
     unit_of_total_time_code = "text",
     visit_type = "text",
@@ -97,7 +94,7 @@ cam_setup_checks_fields <- function(x) {
     photos_per_trigger = "numeric",
     video_length_per_trigger_s = "numeric",
     timelapse_photos = "numeric",
-    timelapse_time = "date",
+    timelapse_time = "text",
     time_zone = "text",
     bait_lure_type = "text",
     camera_visit_comments = "text",
@@ -113,11 +110,21 @@ cam_setup_checks_fields <- function(x) {
 }
 
 parse_cam_setup_checks_fields <- function(x) {
-  dplyr::mutate(x, dplyr::across(dplyr::contains("date"), .fns = excel_to_date))
+  dplyr::mutate(
+    x,
+    dplyr::across(dplyr::contains("date"), .fns = excel_to_date),
+    dplyr::across(
+      c("time_checked", "start_time", "end_time", "timelapse_time"),
+      .fns = excel_to_time
+    ),
+    date_time_checked = combine_dt_tm(.data$date_checked, .data$time_checked),
+    sampling_start = combine_dt_tm(.data$sampling_start_date, .data$start_time),
+    sampling_end = combine_dt_tm(.data$sampling_end_date, .data$end_time),
+    .after = .data$surveyors
+  )
 }
 
 excel_to_date <- function(x) {
-  excel_origin <- "1899-12-30"
   formats <- c("%d-%b-%Y", "%d/%b/%Y")
 
   # Fist convert date-ish characters to date
@@ -125,10 +132,35 @@ excel_to_date <- function(x) {
 
   # Then try numerics
   numeric_dates <- as.numeric(x[is.na(out_date)])
-  parsed_numeric_dates <- lubridate::as_date(numeric_dates, origin = excel_origin)
+  parsed_numeric_dates <- lubridate::as_date(numeric_dates, origin = excel_origin())
 
   # Fill them in
   out_date[is.na(out_date)] <- parsed_numeric_dates
   out_date
+}
+
+excel_to_time <- function(x) {
+  timeish <- grep("[0-9]:[0-9]", x)
+  out_timeish <- lubridate::as_datetime(paste0(excel_origin(), x[timeish]))
+
+  numberish <- which(!is.na(as.numeric(x)))
+  out_numberish <- lubridate::as_datetime(excel_origin()) +
+    as.numeric(x[numberish]) * 24 * 3600
+
+  # Instantiate an empty POSIXct vector to hold the results
+  out_dt <- lubridate::POSIXct(length(x))
+  out_dt[] <- NA_real_
+
+  # Fill in the elements from above
+  out_dt[timeish] <- out_timeish
+  out_dt[numberish] <- out_numberish
+  out_dt
+}
+
+excel_origin <- function() "1899-12-30"
+
+combine_dt_tm <- function(dt, tm) {
+  tm_char <- format(tm, "%H:%M:%S")
+  lubridate::ymd_hms(paste(as.character(dt), tm_char))
 }
 
