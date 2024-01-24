@@ -1,4 +1,4 @@
-# read_project_info works
+# read_sample_station_info works
 
     Code
       names(ssi1)
@@ -38,7 +38,7 @@
       [25] "sample_station_photos"       "site_description_comments"  
       [27] "site_description_date"       "access_notes"               
 
-# read_project_info works as sf
+# read_sample_station_info works as sf
 
     Code
       names(ssi_sf1)
@@ -77,4 +77,47 @@
       [23] "sample_station_photos"       "site_description_comments"  
       [25] "site_description_date"       "access_notes"               
       [27] "geometry"                   
+
+# read_cam_setup_checks works
+
+    Code
+      names(csc1)
+    Output
+       [1] "study_area_name"                "sample_station_label"          
+       [3] "deployment_label"               "camera_label"                  
+       [5] "surveyors"                      "date_time_checked"             
+       [7] "sampling_start"                 "sampling_end"                  
+       [9] "total_visit_or_deployment_time" "unit_of_total_time_code"       
+      [11] "visit_type"                     "camera_status_on_arrival"      
+      [13] "battery_level"                  "batteries_changed"             
+      [15] "number_of_photos"               "quiet_period_s"                
+      [17] "trigger_sensitivity"            "trigger_timing_s"              
+      [19] "photos_per_trigger"             "video_length_per_trigger_s"    
+      [21] "timelapse_photos"               "timelapse_time"                
+      [23] "time_zone"                      "bait_lure_type"                
+      [25] "camera_visit_comments"          "camera_visit_photos"           
+      [27] "sd_downloaded_y_n"              "images_classified_y_n"         
+      [29] "timelapse_template_used"        "data_qc_complete"              
+      [31] "general_sampling_comments"     
+
+---
+
+    Code
+      names(csc2)
+    Output
+       [1] "study_area_name"                "sample_station_label"          
+       [3] "deployment_label"               "camera_label"                  
+       [5] "surveyors"                      "date_time_checked"             
+       [7] "sampling_start"                 "sampling_end"                  
+       [9] "total_visit_or_deployment_time" "unit_of_total_time_code"       
+      [11] "visit_type"                     "camera_status_on_arrival"      
+      [13] "battery_level"                  "batteries_changed"             
+      [15] "number_of_photos"               "quiet_period_s"                
+      [17] "trigger_sensitivity"            "trigger_timing_s"              
+      [19] "photos_per_trigger"             "video_length_per_trigger_s"    
+      [21] "timelapse_photos"               "timelapse_time"                
+      [23] "time_zone"                      "bait_lure_type"                
+      [25] "camera_visit_comments"          "camera_visit_photos"           
+      [27] "sd_downloaded_y_n"              "images_classified_y_n"         
+      [29] "timelapse_template_used"        "general_sampling_comments"     
 

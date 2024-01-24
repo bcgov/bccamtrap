@@ -12,7 +12,7 @@ test_that("read_project_info works", {
   expect_equal(names(pi1), names(pi2))
 })
 
-test_that("read_project_info works", {
+test_that("read_sample_station_info works", {
   ssi1 <- read_sample_station_info(test_meta_file1, as_sf = FALSE)
   ssi2 <- read_sample_station_info(test_meta_file2, as_sf = FALSE)
   expect_s3_class(ssi1, "data.frame")
@@ -21,11 +21,20 @@ test_that("read_project_info works", {
   expect_snapshot(names(ssi2))
 })
 
-test_that("read_project_info works as sf", {
+test_that("read_sample_station_info works as sf", {
   ssi_sf1 <- read_sample_station_info(test_meta_file1)
   ssi_sf2 <- read_sample_station_info(test_meta_file2)
   expect_s3_class(ssi_sf1, "sf")
   expect_s3_class(ssi_sf2, "sf")
   expect_snapshot(names(ssi_sf1))
   expect_snapshot(names(ssi_sf2))
+})
+
+test_that("read_cam_setup_checks works", {
+  csc1 <- read_cam_setup_checks(test_meta_file1)
+  csc2 <- read_cam_setup_checks(test_meta_file2)
+  expect_s3_class(csc1, "data.frame")
+  expect_s3_class(csc2, "data.frame")
+  expect_snapshot(names(csc1))
+  expect_snapshot(names(csc2))
 })
