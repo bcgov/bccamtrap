@@ -38,6 +38,7 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
   if (as_sf) {
     return(to_sf(ss_info))
   }
+  ss_info
 }
 
 read_cam_setup_checks <- function(path, ...) {
@@ -151,7 +152,7 @@ parse_cam_setup_checks_fields <- function(x) {
     date_time_checked = combine_dt_tm(.data$date_checked, .data$time_checked),
     sampling_start = combine_dt_tm(.data$sampling_start_date, .data$start_time),
     sampling_end = combine_dt_tm(.data$sampling_end_date, .data$end_time),
-    .after = .data$surveyors
+    .after = "surveyors"
   ) %>%
     dplyr::mutate(
       timelapse_time = format(.data$timelapse_time, "%H:%M:%S")
