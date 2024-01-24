@@ -38,6 +38,7 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
   if (as_sf) {
     return(to_sf(ss_info))
   }
+  ss_info
 }
 
 read_cam_setup_checks <- function(path, ...) {
