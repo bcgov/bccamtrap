@@ -1,40 +1,42 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
 
-```{r, echo = FALSE}
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "man/figures/README-",
+  out.width = "100%"
 )
 ```
+
+# bccamtrap
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml)
 [![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 <!-- badges: end -->
 
-# bccamtrap
+Tools for QA and validation of Camera Trap data
 
-### Usage
+## Installation
 
-Describe data being used (links), and how to run. Eg:
+You can install the development version of bccamtrap from [GitHub](https://github.com/) with:
 
-There are four core scripts that are required for the analysis, they need to be run in order:
+``` r
+# install.packages("devtools")
+devtools::install_github("ateucher/bccamtrap")
+```
 
-- 01_clean.R
-- 02_analysis.R
-- 03_visualize.R
-- 04_output.R
-
-#### Example
+## Example
 
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
+library(bccamtrap)
 ## basic example code
 ```
 
@@ -65,6 +67,3 @@ Unless required by applicable law or agreed to in writing, software distributed 
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 ```
-
----
-*This project was created using the [bcgovr](https://github.com/bcgov/bcgovr) package.* 
