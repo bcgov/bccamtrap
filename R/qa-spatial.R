@@ -34,18 +34,15 @@ map_stations <- function(stations) {
     zcol = "spatial_outlier")
 }
 
-find_dist_outliers <- function(stations, quant = 0.85, cutoff) {
+find_dist_outliers <- function(stations, quantthresh = 0.85, dist_thresh = NULL) {
   dist <- unclass(sf::st_distance(stations))
 
   # Algorithm to find outliers from distance matrix is from clstutils::findOutliers
-  if (missing(cutoff)) {
-    cutoff <- quantile(dist[lower.tri(dist)], quant, na.rm = TRUE)
-  }
+  dist_thresh <- dist_thresh %||% quantile(dist[lower.tri(dist)], quantthresh, na.rm = TRUE)
 
   # Id the station which is closest to all the rest
-  center <- which.min(apply(dist, 1, median))
-  # Find the distance from the rest of the stations to the center
-  dd <- dist[center, ]
-  # dd[8] <- 50000
-  dd > cutoff
+  mid_station <- which.min(apply(dist, 1, median))
+
+  # Is each stations median distance greater than the calculated threshold?
+  dist[mid_station, ] > dist_thresh
 }
