@@ -17,7 +17,8 @@
 #'
 #' @param stations an `sf` data.frame as read in by [read_sample_station_info()]
 #' @param quant_thresh The quantile above which the distance of a station from
-#'   the other stations will be flagged as an outlier. Default `0.85`
+#'   the other stations (compared to the average distance between stations)
+#'   will be flagged as an outlier. Default `0.85`.
 #' @param dist_thresh The distance (in m) above which the distance of a station
 #'   from the other stations will be flagged as an outlier. By default the
 #'   quantile is used, but can be overriden by setting this to a numeric value
@@ -26,7 +27,7 @@
 #' @return the input data.frame, with a new `logical` column `spatial_outlier` appended.
 #' @seealso [map_stations()]
 #' @export
-check_stations_spatial <- function(stations, quant_thresh = 0.85, dist_thresh = NULL) {
+check_stations_spatial <- function(stations, quant_thresh = 0.9, dist_thresh = NULL) {
   stations$spatial_outlier <- find_dist_outliers(stations)
   if (any(stations$spatial_outlier)) {
     outlier_station <- stations$sample_station_label[stations$spatial_outlier]
@@ -57,18 +58,25 @@ map_stations <- function(stations) {
 
   mapview::mapview(
     stations,
-    layer.name = paste0(stations$study_area_name[1], if (has_outlier_col) ": Outliers"),
-    label = stations$sample_station_label,
+    zcol = if (has_outlier_col) "spatial_outlier",
+    col.regions = c("#bc5090", "#ffa600"),
+    alpha.regions = 0.9,
     map.types = c(
       "Esri.WorldImagery",
       setdiff(mapview::mapviewGetOption("basemaps"), "Esri.WorldImagery")
     ),
-    zcol = if (has_outlier_col) "spatial_outlier"
+    layer.name = paste0(stations$study_area_name[1], if (has_outlier_col) ": Outliers"),
+    label = stations$sample_station_label
   )
 }
 
-find_dist_outliers <- function(stations, quant_thresh = 0.85, dist_thresh = NULL) {
+find_dist_outliers <- function(stations, quant_thresh = 0.9, dist_thresh = NULL) {
   dist <- unclass(sf::st_distance(stations))
+  # TODO: This may be better if look at distances between one station and the
+  # next (i.e., minimum distance) rather than distances of all stations to
+  # midpoint - that could be sensitive if they are spread out in a line, like
+  # along a river bed. Though that wouldn't work if two stations were outliers
+  # together... Keep as-is for now.
 
   # Algorithm to find outliers from distance matrix is from clstutils::findOutliers
   dist_thresh <- dist_thresh %||%
