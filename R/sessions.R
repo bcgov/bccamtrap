@@ -15,7 +15,7 @@ make_sample_sessions <- function(path, as_sf = TRUE) {
   ss <- read_sample_station_info(path, as_sf = as_sf)
 
   csc <- dplyr::mutate(csc, sample_start_date = as.Date(.data$sampling_start))
-  csc <- dplyr::filter(csc, visit_type != "Deployment")
+  csc <- dplyr::filter(csc, .data$visit_type != "Deployment")
 
   # TODO: Decide what columns we want to keep in both datasets
   # csc <- dplyr::select(
@@ -62,5 +62,3 @@ make_sample_sessions <- function(path, as_sf = TRUE) {
 
   ret
 }
-
-utils::globalVariables("closest")

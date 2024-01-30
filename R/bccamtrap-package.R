@@ -5,3 +5,5 @@
 #' @importFrom dplyr .data
 ## usethis namespace: end
 NULL
+
+utils::globalVariables("closest")
