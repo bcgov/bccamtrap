@@ -50,8 +50,8 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
     sheet = sheet,
     col_types = col_types,
     ...
-  ) |>
-    dplyr::mutate(set_date = excel_to_date(.data$set_date))
+  )
+  ss_info <- dplyr::mutate(ss_info, set_date = excel_to_date(.data$set_date))
 
   # Read and join relevant info from Camera Information tab
 
@@ -171,7 +171,7 @@ sample_station_info_fields <- function(x) {
 
 
 parse_cam_setup_checks_fields <- function(x) {
-  dplyr::mutate(
+  ret <- dplyr::mutate(
     x,
     dplyr::across(dplyr::contains("date"), .fns = excel_to_date),
     dplyr::across(
@@ -182,14 +182,17 @@ parse_cam_setup_checks_fields <- function(x) {
     sampling_start = combine_dt_tm(.data$sampling_start_date, .data$start_time),
     sampling_end = combine_dt_tm(.data$sampling_end_date, .data$end_time),
     .after = "surveyors"
-  ) %>%
-    dplyr::mutate(
-      timelapse_time = format(.data$timelapse_time, "%H:%M:%S")
-    ) %>%
-    dplyr::select(
-      -c("date_checked", "time_checked", "sampling_start_date", "start_time",
-         "sampling_end_date", "end_time")
-    )
+  )
+  ret <- dplyr::mutate(
+    ret,
+    timelapse_time = format(.data$timelapse_time, "%H:%M:%S")
+  )
+
+  dplyr::select(
+    ret,
+    -c("date_checked", "time_checked", "sampling_start_date", "start_time",
+                   "sampling_end_date", "end_time")
+  )
 }
 
 excel_to_date <- function(x) {
