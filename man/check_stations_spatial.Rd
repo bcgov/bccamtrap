@@ -4,13 +4,14 @@
 \alias{check_stations_spatial}
 \title{Check spatial attributes of Sample Station information}
 \usage{
-check_stations_spatial(stations, quant_thresh = 0.85, dist_thresh = NULL)
+check_stations_spatial(stations, quant_thresh = 0.9, dist_thresh = NULL)
 }
 \arguments{
 \item{stations}{an \code{sf} data.frame as read in by \code{\link[=read_sample_station_info]{read_sample_station_info()}}}
 
 \item{quant_thresh}{The quantile above which the distance of a station from
-the other stations will be flagged as an outlier. Default \code{0.85}}
+the other stations (compared to the average distance between stations)
+will be flagged as an outlier. Default \code{0.85}.}
 
 \item{dist_thresh}{The distance (in m) above which the distance of a station
 from the other stations will be flagged as an outlier. By default the

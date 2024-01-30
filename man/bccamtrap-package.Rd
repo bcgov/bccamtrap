@@ -6,7 +6,7 @@
 \alias{bccamtrap-package}
 \title{bccamtrap: Tools for QA and validation of Camera Trap data}
 \description{
-What the package does (one paragraph).
+Allows the easy and semi-automated checking, validation, and exploration of camera trap data collected according to BC RISC standards, and tagged using TimeLapse software.
 }
 \seealso{
 Useful links:
@@ -18,6 +18,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Andy Teucher \email{andy.teucher@gmail.com} (\href{https://orcid.org/0000-0002-7840-692X}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Province of British Columbia [copyright holder]
+}
 
 }
 \keyword{internal}
