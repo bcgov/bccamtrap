@@ -282,6 +282,13 @@ to_sf <- function(x, ...) {
             call. = FALSE)
   }
 
-  dplyr::bind_rows(Filter(\(x) nrow(x) > 0, list(x_utm, x_ll)))
+  res <- dplyr::bind_rows(Filter(\(x) nrow(x) > 0, list(x_utm, x_ll)))
+
+  # bcmaps::utm_convert v2.2.0 doesn't restore classes properly
+  # https://github.com/bcgov/bcmaps/issues/143
+  if (dplyr::is.tbl(x) && !dplyr::is.tbl(res)) {
+    class(res) <- c("sf", "tbl_df", "tbl", "data.frame")
+  }
+  res
 }
 
