@@ -251,12 +251,14 @@ to_sf <- function(x, ...) {
   )
 
   if (nrow(x_utm) > 0) {
-    x_utm <- sf::st_as_sf(
+    x_utm <- bcmaps::utm_convert(
       x_utm,
-      coords = c("easting_sample_station", "northing_sample_station"),
-      crs = "EPSG:32610" # TODO: Lookup column with bcmaps. This is hard coded zone 10
-    ) %>%
-      sf::st_transform("EPSG:4326")
+      easting = "easting_sample_station",
+      northing = "northing_sample_station",
+      zone = "utm_zone_sample_station",
+      crs = "EPSG:4326",
+      xycols = FALSE
+    )
   }
 
   x_ll <- dplyr::filter(
@@ -269,7 +271,8 @@ to_sf <- function(x, ...) {
     x_ll <- sf::st_as_sf(
       x_ll,
       coords = c("longitude_sample_station_dd", "latitude_sample_station_dd"),
-      crs = "EPSG:4326"
+      crs = "EPSG:4326",
+      remove = FALSE
     )
   }
 
