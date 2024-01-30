@@ -1,18 +1,25 @@
 Package: bccamtrap
 Title: Tools for QA and validation of Camera Trap data
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person("Andy", "Teucher", , "andy.teucher@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-7840-692X"))
-Description: What the package does (one paragraph).
+           comment = c(ORCID = "0000-0002-7840-692X")),
+    person("Province of British Columbia", role = "cph")
+  )
+Description: Allows the easy and semi-automated checking, validation, and exploration
+    of camera trap data collected according to BC RISC standards, and tagged using 
+    TimeLapse software.
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
 Imports: 
+    bcmaps (>= 2.2.0),
+    cli,
     dplyr,
     janitor,
     lubridate,
+    mapview,
     readxl,
     sf
 URL: https://github.com/ateucher/bccamtrap
