@@ -10,6 +10,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
+#' Read project-level data from the RISC worksheet 'Project Information' tab
+#'
+#' This will read in the project information from a RISC worksheet following the
+#' 'v20230518' template
+#'
+#' @param path path to the RISC workbook
+#' @param ... arguments passed on to [readxl::read_excel()]
+#'
+#' @return a `data.frame` of project-level information
+#' @export
 read_project_info <- function(path, ...) {
   read_sheet_impl_(
     path,
@@ -19,6 +29,16 @@ read_project_info <- function(path, ...) {
   )
 }
 
+#' Read the "Sample Station Information" tab from the RISC worksheet.
+#'
+#' This will read in the sample station information from a RISC worksheet following the
+#' 'v20230518' template
+#'
+#' @inheritParams read_project_info
+#' @param as_sf should the data be returned as an `sf` object of the station locations? Default `TRUE`
+#'
+#' @return a `data.frame` of station information, as an `sf` object if specified.
+#' @export
 read_sample_station_info <- function(path, as_sf = TRUE, ...) {
 
   sheet <- "Sample Station Information"
@@ -41,6 +61,15 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
   ss_info
 }
 
+#' Read the "Camera Setup and Checks" tab from the RISC worksheet.
+#'
+#' This will read in the camera setup information from a RISC worksheet following the
+#' 'v20230518' template
+#'
+#' @inheritParams read_project_info
+#'
+#' @return a `data.frame` of camera setup information
+#' @export
 read_cam_setup_checks <- function(path, ...) {
 
   sheet <- "Camera Setup and Checks"
