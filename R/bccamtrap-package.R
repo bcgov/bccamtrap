@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @importFrom dplyr .data
-#' @importFrom dplyr %>%
 ## usethis namespace: end
 NULL
+
+utils::globalVariables("closest")
