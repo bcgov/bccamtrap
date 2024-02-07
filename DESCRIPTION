@@ -26,7 +26,12 @@ Imports:
 URL: https://github.com/ateucher/bccamtrap
 BugReports: https://github.com/ateucher/bccamtrap/issues
 Suggests: 
+    DBI,
     googledrive,
+    jsonlite,
+    RSQLite,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
