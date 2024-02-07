@@ -3,6 +3,7 @@
 export(check_stations_spatial)
 export(map_stations)
 export(read_cam_setup_checks)
+export(read_image_data)
 export(read_project_info)
 export(read_sample_station_info)
 importFrom(dplyr,.data)

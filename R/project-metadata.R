@@ -71,7 +71,6 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
 #' @return a `data.frame` of camera setup information
 #' @export
 read_cam_setup_checks <- function(path, ...) {
-
   sheet <- "Camera Setup and Checks"
   header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 0)
 
@@ -83,6 +82,9 @@ read_cam_setup_checks <- function(path, ...) {
 }
 
 read_sheet_impl_ <- function(path, sheet, col_types, ...) {
+  if (!file.exists(path)) {
+    cli::cli_abort("RISC worksheet {.path {path}} does not exist.")
+  }
   readxl::read_excel(
     path = path,
     sheet = sheet,
@@ -178,15 +180,13 @@ parse_cam_setup_checks_fields <- function(x) {
       c("time_checked", "start_time", "end_time", "timelapse_time"),
       .fns = excel_to_time
     ),
-    date_time_checked = combine_dt_tm(.data$date_checked, .data$time_checked),
-    sampling_start = combine_dt_tm(.data$sampling_start_date, .data$start_time),
-    sampling_end = combine_dt_tm(.data$sampling_end_date, .data$end_time),
+    date_time_checked = combine_date_time(.data$date_checked, .data$time_checked),
+    sampling_start = combine_date_time(.data$sampling_start_date, .data$start_time),
+    sampling_end = combine_date_time(.data$sampling_end_date, .data$end_time),
     .after = "surveyors"
   )
-  ret <- dplyr::mutate(
-    ret,
-    timelapse_time = format(.data$timelapse_time, "%H:%M:%S")
-  )
+
+  ret$timelapse_time = format(ret$timelapse_time, "%H:%M:%S")
 
   dplyr::select(
     ret,
@@ -239,13 +239,14 @@ excel_to_time <- function(x) {
 
 excel_origin <- function() "1899-12-30"
 
-combine_dt_tm <- function(dt, tm) {
-  tm_char <- format(tm, "%H:%M:%S")
-  lubridate::ymd_hms(paste(as.character(dt), tm_char), quiet = TRUE)
+combine_date_time <- function(dt, tm) {
+  time_char <- format(tm, "%H:%M:%S")
+  lubridate::ymd_hms(paste(as.character(dt), time_char), quiet = TRUE)
 }
 
 to_sf <- function(x, ...) {
 
+  # Make a data.frame of rows with utm data, and another with lat lons
   x_utm <- dplyr::filter(
     x,
     !is.na(.data$utm_zone_sample_station),
@@ -253,6 +254,13 @@ to_sf <- function(x, ...) {
     !is.na(.data$northing_sample_station)
   )
 
+  x_ll <- dplyr::filter(
+    x,
+    !is.na(.data$latitude_sample_station_dd),
+    !is.na(.data$longitude_sample_station_dd)
+  )
+
+  # Convert the utms to sf
   if (nrow(x_utm) > 0) {
     x_utm <- bcmaps::utm_convert(
       x_utm,
@@ -264,12 +272,7 @@ to_sf <- function(x, ...) {
     )
   }
 
-  x_ll <- dplyr::filter(
-    x,
-    !is.na(.data$latitude_sample_station_dd),
-    !is.na(.data$longitude_sample_station_dd)
-  )
-
+  # convert the lat/lons to sf
   if (nrow(x_ll) > 0) {
     x_ll <- sf::st_as_sf(
       x_ll,
@@ -280,11 +283,12 @@ to_sf <- function(x, ...) {
   }
 
   n_invalid_rows <- nrow(x) - (nrow(x_utm) + nrow(x_ll))
+
   if (n_invalid_rows > 0) {
-    warning("Data has some entries with missing or invalid UTMs or Lat/Lon values",
-            call. = FALSE)
+    cli::cli_warn("Data has entries with missing or invalid UTMs or Lat/Lon values")
   }
 
+  # recombine
   res <- dplyr::bind_rows(Filter(\(x) nrow(x) > 0, list(x_utm, x_ll)))
 
   # bcmaps::utm_convert v2.2.0 doesn't restore classes properly
