@@ -34,7 +34,9 @@ read_image_data <- function(path, pattern, recursive = FALSE) {
   df <- dplyr::bind_rows(df_list)
   df <- janitor::clean_names(df)
   df <- dplyr::relocate(df, "date_time", .after = "deployment_label")
-  make_snow_range_cols(df)
+
+  ret <- make_snow_range_cols(df)
+  as.image_data(ret)
 }
 
 check_template <- function(files) {

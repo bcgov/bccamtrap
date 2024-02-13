@@ -60,5 +60,5 @@ make_sample_sessions <- function(path, as_sf = TRUE) {
     sf::st_geometry(ret) <- attr(ss, "sf_column")
   }
 
-  ret
+  as.sample_sessions(ret)
 }

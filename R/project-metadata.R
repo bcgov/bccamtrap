@@ -21,12 +21,13 @@
 #' @return a `data.frame` of project-level information
 #' @export
 read_project_info <- function(path, ...) {
-  read_sheet_impl_(
+  ret <- read_sheet_impl_(
     path,
     sheet = "Project Information",
     col_types = "text",
     ...
   )
+  as.project_info(ret)
 }
 
 #' Read the "Sample Station Information" tab from the RISC worksheet.
@@ -58,7 +59,7 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
   if (as_sf) {
     return(to_sf(ss_info))
   }
-  ss_info
+  as.sample_station_info(ss_info)
 }
 
 #' Read the "Camera Setup and Checks" tab from the RISC worksheet.
@@ -78,7 +79,8 @@ read_cam_setup_checks <- function(path, ...) {
 
   raw_inp <- read_sheet_impl_(path, sheet, col_types = col_types)
 
-  parse_cam_setup_checks_fields(raw_inp)
+  ret <- parse_cam_setup_checks_fields(raw_inp)
+  as.cam_setup_checks(ret)
 }
 
 read_sheet_impl_ <- function(path, sheet, col_types, ...) {
