@@ -57,7 +57,7 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
   # Read and join relevant info from Camera Information tab
 
   if (as_sf) {
-    return(to_sf(ss_info))
+    ss_info <- to_sf(ss_info)
   }
   as.sample_station_info(ss_info)
 }

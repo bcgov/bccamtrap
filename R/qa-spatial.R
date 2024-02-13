@@ -28,6 +28,9 @@
 #' @seealso [map_stations()]
 #' @export
 check_stations_spatial <- function(stations, quant_thresh = 0.9, dist_thresh = NULL) {
+
+  check_sample_station_info(stations)
+
   stations$spatial_outlier <- find_dist_outliers(stations)
   if (any(stations$spatial_outlier)) {
     outlier_station <- stations$sample_station_label[stations$spatial_outlier]
@@ -53,6 +56,8 @@ check_stations_spatial <- function(stations, quant_thresh = 0.9, dist_thresh = N
 #' @seealso [check_stations_spatial()]
 #' @export
 map_stations <- function(stations) {
+
+  check_sample_station_info(stations)
 
   has_outlier_col <- "spatial_outlier" %in% names(stations)
 
