@@ -78,10 +78,10 @@ map_stations <- function(stations) {
 }
 
 find_dist_outliers <- function(stations, quant_thresh = 0.9, dist_thresh = NULL) {
-  dist <- unclass(sf::st_distance(stations))
+  dist <- distances(stations)
   # TODO: This may be better if look at distances between one station and the
-  # next (i.e., minimum distance) rather than distances of all stations to
-  # midpoint - that could be sensitive if they are spread out in a line, like
+  # next (i.e., minimum distance) rather than distances of all stations to a
+  # midpoint, which could be sensitive if they are spread out in a line, like
   # along a river bed. Though that wouldn't work if two stations were outliers
   # together... Keep as-is for now.
 
@@ -92,6 +92,15 @@ find_dist_outliers <- function(stations, quant_thresh = 0.9, dist_thresh = NULL)
   # Id the station which is closest to all the rest
   mid_station <- which.min(apply(dist, 1, stats::median))
 
-  # Is each stations median distance greater than the calculated threshold?
+  # Is each station's median distance greater than the calculated threshold?
   dist[mid_station, ] > dist_thresh
+}
+
+distances <- function(stations) {
+  unclass(sf::st_distance(stations))
+}
+
+summarize_distances <- function(stations) {
+  dist_matrix <- distances(stations)
+  summary(dist_matrix[upper.tri(dist_matrix)])
 }
