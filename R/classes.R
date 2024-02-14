@@ -58,7 +58,15 @@ check_sample_sessions <- function(x, arg = rlang::caller_arg(x), call = rlang::c
 
 check_image_data <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
   if (!inherits(x, "image_data")) {
-    cli::cli_abort("{.arg {arg}} must be a 'image_data' object, a result of {.fn read_image_data}",
+    cli::cli_abort("{.arg {arg}} must be a 'image_data' object.",
+                   arg = arg,
+                   call = call)
+  }
+}
+
+check_is_sf <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+  if (!inherits(x, "sf")) {
+    cli::cli_abort("{.arg {arg}} must be an 'sf' object, a result of {.fn read_image_data}",
                    arg = arg,
                    call = call)
   }
