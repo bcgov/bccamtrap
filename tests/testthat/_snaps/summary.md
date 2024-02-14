@@ -17,6 +17,9 @@
     Output
           Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
          50.26  1600.31  2694.84 12805.59  3896.18 71655.56 
+    Message
+      ! Run `check_stations_spatial()` to validate the spatial information.
+    Output
       
     Message
       i Station status summary:
@@ -50,6 +53,81 @@
     Output
            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
           5.098  3456.952  7303.056  8409.253 12798.212 22787.846 
+    Message
+      ! Run `check_stations_spatial()` to validate the spatial information.
+    Output
+      
+    Message
+      i Station status summary:
+    Output
+      Camera Active  Camera Moved 
+                 18             3 
+      
+    Message
+      i Set dates: Between 2022-11-07 and 2023-11-16
+    Output
+      
+    Message
+      ! Run `map_stations(object)` to view stations on a map.
+
+---
+
+    Code
+      summary(ss1)
+    Output
+      + McKay Lake Parcel --+
+      |                     |
+      |   Sample Stations   |
+      |                     |
+      +---------------------+
+    Message
+      i 12 sample stations in 13 locations.
+    Output
+      
+    Message
+      i Summary of station distances (m):
+    Output
+          Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+         50.26  1600.31  2694.84 12805.59  3896.18 71655.56 
+    Message
+      x Detected 1 potential spatial outlier.
+    Output
+      
+    Message
+      i Station status summary:
+    Output
+      Camera Active Camera Stolen 
+                 12             1 
+      
+    Message
+      i Set dates: Between 2022-11-28 and 2023-11-28
+    Output
+      
+    Message
+      ! Run `map_stations(object)` to view stations on a map.
+
+---
+
+    Code
+      summary(ss2)
+    Output
+      + Taylor River Wat... +
+      |                     |
+      |   Sample Stations   |
+      |                     |
+      +---------------------+
+    Message
+      i 18 sample stations in 21 locations.
+    Output
+      
+    Message
+      i Summary of station distances (m):
+    Output
+           Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+          5.098  3456.952  7303.056  8409.253 12798.212 22787.846 
+    Message
+      x Detected 0 potential spatial outliers.
+    Output
       
     Message
       i Station status summary:

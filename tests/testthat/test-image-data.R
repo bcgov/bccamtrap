@@ -11,6 +11,12 @@ test_that("read_image_data() works", {
   expect_snapshot_value(lapply(imgs_2, class), style = "json2")
 })
 
+test_that("specifying pattern works", {
+  imgs <- read_image_data(test_dir_2)
+  imgs_less <- read_image_data(test_dir_2, pattern = "29_")
+  expect_lt(nrow(imgs_less), nrow(imgs))
+})
+
 test_that("read_image_data() fails appropriately", {
   expect_snapshot(read_image_data("foofydir"), error = TRUE)
 
