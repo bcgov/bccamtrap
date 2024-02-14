@@ -67,7 +67,7 @@ make_sample_sessions <- function(path, as_sf = TRUE) {
   ret <- dplyr::relocate(
     ret,
     dplyr::starts_with("sample_duration"),
-    .after = .data$sampling_end
+    .after = "sampling_end"
   )
 
   if (inherits(ss, "sf")) {
