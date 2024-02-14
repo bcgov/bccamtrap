@@ -18,6 +18,12 @@ as.image_data <- function(x, ...) {
   structure(x, class = c("image_data", class(x)), ...)
 }
 
+# Define classes as a subclass of sf so that it works
+# with S4 methods for sf (eg mapview)
+methods::setOldClass(c("sample_sessions", "sf"))
+methods::setOldClass(c("sample_station_info", "sf"))
+
+## Checkers
 check_project_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
   if (!inherits(x, "project_info")) {
     cli::cli_abort("{.arg {arg}} must be a 'project_info' object, a result of {.fn read_project_info}",
