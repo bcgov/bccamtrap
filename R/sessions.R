@@ -55,6 +55,20 @@ make_sample_sessions <- function(path, as_sf = TRUE) {
   )
 
   ret <- dplyr::select(ret, -"sample_start_date")
+  ret <- dplyr::mutate(
+    ret,
+    sample_duration_days = lubridate::interval(
+      .data$sampling_start,
+      .data$sampling_end
+    ) / lubridate::ddays(1),
+    sample_duration_valid = !is.na(.data$sample_duration_days) &
+      .data$sample_duration_days > 0
+  )
+  ret <- dplyr::relocate(
+    ret,
+    dplyr::starts_with("sample_duration"),
+    .after = .data$sampling_end
+  )
 
   if (inherits(ss, "sf")) {
     sf::st_geometry(ret) <- attr(ss, "sf_column")
