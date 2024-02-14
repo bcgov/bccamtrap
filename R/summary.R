@@ -27,6 +27,10 @@ summary.sample_station_info <- function(object, ...) {
     cli::cli_alert_danger(
       "Detected {.val {n_outliers}} potential spatial outlier{?s}."
     )
+  } else {
+    cli::cli_alert_warning(
+      "Run {.fn check_stations_spatial} to validate the spatial information."
+    )
   }
   cli::cat_line("")
   cli::cli_alert_info(
