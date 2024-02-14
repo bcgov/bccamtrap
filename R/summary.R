@@ -12,7 +12,7 @@
 
 #' @export
 summary.sample_station_info <- function(object, ...) {
-  cli::cat_boxx(object$study_area_name[1], "Study Area", col = "lightgreen")
+  cli::cat_boxx("Sample Stations", object$study_area_name[1], col = "lightblue")
   cli::cli_alert_info(c(
     "{.val {length(unique(object$sample_station_label))}}",
     " sample station{?s} in {.val {nrow(object)}} location{?s}."
@@ -34,20 +34,20 @@ summary.sample_station_info <- function(object, ...) {
   )
   table_print_helper(object$station_status)
   cli::cat_line("")
-  cli::cli_alert_info("Set dates: Between {.val {range(object$set_date)}}")
+  cli::cli_alert_info("Set dates: Between {.val {range(object$set_date, na.rm = TRUE)}}")
   cli::cat_line("")
   cli::cli_alert_warning("Run {.code map_stations(object)} to view stations on a map.")
 }
 
 #' @export
 summary.sample_sessions <- function(object, ...) {
-  cli::cat_boxx(object$study_area_name[1], "Study Area", col = "lightgreen")
+  cli::cat_boxx("Sample Sessions", object$study_area_name[1], col = "lightgreen")
   cli::cli_alert_info(c(
     "{.val {length(unique(object$sample_station_label))}}",
     " sample station{?s} in {.val {length(unique(object$deployment_label))}} deployments{?s}."
   ))
   dep_dur_range <- round(range(object$sample_duration_days, na.rm = TRUE))
-  n_invalid_samples <- sum(!object$sample_duration_valid)
+  n_invalid_samples <- sum(!object$sample_duration_valid, na.rm = TRUE)
   cli::cli_alert_info(
     "Sample sessions lengths range between {.val {dep_dur_range}} days."
   )
@@ -65,6 +65,49 @@ summary.sample_sessions <- function(object, ...) {
     "There are {.val {sum(object$number_of_photos, na.rm = TRUE)}} images. ",
     "Photos per session range betwen {.val {n_photos_range}}."
   ))
+}
+
+#' @export
+summary.image_data <- function(object, ...) {
+  cli::cat_boxx("Image summary", object$study_area_name[1], col = "pink")
+
+  cli::cli_alert_info(c(
+    "{.val {nrow(object)}} images in ",
+    "{.val {length(unique(object$deployment_label))}} deployments at ",
+    "{.val {length(unique(object$sample_station_label))}} sample stations."
+  ))
+
+  cli::cli_alert_info(
+    "{.val {sum(object$lens_obscured, na.rm = TRUE)}} images with lens obscured."
+  )
+
+  cli::cli_alert_info(
+    "{.val {sum(object$needs_review, na.rm = TRUE)}} images starred."
+  )
+
+  cli::cli_alert_warning(
+    "{.val {sum(object$needs_review, na.rm = TRUE)}} images flagged for review."
+  )
+
+  cli::cli_alert_info(
+    "Dates are between {.val {range(as.Date(object$date_time), na.rm = TRUE)}}."
+  )
+
+  cli::cli_alert_info(
+    "Temperatures are between {.val {range(object$temperature, na.rm = TRUE)}} C."
+  )
+
+  cli::cli_alert_info(
+    "Snow depths are between {.val {range(object$snow_depth_lower, na.rm = TRUE)}} cm."
+  )
+
+  cli::cli_alert_info("Species counts:")
+  table_print_helper(object$species)
+
+  cli::cat_line("")
+  cli::cli_alert_warning(
+    "Run {.fn check_deployment_images} to crosscheck images with deployments."
+  )
 }
 
 table_print_helper <- function(x, ...) {
