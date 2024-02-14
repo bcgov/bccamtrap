@@ -17,17 +17,25 @@ summary.sample_station_info <- function(object, ...) {
     "{.val {length(unique(object$sample_station_label))}}",
     " sample station{?s} in {.val {nrow(object)}} location{?s}."
   ))
+  cli::cat_line("")
+  cli::cli_alert_info(
+    "Summary of station distances (m):"
+  )
+  print(summarize_distances(object))
   if ("spatial_outlier" %in% names(object)) {
     n_outliers <- sum(as.numeric(object$spatial_outlier))
     cli::cli_alert_danger(
       "Detected {.val {n_outliers}} potential spatial outlier{?s}."
     )
   }
+  cli::cat_line("")
   cli::cli_alert_info(
     "Station status summary:"
   )
-  summary_table_helper(object$station_status)
+  table_print_helper(object$station_status)
+  cli::cat_line("")
   cli::cli_alert_info("Set dates: Between {.val {range(object$set_date)}}")
+  cli::cat_line("")
   cli::cli_alert_warning("Run {.code map_stations(object)} to view stations on a map.")
 }
 
@@ -51,20 +59,14 @@ summary.sample_sessions <- function(object, ...) {
   cli::cli_alert_info(
     "Camera status on arrival summary:"
   )
-  summary_table_helper(object$camera_status_on_arrival)
+  table_print_helper(object$camera_status_on_arrival)
   n_photos_range <- range(object$number_of_photos, na.rm = TRUE)
   cli::cli_alert_info(c(
-    "There are {.val {sum(object$number_of_photos)}} images. ",
+    "There are {.val {sum(object$number_of_photos, na.rm = TRUE)}} images. ",
     "Photos per session range betwen {.val {n_photos_range}}."
   ))
 }
 
-summary_table_helper <- function(x, col_names = c("Status", "n")) {
-  cli::cat_boxx(
-    knitr::kable(
-      table(x, useNA = "ifany"),
-      col.names = col_names,
-      row.names = FALSE),
-    padding = 0
-  )
+table_print_helper <- function(x, ...) {
+  print(table(x, useNA = "ifany", dnn = NULL), na.print = "NA", ...)
 }
