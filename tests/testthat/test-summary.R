@@ -16,7 +16,7 @@ test_that("summary.sample_sessions works", {
 
 test_that("summary.image_data works", {
   id1 <- read_image_data(test_dir_1)
-  id2 <- read_image_data(test_dir_1)
+  id2 <- read_image_data(test_dir_2)
 
   expect_snapshot(summary(id1))
   expect_snapshot(summary(id2))

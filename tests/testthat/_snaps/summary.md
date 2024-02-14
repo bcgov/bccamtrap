@@ -138,25 +138,27 @@
     Code
       summary(id2)
     Output
-      + McKay Lake -------+
+      + Taylor River -----+
       |                   |
       |   Image summary   |
       |                   |
       +-------------------+
     Message
-      i 5111 images in 11 deployments at 11 sample stations.
-      i 71 images with lens obscured.
-      i 0 images starred.
-      ! 0 images flagged for review.
-      i Dates are between 2022-11-28 and 2023-05-17.
-      i Temperatures are between -14 and 27 C.
-      i Snow depths are between 0 and 15 cm.
+      i 11833 images in 17 deployments at 15 sample stations.
+      i 117 images with lens obscured.
+      i 4 images starred.
+      ! 4 images flagged for review.
+      i Dates are between 2022-11-07 and 2023-07-10.
+      i Temperatures are between -10 and 37 C.
+      i Snow depths are between 0 and 135 cm.
       i Species counts:
     Output
-         Avian (comments)              Beaver          Black Bear Domestic (comments) 
-                        1                   1                   2                   1 
-                Mule Deer       Roosevelt Elk             Unknown                <NA> 
-                       69                  96                   5                4936 
+      Avian (comments)       Black Bear           Cougar        Mule Deer 
+                     6              130               12              155 
+      Other (comments)   Pacific Marten     Red Squirrel    Roosevelt Elk 
+                     1                2                1               88 
+                  <NA> 
+                 11438 
       
     Message
       ! Run `check_deployment_images()` to crosscheck images with deployments.
