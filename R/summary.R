@@ -26,13 +26,7 @@ summary.sample_station_info <- function(object, ...) {
   cli::cli_alert_info(
     "Station status summary:"
   )
-  cli::cat_boxx(
-    knitr::kable(
-      table(object$station_status, useNA = "ifany"),
-      col.names = c("Status", "n"),
-      row.names = FALSE),
-    padding = 0
-  )
+  summary_table_helper(object$station_status)
   cli::cli_alert_info("Set dates: Between {.val {range(object$set_date)}}")
   cli::cli_alert_warning("Run {.code map_stations(object)} to view stations on a map.")
 }
@@ -54,9 +48,23 @@ summary.sample_sessions <- function(object, ...) {
     "There {?is/are} {.val {n_invalid_samples}} invalid sample session{?s}."
     )
   }
+  cli::cli_alert_info(
+    "Camera status on arrival summary:"
+  )
+  summary_table_helper(object$camera_status_on_arrival)
   n_photos_range <- range(object$number_of_photos, na.rm = TRUE)
   cli::cli_alert_info(c(
     "There are {.val {sum(object$number_of_photos)}} images. ",
     "Photos per session range betwen {.val {n_photos_range}}."
   ))
+}
+
+summary_table_helper <- function(x, col_names = c("Status", "n")) {
+  cli::cat_boxx(
+    knitr::kable(
+      table(x, useNA = "ifany"),
+      col.names = col_names,
+      row.names = FALSE),
+    padding = 0
+  )
 }
