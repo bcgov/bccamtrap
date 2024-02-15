@@ -61,5 +61,47 @@ check_deployment_images <- function(sessions, image_data) {
   check_sample_sessions(sessions)
   check_image_data(image_data)
 
+  s_dep_labs <- unique(sessions$deployment_label)
+  i_dep_labs <- unique(image_data$deployment_label)
+
+  i_dep_labs_extra <- setdiff(i_dep_labs, s_dep_labs)
+  s_dep_labs_extra <- setdiff(s_dep_labs, i_dep_labs)
+
+  i_dep_labs_ok <- length(i_dep_labs_extra) == 0
+  s_dep_labs_ok <- length(s_dep_labs_extra) == 0
+
+  if (!i_dep_labs_ok && !s_dep_labs_ok) {
+    cli::cli_abort(
+      "There are no matching deployment labels in {.arg {rlang::caller_arg(sessions)}}
+      and {.arg {rlang::caller_arg(image_data)}}."
+    )
+  }
+
+  if (!i_dep_labs_ok) {
+    cli::cli_alert_warning(
+      "The following deployment labels are present in {.arg {rlang::caller_arg(image_data)}}:
+      {.val {i_dep_labs_extra}} but not {.arg {rlang::caller_arg(sessions)}}"
+    )
+  }
+
+  if (!s_dep_labs_ok) {
+    cli::cli_alert_warning(
+      "The following deployment labels are present in {.arg {rlang::caller_arg(sessions)}}:
+      {.val {s_dep_labs_extra}} but not {.arg {rlang::caller_arg(image_data)}}"
+    )
+  }
+
+  invisible(
+    list(
+      img_dep_labels_not_in_sessions = i_dep_labs_extra,
+      session_dep_labels_not_in_images = s_dep_labs_extra
+    )
+  )
+}
+
+plot_deployment_images <- function(sessions, image_data) {
+  check_sample_sessions(sessions)
+  check_image_data(image_data)
+
 
 }
