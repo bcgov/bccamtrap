@@ -2,8 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @import ggplot2
-#' @importFrom dplyr .data
+#' @importFrom rlang .data
 #' @importFrom methods setOldClass
 ## usethis namespace: end
 NULL
