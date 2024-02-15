@@ -4,6 +4,7 @@
 ## usethis namespace: start
 #' @importFrom rlang .data
 #' @importFrom methods setOldClass
+#' @importFrom magrittr %>%
 ## usethis namespace: end
 NULL
 

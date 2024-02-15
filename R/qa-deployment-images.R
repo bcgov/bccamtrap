@@ -16,15 +16,7 @@ plot_deployments <- function(sessions,
                              interactive = FALSE) {
   check_sample_sessions(sessions)
 
-  sessions$sampling_start_date <- as.Date(sessions$sampling_start)
-  sessions$sampling_end_date <- as.Date(sessions$sampling_end)
-
-  invalid_rows <- is.na(sessions$sampling_end) & !sessions$sample_duration_valid
-
-  half_date <- make_halfway_date(sessions[invalid_rows, ])
-
-  sessions$sampling_end_date[invalid_rows] <- half_date
-  sessions$valid_session <- ifelse(sessions$sample_duration_valid, "Valid", "Invalid")
+  sessions <- process_invalid_sessions(sessions)
 
   p <- ggplot2::ggplot(sessions) +
     ggplot2::geom_linerange(
@@ -81,10 +73,15 @@ plot_deployments <- function(sessions,
   p
 }
 
-make_halfway_date <- function(x) {
-  interval <- lubridate::interval(x$sampling_start_date, x$date_time_checked)
-  duration <- lubridate::as.duration(interval)
-  x$sampling_start_date + duration / 2
+process_invalid_sessions <- function(sessions) {
+  sessions$sampling_start_date <- as.Date(sessions$sampling_start)
+  sessions$sampling_end_date <- as.Date(sessions$sampling_end)
+
+  invalid_rows <- is.na(sessions$sampling_end) & !sessions$sample_duration_valid
+
+  sessions$sampling_end_date[invalid_rows] <- as.Date(sessions$date_time_checked)[invalid_rows]
+  sessions$valid_session <- ifelse(sessions$sample_duration_valid, "Valid", "Invalid")
+  sessions
 }
 
 check_deployment_images <- function(sessions, image_data) {
@@ -108,17 +105,19 @@ check_deployment_images <- function(sessions, image_data) {
   }
 
   if (!i_dep_labs_ok) {
-    cli::cli_alert_warning(
-      "The following deployment labels are present in {.arg {rlang::caller_arg(image_data)}}:
-      {.val {i_dep_labs_extra}} but not {.arg {rlang::caller_arg(sessions)}}"
-    )
+    cli::cli_alert_warning(c(
+      "The following deployment labels are present in {.arg {rlang::caller_arg(image_data)}}",
+      " but not {.arg {rlang::caller_arg(sessions)}}:",
+      " {.val {i_dep_labs_extra}}"
+    ))
   }
 
   if (!s_dep_labs_ok) {
-    cli::cli_alert_warning(
-      "The following deployment labels are present in {.arg {rlang::caller_arg(sessions)}}:
-      {.val {s_dep_labs_extra}} but not {.arg {rlang::caller_arg(image_data)}}"
-    )
+    cli::cli_alert_warning(c(
+      "The following deployment labels are present in {.arg {rlang::caller_arg(sessions)}}",
+      " but not {.arg {rlang::caller_arg(image_data)}}:",
+      " {.val {s_dep_labs_extra}}"
+    ))
   }
 
   invisible(
@@ -129,10 +128,72 @@ check_deployment_images <- function(sessions, image_data) {
   )
 }
 
-
-plot_deployment_detections <- function(sessions, image_data) {
+#' Plot image timestamps over deployment periods
+#'
+#' Plot detections over sample sessions to check for misaligned time stamps
+#'
+#' @inheritParams plot_deployments
+#' @param image_data data.frame of image sequence data, as read via [read_image_data()]
+#'
+#' @return a `ggplot2` object if `interactive = FALSE`, a `plotly` object if `TRUE`
+#' @export
+plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 month", interactive = FALSE) {
   check_sample_sessions(sessions)
   check_image_data(image_data)
 
+  sessions <- process_invalid_sessions(sessions)
 
+  img_data_grouped <- image_data %>%
+    dplyr::mutate(img_date = as.Date(.data$date_time)) %>%
+    dplyr::group_by(.data$deployment_label, .data$img_date) %>%
+    dplyr::summarise()
+
+  p <- ggplot2::ggplot() +
+    ggplot2::geom_point(
+      data = img_data_grouped,
+      ggplot2::aes(
+        x = .data$img_date,
+        y = .data$deployment_label
+      ),
+      shape = "|",
+      colour = "red",
+      size = 3
+    ) +
+    ggplot2::geom_linerange(
+      data = sessions,
+      ggplot2::aes(
+        xmin = .data$sampling_start_date,
+        xmax = .data$sampling_end_date,
+        y = .data$deployment_label,
+        colour = .data$valid_session
+      ),
+      linewidth = 1.1,
+      position = ggplot2::position_dodge(width = 0.5)
+    ) +
+    ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightgrey")) +
+    ggplot2::scale_x_date(date_breaks = date_breaks) +
+    ggplot2::theme_bw()
+
+  if (interactive) {
+    p <- plotly::plotly_build(p)
+    # Hack plotly object to replace markers with text
+    p$x$data[[1]]$mode <- "text"
+    p$x$data[[1]]$hovertext <- p$x$data[[1]]$text
+    p$x$data[[1]]$text <- "|"
+    p$x$data[[1]]$textfont$size <- "11"
+    p$x$data[[1]]$textfont$color <- 'rgba(255,0,0,1)'
+    p$x$data[[1]]$marker <- NULL
+  }
+  p
+}
+
+merge_sessions_images <- function(sessions, image_data) {
+
+  check_deployment_images(sessions, image_data)
+
+  all_data <- dplyr::left_join(
+    sessions, image_data, by = "deployment_label"
+  )
+
+  all_data
 }
