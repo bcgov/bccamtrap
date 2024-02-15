@@ -135,13 +135,15 @@ check_deployment_images <- function(sessions, image_data) {
 #' @inheritParams plot_deployments
 #' @param image_data data.frame of image sequence data, as read via [read_image_data()]
 #'
-#' @return a `ggplot2` object if `interactive = FALSE`, a `plotly` object if `TRUE`
+#' @inherit plot_deployments return
 #' @export
 plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 month", interactive = FALSE) {
   check_sample_sessions(sessions)
   check_image_data(image_data)
 
   sessions <- process_invalid_sessions(sessions)
+
+  pt_symbol <- "|"
 
   img_data_grouped <- image_data %>%
     dplyr::mutate(img_date = as.Date(.data$date_time)) %>%
@@ -155,7 +157,7 @@ plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 mo
         x = .data$img_date,
         y = .data$deployment_label
       ),
-      shape = "|",
+      shape = pt_symbol,
       colour = "red",
       size = 3
     ) +
@@ -178,11 +180,61 @@ plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 mo
     p <- plotly::plotly_build(p)
     # Hack plotly object to replace markers with text
     p$x$data[[1]]$mode <- "text"
+    p$x$data[[1]]$text <- pt_symbol
     p$x$data[[1]]$hovertext <- p$x$data[[1]]$text
-    p$x$data[[1]]$text <- "|"
-    p$x$data[[1]]$textfont$size <- "11"
-    p$x$data[[1]]$textfont$color <- 'rgba(255,0,0,1)'
+    p$x$data[[1]]$textfont$size <- p$x$data[[1]]$marker$size
+    p$x$data[[1]]$textfont$color <- p$x$data[[1]]$marker$color
+    p$x$data[[1]]$textfont$opacity <- p$x$data[[1]]$marker$opacity
     p$x$data[[1]]$marker <- NULL
+  }
+  p
+}
+
+#' Plot daily activity of species
+#'
+#' @inheritParams plot_deployment_detections
+#'
+#' @inherit plot_deployments return
+#' @export
+plot_diel_activity <- function(image_data, interactive = FALSE) {
+  plot_data <- image_data %>%
+    dplyr::filter(
+      !is.na(.data$species) |
+        (!is.na(.data$total_count_episode) & .data$total_count_episode > 0) |
+        !is.na(.data$human_use_type) |
+        grepl("crew", tolower(.data$comment)) |
+        tolower(.data$trigger_mode) %in% c("m", "timelapse")
+    ) %>%
+    dplyr::mutate(
+      time_of_day = (lubridate::hour(.data$date_time) * 60 +
+                       lubridate::minute(.data$date_time) +
+                       lubridate::second(.data$date_time)) / 60,
+      total_count_episode = ifelse(is.na(.data$total_count_episode), 1, .data$total_count_episode)
+    )
+
+  p <- ggplot2::ggplot(plot_data) +
+    ggplot2::geom_point(
+      ggplot2::aes(
+        x = .data$time_of_day,
+        y = .data$species,
+        size = .data$total_count_episode,
+        group = .data$deployment_label
+      ),
+      alpha = 0.3,
+      colour = "#400456"
+    ) +
+    ggplot2::theme_bw() +
+    ggplot2::labs(
+      title = paste0("Daily activity of different species at ", image_data$study_area_name[1]),
+      x = "Time of Day (hours)",
+      y = "Species*",
+      caption = "*NA usually denotes human activity"
+    )
+
+  if (interactive) {
+    p <- plotly::ggplotly(
+      p = p
+    )
   }
   p
 }
