@@ -1,11 +1,16 @@
-plot_deployments <- function(sessions, date_breaks = "1 month", interactive = FALSE) {
+plot_deployments <- function(sessions,
+                             date_breaks = "1 month",
+                             interactive = FALSE) {
   check_sample_sessions(sessions)
 
   sessions$sampling_start_date <- as.Date(sessions$sampling_start)
   sessions$sampling_end_date <- as.Date(sessions$sampling_end)
 
   invalid_rows <- is.na(sessions$sampling_end) & !sessions$sample_duration_valid
-  sessions$sampling_end_date[invalid_rows] <- as.Date(sessions$date_time_checked[invalid_rows])
+
+  half_date <- make_halfway_date(sessions[invalid_rows, ])
+
+  sessions$sampling_end_date[invalid_rows] <- half_date
   sessions$valid_session <- ifelse(sessions$sample_duration_valid, "Valid", "Invalid")
 
   p <- ggplot2::ggplot(sessions) +
@@ -45,16 +50,28 @@ plot_deployments <- function(sessions, date_breaks = "1 month", interactive = FA
     ) +
     ggplot2::scale_size_manual(values = c("Valid" = 2, "Invalid" = 0.1)) +
     ggplot2::scale_shape_manual(values = c("Valid" = 15, "Invalid" = 4)) +
-    ggplot2::scale_x_date(date_breaks = .data$date_breaks) +
+    ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
       title = paste0("Camera Deployments at ", sessions$study_area_name[1]),
-      x = "Date", y = "Sample Station"
+      x = "Date", y = "Sample Station", size = "Valid Session", shape = "Valid Session",
+      colour = "Valid Session"
     )
 
-  if (interactive) return(plotly::ggplotly(p))
-
+  if (interactive) {
+    p <- plotly::ggplotly(
+      p = p,
+      tooltip = c("x", "y", "size", "color", "group")
+    )
+    p <- plotly::style(p, showlegend = FALSE, traces = c(1,2))
+  }
   p
+}
+
+make_halfway_date <- function(x) {
+  interval <- lubridate::interval(x$sampling_start_date, x$date_time_checked)
+  duration <- lubridate::as.duration(interval)
+  x$sampling_start_date + duration / 2
 }
 
 check_deployment_images <- function(sessions, image_data) {
