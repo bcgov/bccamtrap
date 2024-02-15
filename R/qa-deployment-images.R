@@ -1,3 +1,16 @@
+#' Plot timelines of image deployments
+#'
+#' Make a plot of sampling sessions. The plot indicates start and end times
+#' of each deployment, by station. It also shows "invalid" sample sessions,
+#' for example if a camera was moved, stolen, ran out of batteries etc.
+#' This is indicated by a light grey line and no end point.
+#'
+#' @param sessions sessions data, as created by [make_sample_sessions()]
+#' @param date_breaks How to break up the dates on the x axis. See [scales::date_breaks()]. Default `"1 month"`
+#' @param interactive should the plot be interactive? Default `FALSE`
+#'
+#' @return a `ggplot2` object if `interactive = FALSE`, a `plotly` object if `TRUE`
+#' @export
 plot_deployments <- function(sessions,
                              date_breaks = "1 month",
                              interactive = FALSE) {
@@ -116,7 +129,8 @@ check_deployment_images <- function(sessions, image_data) {
   )
 }
 
-plot_deployment_images <- function(sessions, image_data) {
+
+plot_deployment_detections <- function(sessions, image_data) {
   check_sample_sessions(sessions)
   check_image_data(image_data)
 
