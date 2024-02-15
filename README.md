@@ -7,6 +7,8 @@
 
 [![R-CMD-check](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml)
 [![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+[![Codecov test
+coverage](https://codecov.io/gh/bcgov/bccamtrap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bcgov/bccamtrap?branch=main)
 <!-- badges: end -->
 
 Tools for QA and validation of Camera Trap data
