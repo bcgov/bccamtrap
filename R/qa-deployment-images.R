@@ -84,6 +84,15 @@ process_invalid_sessions <- function(sessions) {
   sessions
 }
 
+#' Check for mismatched deployment labels in session data and image data
+#'
+#' This function is mainly called for its messaging - alerting you to deployment labels that are
+#' in the sample session data but not in the image data, and vice versa.
+#'
+#' @inheritParams plot_deployment_detections
+#'
+#' @return a list of two vectors containing mismatched deployment labels
+#' @export
 check_deployment_images <- function(sessions, image_data) {
   check_sample_sessions(sessions)
   check_image_data(image_data)

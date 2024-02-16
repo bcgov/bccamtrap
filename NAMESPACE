@@ -3,6 +3,7 @@
 S3method(summary,image_data)
 S3method(summary,sample_sessions)
 S3method(summary,sample_station_info)
+export(check_deployment_images)
 export(check_stations_spatial)
 export(make_sample_sessions)
 export(map_stations)
