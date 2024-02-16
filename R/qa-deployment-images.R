@@ -30,7 +30,7 @@ plot_deployments <- function(sessions,
       linewidth = 1.1,
       position = ggplot2::position_dodge(width = 0.5)
     ) +
-    ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightgrey")) +
+    ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightpink")) +
     ggplot2::geom_point(
       ggplot2::aes(
         x = .data$sampling_start_date,
@@ -181,7 +181,7 @@ plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 mo
       linewidth = 1.1,
       position = ggplot2::position_dodge(width = 0.5)
     ) +
-    ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightgrey")) +
+    ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightpink")) +
     ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
