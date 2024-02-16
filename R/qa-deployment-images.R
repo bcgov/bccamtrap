@@ -183,14 +183,18 @@ plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 mo
     ) +
     ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightgrey")) +
     ggplot2::scale_x_date(date_breaks = date_breaks) +
-    ggplot2::theme_bw()
+    ggplot2::theme_bw() +
+    ggplot2::labs(
+      title = paste0("Camera Deployments and detections at ", sessions$study_area_name[1]),
+      x = "Date", y = "Deployment Label", colour = "Valid Session"
+    )
 
   if (interactive) {
     p <- plotly::plotly_build(p)
     # Hack plotly object to replace markers with text
     p$x$data[[1]]$mode <- "text"
-    p$x$data[[1]]$text <- pt_symbol
     p$x$data[[1]]$hovertext <- p$x$data[[1]]$text
+    p$x$data[[1]]$text <- pt_symbol
     p$x$data[[1]]$textfont$size <- p$x$data[[1]]$marker$size
     p$x$data[[1]]$textfont$color <- p$x$data[[1]]$marker$color
     p$x$data[[1]]$textfont$opacity <- p$x$data[[1]]$marker$opacity
