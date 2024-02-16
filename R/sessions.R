@@ -10,6 +10,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
+#' Create a spatial data frame of sampling sessions
+#'
+#' Merge data from "Sample Station Info" and "Camera Setup and Checks" tabs to
+#' create sampling sessions - the time that a camera was deployed and running
+#' at a site. "Invalid" sessions are flagged when there is no sampling end date
+#' in "Camera Setup and Checks" or the sampling period is 0 days
+#'
+#' @inheritParams read_sample_station_info
+#'
+#' @return a spatial data.frame (`sf`) of sample sessions
+#' @export
 make_sample_sessions <- function(path, as_sf = TRUE) {
   csc <- read_cam_setup_checks(path)
   ss <- read_sample_station_info(path, as_sf = as_sf)
@@ -62,6 +73,7 @@ make_sample_sessions <- function(path, as_sf = TRUE) {
       .data$sampling_end
     ) / lubridate::ddays(1),
     sample_duration_valid = !is.na(.data$sample_duration_days) &
+      !is.na(.data$sampling_end) &
       .data$sample_duration_days > 0
   )
   ret <- dplyr::relocate(
