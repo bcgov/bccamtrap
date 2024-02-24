@@ -39,6 +39,11 @@ tl_template_v20230518_1 <- lapply(seq_len(nrow(template_tbl)), \(i) {
   )
 })
 
-names(tl_template_v20230518_1) <- template_tbl$DataLabel
+names(tl_template_v20230518_1) <- vapply(
+  tl_template_v20230518_1,
+  `[[`,
+  "col",
+  FUN.VALUE = ""
+)
 
 usethis::use_data(tl_template_v20230518_1, overwrite = TRUE, internal = TRUE)
