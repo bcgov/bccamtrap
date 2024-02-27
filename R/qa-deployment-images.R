@@ -47,8 +47,8 @@ plot_deployments <- function(deployments,
         x = .data$deployment_end_date,
         y = .data$sample_station_label,
         group = .data$deployment_label,
-        size = .data$valid_session,
-        shape = .data$valid_session
+        size = .data$valid_deployment,
+        shape = .data$valid_deployment
       ),
       position = ggplot2::position_dodge(width = 0.5),
       colour = "#400456"
@@ -80,7 +80,7 @@ process_invalid_deployments <- function(deployments) {
   invalid_rows <- is.na(deployments$deployment_end) & !deployments$deployment_duration_valid
 
   deployments$deployment_end_date[invalid_rows] <- as.Date(deployments$date_time_checked)[invalid_rows]
-  deployments$valid_session <- ifelse(deployments$deployment_duration_valid, "Valid", "Invalid")
+  deployments$valid_deployment <- ifelse(deployments$deployment_duration_valid, "Valid", "Invalid")
   deployments
 }
 
@@ -176,7 +176,7 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
         xmin = .data$deployment_start_date,
         xmax = .data$deployment_end_date,
         y = .data$deployment_label,
-        colour = .data$valid_session
+        colour = .data$valid_deployment
       ),
       linewidth = 1.1,
       position = ggplot2::position_dodge(width = 0.5)
