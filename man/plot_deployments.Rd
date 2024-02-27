@@ -4,10 +4,10 @@
 \alias{plot_deployments}
 \title{Plot timelines of image deployments}
 \usage{
-plot_deployments(sessions, date_breaks = "1 month", interactive = FALSE)
+plot_deployments(deployments, date_breaks = "1 month", interactive = FALSE)
 }
 \arguments{
-\item{sessions}{sessions data, as created by \code{\link[=make_sample_sessions]{make_sample_sessions()}}}
+\item{deployments}{deployments data, as created by \code{\link[=make_deployments]{make_deployments()}}}
 
 \item{date_breaks}{How to break up the dates on the x axis. See \code{\link[scales:date_breaks]{scales::date_breaks()}}. Default \code{"1 month"}}
 
@@ -17,8 +17,8 @@ plot_deployments(sessions, date_breaks = "1 month", interactive = FALSE)
 a \code{ggplot2} object if \code{interactive = FALSE}, a \code{plotly} object if \code{TRUE}
 }
 \description{
-Make a plot of sampling sessions. The plot indicates start and end times
-of each deployment, by station. It also shows "invalid" sample sessions,
+Make a plot of sampling deployments. The plot indicates start and end times
+of each deployment, by station. It also shows "invalid" sample deployments,
 for example if a camera was moved, stolen, ran out of batteries etc.
 This is indicated by a light grey line and no end point.
 }

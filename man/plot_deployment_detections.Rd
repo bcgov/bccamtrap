@@ -5,14 +5,14 @@
 \title{Plot image timestamps over deployment periods}
 \usage{
 plot_deployment_detections(
-  sessions,
+  deployments,
   image_data,
   date_breaks = "1 month",
   interactive = FALSE
 )
 }
 \arguments{
-\item{sessions}{sessions data, as created by \code{\link[=make_sample_sessions]{make_sample_sessions()}}}
+\item{deployments}{deployments data, as created by \code{\link[=make_deployments]{make_deployments()}}}
 
 \item{image_data}{data.frame of image sequence data, as read via \code{\link[=read_image_data]{read_image_data()}}}
 
@@ -24,5 +24,5 @@ plot_deployment_detections(
 a \code{ggplot2} object if \code{interactive = FALSE}, a \code{plotly} object if \code{TRUE}
 }
 \description{
-Plot detections over sample sessions to check for misaligned time stamps
+Plot detections over sample deployments to check for misaligned time stamps
 }

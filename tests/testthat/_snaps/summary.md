@@ -142,46 +142,46 @@
     Message
       ! Run `map_stations(object)` to view stations on a map.
 
-# summary.sample_sessions works
+# summary.deployments works
 
     Code
       summary(sessions1)
     Output
-      + McKay Lake Parcel --+
-      |                     |
-      |   Sample Sessions   |
-      |                     |
-      +---------------------+
+      + McKay Lake P... +
+      |                 |
+      |   Deployments   |
+      |                 |
+      +-----------------+
     Message
       i 12 sample stations in 24 deploymentss.
-      i Sample sessions lengths range between 151 and 195 days.
-      x There is 1 invalid sample session.
+      i Deployment lengths range between 151 and 195 days.
+      x There is 1 invalid deployment.
       i Camera status on arrival summary:
     Output
       Active Stolen 
           23      1 
     Message
-      i There are 30041 images. Photos per session range betwen 216 and 14444.
+      i There are 30041 images. Photos per deployment range betwen 216 and 14444.
 
 ---
 
     Code
       summary(sessions2)
     Output
-      + Taylor River Wat... +
-      |                     |
-      |   Sample Sessions   |
-      |                     |
-      +---------------------+
+      + Taylor River... +
+      |                 |
+      |   Deployments   |
+      |                 |
+      +-----------------+
     Message
       i 15 sample stations in 28 deploymentss.
-      i Sample sessions lengths range between 113 and 245 days.
+      i Deployment lengths range between 113 and 245 days.
       i Camera status on arrival summary:
     Output
       Active 
           28 
     Message
-      i There are 19201 images. Photos per session range betwen 189 and 3554.
+      i There are 19201 images. Photos per deployment range betwen 189 and 3554.
 
 # summary.image_data works
 

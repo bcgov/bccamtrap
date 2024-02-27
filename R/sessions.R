@@ -10,23 +10,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-#' Create a spatial data frame of sampling sessions
+#' Create a spatial data frame of deployments
 #'
 #' Merge data from "Sample Station Info" and "Camera Setup and Checks" tabs to
-#' create sampling sessions - the time that a camera was deployed and running
-#' at a site. "Invalid" sessions are flagged when there is no sampling end date
+#' create deployments - the time that a camera was deployed and running
+#' at a site. "Invalid" deployments are flagged when there is no sampling end date
 #' in "Camera Setup and Checks" or the sampling period is 0 days
 #'
 #' @inheritParams read_sample_station_info
 #'
-#' @return a spatial data.frame (`sf`) of sample sessions
+#' @return a spatial data.frame (`sf`) of deployments
 #' @export
-make_sample_sessions <- function(path, as_sf = TRUE) {
+make_deployments <- function(path, as_sf = TRUE) {
   csc <- read_cam_setup_checks(path)
   ss <- read_sample_station_info(path, as_sf = as_sf)
 
-  csc <- dplyr::mutate(csc, sample_start_date = as.Date(.data$sampling_start))
   csc <- dplyr::filter(csc, .data$visit_type != "Deployment")
+
+  csc <- dplyr::rename_with(
+    csc,
+    function(x) gsub("sampling_", "deployment_", x),
+    .cols = dplyr::starts_with("sampling")
+  )
 
   # TODO: Decide what columns we want to keep in both datasets
   # csc <- dplyr::select(
@@ -54,37 +59,42 @@ make_sample_sessions <- function(path, as_sf = TRUE) {
   #   "geometry"
   # )
 
+
+  # temporary variable for joining, since
+  csc$deployment_start_date <- as.Date(csc$deployment_start)
+
   ret <- dplyr::left_join(
     csc,
     ss,
     by = dplyr::join_by(
       "study_area_name",
       "sample_station_label",
-      # Join it to the most recent location
-      closest("sample_start_date" >= "set_date")
+      # Join it to the most recent location, in case a sample station has moved
+      # and thus multiple rows for a station in sample station info sheet
+      closest("deployment_start_date" >= "set_date")
     )
   )
 
-  ret <- dplyr::select(ret, -"sample_start_date")
+  ret <- dplyr::select(ret, -"deployment_start_date")
   ret <- dplyr::mutate(
     ret,
-    sample_duration_days = lubridate::interval(
-      .data$sampling_start,
-      .data$sampling_end
+    deployment_duration_days = lubridate::interval(
+      .data$deployment_start,
+      .data$deployment_end
     ) / lubridate::ddays(1),
-    sample_duration_valid = !is.na(.data$sample_duration_days) &
-      !is.na(.data$sampling_end) &
-      .data$sample_duration_days > 0
+    deployment_duration_valid = !is.na(.data$deployment_duration_days) &
+      !is.na(.data$deployment_end) &
+      .data$deployment_duration_days > 0
   )
   ret <- dplyr::relocate(
     ret,
-    dplyr::starts_with("sample_duration"),
-    .after = "sampling_end"
+    dplyr::starts_with("deployment_duration"),
+    .after = "deployment_end"
   )
 
   if (inherits(ss, "sf")) {
     sf::st_geometry(ret) <- attr(ss, "sf_column")
   }
 
-  as.sample_sessions(ret)
+  as.deployments(ret)
 }

@@ -10,8 +10,8 @@ as.cam_setup_checks <- function(x, ...) {
   structure(x, class = c("cam_setup_checks", class(x)), ...)
 }
 
-as.sample_sessions <- function(x, ...) {
-  structure(x, class = c("sample_sessions", class(x)), ...)
+as.deployments <- function(x, ...) {
+  structure(x, class = c("deployments", class(x)), ...)
 }
 
 as.image_data <- function(x, ...) {
@@ -20,7 +20,7 @@ as.image_data <- function(x, ...) {
 
 # Define classes as a subclass of sf so that it works
 # with S4 methods for sf (eg mapview)
-methods::setOldClass(c("sample_sessions", "sf"))
+methods::setOldClass(c("deployments", "sf"))
 methods::setOldClass(c("sample_station_info", "sf"))
 
 ## Checkers
@@ -48,9 +48,9 @@ check_cam_setup_checks <- function(x, arg = rlang::caller_arg(x), call = rlang::
   }
 }
 
-check_sample_sessions <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
-  if (!inherits(x, "sample_sessions")) {
-    cli::cli_abort("{.arg {arg}} must be a 'sample_sessions' object, a result of {.fn make_sample_sessions}",
+check_deployments <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+  if (!inherits(x, "deployments")) {
+    cli::cli_abort("{.arg {arg}} must be a 'deployments' object, a result of {.fn make_deployments}",
                    arg = arg,
                    call = call)
   }

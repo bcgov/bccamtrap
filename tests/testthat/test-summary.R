@@ -12,9 +12,9 @@ test_that("summary.sample_stations works", {
   expect_snapshot(summary(ss2))
 })
 
-test_that("summary.sample_sessions works", {
-  sessions1 <- make_sample_sessions(test_meta_file1)
-  sessions2 <- make_sample_sessions(test_meta_file2)
+test_that("summary.deployments works", {
+  sessions1 <- make_deployments(test_meta_file1)
+  sessions2 <- make_deployments(test_meta_file2)
 
   expect_snapshot(summary(sessions1))
   expect_snapshot(summary(sessions2))

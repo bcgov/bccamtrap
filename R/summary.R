@@ -44,20 +44,20 @@ summary.sample_station_info <- function(object, ...) {
 }
 
 #' @export
-summary.sample_sessions <- function(object, ...) {
-  cli::cat_boxx("Sample Sessions", object$study_area_name[1], col = "lightgreen")
+summary.deployments <- function(object, ...) {
+  cli::cat_boxx("Deployments", object$study_area_name[1], col = "lightgreen")
   cli::cli_alert_info(c(
     "{.val {length(unique(object$sample_station_label))}}",
     " sample station{?s} in {.val {length(unique(object$deployment_label))}} deployments{?s}."
   ))
-  dep_dur_range <- round(range(object$sample_duration_days, na.rm = TRUE))
-  n_invalid_samples <- sum(!object$sample_duration_valid, na.rm = TRUE)
+  dep_dur_range <- round(range(object$deployment_duration_days, na.rm = TRUE))
+  n_invalid_samples <- sum(!object$deployment_duration_valid, na.rm = TRUE)
   cli::cli_alert_info(
-    "Sample sessions lengths range between {.val {dep_dur_range}} days."
+    "Deployment lengths range between {.val {dep_dur_range}} days."
   )
   if (sum(n_invalid_samples) > 0) {
     cli::cli_alert_danger(
-    "There {?is/are} {.val {n_invalid_samples}} invalid sample session{?s}."
+    "There {?is/are} {.val {n_invalid_samples}} invalid deployment{?s}."
     )
   }
   cli::cli_alert_info(
@@ -67,7 +67,7 @@ summary.sample_sessions <- function(object, ...) {
   n_photos_range <- range(object$number_of_photos, na.rm = TRUE)
   cli::cli_alert_info(c(
     "There are {.val {sum(object$number_of_photos, na.rm = TRUE)}} images. ",
-    "Photos per session range betwen {.val {n_photos_range}}."
+    "Photos per deployment range betwen {.val {n_photos_range}}."
   ))
 }
 

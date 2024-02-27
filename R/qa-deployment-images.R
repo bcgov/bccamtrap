@@ -1,31 +1,31 @@
 #' Plot timelines of image deployments
 #'
-#' Make a plot of sampling sessions. The plot indicates start and end times
-#' of each deployment, by station. It also shows "invalid" sample sessions,
+#' Make a plot of sampling deployments. The plot indicates start and end times
+#' of each deployment, by station. It also shows "invalid" sample deployments,
 #' for example if a camera was moved, stolen, ran out of batteries etc.
 #' This is indicated by a light grey line and no end point.
 #'
-#' @param sessions sessions data, as created by [make_sample_sessions()]
+#' @param deployments deployments data, as created by [make_deployments()]
 #' @param date_breaks How to break up the dates on the x axis. See [scales::date_breaks()]. Default `"1 month"`
 #' @param interactive should the plot be interactive? Default `FALSE`
 #'
 #' @return a `ggplot2` object if `interactive = FALSE`, a `plotly` object if `TRUE`
 #' @export
-plot_deployments <- function(sessions,
+plot_deployments <- function(deployments,
                              date_breaks = "1 month",
                              interactive = FALSE) {
-  check_sample_sessions(sessions)
+  check_deployments(deployments)
 
-  sessions <- process_invalid_sessions(sessions)
+  deployments <- process_invalid_deployments(deployments)
 
-  p <- ggplot2::ggplot(sessions) +
+  p <- ggplot2::ggplot(deployments) +
     ggplot2::geom_linerange(
       ggplot2::aes(
-        xmin = .data$sampling_start_date,
-        xmax = .data$sampling_end_date,
+        xmin = .data$deployment_start_date,
+        xmax = .data$deployment_end_date,
         y = .data$sample_station_label,
         group = .data$deployment_label,
-        colour = .data$valid_session
+        colour = .data$valid_deployment
       ),
       linewidth = 1.1,
       position = ggplot2::position_dodge(width = 0.5)
@@ -33,7 +33,7 @@ plot_deployments <- function(sessions,
     ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightpink")) +
     ggplot2::geom_point(
       ggplot2::aes(
-        x = .data$sampling_start_date,
+        x = .data$deployment_start_date,
         y = .data$sample_station_label,
         group = .data$deployment_label
       ),
@@ -44,7 +44,7 @@ plot_deployments <- function(sessions,
     ) +
     ggplot2::geom_point(
       ggplot2::aes(
-        x = .data$sampling_end_date,
+        x = .data$deployment_end_date,
         y = .data$sample_station_label,
         group = .data$deployment_label,
         size = .data$valid_session,
@@ -58,7 +58,7 @@ plot_deployments <- function(sessions,
     ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
-      title = paste0("Camera Deployments at ", sessions$study_area_name[1]),
+      title = paste0("Camera Deployments at ", deployments$study_area_name[1]),
       x = "Date", y = "Sample Station", size = "Valid Session", shape = "Valid Session",
       colour = "Valid Session"
     )
@@ -73,15 +73,15 @@ plot_deployments <- function(sessions,
   p
 }
 
-process_invalid_sessions <- function(sessions) {
-  sessions$sampling_start_date <- as.Date(sessions$sampling_start)
-  sessions$sampling_end_date <- as.Date(sessions$sampling_end)
+process_invalid_deployments <- function(deployments) {
+  deployments$deployment_start_date <- as.Date(deployments$deployment_start)
+  deployments$deployment_end_date <- as.Date(deployments$deployment_end)
 
-  invalid_rows <- is.na(sessions$sampling_end) & !sessions$sample_duration_valid
+  invalid_rows <- is.na(deployments$deployment_end) & !deployments$deployment_duration_valid
 
-  sessions$sampling_end_date[invalid_rows] <- as.Date(sessions$date_time_checked)[invalid_rows]
-  sessions$valid_session <- ifelse(sessions$sample_duration_valid, "Valid", "Invalid")
-  sessions
+  deployments$deployment_end_date[invalid_rows] <- as.Date(deployments$date_time_checked)[invalid_rows]
+  deployments$valid_session <- ifelse(deployments$deployment_duration_valid, "Valid", "Invalid")
+  deployments
 }
 
 #' Check for mismatched deployment labels in session data and image data
@@ -93,11 +93,11 @@ process_invalid_sessions <- function(sessions) {
 #'
 #' @return a list of two vectors containing mismatched deployment labels
 #' @export
-check_deployment_images <- function(sessions, image_data) {
-  check_sample_sessions(sessions)
+check_deployment_images <- function(deployments, image_data) {
+  check_deployments(deployments)
   check_image_data(image_data)
 
-  s_dep_labs <- unique(sessions$deployment_label)
+  s_dep_labs <- unique(deployments$deployment_label)
   i_dep_labs <- unique(image_data$deployment_label)
 
   i_dep_labs_extra <- setdiff(i_dep_labs, s_dep_labs)
@@ -106,9 +106,9 @@ check_deployment_images <- function(sessions, image_data) {
   i_dep_labs_ok <- length(i_dep_labs_extra) == 0
   s_dep_labs_ok <- length(s_dep_labs_extra) == 0
 
-  if (!i_dep_labs_ok && !s_dep_labs_ok) {
+  if (length(intersect(s_dep_labs, i_dep_labs)) == 0) {
     cli::cli_abort(
-      "There are no matching deployment labels in {.arg {rlang::caller_arg(sessions)}}
+      "There are no matching deployment labels in {.arg {rlang::caller_arg(deployments)}}
       and {.arg {rlang::caller_arg(image_data)}}."
     )
   }
@@ -116,14 +116,14 @@ check_deployment_images <- function(sessions, image_data) {
   if (!i_dep_labs_ok) {
     cli::cli_alert_warning(c(
       "The following deployment labels are present in {.arg {rlang::caller_arg(image_data)}}",
-      " but not {.arg {rlang::caller_arg(sessions)}}:",
+      " but not {.arg {rlang::caller_arg(deployments)}}:",
       " {.val {i_dep_labs_extra}}"
     ))
   }
 
   if (!s_dep_labs_ok) {
     cli::cli_alert_warning(c(
-      "The following deployment labels are present in {.arg {rlang::caller_arg(sessions)}}",
+      "The following deployment labels are present in {.arg {rlang::caller_arg(deployments)}}",
       " but not {.arg {rlang::caller_arg(image_data)}}:",
       " {.val {s_dep_labs_extra}}"
     ))
@@ -131,26 +131,26 @@ check_deployment_images <- function(sessions, image_data) {
 
   invisible(
     list(
-      img_dep_labels_not_in_sessions = i_dep_labs_extra,
-      session_dep_labels_not_in_images = s_dep_labs_extra
+      img_dep_labels_not_in_deployments = i_dep_labs_extra,
+      deployment_dep_labels_not_in_images = s_dep_labs_extra
     )
   )
 }
 
 #' Plot image timestamps over deployment periods
 #'
-#' Plot detections over sample sessions to check for misaligned time stamps
+#' Plot detections over sample deployments to check for misaligned time stamps
 #'
 #' @inheritParams plot_deployments
 #' @param image_data data.frame of image sequence data, as read via [read_image_data()]
 #'
 #' @inherit plot_deployments return
 #' @export
-plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 month", interactive = FALSE) {
-  check_sample_sessions(sessions)
+plot_deployment_detections <- function(deployments, image_data, date_breaks = "1 month", interactive = FALSE) {
+  check_deployments(deployments)
   check_image_data(image_data)
 
-  sessions <- process_invalid_sessions(sessions)
+  deployments <- process_invalid_deployments(deployments)
 
   pt_symbol <- "|"
 
@@ -171,10 +171,10 @@ plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 mo
       size = 3
     ) +
     ggplot2::geom_linerange(
-      data = sessions,
+      data = deployments,
       ggplot2::aes(
-        xmin = .data$sampling_start_date,
-        xmax = .data$sampling_end_date,
+        xmin = .data$deployment_start_date,
+        xmax = .data$deployment_end_date,
         y = .data$deployment_label,
         colour = .data$valid_session
       ),
@@ -185,7 +185,7 @@ plot_deployment_detections <- function(sessions, image_data, date_breaks = "1 mo
     ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
-      title = paste0("Camera Deployments and detections at ", sessions$study_area_name[1]),
+      title = paste0("Camera Deployments and detections at ", deployments$study_area_name[1]),
       x = "Date", y = "Deployment Label", colour = "Valid Session"
     )
 
@@ -252,12 +252,12 @@ plot_diel_activity <- function(image_data, interactive = FALSE) {
   p
 }
 
-merge_sessions_images <- function(sessions, image_data) {
+merge_deployments_images <- function(deployments, image_data) {
 
-  check_deployment_images(sessions, image_data)
+  check_deployment_images(deployments, image_data)
 
   all_data <- dplyr::left_join(
-    sessions, image_data, by = "deployment_label"
+    deployments, image_data, by = "deployment_label"
   )
 
   all_data

@@ -4,10 +4,10 @@
 \alias{check_deployment_images}
 \title{Check for mismatched deployment labels in session data and image data}
 \usage{
-check_deployment_images(sessions, image_data)
+check_deployment_images(deployments, image_data)
 }
 \arguments{
-\item{sessions}{sessions data, as created by \code{\link[=make_sample_sessions]{make_sample_sessions()}}}
+\item{deployments}{deployments data, as created by \code{\link[=make_deployments]{make_deployments()}}}
 
 \item{image_data}{data.frame of image sequence data, as read via \code{\link[=read_image_data]{read_image_data()}}}
 }
