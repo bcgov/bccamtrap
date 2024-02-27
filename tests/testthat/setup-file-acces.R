@@ -16,8 +16,8 @@
 
 googledrive::drive_auth(path = Sys.getenv("GDRIVE_AUTH_TOKEN"))
 
-drv1 <- googledrive::drive_get(id = "1JC_zaIuazGThq7fxnCPZ0wVhv7tIytFs")
-drv2 <- googledrive::drive_get(id = "127MSPa03Pcgrd8P5tvyAUgFmd7BX_nKS")
+drv1 <- googledrive::drive_get(id = "1JC_zaIuazGThq7fxnCPZ0wVhv7tIytFs") # MC
+drv2 <- googledrive::drive_get(id = "1EY559-jrhrkazFsJ8AoKH0OBewRfdsPq") # TA
 
 test_dir <- withr::local_tempdir(
   pattern = "bccamtrap_test",
