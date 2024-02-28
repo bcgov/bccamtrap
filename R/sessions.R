@@ -99,3 +99,25 @@ make_deployments <- function(path, as_sf = TRUE) {
 
   as.deployments(ret)
 }
+
+#' Identify distinct sample sessions from deployments
+#'
+#' This function:
+#' - Sets sampling_start as deployment_start
+#' - If sampling_end < deployment_end, sets that as the sampling end
+#' - If sampling_end == deployment_end, looks in image data for indication
+#'   of valid sampling ending early:
+#'      - end of daily time lapse photos
+#'      - lens obscured constantly until end of deployment
+#' - Looks for
+#'
+#' @inheritParams plot_deployment_detections
+#' @inheritParams make_deployments
+#' @param days_lens_obscured number of consecutive days a lens is obscured before
+#'     signalling the start of a new sample session.
+#'
+#' @return a data.frame with one or more rows (sample sessions) per deployment
+#' @export
+make_sessions <- function(deployments, image_data, days_lens_obscured = 3, as_sf = TRUE) {
+
+}
