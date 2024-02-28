@@ -81,6 +81,9 @@ summary.image_data <- function(object, ...) {
     "{.val {length(unique(object$sample_station_label))}} sample stations."
   ))
 
+  cli::cli_alert_info("Image counts by trigger mode:")
+  table_print_helper(object$trigger_mode)
+
   cli::cli_alert_info(
     "{.val {sum(object$lens_obscured, na.rm = TRUE)}} images with lens obscured."
   )

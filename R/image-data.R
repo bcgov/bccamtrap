@@ -35,7 +35,8 @@ read_image_data <- function(path, pattern, recursive = FALSE) {
   df <- janitor::clean_names(df)
   df <- dplyr::relocate(df, "date_time", .after = "deployment_label")
 
-  ret <- make_snow_range_cols(df)
+  df <- make_snow_range_cols(df)
+  ret <- standardize_trigger_mode(df)
   as.image_data(ret)
 }
 
@@ -159,4 +160,18 @@ make_snow_range_cols <- function(x) {
   )
     dplyr::relocate(x, "snow_is_est", "snow_depth_lower", "snow_depth_upper",
                     .after = "snow_depth")
+}
+
+standardize_trigger_mode <- function(x) {
+  x$trigger_mode <- dplyr::case_when(
+    x$trigger_mode == "M" ~ "Motion Detection",
+    x$trigger_mode == "T" ~ "Time Lapse",
+    .default = x$trigger_mode
+  )
+  if (!all(x$trigger_mode %in% c("Motion Detection", "Time Lapse"))) {
+    cli::cli_abort(
+      "Unexpected values found in {.var trigger_mode} column."
+    )
+  }
+  x
 }

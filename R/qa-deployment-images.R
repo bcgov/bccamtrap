@@ -203,7 +203,7 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
   p
 }
 
-#' Plot daily activity of species
+#' Plot daily activity of species detected by motion detection
 #'
 #' @inheritParams plot_deployment_detections
 #'
@@ -216,7 +216,8 @@ plot_diel_activity <- function(image_data, interactive = FALSE) {
         (!is.na(.data$total_count_episode) & .data$total_count_episode > 0) |
         !is.na(.data$human_use_type) |
         grepl("crew", tolower(.data$comment)) |
-        tolower(.data$trigger_mode) %in% c("m", "timelapse")
+        tolower(.data$trigger_mode) %in% c("m", "timelapse"),
+      .data$trigger_mode == "Motion Detection"
     ) %>%
     dplyr::mutate(
       time_of_day = (lubridate::hour(.data$date_time) * 60 +
