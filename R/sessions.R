@@ -84,7 +84,7 @@ make_deployments <- function(path, as_sf = TRUE) {
       .data$deployment_end
     ) / lubridate::ddays(1),
     deployment_duration_valid = !is.na(.data$deployment_duration_days) &
-      !is.na(.data$deployment_end) &
+      !is.na(.data$sampling_end) &
       .data$deployment_duration_days > 0
   )
   ret <- dplyr::relocate(
