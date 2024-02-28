@@ -195,6 +195,11 @@
       +-------------------+
     Message
       i 5111 images in 11 deployments at 11 sample stations.
+      i Image counts by trigger mode:
+    Output
+      Motion Detection       Time Lapse 
+                  3371             1740 
+    Message
       i 71 images with lens obscured.
       i 0 images starred.
       ! 0 images flagged for review.
@@ -223,6 +228,11 @@
       +-------------------+
     Message
       i 11833 images in 17 deployments at 15 sample stations.
+      i Image counts by trigger mode:
+    Output
+      Motion Detection       Time Lapse 
+                  8657             3176 
+    Message
       i 117 images with lens obscured.
       i 4 images starred.
       ! 4 images flagged for review.
