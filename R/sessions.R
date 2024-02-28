@@ -27,11 +27,12 @@ make_deployments <- function(path, as_sf = TRUE) {
 
   csc <- dplyr::filter(csc, .data$visit_type != "Deployment")
 
-  csc <- dplyr::rename_with(
-    csc,
-    function(x) gsub("sampling_", "deployment_", x),
-    .cols = dplyr::starts_with("sampling")
-  )
+  # sample session starts when deployment starts
+  csc$deployment_start <- csc$sampling_start
+
+  # Make the *deployment* end be when the card was pulled.
+  # Session end manually set in sampling_end
+  csc$deployment_end <- csc$date_time_checked
 
   # TODO: Decide what columns we want to keep in both datasets
   # csc <- dplyr::select(
@@ -75,7 +76,7 @@ make_deployments <- function(path, as_sf = TRUE) {
     )
   )
 
-  ret <- dplyr::select(ret, -"deployment_start_date")
+  ret <- dplyr::select(ret, -"deployment_start_date", -"date_time_checked")
   ret <- dplyr::mutate(
     ret,
     deployment_duration_days = lubridate::interval(
@@ -88,8 +89,8 @@ make_deployments <- function(path, as_sf = TRUE) {
   )
   ret <- dplyr::relocate(
     ret,
-    dplyr::starts_with("deployment_duration"),
-    .after = "deployment_end"
+    dplyr::starts_with("deployment_"),
+    .before = "sampling_start"
   )
 
   if (inherits(ss, "sf")) {
