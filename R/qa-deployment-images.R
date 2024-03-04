@@ -257,8 +257,9 @@ merge_deployments_images <- function(deployments, image_data) {
 
   check_deployment_images(deployments, image_data)
 
-  all_data <- dplyr::left_join(
-    deployments, image_data, by = "deployment_label"
+  all_data <- dplyr::full_join(
+    deployments, image_data,
+    by = c("study_area_name", "sample_station_label", "deployment_label")
   )
 
   all_data
