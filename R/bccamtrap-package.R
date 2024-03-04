@@ -2,7 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom rlang .data
+#' @import rlang
 #' @importFrom methods setOldClass
 #' @importFrom magrittr %>%
 ## usethis namespace: end

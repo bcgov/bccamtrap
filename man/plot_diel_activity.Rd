@@ -2,7 +2,7 @@
 % Please edit documentation in R/qa-deployment-images.R
 \name{plot_diel_activity}
 \alias{plot_diel_activity}
-\title{Plot daily activity of species}
+\title{Plot daily activity of species detected by motion detection}
 \usage{
 plot_diel_activity(image_data, interactive = FALSE)
 }
@@ -15,5 +15,5 @@ plot_diel_activity(image_data, interactive = FALSE)
 a \code{ggplot2} object if \code{interactive = FALSE}, a \code{plotly} object if \code{TRUE}
 }
 \description{
-Plot daily activity of species
+Plot daily activity of species detected by motion detection
 }
