@@ -23,6 +23,7 @@ Imports:
     magrittr,
     mapview,
     methods,
+    openxlsx2,
     plotly,
     readr,
     readxl,
