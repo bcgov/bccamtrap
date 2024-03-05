@@ -40,20 +40,19 @@ write_image_data <- function(image_data, file, ..., na = "", template = system.f
     )
   }
 
-  write_to_tl_sheet(
+  write_to_spi_sheet(
     image_data,
     output_file = file,
     template = template,
+    sheet = "Sequence Image Data",
     ...
   )
 }
 
-write_to_tl_sheet <- function(image_data, output_file, template, ...) {
+write_to_spi_sheet <- function(x, output_file, template, sheet, ...) {
   wb <- openxlsx2::wb_load(template)
 
   sheets <- wb$get_sheet_names()
-
-  sheet <- "Sequence Image Data"
 
   if (!sheet %in% sheets) {
     cli::cli_abort("Sheet {.val {sheet}} not found in template")
@@ -63,21 +62,14 @@ write_to_tl_sheet <- function(image_data, output_file, template, ...) {
 
   template_df <- as.data.frame(matrix(
     NA_character_,
-    nrow(image_data),
+    nrow(x),
     length(template_colnames),
     dimnames = list(NULL, template_colnames)
   ))
 
-  default_columns <- list(
-    `Study Area Name` = image_data$study_area_name,
-    `Camera Label` = image_data$sample_station_label,
-    `Detection Date` = format(image_data$date_time, "%d-%b-%Y"),
-    `Detection Time` = format(image_data$date_time, "%H:%M:%S"),
-    `Species Code` = image_data$species,
-    `Count` = image_data$total_count_episode
-  )
+  default_columns <- get_default_columns(x, sheet)
 
-  other_columns <- eval(substitute(list(...)), envir = image_data)
+  other_columns <- eval(substitute(list(...)), envir = x)
 
   invalid_columns <- setdiff(
     c(names(default_columns), names(other_columns)),
@@ -101,5 +93,19 @@ write_to_tl_sheet <- function(image_data, output_file, template, ...) {
   )
 
   wb$save(file = output_file)
-  invisible(image_data)
+  invisible(x)
+}
+
+get_default_columns <- function(x, sheet) {
+  switch(
+    sheet,
+    "Sequence Image Data" = list(
+      `Study Area Name` = x$study_area_name,
+      `Camera Label` = x$sample_station_label,
+      `Detection Date` = format(x$date_time, "%d-%b-%Y"),
+      `Detection Time` = format(x$date_time, "%H:%M:%S"),
+      `Species Code` = x$species,
+      `Count` = x$total_count_episode
+    )
+  )
 }
