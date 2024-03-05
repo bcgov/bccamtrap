@@ -1,4 +1,27 @@
-write_timelapse <- function(image_data, file, na = "", ..., template = system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")) {
+#' Write image data to a csv or SPI submission template
+#'
+#' if output `file` specified is a csv file, this will output all of the image
+#' data to a single csv file. If it is a `xls*` file, it will populate the
+#' `Sequence Image Data` tab in a new SPI submission sheet, using a template.
+#'
+#' @param image_data image data object.
+#' @param file path to the output file
+#' @param ... extra columns in `image_data` to write out. Must be paired column
+#'   names in the form `"Destination Column" = image_data$data_column`. See examples.
+#' @param na How should missing values be written. Default empty (`""`)
+#' @param template SPI submission template to use. Default is included in the
+#'   package, accessed by
+#'   `system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")`
+#'
+#' @return input `image_data`, invisibly
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' write_image_data(image_data, "my_spi_submission.xlsx")
+#' write_image_data(image_data, "my_spi_submission.xlsx", "Surveyor" = image_data$surveyor)
+#' }
+write_image_data <- function(image_data, file, ..., na = "", template = system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")) {
   check_image_data(image_data)
   check_name(file)
 
@@ -29,22 +52,40 @@ write_timelapse <- function(image_data, file, na = "", ..., template = system.fi
 write_to_tl_sheet <- function(image_data, output_file, template, ...) {
   wb <- openxlsx2::wb_load(template)
 
-  output_data <- dplyr::mutate(
-    image_data,
-    `Study Area Name` = .data$study_area_name,
-    `Camera Label` = .data$sample_station_label,
-    `Detection Date` = format(.data$date_time, "%d-%b-%Y"),
-    `Detection Time` = format(.data$date_time, "%H:%M:%S"),
-    `Air Temperature (C)` = .data$temperature,
-    `Sequence Definition (s)` = NA_integer_,
-    `Species Code` = .data$species,
-    `Count` = .data$total_count_episode,
-    ...,
-    .keep = "none"
+  sheets <- wb$get_sheet_names()
+
+  sheet <- "Sequence Image Data"
+
+  if (!sheet %in% sheets) {
+    cli::cli_abort("Sheet {.val Sequence Image Data} not found in template")
+  }
+
+  template_colnames <- names(openxlsx2::wb_data(wb, sheet, rows = 1))
+
+  template_df <- as.data.frame(matrix(
+    NA_character_,
+    nrow(image_data),
+    length(template_colnames),
+    dimnames = list(NULL, template_colnames)
+  ))
+
+  output_data <- utils::modifyList(
+    template_df,
+    c(
+      list(
+      `Study Area Name` = image_data$study_area_name,
+      `Camera Label` = image_data$sample_station_label,
+      `Detection Date` = format(image_data$date_time, "%d-%b-%Y"),
+      `Detection Time` = format(image_data$date_time, "%H:%M:%S"),
+      `Species Code` = image_data$species,
+      `Count` = image_data$total_count_episode
+      ),
+      list(...)
+    )
   )
 
   wb$add_data(
-    "Sequence Image Data",
+    sheet,
     output_data,
     start_col = 1,
     start_row = 2,
@@ -52,4 +93,5 @@ write_to_tl_sheet <- function(image_data, output_file, template, ...) {
   )
 
   wb$save(file = output_file)
+  invisible(image_data)
 }
