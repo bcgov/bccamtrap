@@ -4,7 +4,7 @@
 \alias{write_to_spi_sheet}
 \title{Write a single data frame to SPI submission template}
 \usage{
-write_to_spi_sheet(x, file, ..., template)
+write_to_spi_sheet(x, file, ..., template = default_spi_template())
 }
 \arguments{
 \item{x}{object of class \code{sample_station_info}, \code{camera_info}, \code{cam_setup_checks}, or \code{image_data}}

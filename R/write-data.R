@@ -44,7 +44,7 @@ fill_spi_template <- function(sample_station_info,
                               camera_setup_checks,
                               image_data,
                               file,
-                              template = system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")) {
+                              template = default_spi_template()) {
 
   check_sample_station_info(sample_station_info)
   check_camera_info(camera_info)
@@ -86,7 +86,10 @@ fill_spi_template <- function(sample_station_info,
 #' write_to_spi_sheet(image_data, "my_spi_submission.xlsx", Surveyor = surveyor,
 #'    `Survey Observation Photos` = file)
 #' }
-write_to_spi_sheet <- function(x, file, ..., template) {
+write_to_spi_sheet <- function(x,
+                               file,
+                               ...,
+                               template = default_spi_template()) {
   UseMethod("write_to_spi_sheet")
 }
 
@@ -96,7 +99,10 @@ write_to_spi_sheet.default <- function(x, file, ..., template) {
 }
 
 #' @export
-write_to_spi_sheet.sample_station_info <- function(x, file, ..., template) {
+write_to_spi_sheet.sample_station_info <- function(x,
+                                                   file,
+                                                   ...,
+                                                   template = default_spi_template()) {
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -107,7 +113,10 @@ write_to_spi_sheet.sample_station_info <- function(x, file, ..., template) {
 }
 
 #' @export
-write_to_spi_sheet.camera_info <- function(x, file, ..., template) {
+write_to_spi_sheet.camera_info <- function(x,
+                                           file,
+                                           ...,
+                                           template = default_spi_template()) {
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -118,7 +127,10 @@ write_to_spi_sheet.camera_info <- function(x, file, ..., template) {
 }
 
 #' @export
-write_to_spi_sheet.cam_setup_checks <- function(x, file, ..., template) {
+write_to_spi_sheet.cam_setup_checks <- function(x,
+                                                file,
+                                                ...,
+                                                template = default_spi_template()) {
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -129,7 +141,10 @@ write_to_spi_sheet.cam_setup_checks <- function(x, file, ..., template) {
 }
 
 #' @export
-write_to_spi_sheet.image_data <- function(x, file, ..., template) {
+write_to_spi_sheet.image_data <- function(x,
+                                          file,
+                                          ...,
+                                          template = default_spi_template()) {
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -139,7 +154,11 @@ write_to_spi_sheet.image_data <- function(x, file, ..., template) {
   )
 }
 
-write_to_spi_sheet_impl_ <- function(x, output_file, sheet, ..., template = system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")) {
+write_to_spi_sheet_impl_ <- function(x,
+                                     output_file,
+                                     sheet,
+                                     ...,
+                                     template = default_spi_template()) {
   wb <- openxlsx2::wb_load(template)
 
   sheets <- wb$get_sheet_names()
@@ -227,4 +246,8 @@ lat_from_sf <- function(x) {
 lon_from_sf <- function(x) {
   x <- sf::st_transform(x, 4326)
   sf::st_coordinates(x)[,1]
+}
+
+default_spi_template <- function() {
+  system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")
 }

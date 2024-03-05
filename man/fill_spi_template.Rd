@@ -10,8 +10,7 @@ fill_spi_template(
   camera_setup_checks,
   image_data,
   file,
-  template = system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package =
-    "bccamtrap")
+  template = default_spi_template()
 )
 }
 \arguments{
