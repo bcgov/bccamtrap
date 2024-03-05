@@ -56,12 +56,12 @@ fill_spi_template <- function(sample_station_info,
     cli::cli_abort("file must be an Excel file name")
   }
 
-  lapply(
-    list(sample_station_info, camera_info, camera_setup_checks, image_data),
-    function(x) {
-      write_to_spi_sheet(x, output_file = file, template = template)
-    }
-  )
+  # First one uses the template, subsequent ones need to write to the new file
+  write_to_spi_sheet(sample_station_info, file, template = template)
+  write_to_spi_sheet(camera_info, file, template = file)
+  write_to_spi_sheet(camera_setup_checks, file, template = file)
+  write_to_spi_sheet(image_data, file, template = file)
+
   invisible(file)
 }
 
