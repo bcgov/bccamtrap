@@ -7,14 +7,15 @@
 write_to_spi_sheet(x, file, ..., template = default_spi_template())
 }
 \arguments{
-\item{x}{object of class \code{sample_station_info}, \code{camera_info}, \code{cam_setup_checks}, or \code{image_data}}
+\item{x}{object of class \code{sample_station_info}, \code{camera_info},
+\code{cam_setup_checks}, or \code{image_data}}
 
 \item{file}{path to the output file (\verb{.xls*})}
 
-\item{...}{extra columns in \code{x} to write out. Must be paired column
-names in the form \code{`Destination Column` = data_column}. If the left-hand side
-is a syntactically valid name it can be provided as-is, but if it has spaces in it
-it must be wrapped in backticks or quotes. See examples.}
+\item{...}{extra columns in \code{x} to write out. Must be paired column names in
+the form \code{`Destination Column` = data_column}. If the left-hand side
+is a syntactically valid name it can be provided as-is, but if it has
+spaces in it it must be wrapped in backticks or quotes. See examples.}
 
 \item{template}{SPI submission template to use. Default is included in the
 package, accessed by
@@ -24,7 +25,8 @@ package, accessed by
 input \code{x}, invisibly
 }
 \description{
-Write a single data frame to SPI submission template
+If you want to write to an existing file, specify the same file name in both
+the \code{file} and the \code{template} parameters.
 }
 \examples{
 \dontrun{

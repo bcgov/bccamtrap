@@ -67,15 +67,20 @@ fill_spi_template <- function(sample_station_info,
 
 #' Write a single data frame to SPI submission template
 #'
-#' @param x object of class `sample_station_info`, `camera_info`, `cam_setup_checks`, or `image_data`
+#' If you want to write to an existing file, specify the same file name in both
+#' the `file` and the `template` parameters.
+#'
+#' @param x object of class `sample_station_info`, `camera_info`,
+#'   `cam_setup_checks`, or `image_data`
 #' @param file path to the output file (`.xls*`)
-#' @param ... extra columns in `x` to write out. Must be paired column
-#'   names in the form \code{`Destination Column` = data_column}. If the left-hand side
-#'   is a syntactically valid name it can be provided as-is, but if it has spaces in it
-#'   it must be wrapped in backticks or quotes. See examples.
+#' @param ... extra columns in `x` to write out. Must be paired column names in
+#'   the form \code{`Destination Column` = data_column}. If the left-hand side
+#'   is a syntactically valid name it can be provided as-is, but if it has
+#'   spaces in it it must be wrapped in backticks or quotes. See examples.
 #' @param template SPI submission template to use. Default is included in the
 #'   package, accessed by
-#'   `system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")`
+#'   `system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package =
+#'   "bccamtrap")`
 #'
 #' @return input `x`, invisibly
 #' @export
