@@ -4,7 +4,7 @@
 \alias{read_image_data}
 \title{Read image data from a collection of csvs from TimeLapse}
 \usage{
-read_image_data(path, pattern, recursive = FALSE)
+read_image_data(path, pattern, recursive = FALSE, ...)
 }
 \arguments{
 \item{path}{path to directory of image files.}
@@ -13,6 +13,8 @@ read_image_data(path, pattern, recursive = FALSE)
 the regular expression will read. Default \code{FALSE}.}
 
 \item{recursive}{should files found within subfolders of \code{path} also be read?}
+
+\item{...}{arguments passed on to \code{\link[readr:read_delim]{readr::read_csv()}}}
 }
 \value{
 a \code{data.frame} of Timelapse image data from the files found in \code{path}

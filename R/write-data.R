@@ -40,10 +40,6 @@ write_image_data <- function(image_data, file, ..., na = "", template = system.f
     )
   }
 
-  if (!file.exists(file)) {
-    cli::cli_abort("File {.var {file}} does not exist")
-  }
-
   write_to_tl_sheet(
     image_data,
     output_file = file,
@@ -60,7 +56,7 @@ write_to_tl_sheet <- function(image_data, output_file, template, ...) {
   sheet <- "Sequence Image Data"
 
   if (!sheet %in% sheets) {
-    cli::cli_abort("Sheet {.val Sequence Image Data} not found in template")
+    cli::cli_abort("Sheet {.val {sheet}} not found in template")
   }
 
   template_colnames <- names(openxlsx2::wb_data(wb, sheet, rows = 1))
@@ -72,26 +68,28 @@ write_to_tl_sheet <- function(image_data, output_file, template, ...) {
     dimnames = list(NULL, template_colnames)
   ))
 
+  default_columns <- list(
+    `Study Area Name` = image_data$study_area_name,
+    `Camera Label` = image_data$sample_station_label,
+    `Detection Date` = format(image_data$date_time, "%d-%b-%Y"),
+    `Detection Time` = format(image_data$date_time, "%H:%M:%S"),
+    `Species Code` = image_data$species,
+    `Count` = image_data$total_count_episode
+  )
+
   other_columns <- eval(substitute(list(...)), envir = image_data)
 
-  invalid_columns <- setdiff(names(other_columns), template_colnames)
+  invalid_columns <- setdiff(
+    c(names(default_columns), names(other_columns)),
+      template_colnames
+  )
   if (length(invalid_columns) > 0) {
     cli::cli_abort("Column{?s} {.var {invalid_columns}} not in template.")
   }
 
   output_data <- utils::modifyList(
     template_df,
-    c(
-      list(
-      `Study Area Name` = image_data$study_area_name,
-      `Camera Label` = image_data$sample_station_label,
-      `Detection Date` = format(image_data$date_time, "%d-%b-%Y"),
-      `Detection Time` = format(image_data$date_time, "%H:%M:%S"),
-      `Species Code` = image_data$species,
-      `Count` = image_data$total_count_episode
-      ),
-      other_columns
-    )
+    c(default_columns, other_columns)
   )
 
   wb$add_data(
