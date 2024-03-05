@@ -21,23 +21,28 @@ test_that("write_image_data() works with csv", {
   )
 })
 
-test_that("write_image_data() works with excel template", {
+test_that("fill_spi_template() works", {
+  ss <- read_sample_station_info(test_meta_file1)
+  ci <- read_camera_info(test_meta_file1)
+  csc <- read_cam_setup_checks(test_meta_file1)
   imgs_1 <- read_image_data(test_dir_1, n_max = 1)
-  imgs_2 <- read_image_data(test_dir_2, n_max = 1)
-
   temp_dir <- withr::local_tempdir()
-
   out_xls <- file.path(temp_dir, "out1.xlsm")
-  write_image_data(imgs_1, out_xls)
+
+  fill_spi_template(ss, ci, csc, imgs_1, out_xls)
+
   expect_true(file.exists(out_xls))
+
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Sample Station Information")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Information")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Setup and Checks")
+  )
   expect_snapshot(
     openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
-  )
-
-  out_xls2 <- file.path(temp_dir, "out2.xlsm")
-  write_image_data(imgs_2, out_xls2)
-  expect_true(file.exists(out_xls2))
-  expect_snapshot(
-    openxlsx2::read_xlsx(out_xls2, sheet = "Sequence Image Data")
   )
 })

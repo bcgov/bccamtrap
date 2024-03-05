@@ -23,7 +23,11 @@ fill_spi_template(
 
 \item{image_data}{object of class \code{image_data}}
 
-\item{file}{path to the output csv file}
+\item{file}{path to the output file (\verb{.xls*})}
+
+\item{template}{SPI submission template to use. Default is included in the
+package, accessed by
+\code{system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")}}
 }
 \value{
 path to the output \code{file}

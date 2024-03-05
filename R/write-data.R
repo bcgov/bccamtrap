@@ -35,7 +35,7 @@ write_image_data <- function(image_data, file, na = "", ...) {
 #' @param camera_info object of class `camera_info`
 #' @param camera_setup_checks object of class `camera_setup_checks`
 #' @param image_data object of class `image_data`
-#' @param file path to the output csv file
+#' @inheritParams write_to_spi_sheet
 #'
 #' @return path to the output `file`
 #' @export
@@ -192,19 +192,19 @@ get_default_columns <- function(x, sheet) {
     "Sample Station Information" = list(
       `Study Area Name` = x$study_area_name,
       `Sample Station Label` = x$sample_station_label,
-      `Longitude Sample Station (DD)` = x$longitude_sample_station_dd,
-      `Latitude Sample Station (DD)` = x$latitude_sample_station_dd
+      `Longitude Sample Station (DD)` = lon_from_sf(x),
+      `Latitude Sample Station (DD)` = lat_from_sf(x)
     ),
     "Camera Information" = list(
       `Study Area Name` = x$study_area_name,
       `Camera Label` = x$camera_label,
-      `Longitude Sample Station (DD)` = x$longitude_sample_station_dd,
-      `Latitude Sample Station (DD)` = x$latitude_sample_station_dd
+      `Longitude Camera (DD)` = lon_from_sf(x),
+      `Latitude Camera (DD)` = lat_from_sf(x)
     ),
     "Camera Setup and Checks" = list(
       `Study Area Name` = x$study_area_name,
       `Camera Label` = x$camera_label,
-      `Date` = format(x$samplinge_start_date, "%d-%b-%Y"),
+      `Date` = format(x$sampling_start, "%d-%b-%Y"),
       `Visit End Date` = format(x$sampling_end, "%d-%b-%Y")
     ),
     "Sequence Image Data" = list(
@@ -217,4 +217,14 @@ get_default_columns <- function(x, sheet) {
     ),
     cli::cli_abort("Invalid sheet name: {sheet}")
   )
+}
+
+lat_from_sf <- function(x) {
+  x <- sf::st_transform(x, 4326)
+  sf::st_coordinates(x)[,2]
+}
+
+lon_from_sf <- function(x) {
+  x <- sf::st_transform(x, 4326)
+  sf::st_coordinates(x)[,1]
 }
