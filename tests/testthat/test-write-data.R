@@ -22,10 +22,10 @@ test_that("write_image_data() works with csv", {
 })
 
 test_that("fill_spi_template() works", {
-  ss <- read_sample_station_info(test_meta_file1)
-  ci <- read_camera_info(test_meta_file1)
-  csc <- read_cam_setup_checks(test_meta_file1)
-  imgs_1 <- read_image_data(test_dir_1, n_max = 1)
+  ss <- hide_names(read_sample_station_info(test_meta_file1))
+  ci <- hide_names(read_camera_info(test_meta_file1))
+  csc <- hide_names(read_cam_setup_checks(test_meta_file1))
+  imgs_1 <- hide_names(read_image_data(test_dir_1, n_max = 1))
   temp_dir <- withr::local_tempdir()
   out_xls <- file.path(temp_dir, "out1.xlsm")
 
@@ -52,10 +52,10 @@ test_that("fill_spi_template() works", {
 })
 
 test_that("write_to_spi_sheet() works", {
-  ss <- read_sample_station_info(test_meta_file2)
-  ci <- read_camera_info(test_meta_file2)
-  csc <- read_cam_setup_checks(test_meta_file2)
-  imgs <- read_image_data(test_dir_2, n_max = 1)
+  ss <- hide_names(read_sample_station_info(test_meta_file2))
+  ci <- hide_names(read_camera_info(test_meta_file2))
+  csc <- hide_names(read_cam_setup_checks(test_meta_file2))
+  imgs <- hide_names(read_image_data(test_dir_2, n_max = 1))
   temp_dir <- withr::local_tempdir()
 
   out_xls <- file.path(temp_dir, "out2.xlsm")
@@ -91,7 +91,7 @@ test_that("write_to_spi_sheet() works", {
     transform = hide_numbers
   )
 
-    write_to_spi_sheet(
+  write_to_spi_sheet(
     imgs,
     out_xls,
     Surveyor = surveyor

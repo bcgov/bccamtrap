@@ -3,20 +3,20 @@
     Code
       openxlsx2::read_xlsx(out_xls, sheet = "Sample Station Information")
     Output
-           Study Area Name Study Area Photos Sample Station Label
-      X  McKay Lake Parcel                NA                   AX
-      X  McKay Lake Parcel                NA                   BX
-      X  McKay Lake Parcel                NA                   BX
-      X  McKay Lake Parcel                NA                   CX
-      X  McKay Lake Parcel                NA                   CX
-      X  McKay Lake Parcel                NA                   CX
-      X  McKay Lake Parcel                NA                   CX
-      X  McKay Lake Parcel                NA                   CX
-      XX McKay Lake Parcel                NA                   DX
-      XX McKay Lake Parcel                NA                   DX
-      XX McKay Lake Parcel                NA                   DX
-      XX McKay Lake Parcel                NA                   DX
-      XX McKay Lake Parcel                NA                   CX
+         Study Area Name Study Area Photos Sample Station Label
+      X           Hidden                NA                   AX
+      X           Hidden                NA                   BX
+      X           Hidden                NA                   BX
+      X           Hidden                NA                   CX
+      X           Hidden                NA                   CX
+      X           Hidden                NA                   CX
+      X           Hidden                NA                   CX
+      X           Hidden                NA                   CX
+      XX          Hidden                NA                   DX
+      XX          Hidden                NA                   DX
+      XX          Hidden                NA                   DX
+      XX          Hidden                NA                   DX
+      XX          Hidden                NA                   CX
          UTM Zone Sample Station Easting Sample Station Northing Sample Station
       X                       NA                     NA                      NA
       X                       NA                     NA                      NA
@@ -79,20 +79,20 @@
     Code
       openxlsx2::read_xlsx(out_xls, sheet = "Camera Information")
     Output
-           Study Area Name Camera Label Parent Sample Station Label UTM Zone Camera
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      X  McKay Lake Parcel      EcoXXXX                          NA              NA
-      XX McKay Lake Parcel      EcoXXXX                          NA              NA
-      XX McKay Lake Parcel      EcoXXXX                          NA              NA
-      XX McKay Lake Parcel      EcoXXXX                          NA              NA
-      XX McKay Lake Parcel      EcoXXXX                          NA              NA
-      XX McKay Lake Parcel      EcoXXXX                          NA              NA
+         Study Area Name Camera Label Parent Sample Station Label UTM Zone Camera
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
          Easting Camera Northing Camera Longitude Camera (DD) Latitude Camera (DD)
       X              NA              NA             -XXX.XXXX             XX.XXXXX
       X              NA              NA             -XXX.XXXX             XX.XXXXX
@@ -141,43 +141,43 @@
     Code
       openxlsx2::read_xlsx(out_xls, sheet = "Camera Setup and Checks")
     Output
-           Study Area Name Camera Label        Date Time Visit End Date End Time
-      X  McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      X  McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      X  McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      X  McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      X  McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      X  McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      X  McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      X  McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA           <NA>       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
-      XX McKay Lake Parcel      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+         Study Area Name Camera Label        Date Time Visit End Date End Time
+      X           Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Dec-XXXX   NA    XX-May-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-May-XXXX   NA    XX-Nov-XXXX       NA
          Total Visit or Deployment Time Unit of Total Time Code Quiet Period (s)
       X                              NA                      NA               NA
       X                              NA                      NA               NA
@@ -333,17 +333,17 @@
       openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
     Output
          Study Area Name Camera Label Detection Date Detection Time
-      X       McKay Lake           AX    XX-Dec-XXXX       XX:XX:XX
-      X       McKay Lake           BX    XX-Nov-XXXX       XX:XX:XX
-      X       McKay Lake           BX    XX-Dec-XXXX       XX:XX:XX
-      X       McKay Lake           CX    XX-Dec-XXXX       XX:XX:XX
-      X       McKay Lake           CX    XX-Dec-XXXX       XX:XX:XX
-      X       McKay Lake           CX    XX-Nov-XXXX       XX:XX:XX
-      X       McKay Lake           CX    XX-Dec-XXXX       XX:XX:XX
-      X       McKay Lake           CX    XX-Dec-XXXX       XX:XX:XX
-      XX      McKay Lake           DX    XX-Nov-XXXX       XX:XX:XX
-      XX      McKay Lake           DX    XX-Nov-XXXX       XX:XX:XX
-      XX      McKay Lake           DX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden           AX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden           BX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden           BX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden           CX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden           DX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           DX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           DX    XX-Dec-XXXX       XX:XX:XX
          Air Temperature (C) Sequence Definition (s) Species Code Count
       X                   NA                      NA           NA    NA
       X                   NA                      NA           NA    NA
@@ -446,28 +446,28 @@
     Code
       openxlsx2::read_xlsx(out_xls, sheet = "Sample Station Information")
     Output
-                Study Area Name Study Area Photos Sample Station Label
-      X  Taylor River Watershed                NA                 XX_X
-      X  Taylor River Watershed                NA                 XX_X
-      X  Taylor River Watershed                NA                   XX
-      X  Taylor River Watershed                NA                 XX_X
-      X  Taylor River Watershed                NA                 XX_X
-      X  Taylor River Watershed                NA                   XX
-      X  Taylor River Watershed                NA                   XX
-      X  Taylor River Watershed                NA                   XX
-      XX Taylor River Watershed                NA                   XX
-      XX Taylor River Watershed                NA                   XX
-      XX Taylor River Watershed                NA                 XX_X
-      XX Taylor River Watershed                NA                 XX_X
-      XX Taylor River Watershed                NA                 XX_X
-      XX Taylor River Watershed                NA                   XX
-      XX Taylor River Watershed                NA                   XX
-      XX Taylor River Watershed                NA                   XX
-      XX Taylor River Watershed                NA                   XX
-      XX Taylor River Watershed                NA                 XX_X
-      XX Taylor River Watershed                NA           MOTI Cam_X
-      XX Taylor River Watershed                NA           MOTI Cam_X
-      XX Taylor River Watershed                NA           MOTI Cam_X
+         Study Area Name Study Area Photos Sample Station Label
+      X           Hidden                NA                 XX_X
+      X           Hidden                NA                 XX_X
+      X           Hidden                NA                   XX
+      X           Hidden                NA                 XX_X
+      X           Hidden                NA                 XX_X
+      X           Hidden                NA                   XX
+      X           Hidden                NA                   XX
+      X           Hidden                NA                   XX
+      XX          Hidden                NA                   XX
+      XX          Hidden                NA                   XX
+      XX          Hidden                NA                 XX_X
+      XX          Hidden                NA                 XX_X
+      XX          Hidden                NA                 XX_X
+      XX          Hidden                NA                   XX
+      XX          Hidden                NA                   XX
+      XX          Hidden                NA                   XX
+      XX          Hidden                NA                   XX
+      XX          Hidden                NA                 XX_X
+      XX          Hidden                NA           MOTI Cam_X
+      XX          Hidden                NA           MOTI Cam_X
+      XX          Hidden                NA           MOTI Cam_X
          UTM Zone Sample Station Easting Sample Station Northing Sample Station
       X                       NA                     NA                      NA
       X                       NA                     NA                      NA
@@ -562,72 +562,72 @@
     Code
       openxlsx2::read_xlsx(out_xls, sheet = "Camera Information")
     Output
-                Study Area Name Camera Label Parent Sample Station Label
-      X  Taylor River Watershed        UBC X                          NA
-      X  Taylor River Watershed        UBC X                          NA
-      X  Taylor River Watershed      EcoXXXX                          NA
-      X  Taylor River Watershed      EcoXXXX                          NA
-      X  Taylor River Watershed      EcoXXXX                          NA
-      X  Taylor River Watershed      EcoXXXX                          NA
-      X  Taylor River Watershed      EcoXXXX                          NA
-      X  Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed        UBC X                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed        UBC X                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed        UBC X                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-      XX Taylor River Watershed      EcoXXXX                          NA
-         UTM Zone Camera Easting Camera Northing Camera Longitude Camera (DD)
-      X               NA             NA              NA             -XXX.XXXX
-      X               NA             NA              NA             -XXX.XXXX
-      X               NA             NA              NA             -XXX.XXXX
-      X               NA             NA              NA             -XXX.XXXX
-      X               NA             NA              NA             -XXX.XXXX
-      X               NA             NA              NA             -XXX.XXXX
-      X               NA             NA              NA             -XXX.XXXX
-      X               NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-      XX              NA             NA              NA             -XXX.XXXX
-         Latitude Camera (DD) Make of Camera Code Model of Camera Camera Comments
-      X              XX.XXXXX                  NA              NA              NA
-      X              XX.XXXXX                  NA              NA              NA
-      X              XX.XXXXX                  NA              NA              NA
-      X              XX.XXXXX                  NA              NA              NA
-      X              XX.XXXXX                  NA              NA              NA
-      X              XX.XXXXX                  NA              NA              NA
-      X              XX.XXXXX                  NA              NA              NA
-      X              XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
-      XX             XX.XXXXX                  NA              NA              NA
+         Study Area Name Camera Label Parent Sample Station Label UTM Zone Camera
+      X           Hidden        UBC X                          NA              NA
+      X           Hidden        UBC X                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      X           Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden        UBC X                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden        UBC X                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden        UBC X                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+      XX          Hidden      EcoXXXX                          NA              NA
+         Easting Camera Northing Camera Longitude Camera (DD) Latitude Camera (DD)
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      X              NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+      XX             NA              NA             -XXX.XXXX             XX.XXXXX
+         Make of Camera Code Model of Camera Camera Comments
+      X                   NA              NA              NA
+      X                   NA              NA              NA
+      X                   NA              NA              NA
+      X                   NA              NA              NA
+      X                   NA              NA              NA
+      X                   NA              NA              NA
+      X                   NA              NA              NA
+      X                   NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
+      XX                  NA              NA              NA
          Site Description Comments Site Description Date
       X                         NA                    NA
       X                         NA                    NA
@@ -656,50 +656,50 @@
     Code
       openxlsx2::read_xlsx(out_xls, sheet = "Camera Setup and Checks")
     Output
-                Study Area Name Camera Label        Date Time Visit End Date End Time
-      X  Taylor River Watershed        UBC X XX-Nov-XXXX   NA           <NA>       NA
-      X  Taylor River Watershed        UBC X XX-Nov-XXXX   NA           <NA>       NA
-      X  Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      X  Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      X  Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      X  Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      X  Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      X  Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jul-XXXX   NA    XX-Oct-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jul-XXXX   NA    XX-Oct-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
-      XX Taylor River Watershed      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
-      XX Taylor River Watershed        UBC X XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
+         Study Area Name Camera Label        Date Time Visit End Date End Time
+      X           Hidden        UBC X XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden        UBC X XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      X           Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA           <NA>       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden        UBC X XX-Nov-XXXX   NA    XX-Jun-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Nov-XXXX   NA    XX-Jul-XXXX       NA
+      XX          Hidden        UBC X XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden        UBC X XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jul-XXXX   NA    XX-Oct-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jul-XXXX   NA    XX-Oct-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
+      XX          Hidden        UBC X XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
+      XX          Hidden        UBC X XX-Jun-XXXX   NA    XX-Oct-XXXX       NA
+      XX          Hidden      EcoXXXX XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
+      XX          Hidden        UBC X XX-Jun-XXXX   NA    XX-Nov-XXXX       NA
          Total Visit or Deployment Time Unit of Total Time Code Quiet Period (s)
       X                              NA                      NA               NA
       X                              NA                      NA               NA
@@ -883,29 +883,29 @@
       openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
     Output
          Study Area Name Camera Label Detection Date Detection Time
-      X     Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      X     Taylor River         XX_X    XX-Apr-XXXX       XX:XX:XX
-      X     Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      X     Taylor River         XX_X    XX-Feb-XXXX       XX:XX:XX
-      X     Taylor River         XX_X    XX-May-XXXX       XX:XX:XX
-      X     Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
-      X     Taylor River           XX    XX-Jan-XXXX       XX:XX:XX
-      X     Taylor River           XX    XX-Feb-XXXX       XX:XX:XX
-      XX    Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River         XX_X    XX-Feb-XXXX       XX:XX:XX
-      XX    Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Jan-XXXX       XX:XX:XX
-      XX    Taylor River           XX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden         XX_X    XX-Apr-XXXX       XX:XX:XX
+      X           Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden         XX_X    XX-Feb-XXXX       XX:XX:XX
+      X           Hidden         XX_X    XX-May-XXXX       XX:XX:XX
+      X           Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden           XX    XX-Jan-XXXX       XX:XX:XX
+      X           Hidden           XX    XX-Feb-XXXX       XX:XX:XX
+      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden         XX_X    XX-Feb-XXXX       XX:XX:XX
+      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Jan-XXXX       XX:XX:XX
+      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
          Air Temperature (C) Sequence Definition (s) Species Code Count
       X                   NA                      NA           NA     X
       X                   NA                      NA           NA    NA
@@ -1074,28 +1074,28 @@
       XX                        NA                  NA                        NA
       XX                        NA                  NA                        NA
       XX                        NA                  NA                        NA
-                Surveyor Comments Add your new column here
-      X  Alysia Boudreau       NA                       NA
-      X  Alysia Boudreau       NA                       NA
-      X  Alysia Boudreau       NA                       NA
-      X  Alysia Boudreau       NA                       NA
-      X  Alysia Boudreau       NA                       NA
-      X  Alysia Boudreau       NA                       NA
-      X  Alysia Boudreau       NA                       NA
-      X  Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
-      XX Alysia Boudreau       NA                       NA
+         Surveyor Comments Add your new column here
+      X    Hidden       NA                       NA
+      X    Hidden       NA                       NA
+      X    Hidden       NA                       NA
+      X    Hidden       NA                       NA
+      X    Hidden       NA                       NA
+      X    Hidden       NA                       NA
+      X    Hidden       NA                       NA
+      X    Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
+      XX   Hidden       NA                       NA
 
