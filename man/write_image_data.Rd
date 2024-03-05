@@ -19,7 +19,9 @@ write_image_data(
 \item{file}{path to the output file}
 
 \item{...}{extra columns in \code{image_data} to write out. Must be paired column
-names in the form \code{"Destination Column" = image_data$data_column}. See examples.}
+names in the form \code{`Destination Column` = data_column}. If the left-hand side
+is a syntactically valid name it can be provided as-is, but if it has spaces in it
+it must be wrapped in backticks or quotes. See examples.}
 
 \item{na}{How should missing values be written. Default empty (\code{""})}
 
@@ -38,6 +40,7 @@ data to a single csv file. If it is a \verb{xls*} file, it will populate the
 \examples{
 \dontrun{
 write_image_data(image_data, "my_spi_submission.xlsx")
-write_image_data(image_data, "my_spi_submission.xlsx", "Surveyor" = image_data$surveyor)
+write_image_data(image_data, "my_spi_submission.xlsx", Surveyor = surveyor,
+   `Survey Observation Photos` = file)
 }
 }

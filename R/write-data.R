@@ -7,7 +7,9 @@
 #' @param image_data image data object.
 #' @param file path to the output file
 #' @param ... extra columns in `image_data` to write out. Must be paired column
-#'   names in the form `"Destination Column" = image_data$data_column`. See examples.
+#'   names in the form \code{`Destination Column` = data_column}. If the left-hand side
+#'   is a syntactically valid name it can be provided as-is, but if it has spaces in it
+#'   it must be wrapped in backticks or quotes. See examples.
 #' @param na How should missing values be written. Default empty (`""`)
 #' @param template SPI submission template to use. Default is included in the
 #'   package, accessed by
@@ -19,7 +21,8 @@
 #' @examples
 #' \dontrun{
 #' write_image_data(image_data, "my_spi_submission.xlsx")
-#' write_image_data(image_data, "my_spi_submission.xlsx", "Surveyor" = image_data$surveyor)
+#' write_image_data(image_data, "my_spi_submission.xlsx", Surveyor = surveyor,
+#'    `Survey Observation Photos` = file)
 #' }
 write_image_data <- function(image_data, file, ..., na = "", template = system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")) {
   check_image_data(image_data)
@@ -69,6 +72,13 @@ write_to_tl_sheet <- function(image_data, output_file, template, ...) {
     dimnames = list(NULL, template_colnames)
   ))
 
+  other_columns <- eval(substitute(list(...)), envir = image_data)
+
+  invalid_columns <- setdiff(names(other_columns), template_colnames)
+  if (length(invalid_columns) > 0) {
+    cli::cli_abort("Column{?s} {.var {invalid_columns}} not in template.")
+  }
+
   output_data <- utils::modifyList(
     template_df,
     c(
@@ -80,7 +90,7 @@ write_to_tl_sheet <- function(image_data, output_file, template, ...) {
       `Species Code` = image_data$species,
       `Count` = image_data$total_count_episode
       ),
-      list(...)
+      other_columns
     )
   )
 
