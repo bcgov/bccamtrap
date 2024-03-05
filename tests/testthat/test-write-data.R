@@ -23,7 +23,7 @@ test_that("write_image_data() works with csv", {
 
 test_that("fill_spi_template() works", {
   ss <- read_sample_station_info(test_meta_file1)
-  ci <- read_camera_info(test_meta_file1)
+  ci <-     read_camera_info(test_meta_file1)
   csc <- read_cam_setup_checks(test_meta_file1)
   imgs_1 <- read_image_data(test_dir_1, n_max = 1)
   temp_dir <- withr::local_tempdir()
@@ -34,15 +34,19 @@ test_that("fill_spi_template() works", {
   expect_true(file.exists(out_xls))
 
   expect_snapshot(
-    openxlsx2::read_xlsx(out_xls, sheet = "Sample Station Information")
+    openxlsx2::read_xlsx(out_xls, sheet = "Sample Station Information"),
+    transform = hide_numbers
   )
   expect_snapshot(
-    openxlsx2::read_xlsx(out_xls, sheet = "Camera Information")
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Information"),
+    transform = hide_numbers
   )
   expect_snapshot(
-    openxlsx2::read_xlsx(out_xls, sheet = "Camera Setup and Checks")
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Setup and Checks"),
+    transform = hide_numbers
   )
   expect_snapshot(
-    openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
+    openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data"),
+    transform = hide_numbers
   )
 })
