@@ -2,40 +2,25 @@
 % Please edit documentation in R/write-data.R
 \name{write_image_data}
 \alias{write_image_data}
-\title{Write image data to a csv or SPI submission template}
+\title{Write image data to a csv file}
 \usage{
-write_image_data(
-  image_data,
-  file,
-  ...,
-  na = "",
-  template = system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package =
-    "bccamtrap")
-)
+write_image_data(image_data, file, na = "", ...)
 }
 \arguments{
 \item{image_data}{image data object.}
 
-\item{file}{path to the output file}
-
-\item{...}{extra columns in \code{image_data} to write out. Must be paired column
-names in the form \code{`Destination Column` = data_column}. If the left-hand side
-is a syntactically valid name it can be provided as-is, but if it has spaces in it
-it must be wrapped in backticks or quotes. See examples.}
+\item{file}{path to the output csv file}
 
 \item{na}{How should missing values be written. Default empty (\code{""})}
 
-\item{template}{SPI submission template to use. Default is included in the
-package, accessed by
-\code{system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")}}
+\item{...}{other parameters passed on to \code{\link[readr:write_delim]{readr::write_csv()}}}
 }
 \value{
 input \code{image_data}, invisibly
 }
 \description{
-if output \code{file} specified is a csv file, this will output all of the image
-data to a single csv file. If it is a \verb{xls*} file, it will populate the
-\verb{Sequence Image Data} tab in a new SPI submission sheet, using a template.
+This is a very thin wrapper around \code{\link[readr:write_delim]{readr::write_csv()}}. You can use that
+function directly for more control
 }
 \examples{
 \dontrun{
