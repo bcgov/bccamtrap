@@ -52,14 +52,52 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
     col_types = col_types,
     ...
   )
-  ss_info <- dplyr::mutate(ss_info, set_date = excel_to_date(.data$set_date))
+  ss_info <- dplyr::mutate(
+    ss_info,
+    set_date = excel_to_date(.data$set_date)
+  )
 
-  # Read and join relevant info from Camera Information tab
-
+  ss_info <- as.sample_station_info(ss_info)
   if (as_sf) {
     ss_info <- to_sf(ss_info)
   }
-  as.sample_station_info(ss_info)
+  ss_info
+}
+
+#' Read the "Camera Information" tab from the RISC worksheet.
+#'
+#' This will read in the camera information from a RISC worksheet following the
+#' 'v20230518' template
+#'
+#' @inheritParams read_project_info
+#' @param as_sf should the data be returned as an `sf` object of the station locations? Default `TRUE`
+#'
+#' @return a `data.frame` of station information, as an `sf` object if specified.
+#' @export
+read_camera_info <- function(path, as_sf = TRUE, ...) {
+
+  sheet <- "Camera Information"
+  header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 0)
+  col_types <- camera_info_fields(header)
+
+  cam_info <- read_sheet_impl_(
+    path,
+    sheet = sheet,
+    col_types = col_types,
+    ...
+  )
+
+  cam_info <- dplyr::mutate(
+    cam_info,
+    site_description_date = excel_to_date(.data$site_description_date)
+  )
+
+  cam_info <- as.camera_info(cam_info)
+
+  if (as_sf) {
+    cam_info <- to_sf(cam_info)
+  }
+  cam_info
 }
 
 #' Read the "Camera Setup and Checks" tab from the RISC worksheet.
@@ -133,6 +171,26 @@ cam_setup_checks_fields <- function(x) {
     timelapse_template_used = "text",
     data_qc_complete = "text",
     general_sampling_comments = "text"
+  )
+
+  col_types[intersect(names(col_types), names(x))]
+}
+
+camera_info_fields <- function(x) {
+  col_types <- c(
+    study_area_name = "text",
+    parent_sample_station_label = "text",
+    camera_label = "text",
+    utm_zone_camera = "numeric",
+    easting_camera = "numeric",
+    northing_camera = "numeric",
+    latitude_camera_dd = "numeric",
+    longitude_camera_dd = "numeric",
+    make_of_camera_code = "text",
+    model_of_camera = "text",
+    camera_comments = "text",
+    site_description_comments = "text",
+    site_description_date = "text"
   )
 
   col_types[intersect(names(col_types), names(x))]
@@ -246,29 +304,64 @@ combine_date_time <- function(dt, tm) {
   lubridate::ymd_hms(paste(as.character(dt), time_char), quiet = TRUE)
 }
 
+#' Convert Sample Station Info or Camera Info to a spatial `sf` boject
+#' #'
+#' @param x Object of class `sample_station_info` or `camera_info`
+#' @param ... arguments passed on to [sf::st_as_sf()]
+#'
+#' @return input as a an `sf` object
+#' @export
 to_sf <- function(x, ...) {
+  UseMethod("to_sf")
+}
+
+#' @export
+to_sf.default <- function(x, ...) {
+  cli::cli_abort("No method defined for object of class {class(x)}")
+}
+
+#' @export
+to_sf.camera_info <- function(x, ...) {
+  out <- to_sf_impl_(x, type = "camera", ...)
+  as.camera_info(out)
+}
+
+#' @export
+to_sf.sample_station_info <- function(x, ...) {
+  out <- to_sf_impl_(x, type = "sample_station", ...)
+  as.sample_station_info(out)
+}
+
+to_sf_impl_ <- function(x, type = c("camera", "sample_station"), ...) {
+
+  type <- match.arg(type)
+  zone_col <- paste0("utm_zone_", type)
+  easting_col <- paste0("easting_", type)
+  northing_col <- paste0("northing_", type)
+  lat_col <- paste0("latitude_", type, "_dd")
+  lon_col <- paste0("longitude_", type, "_dd")
 
   # Make a data.frame of rows with utm data, and another with lat lons
   x_utm <- dplyr::filter(
     x,
-    !is.na(.data$utm_zone_sample_station),
-    !is.na(.data$easting_sample_station),
-    !is.na(.data$northing_sample_station)
+    !is.na(.data[[zone_col]]),
+    !is.na(.data[[easting_col]]),
+    !is.na(.data[[northing_col]])
   )
 
   x_ll <- dplyr::filter(
     x,
-    !is.na(.data$latitude_sample_station_dd),
-    !is.na(.data$longitude_sample_station_dd)
+    !is.na(.data[[lat_col]]),
+    !is.na(.data[[lon_col]])
   )
 
   # Convert the utms to sf
   if (nrow(x_utm) > 0) {
     x_utm <- bcmaps::utm_convert(
       x_utm,
-      easting = "easting_sample_station",
-      northing = "northing_sample_station",
-      zone = "utm_zone_sample_station",
+      easting = easting_col,
+      northing = northing_col,
+      zone = zone_col,
       crs = "EPSG:4326",
       xycols = FALSE
     )
@@ -278,9 +371,10 @@ to_sf <- function(x, ...) {
   if (nrow(x_ll) > 0) {
     x_ll <- sf::st_as_sf(
       x_ll,
-      coords = c("longitude_sample_station_dd", "latitude_sample_station_dd"),
+      coords = c(lon_col, lat_col),
       crs = "EPSG:4326",
-      remove = FALSE
+      remove = FALSE,
+      ...
     )
   }
 

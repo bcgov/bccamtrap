@@ -6,6 +6,10 @@ as.sample_station_info <- function(x, ...) {
   structure(x, class = c("sample_station_info", class(x)), ...)
 }
 
+as.camera_info <- function(x, ...) {
+  structure(x, class = c("camera_info", class(x)), ...)
+}
+
 as.cam_setup_checks <- function(x, ...) {
   structure(x, class = c("cam_setup_checks", class(x)), ...)
 }
@@ -35,6 +39,14 @@ check_project_info <- function(x, arg = rlang::caller_arg(x), call = rlang::call
 check_sample_station_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
   if (!inherits(x, "sample_station_info")) {
     cli::cli_abort("{.arg {arg}} must be a 'sample_station_info' object, a result of {.fn read_sample_station_info}",
+                   arg = arg,
+                   call = call)
+  }
+}
+
+check_camera_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+  if (!inherits(x, "camera_info")) {
+    cli::cli_abort("{.arg {arg}} must be a 'camera_info' object, a result of {.fn read_camera_info}",
                    arg = arg,
                    call = call)
   }

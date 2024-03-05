@@ -4,10 +4,11 @@
 #' @param pattern an optional regular expression. Only file names which match
 #'   the regular expression will read. Default `FALSE`.
 #' @param recursive should files found within subfolders of `path` also be read?
+#' @param ... arguments passed on to [readr::read_csv()]
 #'
 #' @return a `data.frame` of Timelapse image data from the files found in `path`
 #' @export
-read_image_data <- function(path, pattern, recursive = FALSE) {
+read_image_data <- function(path, pattern, recursive = FALSE, ...) {
   if (!dir.exists(path)) {
     cli::cli_abort("Directory {.path {path}} does not exist")
   }
@@ -29,7 +30,7 @@ read_image_data <- function(path, pattern, recursive = FALSE) {
 
   template <- check_template(csvfiles)
 
-  df_list <- lapply(csvfiles, read_one_image_csv, template = template)
+  df_list <- lapply(csvfiles, read_one_image_csv, template = template, ...)
 
   df <- dplyr::bind_rows(df_list)
   df <- janitor::clean_names(df)
@@ -60,10 +61,10 @@ check_template <- function(files) {
   template
 }
 
-read_one_image_csv <- function(path, template) {
+read_one_image_csv <- function(path, template, ...) {
     col_names <- strsplit(readLines(path, n = 1), ",")[[1]]
     col_spec <- image_file_cols(template, col_names)
-    df <- readr::read_csv(path, col_types = col_spec, name_repair = "unique_quiet")
+    df <- readr::read_csv(path, col_types = col_spec, name_repair = "unique_quiet", ...)
     reconcile_date_time_fields(df, path)
 }
 

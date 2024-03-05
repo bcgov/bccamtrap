@@ -3,7 +3,7 @@
     Code
       summary(ss1)
     Output
-      + McKay Lake Parcel --+
+      + Hidden -------------+
       |                     |
       |   Sample Stations   |
       |                     |
@@ -39,7 +39,7 @@
     Code
       summary(ss2)
     Output
-      + Taylor River Wat... +
+      + Hidden -------------+
       |                     |
       |   Sample Stations   |
       |                     |
@@ -75,7 +75,7 @@
     Code
       summary(ss1)
     Output
-      + McKay Lake Parcel --+
+      + Hidden -------------+
       |                     |
       |   Sample Stations   |
       |                     |
@@ -111,7 +111,7 @@
     Code
       summary(ss2)
     Output
-      + Taylor River Wat... +
+      + Hidden -------------+
       |                     |
       |   Sample Stations   |
       |                     |
@@ -147,7 +147,7 @@
     Code
       summary(sessions1)
     Output
-      + McKay Lake P... +
+      + Hidden ---------+
       |                 |
       |   Deployments   |
       |                 |
@@ -168,7 +168,7 @@
     Code
       summary(sessions2)
     Output
-      + Taylor River... +
+      + Hidden ---------+
       |                 |
       |   Deployments   |
       |                 |
@@ -188,7 +188,7 @@
     Code
       summary(id1)
     Output
-      + McKay Lake -------+
+      + Hidden -----------+
       |                   |
       |   Image summary   |
       |                   |
@@ -221,7 +221,7 @@
     Code
       summary(id2)
     Output
-      + Taylor River -----+
+      + Hidden -----------+
       |                   |
       |   Image summary   |
       |                   |
