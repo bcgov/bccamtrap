@@ -333,17 +333,17 @@
       openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
     Output
          Study Area Name Camera Label Detection Date Detection Time
-      X           Hidden           AX    XX-Dec-XXXX       XX:XX:XX
-      X           Hidden           BX    XX-Nov-XXXX       XX:XX:XX
-      X           Hidden           BX    XX-Dec-XXXX       XX:XX:XX
-      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
-      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
-      X           Hidden           CX    XX-Nov-XXXX       XX:XX:XX
-      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
-      X           Hidden           CX    XX-Dec-XXXX       XX:XX:XX
-      XX          Hidden           DX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           DX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           DX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
          Air Temperature (C) Sequence Definition (s) Species Code Count
       X                   NA                      NA           NA    NA
       X                   NA                      NA           NA    NA
@@ -880,32 +880,40 @@
 ---
 
     Code
+      write_to_spi_sheet(imgs, out_xls, Surveyor = surveyor)
+    Condition
+      Error in `write_to_spi_sheet()`:
+      ! `camera_label` must be present in `x`. Use `merge_deployment_images()`
+
+---
+
+    Code
       openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
     Output
          Study Area Name Camera Label Detection Date Detection Time
-      X           Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      X           Hidden         XX_X    XX-Apr-XXXX       XX:XX:XX
-      X           Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      X           Hidden         XX_X    XX-Feb-XXXX       XX:XX:XX
-      X           Hidden         XX_X    XX-May-XXXX       XX:XX:XX
-      X           Hidden           XX    XX-Nov-XXXX       XX:XX:XX
-      X           Hidden           XX    XX-Jan-XXXX       XX:XX:XX
-      X           Hidden           XX    XX-Feb-XXXX       XX:XX:XX
-      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden         XX_X    XX-Feb-XXXX       XX:XX:XX
-      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden         XX_X    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Jan-XXXX       XX:XX:XX
-      XX          Hidden           XX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden        UBC X    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden        UBC X    XX-Apr-XXXX       XX:XX:XX
+      X           Hidden        UBC X    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden        UBC X    XX-Feb-XXXX       XX:XX:XX
+      X           Hidden        UBC X    XX-May-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Jan-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Feb-XXXX       XX:XX:XX
+      XX            <NA>         <NA>    XX-Nov-XXXX       XX:XX:XX
+      XX            <NA>         <NA>    XX-Feb-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden        UBC X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX            <NA>         <NA>    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden        UBC X    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX            <NA>         <NA>    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden        UBC X    XX-Jan-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
          Air Temperature (C) Sequence Definition (s) Species Code Count
       X                   NA                      NA           NA     X
       X                   NA                      NA           NA    NA

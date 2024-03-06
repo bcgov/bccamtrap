@@ -91,6 +91,18 @@ test_that("write_to_spi_sheet() works", {
     transform = hide_numbers
   )
 
+  expect_snapshot(
+    write_to_spi_sheet(
+      imgs,
+      out_xls,
+      Surveyor = surveyor
+    ),
+    error = TRUE
+  )
+
+  deployments <- hide_names(make_deployments(test_meta_file2))
+  imgs <- merge_deployments_images(deployments, imgs)
+
   write_to_spi_sheet(
     imgs,
     out_xls,

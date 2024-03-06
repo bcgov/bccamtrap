@@ -56,6 +56,14 @@ fill_spi_template <- function(sample_station_info,
     cli::cli_abort("file must be an Excel file name")
   }
 
+  if (!"camera_label" %in% names(image_data)) {
+    image_data <- dplyr::left_join(
+      image_data,
+      dplyr::select(camera_setup_checks, "deployment_label", "camera_label"),
+      by = "deployment_label"
+    )
+  }
+
   # First one uses the template, subsequent ones need to write to the new file
   write_to_spi_sheet(sample_station_info, file, template = template)
   write_to_spi_sheet(camera_info, file, template = file)
@@ -150,6 +158,11 @@ write_to_spi_sheet.image_data <- function(x,
                                           file,
                                           ...,
                                           template = default_spi_template()) {
+  if (!"camera_label" %in% names(x)) {
+    cli::cli_abort("{.var camera_label} must be present in {.var x}.
+                   Use {.fn merge_deployment_images}")
+  }
+
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -233,7 +246,7 @@ get_default_columns <- function(x, sheet) {
     ),
     "Sequence Image Data" = list(
       `Study Area Name` = x$study_area_name,
-      `Camera Label` = x$sample_station_label, # TODO: Join cam setup and checks to get camera label
+      `Camera Label` = x$camera_label,
       `Detection Date` = format(x$date_time, "%d-%b-%Y"),
       `Detection Time` = format(x$date_time, "%H:%M:%S"),
       `Species Code` = x$species,

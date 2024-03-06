@@ -15,7 +15,11 @@ as.cam_setup_checks <- function(x, ...) {
 }
 
 as.deployments <- function(x, ...) {
-  structure(x, class = c("deployments", class(x)), ...)
+  structure(
+    x,
+    class = c("deployments", setdiff(class(x), "cam_setup_checks")),
+    ...
+  )
 }
 
 as.image_data <- function(x, ...) {
@@ -25,6 +29,7 @@ as.image_data <- function(x, ...) {
 # Define classes as a subclass of sf so that it works
 # with S4 methods for sf (eg mapview)
 methods::setOldClass(c("deployments", "sf"))
+methods::setOldClass(c("camera_info", "sf"))
 methods::setOldClass(c("sample_station_info", "sf"))
 
 ## Checkers
