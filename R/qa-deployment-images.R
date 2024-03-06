@@ -79,7 +79,7 @@ process_invalid_deployments <- function(deployments) {
 
   invalid_rows <- is.na(deployments$deployment_end) & !deployments$deployment_duration_valid
 
-  deployments$deployment_end_date[invalid_rows] <- as.Date(deployments$date_time_checked)[invalid_rows]
+  deployments$deployment_end_date[invalid_rows] <- as.Date(deployments$deployment_end)[invalid_rows]
   deployments$valid_deployment <- ifelse(deployments$deployment_duration_valid, "Valid", "Invalid")
   deployments
 }
@@ -156,7 +156,7 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
 
   img_data_grouped <- image_data %>%
     dplyr::mutate(img_date = as.Date(.data$date_time)) %>%
-    dplyr::group_by(.data$deployment_label, .data$img_date) %>%
+    dplyr::group_by(.data$deployment_label, .data$img_date, .data$lens_obscured) %>%
     dplyr::summarise()
 
   p <- ggplot2::ggplot() +
@@ -164,10 +164,10 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
       data = img_data_grouped,
       ggplot2::aes(
         x = .data$img_date,
-        y = .data$deployment_label
+        y = .data$deployment_label,
+        colour = .data$lens_obscured
       ),
       shape = pt_symbol,
-      colour = "red",
       size = 3
     ) +
     ggplot2::geom_linerange(
@@ -176,17 +176,18 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
         xmin = .data$deployment_start_date,
         xmax = .data$deployment_end_date,
         y = .data$deployment_label,
-        colour = .data$valid_deployment
+        alpha = .data$valid_deployment
       ),
-      linewidth = 1.1,
+      linewidth = 0.8,
       position = ggplot2::position_dodge(width = 0.5)
     ) +
-    ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightpink")) +
+    ggplot2::scale_colour_manual(values = c("TRUE" = "#f7941d", "FALSE" = "#400456")) +
+    ggplot2::scale_alpha_manual(values = c("Valid" = 1, "Invalid" = 0.4)) +
     ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
       title = paste0("Camera Deployments and detections at ", deployments$study_area_name[1]),
-      x = "Date", y = "Deployment Label", colour = "Valid Deployment"
+      x = "Date", y = "Deployment Label" , colour = "Lens Obscured", alpha = "Valid Deployment"
     )
 
   if (interactive) {
@@ -199,6 +200,14 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
     p$x$data[[1]]$textfont$color <- p$x$data[[1]]$marker$color
     p$x$data[[1]]$textfont$opacity <- p$x$data[[1]]$marker$opacity
     p$x$data[[1]]$marker <- NULL
+
+    p$x$data[[2]]$mode <- "text"
+    p$x$data[[2]]$hovertext <- p$x$data[[2]]$text
+    p$x$data[[2]]$text <- pt_symbol
+    p$x$data[[2]]$textfont$size <- p$x$data[[2]]$marker$size
+    p$x$data[[2]]$textfont$color <- p$x$data[[2]]$marker$color
+    p$x$data[[2]]$textfont$opacity <- p$x$data[[2]]$marker$opacity
+    p$x$data[[2]]$marker <- NULL
   }
   p
 }
@@ -266,11 +275,19 @@ merge_deployments_images <- function(deployments, image_data, as_sf = TRUE) {
 
   check_deployment_images(deployments, image_data)
 
+  if (!as_sf) {
+    deployments <- sf::st_drop_geometry(deployments)
+  }
+
   all_data <- dplyr::left_join(
     dplyr::select(image_data, -"study_area_name", -"sample_station_label"),
     deployments,
     by = "deployment_label"
   )
+
+  if (as_sf) {
+    sf::st_geometry(all_data) <- "geometry"
+  }
 
   class(all_data) <- setdiff(class(all_data), "deployments")
   all_data
