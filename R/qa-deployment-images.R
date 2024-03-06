@@ -59,8 +59,8 @@ plot_deployments <- function(deployments,
     ggplot2::theme_bw() +
     ggplot2::labs(
       title = paste0("Camera Deployments at ", deployments$study_area_name[1]),
-      x = "Date", y = "Sample Station", size = "Valid Session", shape = "Valid Session",
-      colour = "Valid Session"
+      x = "Date", y = "Sample Station", size = "Valid Deployment", shape = "Valid Deployment",
+      colour = "Valid Deployment"
     )
 
   if (interactive) {
@@ -84,10 +84,10 @@ process_invalid_deployments <- function(deployments) {
   deployments
 }
 
-#' Check for mismatched deployment labels in session data and image data
+#' Check for mismatched deployment labels in deployment data and image data
 #'
 #' This function is mainly called for its messaging - alerting you to deployment labels that are
-#' in the sample session data but not in the image data, and vice versa.
+#' in the sample deployment data but not in the image data, and vice versa.
 #'
 #' @inheritParams plot_deployment_detections
 #'
@@ -186,7 +186,7 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
     ggplot2::theme_bw() +
     ggplot2::labs(
       title = paste0("Camera Deployments and detections at ", deployments$study_area_name[1]),
-      x = "Date", y = "Deployment Label", colour = "Valid Session"
+      x = "Date", y = "Deployment Label", colour = "Valid Deployment"
     )
 
   if (interactive) {
