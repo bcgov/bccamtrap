@@ -6,12 +6,20 @@ as.sample_station_info <- function(x, ...) {
   structure(x, class = c("sample_station_info", class(x)), ...)
 }
 
+as.camera_info <- function(x, ...) {
+  structure(x, class = c("camera_info", class(x)), ...)
+}
+
 as.cam_setup_checks <- function(x, ...) {
   structure(x, class = c("cam_setup_checks", class(x)), ...)
 }
 
 as.deployments <- function(x, ...) {
-  structure(x, class = c("deployments", class(x)), ...)
+  structure(
+    x,
+    class = c("deployments", setdiff(class(x), "cam_setup_checks")),
+    ...
+  )
 }
 
 as.image_data <- function(x, ...) {
@@ -21,6 +29,7 @@ as.image_data <- function(x, ...) {
 # Define classes as a subclass of sf so that it works
 # with S4 methods for sf (eg mapview)
 methods::setOldClass(c("deployments", "sf"))
+methods::setOldClass(c("camera_info", "sf"))
 methods::setOldClass(c("sample_station_info", "sf"))
 
 ## Checkers
@@ -35,6 +44,14 @@ check_project_info <- function(x, arg = rlang::caller_arg(x), call = rlang::call
 check_sample_station_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
   if (!inherits(x, "sample_station_info")) {
     cli::cli_abort("{.arg {arg}} must be a 'sample_station_info' object, a result of {.fn read_sample_station_info}",
+                   arg = arg,
+                   call = call)
+  }
+}
+
+check_camera_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+  if (!inherits(x, "camera_info")) {
+    cli::cli_abort("{.arg {arg}} must be a 'camera_info' object, a result of {.fn read_camera_info}",
                    arg = arg,
                    call = call)
   }

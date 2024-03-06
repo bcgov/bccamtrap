@@ -103,9 +103,12 @@ print.sample_station_info <- function(x, ...) {
     select(-contains(c("utm", "easting", "northing", "dd")))
   print(as_tibble(x))
 }
-print.deployments <- print.sample_station_info
+
+print.image_data <- print.deployments <- print.camera_info <- print.sample_station_info
 registerS3method("print", "sample_station_info", print.sample_station_info)
+registerS3method("print", "camera_info", print.sample_station_info)
 registerS3method("print", "deployments", print.deployments)
+registerS3method("print", "image_data", print.deployments)
 
 obfuscate_location <- function(x) {
   
@@ -170,8 +173,25 @@ summary(sample_stations)
 Use the `map_stations()` function to create an interactive map the of the stations. This 
 will show any potential outlying stations, indicating possible data errors:
 
-```{r}
+```{r, map-stations}
 map_stations(sample_stations)
+```
+
+#### Camera Information:
+
+Read camera information using `read_camera_info()`:
+
+```{r}
+#| eval: false
+camera_info <- read_camera_info(metadata_path)
+camera_info
+```
+
+```{r}
+#| echo: false
+camera_info <- read_camera_info(metadata_path)
+camera_info$study_area_name <- "Test Project"
+camera_info
 ```
 
 #### Camera Setup and Checks:
@@ -214,7 +234,7 @@ summary(deployments)
 
 We can use the [mapview](https://r-spatial.github.io/mapview/) package to quickly visualize this, setting the `zcol` argument to the name of the column you'd like to colour the points by. Clicking on a point will give you the details of that deployment.
 
-```{r}
+```{r, mapview-deployments}
 library(mapview)
 mapview(deployments, zcol = "sample_station_label")
 ```
@@ -255,6 +275,13 @@ a potential problem.
 check_deployment_images(deployments, image_data)
 ```
 
+Use `merge_deployments_images()` to join the deployment metadata to the images:
+
+```{r}
+images_with_metadata <- merge_deployments_images(deployments, image_data)
+images_with_metadata
+```
+
 ### Plots
 
 There are several plotting functions available to help you visualize your data
@@ -269,7 +296,7 @@ as expected, and flag any "invalid" deployments (i.e., where we don't know the e
 time because a camera was stolen, bumped, ran out of batteries etc.). You can 
 make static or interactive plots:
 
-```{r}
+```{r, plot-deployments}
 plot_deployments(deployments, date_breaks = "2 months")
 # plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")
 ```
@@ -281,7 +308,7 @@ potential time mismatches between the session data and image time labels.
 Mismatches could indicate wrong time settings on cameras, errors in deployment 
 labels (as the below indicates), or any number of data entry errors.
 
-```{r}
+```{r, plot-detections}
 plot_deployment_detections(deployments, image_data, date_breaks = "2 months")
 # plot_deployment_detections(deployments, image_data, interactive = TRUE, date_breaks = "2 months")
 ```
@@ -290,9 +317,45 @@ plot_deployment_detections(deployments, image_data, date_breaks = "2 months")
 
 We can plot the patterns of daily detections by species:
 
-```{r}
+```{r, plot-diel}
 plot_diel_activity(image_data)
 # plot_diel_activity(image_data, interactive = TRUE)
+```
+
+### Write Data to SPI template
+
+bccamtrap also has functionality to write out data to a SPI template for submission.
+
+Use `fill_spi_template()` to write all of the data to a SPI template, 
+filling in just the default required fields. This will fill in all of the tabs 
+except for the Project Info sheet which you must fill in manually.
+
+```{r}
+#| eval: false
+fill_spi_template(
+  sample_stations,
+  camera_info, 
+  camera_setup_checks,
+  image_data,
+  file = "~/Desktop/SPI_output.xlsx"
+)
+```
+
+If you want more control, such as adding data to other fields in the SPI 
+template, use `write_to_spi_sheet()`.
+
+If you want to write to an existing file, specify the same file name in both the
+`file` and the `template` parameters. To write columns other than the 
+default columns, specify paired column names in the form `` `Destination Column` = data_column``. If the left-hand side is a syntactically valid name it can be provided as-is, but if it has spaces in it it must be wrapped in backticks or quotes.
+
+```{r}
+#| eval: false
+write_to_spi_sheet(
+  sample_stations,
+  file = "~/Desktop/SPI_output.xlsx",
+  `Number of Cameras` = number_of_cameras,
+  template = "~/Desktop/SPI_output.xlsx"
+)
 ```
 
 ### Project Status

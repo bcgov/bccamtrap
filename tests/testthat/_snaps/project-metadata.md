@@ -80,6 +80,58 @@
       [27] "easting_sample_station"      "northing_sample_station"    
       [29] "geometry"                   
 
+# read_camera_info works
+
+    Code
+      names(ci1)
+    Output
+       [1] "study_area_name"             "parent_sample_station_label"
+       [3] "camera_label"                "utm_zone_camera"            
+       [5] "easting_camera"              "northing_camera"            
+       [7] "longitude_camera_dd"         "latitude_camera_dd"         
+       [9] "make_of_camera_code"         "model_of_camera"            
+      [11] "camera_comments"             "site_description_comments"  
+      [13] "site_description_date"      
+
+---
+
+    Code
+      names(ci2)
+    Output
+       [1] "study_area_name"             "parent_sample_station_label"
+       [3] "camera_label"                "utm_zone_camera"            
+       [5] "easting_camera"              "northing_camera"            
+       [7] "longitude_camera_dd"         "latitude_camera_dd"         
+       [9] "make_of_camera_code"         "model_of_camera"            
+      [11] "camera_comments"             "site_description_comments"  
+      [13] "site_description_date"      
+
+# read_camera_info works as sf
+
+    Code
+      names(ci_sf1)
+    Output
+       [1] "study_area_name"             "parent_sample_station_label"
+       [3] "camera_label"                "utm_zone_camera"            
+       [5] "easting_camera"              "northing_camera"            
+       [7] "longitude_camera_dd"         "latitude_camera_dd"         
+       [9] "make_of_camera_code"         "model_of_camera"            
+      [11] "camera_comments"             "site_description_comments"  
+      [13] "site_description_date"       "geometry"                   
+
+---
+
+    Code
+      names(ci_sf2)
+    Output
+       [1] "study_area_name"             "parent_sample_station_label"
+       [3] "camera_label"                "utm_zone_camera"            
+       [5] "longitude_camera_dd"         "latitude_camera_dd"         
+       [7] "make_of_camera_code"         "model_of_camera"            
+       [9] "camera_comments"             "site_description_comments"  
+      [11] "site_description_date"       "easting_camera"             
+      [13] "northing_camera"             "geometry"                   
+
 # read_cam_setup_checks works
 
     Code

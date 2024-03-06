@@ -253,13 +253,25 @@ plot_diel_activity <- function(image_data, interactive = FALSE) {
   p
 }
 
-merge_deployments_images <- function(deployments, image_data) {
+#' Merge image data with deployment data
+#'
+#' Attach deployment metadata with image data.
+#'
+#' @inheritParams check_deployment_images
+#' @inheritParams read_sample_station_info
+#'
+#' @return `data.frame` of class `image_data`, with `deployment` columns attached
+#' @export
+merge_deployments_images <- function(deployments, image_data, as_sf = TRUE) {
 
   check_deployment_images(deployments, image_data)
 
   all_data <- dplyr::left_join(
-    deployments, image_data, by = "deployment_label"
+    dplyr::select(image_data, -"study_area_name", -"sample_station_label"),
+    deployments,
+    by = "deployment_label"
   )
 
+  class(all_data) <- setdiff(class(all_data), "deployments")
   all_data
 }

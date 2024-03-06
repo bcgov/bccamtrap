@@ -86,7 +86,7 @@ sample_stations
     #> Simple feature collection with 21 features and 28 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -126.8515 ymin: 51.47261 xmax: -126.0528 ymax: 51.52903
+    #> Bounding box:  xmin: -129.4015 ymin: 51.71167 xmax: -128.5966 ymax: 51.76095
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 21 × 23
     #>    study_area_name study_area_photos sample_station_label station_status
@@ -131,7 +131,7 @@ summary(sample_stations)
 #> ℹ 18 sample stations in 21 locations.
 #> ℹ Summary of station distances (m):
 #>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#>     5.08  4243.90  8703.08 11924.92 14548.23 55460.22
+#>     5.08  4244.60  8704.57 11926.88 14550.71 55469.98
 #> ✖ Detected 1 potential spatial outlier.
 #> ℹ Station status summary:
 #> Camera Active  Camera Moved 
@@ -148,7 +148,38 @@ possible data errors:
 map_stations(sample_stations)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-map-stations-1.png" width="100%" />
+
+#### Camera Information:
+
+Read camera information using `read_camera_info()`:
+
+``` r
+camera_info <- read_camera_info(metadata_path)
+camera_info
+```
+
+    #> Simple feature collection with 21 features and 13 fields
+    #> Geometry type: POINT
+    #> Dimension:     XY
+    #> Bounding box:  xmin: -125.5219 ymin: 49.28703 xmax: -125.2213 ymax: 49.34728
+    #> Geodetic CRS:  WGS 84
+    #> # A tibble: 21 × 8
+    #>    study_area_name parent_sample_station_label camera_label make_of_camera_code
+    #>    <chr>           <chr>                       <chr>        <chr>              
+    #>  1 Test Project    19_1                        UBC 2        <NA>               
+    #>  2 Test Project    19_2                        UBC 1        <NA>               
+    #>  3 Test Project    20                          Eco1059      <NA>               
+    #>  4 Test Project    21_1                        Eco1057      <NA>               
+    #>  5 Test Project    21_2                        Eco7998      <NA>               
+    #>  6 Test Project    24                          Eco1050      <NA>               
+    #>  7 Test Project    25                          Eco1040      <NA>               
+    #>  8 Test Project    26                          Eco7939      <NA>               
+    #>  9 Test Project    27                          Eco6690      <NA>               
+    #> 10 Test Project    28                          UBC 4        <NA>               
+    #> # ℹ 11 more rows
+    #> # ℹ 4 more variables: model_of_camera <chr>, camera_comments <chr>,
+    #> #   site_description_comments <chr>, site_description_date <date>
 
 #### Camera Setup and Checks:
 
@@ -193,7 +224,7 @@ deployments
     #> Simple feature collection with 28 features and 58 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -119.4425 ymin: 44.95789 xmax: -118.7563 ymax: 45.05068
+    #> Bounding box:  xmin: -122.3968 ymin: 51.21333 xmax: -121.6091 ymax: 51.28496
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 28 × 53
     #>    study_area_name sample_station_label deployment_label camera_label surveyors
@@ -243,7 +274,7 @@ library(mapview)
 mapview(deployments, zcol = "sample_station_label")
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+<img src="man/figures/README-mapview-deployments-1.png" width="100%" />
 
 ### Image data
 
@@ -288,6 +319,9 @@ summary(image_data)
 #> │                   │
 #> └───────────────────┘
 #> ℹ 11833 images in 17 deployments at 15 sample stations.
+#> ℹ Image counts by trigger mode:
+#> Motion Detection       Time Lapse 
+#>             8657             3176
 #> ℹ 117 images with lens obscured.
 #> ℹ 4 images starred.
 #> ! 4 images flagged for review.
@@ -318,6 +352,36 @@ check_deployment_images(deployments, image_data)
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 ```
 
+Use `merge_deployments_images()` to join the deployment metadata to the
+images:
+
+``` r
+images_with_metadata <- merge_deployments_images(deployments, image_data)
+#> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
+#> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
+images_with_metadata
+#> # A tibble: 11,833 × 93
+#>    root_folder deployment_label date_time           episode species
+#>    <chr>       <chr>            <dttm>              <chr>   <chr>  
+#>  1 100RECNX    19_1_20230605    2022-11-10 15:15:53 1:1|5   <NA>   
+#>  2 100RECNX    19_1_20230605    2022-11-10 15:15:58 1:2|5   <NA>   
+#>  3 100RECNX    19_1_20230605    2022-11-10 15:16:25 1:3|5   <NA>   
+#>  4 100RECNX    19_1_20230605    2022-11-10 15:16:27 1:4|5   <NA>   
+#>  5 100RECNX    19_1_20230605    2022-11-10 15:16:31 1:5|5   <NA>   
+#>  6 100RECNX    19_1_20230605    2022-11-11 12:00:00 2:1|1   <NA>   
+#>  7 100RECNX    19_1_20230605    2022-11-12 12:00:00 3:1|1   <NA>   
+#>  8 100RECNX    19_1_20230605    2022-11-13 12:00:00 4:1|1   <NA>   
+#>  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   <NA>   
+#> 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   <NA>   
+#> # ℹ 11,823 more rows
+#> # ℹ 88 more variables: total_count_episode <dbl>, obj_count_image <int>,
+#> #   adult_male <int>, adult_female <int>, adult_unclassified_sex <int>,
+#> #   yearling_male <int>, yearling_female <int>,
+#> #   yearling_unclassified_sex <int>, young_of_year_unclassified_sex <int>,
+#> #   juvenile_unclassified_sex <int>, male_unclassified_age <int>,
+#> #   female_unclassified_age <int>, unclassified_life_stage_and_sex <int>, …
+```
+
 ### Plots
 
 There are several plotting functions available to help you visualize
@@ -337,7 +401,7 @@ ran out of batteries etc.). You can make static or interactive plots:
 plot_deployments(deployments, date_breaks = "2 months")
 ```
 
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
+<img src="man/figures/README-plot-deployments-1.png" width="100%" />
 
 ``` r
 # plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")
@@ -355,7 +419,7 @@ entry errors.
 plot_deployment_detections(deployments, image_data, date_breaks = "2 months")
 ```
 
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
+<img src="man/figures/README-plot-detections-1.png" width="100%" />
 
 ``` r
 # plot_deployment_detections(deployments, image_data, interactive = TRUE, date_breaks = "2 months")
@@ -369,10 +433,49 @@ We can plot the patterns of daily detections by species:
 plot_diel_activity(image_data)
 ```
 
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
+<img src="man/figures/README-plot-diel-1.png" width="100%" />
 
 ``` r
 # plot_diel_activity(image_data, interactive = TRUE)
+```
+
+### Write Data to SPI template
+
+bccamtrap also has functionality to write out data to a SPI template for
+submission.
+
+Use `fill_spi_template()` to write all of the data to a SPI template,
+filling in just the default required fields. This will fill in all of
+the tabs except for the Project Info sheet which you must fill in
+manually.
+
+``` r
+fill_spi_template(
+  sample_stations,
+  camera_info, 
+  camera_setup_checks,
+  image_data,
+  file = "~/Desktop/SPI_output.xlsx"
+)
+```
+
+If you want more control, such as adding data to other fields in the SPI
+template, use `write_to_spi_sheet()`.
+
+If you want to write to an existing file, specify the same file name in
+both the `file` and the `template` parameters. To write columns other
+than the default columns, specify paired column names in the form
+`` `Destination Column` = data_column ``. If the left-hand side is a
+syntactically valid name it can be provided as-is, but if it has spaces
+in it it must be wrapped in backticks or quotes.
+
+``` r
+write_to_spi_sheet(
+  sample_stations,
+  file = "~/Desktop/SPI_output.xlsx",
+  `Number of Cameras` = number_of_cameras,
+  template = "~/Desktop/SPI_output.xlsx"
+)
 ```
 
 ### Project Status
