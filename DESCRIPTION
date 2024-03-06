@@ -29,7 +29,7 @@ Imports:
     readxl,
     rlang (>= 1.1.0),
     sf
-URL: https://github.com/ateucher/bccamtrap
+URL: https://github.com/ateucher/bccamtrap, https://bcgov.github.io/bccamtrap/
 BugReports: https://github.com/ateucher/bccamtrap/issues
 Suggests: 
     DBI,
