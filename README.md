@@ -86,7 +86,7 @@ sample_stations
     #> Simple feature collection with 21 features and 28 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -130.0615 ymin: 49.45878 xmax: -129.2956 ymax: 49.50631
+    #> Bounding box:  xmin: -129.4015 ymin: 51.71167 xmax: -128.5966 ymax: 51.76095
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 21 × 23
     #>    study_area_name study_area_photos sample_station_label station_status
@@ -130,8 +130,8 @@ summary(sample_stations)
 #> └─────────────────────┘
 #> ℹ 18 sample stations in 21 locations.
 #> ℹ Summary of station distances (m):
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>     5.1  4235.8  8685.5 11902.5 14519.7 55349.6
+#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#>     5.08  4244.60  8704.57 11926.88 14550.71 55469.98
 #> ✖ Detected 1 potential spatial outlier.
 #> ℹ Station status summary:
 #> Camera Active  Camera Moved 
@@ -224,7 +224,7 @@ deployments
     #> Simple feature collection with 28 features and 58 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -126.5251 ymin: 50.25814 xmax: -125.7487 ymax: 50.31553
+    #> Bounding box:  xmin: -122.3968 ymin: 51.21333 xmax: -121.6091 ymax: 51.28496
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 28 × 53
     #>    study_area_name sample_station_label deployment_label camera_label surveyors
@@ -350,6 +350,36 @@ problem.
 check_deployment_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
+```
+
+Use `merge_deployments_images()` to join the deployment metadata to the
+images:
+
+``` r
+images_with_metadata <- merge_deployments_images(deployments, image_data)
+#> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
+#> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
+images_with_metadata
+#> # A tibble: 11,833 × 93
+#>    root_folder deployment_label date_time           episode species
+#>    <chr>       <chr>            <dttm>              <chr>   <chr>  
+#>  1 100RECNX    19_1_20230605    2022-11-10 15:15:53 1:1|5   <NA>   
+#>  2 100RECNX    19_1_20230605    2022-11-10 15:15:58 1:2|5   <NA>   
+#>  3 100RECNX    19_1_20230605    2022-11-10 15:16:25 1:3|5   <NA>   
+#>  4 100RECNX    19_1_20230605    2022-11-10 15:16:27 1:4|5   <NA>   
+#>  5 100RECNX    19_1_20230605    2022-11-10 15:16:31 1:5|5   <NA>   
+#>  6 100RECNX    19_1_20230605    2022-11-11 12:00:00 2:1|1   <NA>   
+#>  7 100RECNX    19_1_20230605    2022-11-12 12:00:00 3:1|1   <NA>   
+#>  8 100RECNX    19_1_20230605    2022-11-13 12:00:00 4:1|1   <NA>   
+#>  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   <NA>   
+#> 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   <NA>   
+#> # ℹ 11,823 more rows
+#> # ℹ 88 more variables: total_count_episode <dbl>, obj_count_image <int>,
+#> #   adult_male <int>, adult_female <int>, adult_unclassified_sex <int>,
+#> #   yearling_male <int>, yearling_female <int>,
+#> #   yearling_unclassified_sex <int>, young_of_year_unclassified_sex <int>,
+#> #   juvenile_unclassified_sex <int>, male_unclassified_age <int>,
+#> #   female_unclassified_age <int>, unclassified_life_stage_and_sex <int>, …
 ```
 
 ### Plots

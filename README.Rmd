@@ -104,10 +104,11 @@ print.sample_station_info <- function(x, ...) {
   print(as_tibble(x))
 }
 
-print.deployments <- print.camera_info <- print.sample_station_info
+print.image_data <- print.deployments <- print.camera_info <- print.sample_station_info
 registerS3method("print", "sample_station_info", print.sample_station_info)
 registerS3method("print", "camera_info", print.sample_station_info)
 registerS3method("print", "deployments", print.deployments)
+registerS3method("print", "image_data", print.deployments)
 
 obfuscate_location <- function(x) {
   
@@ -274,6 +275,13 @@ a potential problem.
 check_deployment_images(deployments, image_data)
 ```
 
+Use `merge_deployments_images()` to join the deployment metadata to the images:
+
+```{r}
+images_with_metadata <- merge_deployments_images(deployments, image_data)
+images_with_metadata
+```
+
 ### Plots
 
 There are several plotting functions available to help you visualize your data
@@ -338,7 +346,7 @@ template, use `write_to_spi_sheet()`.
 
 If you want to write to an existing file, specify the same file name in both the
 `file` and the `template` parameters. To write columns other than the 
-default columns, specify paired column names in the form `` `Destination Column` = data_column``. If the left-hand side is a syntactically valid name it can be provided as-is, but if it has spaces in it it must be wrapped in backticks or quotes. 
+default columns, specify paired column names in the form `` `Destination Column` = data_column``. If the left-hand side is a syntactically valid name it can be provided as-is, but if it has spaces in it it must be wrapped in backticks or quotes.
 
 ```{r}
 #| eval: false
