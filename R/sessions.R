@@ -109,15 +109,17 @@ make_deployments <- function(path, as_sf = TRUE) {
 #'   of valid sampling ending early:
 #'      - end of daily time lapse photos
 #'      - lens obscured constantly until end of deployment
-#' - Looks for
 #'
 #' @inheritParams plot_deployment_detections
 #' @inheritParams make_deployments
-#' @param days_lens_obscured number of consecutive days a lens is obscured before
-#'     signalling the start of a new sample session.
 #'
 #' @return a data.frame with one or more rows (sample sessions) per deployment
 #' @export
-make_sessions <- function(deployments, image_data, days_lens_obscured = 3, as_sf = TRUE) {
+make_sessions <- function(deployments, image_data, as_sf = TRUE) {
+  merged <- merge_deployments_images(deployments, image_data, as_sf = FALSE)
 
+  merged %>%
+    dplyr::filter(tolower(.data$trigger_mode) %in% c("t", "time lapse")) %>%
+    dplyr::group_by(.data$deployment_label) %>%
+    dplyr::summarize(max_tl_date = max(.data$date_time))
 }
