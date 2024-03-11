@@ -29,7 +29,7 @@ summary.sample_station_info <- function(object, ...) {
     )
   } else {
     cli::cli_alert_warning(
-      "Run {.fn check_stations_spatial} to validate the spatial information."
+      "Run {.fn qa_stations_spatial} to validate the spatial information."
     )
   }
   cli::cat_line("")
@@ -113,7 +113,7 @@ summary.image_data <- function(object, ...) {
 
   cli::cat_line("")
   cli::cli_alert_warning(
-    "Run {.fn check_deployment_images} to crosscheck images with deployments."
+    "Run {.fn qa_deployment_images} to crosscheck images with deployments."
   )
 }
 

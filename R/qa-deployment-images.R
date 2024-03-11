@@ -93,7 +93,7 @@ process_invalid_deployments <- function(deployments) {
 #'
 #' @return a list of two vectors containing mismatched deployment labels
 #' @export
-check_deployment_images <- function(deployments, image_data) {
+qa_deployment_images <- function(deployments, image_data) {
   check_deployments(deployments)
   check_image_data(image_data)
 
@@ -257,14 +257,14 @@ plot_diel_activity <- function(image_data, interactive = FALSE) {
 #'
 #' Attach deployment metadata with image data.
 #'
-#' @inheritParams check_deployment_images
+#' @inheritParams qa_deployment_images
 #' @inheritParams read_sample_station_info
 #'
 #' @return `data.frame` of class `image_data`, with `deployment` columns attached
 #' @export
 merge_deployments_images <- function(deployments, image_data, as_sf = TRUE) {
 
-  check_deployment_images(deployments, image_data)
+  qa_deployment_images(deployments, image_data)
 
   all_data <- dplyr::left_join(
     dplyr::select(image_data, -"study_area_name", -"sample_station_label"),

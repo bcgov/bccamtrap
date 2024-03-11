@@ -109,11 +109,11 @@ sample_stations
     #> #   distance_to_feature_m <dbl>, visible_range_m <dbl>, habitat_feature <chr>,
     #> #   lock <chr>, code <chr>, sample_station_comments <chr>, …
 
-Use the `check_stations_spatial()` function to run some basic spatial
+Use the `qa_stations_spatial()` function to run some basic spatial
 validation on the data - namely checking for spatial outliers:
 
 ``` r
-sample_stations <- check_stations_spatial(sample_stations)
+sample_stations <- qa_stations_spatial(sample_stations)
 #> ! Station 19_1 appears to be very far away from other stations. Please check
 #> its coordinates.
 ```
@@ -335,10 +335,10 @@ summary(image_data)
 #>                1                2                1               88 
 #>             <NA> 
 #>            11438
-#> ! Run `check_deployment_images()` to crosscheck images with deployments.
+#> ! Run `qa_deployment_images()` to crosscheck images with deployments.
 ```
 
-Use the `check_deployment_images()` function to find deployment labels
+Use the `qa_deployment_images()` function to find deployment labels
 that are in the deployment data but not in the image data, and
 vice-versa. It is usually likely that there will be deployment labels in
 the deployment data that are missing from the image data if not all of
@@ -347,7 +347,7 @@ in the image data but not in the deployment data indicate a potential
 problem.
 
 ``` r
-check_deployment_images(deployments, image_data)
+qa_deployment_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 ```

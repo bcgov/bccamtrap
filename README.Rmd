@@ -157,11 +157,11 @@ sample_stations$study_area_name <- "Test Project"
 (sample_stations <- obfuscate_location(sample_stations))
 ```
 
-Use the `check_stations_spatial()` function to run some basic spatial validation
+Use the `qa_stations_spatial()` function to run some basic spatial validation
 on the data - namely checking for spatial outliers:
 
 ```{r}
-sample_stations <- check_stations_spatial(sample_stations)
+sample_stations <- qa_stations_spatial(sample_stations)
 ```
 
 Use the `summary()` method for Sample Station Info for basic descriptive stats:
@@ -264,7 +264,7 @@ Again, we can use the `summary()` method to get an overview of the image data.
 summary(image_data)
 ```
 
-Use the `check_deployment_images()` function to find deployment labels that are 
+Use the `qa_deployment_images()` function to find deployment labels that are 
 in the deployment data but not in the image data, and vice-versa. It is usually
 likely that there will be deployment labels in the deployment data that are missing
 from the image data if not all of the images have been processed yet. Deployment
@@ -272,7 +272,7 @@ labels that are present in the image data but not in the deployment data indicat
 a potential problem.
 
 ```{r}
-check_deployment_images(deployments, image_data)
+qa_deployment_images(deployments, image_data)
 ```
 
 Use `merge_deployments_images()` to join the deployment metadata to the images:
