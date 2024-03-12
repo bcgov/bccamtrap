@@ -115,6 +115,11 @@ summary.image_data <- function(object, ...) {
   cli::cli_alert_warning(
     "Run {.fn qa_deployment_images} to crosscheck images with deployments."
   )
+
+    cli::cat_line("")
+  cli::cli_alert_warning(
+    "Run {.fn qa_image_data} to run various QA checks."
+  )
 }
 
 table_print_helper <- function(x, ...) {
