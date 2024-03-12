@@ -15,8 +15,9 @@ make_deployments(path, as_sf = TRUE)
 a spatial data.frame (\code{sf}) of deployments
 }
 \description{
-Merge data from "Sample Station Info" and "Camera Setup and Checks" tabs to
-create deployments - the time that a camera was deployed and running
-at a site. "Invalid" deployments are flagged when there is no sampling end date
-in "Camera Setup and Checks" or the sampling period is 0 days
+Merge data from "Sample Station Info", "Camera Information",  and "Camera
+Setup and Checks" tabs to create deployments - the time that a camera was
+deployed and running at a site. "Invalid" deployments are flagged when there
+is no sampling end date in "Camera Setup and Checks" or the sampling period
+is 0 days
 }
