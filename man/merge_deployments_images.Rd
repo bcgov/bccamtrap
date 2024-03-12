@@ -9,7 +9,7 @@ merge_deployments_images(deployments, image_data, as_sf = TRUE)
 \arguments{
 \item{deployments}{deployments data, as created by \code{\link[=make_deployments]{make_deployments()}}}
 
-\item{image_data}{data.frame of image sequence data, as read via \code{\link[=read_image_data]{read_image_data()}}}
+\item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
 
 \item{as_sf}{should the data be returned as an \code{sf} object of the station locations? Default \code{TRUE}}
 }

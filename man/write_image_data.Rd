@@ -7,7 +7,7 @@
 write_image_data(image_data, file, na = "", ...)
 }
 \arguments{
-\item{image_data}{image data object.}
+\item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
 
 \item{file}{path to the output csv file}
 
