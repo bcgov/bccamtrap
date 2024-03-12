@@ -141,21 +141,21 @@ make_snow_range_cols <- function(x) {
     x,
     snow_is_est = grepl("Est", .data$snow_depth),
     snow_depth_lower = dplyr::case_when(
-      grepl("Trace", .data$snow_depth) ~ 1,
-      grepl("Low", .data$snow_depth) ~ 5,
-      grepl("Mod", .data$snow_depth) ~ 15,
-      grepl("Deep", .data$snow_depth) ~ 30,
-      grepl("Very Deep", .data$snow_depth) ~ 60,
-      grepl("Over", .data$snow_depth) ~ 120,
+      grepl("Est\\. Trace", .data$snow_depth) ~ 1,
+      grepl("Est\\. Low", .data$snow_depth) ~ 5,
+      grepl("Est\\. Mod", .data$snow_depth) ~ 15,
+      grepl("Est\\. Deep", .data$snow_depth) ~ 30,
+      grepl("Est\\. Very Deep", .data$snow_depth) ~ 60,
+      grepl("Est\\. Over", .data$snow_depth) ~ 120,
       .default = suppressWarnings(as.numeric(.data$snow_depth))
     ),
     snow_depth_upper = dplyr::case_when(
-      grepl("Trace", .data$snow_depth) ~ 5,
-      grepl("Low", .data$snow_depth) ~ 15,
-      grepl("Mod", .data$snow_depth) ~ 30,
-      grepl("Deep", .data$snow_depth) ~ 60,
-      grepl("Very Deep", .data$snow_depth) ~ 120,
-      grepl("Over", .data$snow_depth) ~ Inf,
+      grepl("Est\\. Trace", .data$snow_depth) ~ 5,
+      grepl("Est\\. Low", .data$snow_depth) ~ 15,
+      grepl("Est\\. Mod", .data$snow_depth) ~ 30,
+      grepl("Est\\. Deep", .data$snow_depth) ~ 60,
+      grepl("Est\\. Very Deep", .data$snow_depth) ~ 120,
+      grepl("Est\\. Over", .data$snow_depth) ~ Inf,
       .default = .data$snow_depth_lower
     )
   )
