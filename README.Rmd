@@ -282,6 +282,44 @@ images_with_metadata <- merge_deployments_images(deployments, image_data)
 images_with_metadata
 ```
 
+#### Image Data QA
+
+There are a number of common data quality issues that we can check for in the image
+data itself, aside from those addressed above when reconciling deployments and images.
+
+We can use the `qa_image_data()` function to detect the following problems:
+
+* Check for blanks in key fields: study area, station label, deployment date,
+ surveyor, trigger mode, temperature, episode
+* Species detected with no count data
+* Count data with no species
+* Sum of individual count fields equals Total Count
+* Multiple entries under same Episode number (indicating possible double entry)
+* Ensure dates for timelapse images are continuous and in order.
+* Snow data
+   - No blanks unless lens obscured is `TRUE`
+   - Look for snow depth outliers (e.g., 10, 10, 110, 10, 15, 20)
+   
+Run the `qa_image_data()` function:
+   
+```{r}
+image_data_qa <- qa_image_data(image_data)
+dim(image_data_qa)
+```
+
+We can see that this has identified `r nrow(image_data_qa)` records with potential problems.
+This dataset has a number of fields starting with `QA_` which help us know which 
+images we should have a closer look at. All of the original fields, plus any `QA_` 
+fields that have at least one `TRUE` value are returned:
+
+```{r}
+names(image_data_qa)
+```
+
+```{r}
+select(image_data_qa, root_folder, file, starts_with("QA_"))
+```
+
 ### Plots
 
 There are several plotting functions available to help you visualize your data
@@ -299,6 +337,16 @@ make static or interactive plots:
 ```{r, plot-deployments}
 plot_deployments(deployments, date_breaks = "2 months")
 # plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")
+```
+
+#### Snow depth plot
+
+We can plot the recorded snow depths across deployments using the `plot_snow()`
+function with our image data:
+
+```{r, plot-snow}
+plot_snow(image_data, date_breaks = "2 months")
+# plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)
 ```
 
 #### Detection plot
