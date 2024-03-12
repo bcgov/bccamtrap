@@ -22,12 +22,6 @@
     <loc>https://bcgov.github.io/bccamtrap/reference/bccamtrap-package.html</loc>
   </url>
   <url>
-    <loc>https://bcgov.github.io/bccamtrap/reference/check_deployment_images.html</loc>
-  </url>
-  <url>
-    <loc>https://bcgov.github.io/bccamtrap/reference/check_stations_spatial.html</loc>
-  </url>
-  <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/fill_spi_template.html</loc>
   </url>
   <url>
@@ -50,6 +44,18 @@
   </url>
   <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/plot_diel_activity.html</loc>
+  </url>
+  <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/plot_snow.html</loc>
+  </url>
+  <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/qa_deployment_images.html</loc>
+  </url>
+  <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/qa_image_data.html</loc>
+  </url>
+  <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/qa_stations_spatial.html</loc>
   </url>
   <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/read_cam_setup_checks.html</loc>

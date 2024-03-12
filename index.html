@@ -113,7 +113,7 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 21 features and 28 fields</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; Geometry type: POINT</span></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -129.4015 ymin: 51.71167 xmax: -128.5966 ymax: 51.76095</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -126.3803 ymin: 47.30585 xmax: -125.6508 ymax: 47.3639</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 21 × 23</span></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;    study_area_name study_area_photos sample_station_label station_status</span></span>
@@ -135,9 +135,9 @@
 <span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; #   camera_bearing_degrees &lt;dbl&gt;, camera_height_cm &lt;dbl&gt;,</span></span>
 <span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; #   distance_to_feature_m &lt;dbl&gt;, visible_range_m &lt;dbl&gt;, habitat_feature &lt;chr&gt;,</span></span>
 <span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; #   lock &lt;chr&gt;, code &lt;chr&gt;, sample_station_comments &lt;chr&gt;, …</span></span></code></pre></div>
-<p>Use the <code><a href="reference/check_stations_spatial.html">check_stations_spatial()</a></code> function to run some basic spatial validation on the data - namely checking for spatial outliers:</p>
+<p>Use the <code><a href="reference/qa_stations_spatial.html">qa_stations_spatial()</a></code> function to run some basic spatial validation on the data - namely checking for spatial outliers:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sample_stations</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/check_stations_spatial.html">check_stations_spatial</a></span><span class="op">(</span><span class="va">sample_stations</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">sample_stations</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qa_stations_spatial.html">qa_stations_spatial</a></span><span class="op">(</span><span class="va">sample_stations</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! Station 19_1 appears to be very far away from other stations. Please check</span></span>
 <span><span class="co">#&gt; its coordinates.</span></span></code></pre></div>
 <p>Use the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for Sample Station Info for basic descriptive stats:</p>
@@ -151,7 +151,7 @@
 <span><span class="co">#&gt; ℹ 18 sample stations in 21 locations.</span></span>
 <span><span class="co">#&gt; ℹ Summary of station distances (m):</span></span>
 <span><span class="co">#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></span>
-<span><span class="co">#&gt;     5.08  4244.60  8704.57 11926.88 14550.71 55469.98</span></span>
+<span><span class="co">#&gt;     5.11  4224.12  8658.82 11869.30 14477.47 55180.26</span></span>
 <span><span class="co">#&gt; ✖ Detected 1 potential spatial outlier.</span></span>
 <span><span class="co">#&gt; ℹ Station status summary:</span></span>
 <span><span class="co">#&gt; Camera Active  Camera Moved </span></span>
@@ -229,7 +229,7 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 28 features and 58 fields</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; Geometry type: POINT</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -122.3968 ymin: 51.21333 xmax: -121.6091 ymax: 51.28496</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -123.505 ymin: 51.2599 xmax: -122.7148 ymax: 51.32557</span></span>
 <span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
 <span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 53</span></span>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt;    study_area_name sample_station_label deployment_label camera_label surveyors</span></span>
@@ -324,10 +324,11 @@
 <span><span class="co">#&gt;                1                2                1               88 </span></span>
 <span><span class="co">#&gt;             &lt;NA&gt; </span></span>
 <span><span class="co">#&gt;            11438</span></span>
-<span><span class="co">#&gt; ! Run `check_deployment_images()` to crosscheck images with deployments.</span></span></code></pre></div>
-<p>Use the <code><a href="reference/check_deployment_images.html">check_deployment_images()</a></code> function to find deployment labels that are in the deployment data but not in the image data, and vice-versa. It is usually likely that there will be deployment labels in the deployment data that are missing from the image data if not all of the images have been processed yet. Deployment labels that are present in the image data but not in the deployment data indicate a potential problem.</p>
+<span><span class="co">#&gt; ! Run `qa_deployment_images()` to crosscheck images with deployments.</span></span>
+<span><span class="co">#&gt; ! Run `qa_image_data()` to run various QA checks.</span></span></code></pre></div>
+<p>Use the <code><a href="reference/qa_deployment_images.html">qa_deployment_images()</a></code> function to find deployment labels that are in the deployment data but not in the image data, and vice-versa. It is usually likely that there will be deployment labels in the deployment data that are missing from the image data if not all of the images have been processed yet. Deployment labels that are present in the image data but not in the deployment data indicate a potential problem.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/check_deployment_images.html">check_deployment_images</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/qa_deployment_images.html">qa_deployment_images</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"</span></span>
 <span><span class="co">#&gt; ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"</span></span></code></pre></div>
 <p>Use <code><a href="reference/merge_deployments_images.html">merge_deployments_images()</a></code> to join the deployment metadata to the images:</p>
@@ -356,6 +357,83 @@
 <span><span class="co">#&gt; #   yearling_unclassified_sex &lt;int&gt;, young_of_year_unclassified_sex &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   juvenile_unclassified_sex &lt;int&gt;, male_unclassified_age &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   female_unclassified_age &lt;int&gt;, unclassified_life_stage_and_sex &lt;int&gt;, …</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="image-data-qa">Image Data QA<a class="anchor" aria-label="anchor" href="#image-data-qa"></a>
+</h4>
+<p>There are a number of common data quality issues that we can check for in the image data itself, aside from those addressed above when reconciling deployments and images.</p>
+<p>We can use the <code><a href="reference/qa_image_data.html">qa_image_data()</a></code> function to detect the following problems:</p>
+<ul>
+<li>Check for blanks in key fields: study area, station label, deployment date, surveyor, trigger mode, temperature, episode</li>
+<li>Species detected with no count data</li>
+<li>Count data with no species</li>
+<li>Sum of individual count fields equals Total Count</li>
+<li>Multiple entries under same Episode number (indicating possible double entry)</li>
+<li>Ensure dates for timelapse images are continuous and in order.</li>
+<li>Snow data
+<ul>
+<li>No blanks unless lens obscured is <code>TRUE</code>
+</li>
+<li>Look for snow depth outliers (e.g., 10, 10, 110, 10, 15, 20)</li>
+</ul>
+</li>
+</ul>
+<p>Run the <code><a href="reference/qa_image_data.html">qa_image_data()</a></code> function:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">image_data_qa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qa_image_data.html">qa_image_data</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 24 53</span></span></code></pre></div>
+<p>We can see that this has identified 24 records with potential problems. This dataset has a number of fields starting with <code>QA_</code> which help us know which images we should have a closer look at. All of the original fields, plus any <code>QA_</code> fields that have at least one <code>TRUE</code> value are returned:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "root_folder"                     "study_area_name"                </span></span>
+<span><span class="co">#&gt;  [3] "sample_station_label"            "deployment_label"               </span></span>
+<span><span class="co">#&gt;  [5] "date_time"                       "episode_num"                    </span></span>
+<span><span class="co">#&gt;  [7] "episode"                         "species"                        </span></span>
+<span><span class="co">#&gt;  [9] "total_count_episode"             "obj_count_image"                </span></span>
+<span><span class="co">#&gt; [11] "adult_male"                      "adult_female"                   </span></span>
+<span><span class="co">#&gt; [13] "adult_unclassified_sex"          "yearling_male"                  </span></span>
+<span><span class="co">#&gt; [15] "yearling_female"                 "yearling_unclassified_sex"      </span></span>
+<span><span class="co">#&gt; [17] "young_of_year_unclassified_sex"  "juvenile_unclassified_sex"      </span></span>
+<span><span class="co">#&gt; [19] "male_unclassified_age"           "female_unclassified_age"        </span></span>
+<span><span class="co">#&gt; [21] "unclassified_life_stage_and_sex" "antler_class"                   </span></span>
+<span><span class="co">#&gt; [23] "animal_identifiable"             "animal_tagged"                  </span></span>
+<span><span class="co">#&gt; [25] "behaviour_1"                     "behaviour_2"                    </span></span>
+<span><span class="co">#&gt; [27] "behaviour_3"                     "human_use_type"                 </span></span>
+<span><span class="co">#&gt; [29] "human_transport_mode"            "temperature"                    </span></span>
+<span><span class="co">#&gt; [31] "snow_depth"                      "snow_is_est"                    </span></span>
+<span><span class="co">#&gt; [33] "snow_depth_lower"                "snow_depth_upper"               </span></span>
+<span><span class="co">#&gt; [35] "lens_obscured"                   "starred"                        </span></span>
+<span><span class="co">#&gt; [37] "needs_review"                    "comment"                        </span></span>
+<span><span class="co">#&gt; [39] "surveyor"                        "trigger_mode"                   </span></span>
+<span><span class="co">#&gt; [41] "file"                            "relative_path"                  </span></span>
+<span><span class="co">#&gt; [43] "delete_flag"                     "QA_BLANK_study_area_name"       </span></span>
+<span><span class="co">#&gt; [45] "QA_BLANK_sample_station_label"   "QA_BLANK_deployment_label"      </span></span>
+<span><span class="co">#&gt; [47] "QA_BLANK_date_time"              "QA_BLANK_surveyor"              </span></span>
+<span><span class="co">#&gt; [49] "QA_BLANK_trigger_mode"           "QA_BLANK_temperature"           </span></span>
+<span><span class="co">#&gt; [51] "QA_BLANK_episode"                "QA_timelapse_lag"               </span></span>
+<span><span class="co">#&gt; [53] "QA_snow_outlier"</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">select</span><span class="op">(</span><span class="va">image_data_qa</span>, <span class="va">root_folder</span>, <span class="va">file</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">"QA_"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 24 × 12</span></span>
+<span><span class="co">#&gt;    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;        &lt;lgl&gt;                    &lt;lgl&gt;                    </span></span>
+<span><span class="co">#&gt;  1 27_20230605   RCNX0030.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  2 100RECNX      RCNX0114.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  3 100RECNX      RCNX0118.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  4 21_2_20230605 RCNX0010.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  5 100RECNX      RCNX0261.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  6 100RECNX      RCNX0339.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  7 100RECNX      RCNX0376.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  8 29_2_20230605 IMG_0252.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt;  9 100RECNX      IMG_0134.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt; 10 102RECNX      RCNX0041.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt; # ℹ 14 more rows</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​QA_BLANK_sample_station_label</span></span>
+<span><span class="co">#&gt; # ℹ 8 more variables: QA_BLANK_deployment_label &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   QA_BLANK_date_time &lt;lgl&gt;, QA_BLANK_surveyor &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   QA_BLANK_trigger_mode &lt;lgl&gt;, QA_BLANK_temperature &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   QA_BLANK_episode &lt;lgl&gt;, QA_timelapse_lag &lt;lgl&gt;, QA_snow_outlier &lt;lgl&gt;</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="plots">Plots<a class="anchor" aria-label="anchor" href="#plots"></a>
@@ -365,30 +443,40 @@
 <h4 id="deployment-plot">Deployment plot<a class="anchor" aria-label="anchor" href="#deployment-plot"></a>
 </h4>
 <p>We can plot deployments to see that the start and ends of our deployments are as expected, and flag any “invalid” deployments (i.e., where we don’t know the end time because a camera was stolen, bumped, ran out of batteries etc.). You can make static or interactive plots:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployments.html">plot_deployments</a></span><span class="op">(</span><span class="va">deployments</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-deployments-1.png" width="100%"></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="snow-depth-plot">Snow depth plot<a class="anchor" aria-label="anchor" href="#snow-depth-plot"></a>
+</h4>
+<p>We can plot the recorded snow depths across deployments using the <code><a href="reference/plot_snow.html">plot_snow()</a></code> function with our image data:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_snow.html">plot_snow</a></span><span class="op">(</span><span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-plot-snow-1.png" width="100%"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="detection-plot">Detection plot<a class="anchor" aria-label="anchor" href="#detection-plot"></a>
 </h4>
 <p>We can also plot image timestamps over the deployment durations to alert us to potential time mismatches between the session data and image time labels. Mismatches could indicate wrong time settings on cameras, errors in deployment labels (as the below indicates), or any number of data entry errors.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployment_detections.html">plot_deployment_detections</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-detections-1.png" width="100%"></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot_deployment_detections(deployments, image_data, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="daily-detection-patterns">Daily detection patterns<a class="anchor" aria-label="anchor" href="#daily-detection-patterns"></a>
 </h4>
 <p>We can plot the patterns of daily detections by species:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_diel_activity.html">plot_diel_activity</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-diel-1.png" width="100%"></p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot_diel_activity(image_data, interactive = TRUE)</span></span></code></pre></div>
 </div>
 </div>
@@ -397,7 +485,7 @@
 </h3>
 <p>bccamtrap also has functionality to write out data to a SPI template for submission.</p>
 <p>Use <code><a href="reference/fill_spi_template.html">fill_spi_template()</a></code> to write all of the data to a SPI template, filling in just the default required fields. This will fill in all of the tabs except for the Project Info sheet which you must fill in manually.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/fill_spi_template.html">fill_spi_template</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_stations</span>,</span>
 <span>  <span class="va">camera_info</span>, </span>
@@ -407,7 +495,7 @@
 <span><span class="op">)</span></span></code></pre></div>
 <p>If you want more control, such as adding data to other fields in the SPI template, use <code><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet()</a></code>.</p>
 <p>If you want to write to an existing file, specify the same file name in both the <code>file</code> and the <code>template</code> parameters. To write columns other than the default columns, specify paired column names in the form <code>`Destination Column` = data_column</code>. If the left-hand side is a syntactically valid name it can be provided as-is, but if it has spaces in it it must be wrapped in backticks or quotes.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_stations</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"~/Desktop/SPI_output.xlsx"</span>,</span>
@@ -433,17 +521,17 @@
 <div class="section level3">
 <h3 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
-<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
-<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
 </div>
 </div>
 </div>
