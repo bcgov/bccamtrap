@@ -166,7 +166,7 @@ validate_timestamp_order <- function(x) {
                   "sample_station_label",
                   "deployment_label")
 
-  x <- dplyr::arrange(x, dplyr::across(all_of(c(group_cols, "date_time"))))
+  x <- dplyr::arrange(x, dplyr::across(dplyr::all_of(c(group_cols, "date_time"))))
 
   y <- dplyr::filter(
     x,
@@ -242,3 +242,6 @@ validate_snow_data <- function(x) {
   )
 }
 
+plot_snow <- function(image_data) {
+
+}
