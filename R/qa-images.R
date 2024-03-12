@@ -22,32 +22,32 @@
 qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRUE) {
   check_image_data(image_data)
 
-  image_data <- check_blanks(image_data)
+  image_data <- find_blanks(image_data)
 
-  image_data <- check_unmatched(
+  image_data <- find_unmatched(
     image_data,
     "species",
     "total_count_episode",
     exclude_human_use = exclude_human_use
   )
-  image_data <- check_unmatched(
+  image_data <- find_unmatched(
     image_data,
     "total_count_episode",
     "species",
     exclude_human_use = exclude_human_use
   )
 
-  image_data <- check_counts(
+  image_data <- validate_counts(
     image_data,
     exclude_human_use = exclude_human_use
   )
 
-  image_data <- check_dup_episode(image_data)
+  image_data <- find_dup_episodes(image_data)
 
-  image_data <- check_timestamp_order(image_data)
+  image_data <- validate_timestamp_order(image_data)
 
   if (check_snow) {
-    image_data <- check_snow_data(image_data)
+    image_data <- validate_snow_data(image_data)
   }
 
   dplyr::filter(
@@ -56,7 +56,7 @@ qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRU
   )
 }
 
-check_blanks <- function(x) {
+find_blanks <- function(x) {
   cols <- c(
     "study_area_name",
     "sample_station_label",
@@ -79,7 +79,7 @@ is_blank <- function(x) {
   is.na(x) | !nzchar(x) | grepl("^\\s+$", x)
 }
 
-check_unmatched <- function(x, y, z, exclude_human_use) {
+find_unmatched <- function(x, y, z, exclude_human_use) {
   colname <- paste("QA", y, "UNMATCHED", z, sep = "_")
   x[[colname]] <- !is_blank(x[[y]]) & is_blank(x[[z]])
 
@@ -89,22 +89,23 @@ check_unmatched <- function(x, y, z, exclude_human_use) {
   x
 }
 
-check_counts <- function(x, exclude_human_use) {
+validate_counts <- function(x,
+                            cols = c(
+                              "adult_male",
+                              "adult_female",
+                              "adult_unclassified_sex",
+                              "yearling_male",
+                              "yearling_female",
+                              "yearling_unclassified_sex",
+                              "young_of_year_unclassified_sex",
+                              "juvenile_unclassified_sex",
+                              "male_unclassified_age",
+                              "female_unclassified_age",
+                              "unclassified_life_stage_and_sex"
+                            ), exclude_human_use) {
   x <- dplyr::mutate(
     x,
-    sum_counts = rowSums(dplyr::pick(
-      "adult_male",
-      "adult_female",
-      "adult_unclassified_sex",
-      "yearling_male",
-      "yearling_female",
-      "yearling_unclassified_sex",
-      "young_of_year_unclassified_sex",
-      "juvenile_unclassified_sex",
-      "male_unclassified_age",
-      "female_unclassified_age",
-      "unclassified_life_stage_and_sex"
-    ),
+    sum_counts = rowSums(dplyr::pick(dplyr::all_of(cols)),
     na.rm = TRUE
     ),
     QA_sum_counts = is_true_vec(
@@ -122,7 +123,7 @@ check_counts <- function(x, exclude_human_use) {
 
 is_true_vec <- Vectorize(isTRUE)
 
-check_dup_episode <- function(x) {
+find_dup_episodes <- function(x) {
 
   extract_ep_num <- function(x) {
     vapply(
@@ -159,7 +160,7 @@ check_dup_episode <- function(x) {
   dplyr::select(x, -dplyr::any_of("dupe_count"))
 }
 
-check_timestamp_order <- function(x) {
+validate_timestamp_order <- function(x) {
 
   group_cols <- c("study_area_name",
                   "sample_station_label",
@@ -196,7 +197,7 @@ check_timestamp_order <- function(x) {
   dplyr::select(x, -dplyr::any_of("tdiff"))
 }
 
-check_snow_data <- function(x) {
+validate_snow_data <- function(x) {
   x <- dplyr::arrange(x, .data$date_time)
 
   group_cols <- c("study_area_name",
