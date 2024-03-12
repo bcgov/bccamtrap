@@ -24,6 +24,7 @@
 make_deployments <- function(path, as_sf = TRUE) {
   csc <- read_cam_setup_checks(path)
   ss <- read_sample_station_info(path, as_sf = as_sf)
+  ci <- read_camera_info(path, as_sf = FALSE)
 
   csc <- dplyr::filter(csc, .data$visit_type != "Deployment")
 
@@ -33,17 +34,43 @@ make_deployments <- function(path, as_sf = TRUE) {
     .cols = dplyr::starts_with("sampling")
   )
 
-  # TODO: Decide what columns we want to keep in both datasets
+  ci <- dplyr::select(
+    ci,
+    "study_area_name",
+    sample_station_label = "parent_sample_station_label",
+    camera_make = "make_of_camera_code",
+    camera_model = "model_of_camera"
+  )
+
+  ci <- dplyr::distinct(ci)
+
   # csc <- dplyr::select(
   #   csc,
   #   "study_area_name",
   #   "sample_station_label",
+  #   # "camera_label",
   #   "deployment_label",
-  #   dplyr::contains("date"),
-  #   dplyr::contains("start"),
-  #   dplyr::contains("end")
+  #   "date_time_checked", # _set and _check
+  #   "deployment_start", # date_set
+  #   "deployment_end", # date_set
+  #   "surveyors", # _set and _check
+  #   "battery_level", # _set and _check
+  #   "batteries_changed", # _set only
+  #   "camera_status_on_arrival", # camera_status _set and _check
+  #   "visit_type", # _set and _check
+  #   "sd_downloaded_y_n", # sd_removed
+  #   "number_of_photos",
+  #   "quiet_period_s",
+  #   "trigger_sensitivity",
+  #   "trigger_timing_s",
+  #   "photos_per_trigger",
+  #   "video_length_per_trigger_s",
+  #   "timelapse_photos",
+  #   "timelapse_time",
+  #   "time_zone",
+  #   "camera_visit_comments"
   # )
-
+  #
   # ss <- dplyr::select(
   #   ss,
   #   "study_area_name",
@@ -56,16 +83,20 @@ make_deployments <- function(path, as_sf = TRUE) {
   #   "station_status",
   #   "set_date",
   #   "elevation_m":"habitat_feature",
-  #   "geometry"
+  #   "site_description_date"
   # )
-
 
   # temporary variable for joining, since
   csc$deployment_start_date <- as.Date(csc$deployment_start)
 
+  ci_ss <- dplyr::left_join(
+    ss, ci,
+    by = c("study_area_name", "sample_station_label")
+  )
+
   ret <- dplyr::left_join(
     csc,
-    ss,
+    ci_ss,
     by = dplyr::join_by(
       "study_area_name",
       "sample_station_label",
