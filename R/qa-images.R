@@ -106,7 +106,7 @@ validate_counts <- function(x,
   x <- dplyr::mutate(
     x,
     sum_counts = rowSums(dplyr::pick(dplyr::all_of(cols)),
-    na.rm = TRUE
+                         na.rm = TRUE
     ),
     QA_sum_counts = is_true_vec(
       .data$sum_counts != .data$total_count_episode |
@@ -242,24 +242,41 @@ validate_snow_data <- function(x) {
   )
 }
 
-plot_snow <- function(image_data) {
+plot_snow <- function(image_data, interactive = FALSE) {
   x <- dplyr::filter(image_data, .data$trigger_mode == "Time Lapse")
+  x$id <- seq_len(nrow(x))
 
-  ggplot2::ggplot(mapping = ggplot2::aes(x = .data$date_time, colour = .data$snow_is_est)) +
-    ggplot2::geom_point(
+  p <- ggplot2::ggplot(
+    mapping = ggplot2::aes(
+      x = .data$date_time,
+      colour = .data$snow_is_est,
+      data_id = .data$id,
+      tooltip = .data$snow_depth
+    )
+  ) +
+    ggiraph::geom_point_interactive(
       data = dplyr::filter(x, !.data$snow_is_est, !is.na(.data$snow_depth)),
-      ggplot2::aes(y = as.numeric(.data$snow_depth))
+      ggplot2::aes(y = as.numeric(.data$snow_depth)),
+      size = 0.5
     ) +
-    ggplot2::geom_errorbar(
+    ggiraph::geom_errorbar_interactive(
       data = dplyr::filter(x, .data$snow_is_est),
-      ggplot2::aes(ymin = .data$snow_depth_lower, ymax = .data$snow_depth_upper)
+      ggplot2::aes(ymin = .data$snow_depth_lower, ymax = .data$snow_depth_upper),
+      size = 0.5
     ) +
     ggplot2::facet_wrap(ggplot2::vars(.data$deployment_label)) +
     ggplot2::scale_colour_manual(values = c("TRUE" = "#f7941d", "FALSE" = "#400456")) +
     ggplot2::theme_bw() +
     ggplot2::labs(
-      title = paste0("Snow depths at ", image_data$study_area_name[1], "Deployments"),
+      title = paste0("Snow depths at ", image_data$study_area_name[1], " Deployments"),
       x = "Date", y = "Snow Depth (cm)", colour = "Depth Estimated"
     )
 
+  if (interactive) {
+    p <- ggiraph::girafe(
+      ggobj = p,
+      options = list(ggiraph::opts_zoom(max = 10))
+    )
+  }
+  p
 }
