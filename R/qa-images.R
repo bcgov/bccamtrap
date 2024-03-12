@@ -278,7 +278,7 @@ plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE) 
       ggplot2::aes(y = as.numeric(.data$snow_depth)),
       size = 0.5
     ) +
-    ggiraph::geom_errorbar_interactive(
+    ggiraph::geom_linerange_interactive(
       data = dplyr::filter(x, .data$snow_is_est),
       ggplot2::aes(ymin = .data$snow_depth_lower, ymax = .data$snow_depth_upper),
       size = 0.5
