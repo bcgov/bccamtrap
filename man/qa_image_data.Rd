@@ -30,7 +30,7 @@ surveyor, trigger mode, temperature, episode)
 \item Snow data
 \itemize{
 \item No blanks unless lens obscured is TRUE
-\item Look for erroneous values (e.g., 10, 10, 110, 10, 15, 20)
+\item Look for snow depth outliers (e.g., 10, 10, 110, 10, 15, 20)
 }
 }
 }

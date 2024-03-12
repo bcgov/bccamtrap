@@ -9,7 +9,7 @@
 #' * Ensure dates for timelapse images are continuous and in order.
 #' * Snow data
 #'     - No blanks unless lens obscured is TRUE
-#'     - Look for erroneous values (e.g., 10, 10, 110, 10, 15, 20)
+#'     - Look for snow depth outliers (e.g., 10, 10, 110, 10, 15, 20)
 #'
 #' @param image_data data.frame of class `image_data`, as read in by [read_image_data()].
 #' @param exclude_human_use should images where `human_use_type` indicates a motion
@@ -138,10 +138,10 @@ check_dup_episode <- function(x) {
     .before = "episode"
   )
 
-  cols <- c("episode_num", "deployment_label", "species")
+  cols <- c("episode_num", "deployment_label", "date_time", "file", "species")
 
   y <- dplyr::select(x, dplyr::all_of(cols))
-  y <- janitor::get_dupes(y, dplyr::all_of(cols))
+  y <- janitor::get_dupes(y, dplyr::all_of(c("episode_num", "deployment_label", "species")))
   y <- dplyr::filter(
     y,
     dplyr::if_all(dplyr::all_of(cols), \(x) !is.na(x))
@@ -151,6 +151,7 @@ check_dup_episode <- function(x) {
     x, y,
     by = cols
   )
+
   x <- dplyr::mutate(
     x,
     QA_dup_episode = !is.na(.data$dupe_count > 0)
@@ -164,7 +165,7 @@ check_timestamp_order <- function(x) {
                   "sample_station_label",
                   "deployment_label")
 
-  x <- dplyr::arrange(x, dplyr::across(c(group_cols, "date_time")))
+  x <- dplyr::arrange(x, dplyr::across(all_of(c(group_cols, "date_time"))))
 
   y <- dplyr::filter(
     x,
@@ -179,7 +180,7 @@ check_timestamp_order <- function(x) {
   y <- dplyr::mutate(
     y,
     tdiff = c(1, diff(as.Date(.data$date_time))),
-    .by = group_cols
+    .by = dplyr::all_of(group_cols)
   )
 
   x <- dplyr::left_join(
@@ -189,7 +190,7 @@ check_timestamp_order <- function(x) {
 
   x <- dplyr::mutate(
     x,
-    QA_TL_lag = !is.na(.data$tdiff) & .data$tdiff != 1,
+    QA_timelapse_lag = !is.na(.data$tdiff) & .data$tdiff != 1,
   )
 
   dplyr::select(x, -dplyr::any_of("tdiff"))
