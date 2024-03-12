@@ -243,5 +243,23 @@ validate_snow_data <- function(x) {
 }
 
 plot_snow <- function(image_data) {
+  x <- dplyr::filter(image_data, .data$trigger_mode == "Time Lapse")
+
+  ggplot2::ggplot(mapping = ggplot2::aes(x = .data$date_time, colour = .data$snow_is_est)) +
+    ggplot2::geom_point(
+      data = dplyr::filter(x, !.data$snow_is_est, !is.na(.data$snow_depth)),
+      ggplot2::aes(y = as.numeric(.data$snow_depth))
+    ) +
+    ggplot2::geom_errorbar(
+      data = dplyr::filter(x, .data$snow_is_est),
+      ggplot2::aes(ymin = .data$snow_depth_lower, ymax = .data$snow_depth_upper)
+    ) +
+    ggplot2::facet_wrap(ggplot2::vars(.data$deployment_label)) +
+    ggplot2::scale_colour_manual(values = c("TRUE" = "#f7941d", "FALSE" = "#400456")) +
+    ggplot2::theme_bw() +
+    ggplot2::labs(
+      title = paste0("Snow depths at ", image_data$study_area_name[1], "Deployments"),
+      x = "Date", y = "Snow Depth (cm)", colour = "Depth Estimated"
+    )
 
 }
