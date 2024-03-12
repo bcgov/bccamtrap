@@ -215,6 +215,10 @@
       
     Message
       ! Run `qa_deployment_images()` to crosscheck images with deployments.
+    Output
+      
+    Message
+      ! Run `qa_image_data()` to run various QA checks.
 
 ---
 
@@ -250,4 +254,8 @@
       
     Message
       ! Run `qa_deployment_images()` to crosscheck images with deployments.
+    Output
+      
+    Message
+      ! Run `qa_image_data()` to run various QA checks.
 
