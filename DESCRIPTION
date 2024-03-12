@@ -25,6 +25,7 @@ Imports:
     methods,
     openxlsx2,
     plotly,
+    RcppRoll,
     readr,
     readxl,
     rlang (>= 1.1.0),
