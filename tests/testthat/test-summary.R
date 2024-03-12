@@ -5,8 +5,8 @@ test_that("summary.sample_stations works", {
   expect_snapshot(summary(ss1))
   expect_snapshot(summary(ss2))
 
-  ss1 <- check_stations_spatial(ss1)
-  ss2 <- check_stations_spatial(ss2)
+  ss1 <- qa_stations_spatial(ss1)
+  ss2 <- qa_stations_spatial(ss2)
 
   expect_snapshot(summary(ss1))
   expect_snapshot(summary(ss2))

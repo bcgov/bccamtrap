@@ -4,7 +4,7 @@
 #' function directly for more control
 #'
 #'
-#' @param image_data image data object.
+#' @inheritParams qa_image_data
 #' @param file path to the output csv file
 #' @param na How should missing values be written. Default empty (`""`)
 #' @param ... other parameters passed on to [readr::write_csv()]
@@ -34,7 +34,7 @@ write_image_data <- function(image_data, file, na = "", ...) {
 #' @param sample_station_info object of class `sample_station_info`
 #' @param camera_info object of class `camera_info`
 #' @param camera_setup_checks object of class `camera_setup_checks`
-#' @param image_data object of class `image_data`
+#' @inheritParams qa_image_data
 #' @inheritParams write_to_spi_sheet
 #'
 #' @return path to the output `file`

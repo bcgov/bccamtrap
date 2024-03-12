@@ -18,7 +18,7 @@
           Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
          50.26  1600.31  2694.84 12805.59  3896.18 71655.56 
     Message
-      ! Run `check_stations_spatial()` to validate the spatial information.
+      ! Run `qa_stations_spatial()` to validate the spatial information.
     Output
       
     Message
@@ -54,7 +54,7 @@
            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
           5.098  3456.952  7303.056  8409.253 12798.212 22787.846 
     Message
-      ! Run `check_stations_spatial()` to validate the spatial information.
+      ! Run `qa_stations_spatial()` to validate the spatial information.
     Output
       
     Message
@@ -214,7 +214,11 @@
                        69                  96                   5                4936 
       
     Message
-      ! Run `check_deployment_images()` to crosscheck images with deployments.
+      ! Run `qa_deployment_images()` to crosscheck images with deployments.
+    Output
+      
+    Message
+      ! Run `qa_image_data()` to run various QA checks.
 
 ---
 
@@ -249,5 +253,9 @@
                  11438 
       
     Message
-      ! Run `check_deployment_images()` to crosscheck images with deployments.
+      ! Run `qa_deployment_images()` to crosscheck images with deployments.
+    Output
+      
+    Message
+      ! Run `qa_image_data()` to run various QA checks.
 

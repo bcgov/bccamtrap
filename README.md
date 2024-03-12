@@ -86,7 +86,7 @@ sample_stations
     #> Simple feature collection with 21 features and 28 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -129.4015 ymin: 51.71167 xmax: -128.5966 ymax: 51.76095
+    #> Bounding box:  xmin: -126.3803 ymin: 47.30585 xmax: -125.6508 ymax: 47.3639
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 21 × 23
     #>    study_area_name study_area_photos sample_station_label station_status
@@ -109,11 +109,11 @@ sample_stations
     #> #   distance_to_feature_m <dbl>, visible_range_m <dbl>, habitat_feature <chr>,
     #> #   lock <chr>, code <chr>, sample_station_comments <chr>, …
 
-Use the `check_stations_spatial()` function to run some basic spatial
+Use the `qa_stations_spatial()` function to run some basic spatial
 validation on the data - namely checking for spatial outliers:
 
 ``` r
-sample_stations <- check_stations_spatial(sample_stations)
+sample_stations <- qa_stations_spatial(sample_stations)
 #> ! Station 19_1 appears to be very far away from other stations. Please check
 #> its coordinates.
 ```
@@ -131,7 +131,7 @@ summary(sample_stations)
 #> ℹ 18 sample stations in 21 locations.
 #> ℹ Summary of station distances (m):
 #>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#>     5.08  4244.60  8704.57 11926.88 14550.71 55469.98
+#>     5.11  4224.12  8658.82 11869.30 14477.47 55180.26
 #> ✖ Detected 1 potential spatial outlier.
 #> ℹ Station status summary:
 #> Camera Active  Camera Moved 
@@ -224,7 +224,7 @@ deployments
     #> Simple feature collection with 28 features and 58 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -122.3968 ymin: 51.21333 xmax: -121.6091 ymax: 51.28496
+    #> Bounding box:  xmin: -123.505 ymin: 51.2599 xmax: -122.7148 ymax: 51.32557
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 28 × 53
     #>    study_area_name sample_station_label deployment_label camera_label surveyors
@@ -335,19 +335,19 @@ summary(image_data)
 #>                1                2                1               88 
 #>             <NA> 
 #>            11438
-#> ! Run `check_deployment_images()` to crosscheck images with deployments.
+#> ! Run `qa_deployment_images()` to crosscheck images with deployments.
+#> ! Run `qa_image_data()` to run various QA checks.
 ```
 
-Use the `check_deployment_images()` function to find deployment labels
-that are in the deployment data but not in the image data, and
-vice-versa. It is usually likely that there will be deployment labels in
-the deployment data that are missing from the image data if not all of
-the images have been processed yet. Deployment labels that are present
-in the image data but not in the deployment data indicate a potential
-problem.
+Use the `qa_deployment_images()` function to find deployment labels that
+are in the deployment data but not in the image data, and vice-versa. It
+is usually likely that there will be deployment labels in the deployment
+data that are missing from the image data if not all of the images have
+been processed yet. Deployment labels that are present in the image data
+but not in the deployment data indicate a potential problem.
 
 ``` r
-check_deployment_images(deployments, image_data)
+qa_deployment_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 ```
@@ -382,6 +382,95 @@ images_with_metadata
 #> #   female_unclassified_age <int>, unclassified_life_stage_and_sex <int>, …
 ```
 
+#### Image Data QA
+
+There are a number of common data quality issues that we can check for
+in the image data itself, aside from those addressed above when
+reconciling deployments and images.
+
+We can use the `qa_image_data()` function to detect the following
+problems:
+
+- Check for blanks in key fields: study area, station label, deployment
+  date, surveyor, trigger mode, temperature, episode
+- Species detected with no count data
+- Count data with no species
+- Sum of individual count fields equals Total Count
+- Multiple entries under same Episode number (indicating possible double
+  entry)
+- Ensure dates for timelapse images are continuous and in order.
+- Snow data
+  - No blanks unless lens obscured is `TRUE`
+  - Look for snow depth outliers (e.g., 10, 10, 110, 10, 15, 20)
+
+Run the `qa_image_data()` function:
+
+``` r
+image_data_qa <- qa_image_data(image_data)
+dim(image_data_qa)
+#> [1] 24 53
+```
+
+We can see that this has identified 24 records with potential problems.
+This dataset has a number of fields starting with `QA_` which help us
+know which images we should have a closer look at. All of the original
+fields, plus any `QA_` fields that have at least one `TRUE` value are
+returned:
+
+``` r
+names(image_data_qa)
+#>  [1] "root_folder"                     "study_area_name"                
+#>  [3] "sample_station_label"            "deployment_label"               
+#>  [5] "date_time"                       "episode_num"                    
+#>  [7] "episode"                         "species"                        
+#>  [9] "total_count_episode"             "obj_count_image"                
+#> [11] "adult_male"                      "adult_female"                   
+#> [13] "adult_unclassified_sex"          "yearling_male"                  
+#> [15] "yearling_female"                 "yearling_unclassified_sex"      
+#> [17] "young_of_year_unclassified_sex"  "juvenile_unclassified_sex"      
+#> [19] "male_unclassified_age"           "female_unclassified_age"        
+#> [21] "unclassified_life_stage_and_sex" "antler_class"                   
+#> [23] "animal_identifiable"             "animal_tagged"                  
+#> [25] "behaviour_1"                     "behaviour_2"                    
+#> [27] "behaviour_3"                     "human_use_type"                 
+#> [29] "human_transport_mode"            "temperature"                    
+#> [31] "snow_depth"                      "snow_is_est"                    
+#> [33] "snow_depth_lower"                "snow_depth_upper"               
+#> [35] "lens_obscured"                   "starred"                        
+#> [37] "needs_review"                    "comment"                        
+#> [39] "surveyor"                        "trigger_mode"                   
+#> [41] "file"                            "relative_path"                  
+#> [43] "delete_flag"                     "QA_BLANK_study_area_name"       
+#> [45] "QA_BLANK_sample_station_label"   "QA_BLANK_deployment_label"      
+#> [47] "QA_BLANK_date_time"              "QA_BLANK_surveyor"              
+#> [49] "QA_BLANK_trigger_mode"           "QA_BLANK_temperature"           
+#> [51] "QA_BLANK_episode"                "QA_timelapse_lag"               
+#> [53] "QA_snow_outlier"
+```
+
+``` r
+select(image_data_qa, root_folder, file, starts_with("QA_"))
+#> # A tibble: 24 × 12
+#>    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹
+#>    <chr>         <chr>        <lgl>                    <lgl>                    
+#>  1 27_20230605   RCNX0030.JPG FALSE                    FALSE                    
+#>  2 100RECNX      RCNX0114.JPG FALSE                    FALSE                    
+#>  3 100RECNX      RCNX0118.JPG FALSE                    FALSE                    
+#>  4 21_2_20230605 RCNX0010.JPG FALSE                    FALSE                    
+#>  5 100RECNX      RCNX0261.JPG FALSE                    FALSE                    
+#>  6 100RECNX      RCNX0339.JPG FALSE                    FALSE                    
+#>  7 100RECNX      RCNX0376.JPG FALSE                    FALSE                    
+#>  8 29_2_20230605 IMG_0252.JPG FALSE                    FALSE                    
+#>  9 100RECNX      IMG_0134.JPG FALSE                    FALSE                    
+#> 10 102RECNX      RCNX0041.JPG FALSE                    FALSE                    
+#> # ℹ 14 more rows
+#> # ℹ abbreviated name: ¹​QA_BLANK_sample_station_label
+#> # ℹ 8 more variables: QA_BLANK_deployment_label <lgl>,
+#> #   QA_BLANK_date_time <lgl>, QA_BLANK_surveyor <lgl>,
+#> #   QA_BLANK_trigger_mode <lgl>, QA_BLANK_temperature <lgl>,
+#> #   QA_BLANK_episode <lgl>, QA_timelapse_lag <lgl>, QA_snow_outlier <lgl>
+```
+
 ### Plots
 
 There are several plotting functions available to help you visualize
@@ -405,6 +494,21 @@ plot_deployments(deployments, date_breaks = "2 months")
 
 ``` r
 # plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")
+```
+
+#### Snow depth plot
+
+We can plot the recorded snow depths across deployments using the
+`plot_snow()` function with our image data:
+
+``` r
+plot_snow(image_data, date_breaks = "2 months")
+```
+
+<img src="man/figures/README-plot-snow-1.png" width="100%" />
+
+``` r
+# plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)
 ```
 
 #### Detection plot

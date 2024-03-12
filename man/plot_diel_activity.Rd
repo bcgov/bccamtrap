@@ -7,7 +7,7 @@
 plot_diel_activity(image_data, interactive = FALSE)
 }
 \arguments{
-\item{image_data}{data.frame of image sequence data, as read via \code{\link[=read_image_data]{read_image_data()}}}
+\item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
 
 \item{interactive}{should the plot be interactive? Default \code{FALSE}}
 }
