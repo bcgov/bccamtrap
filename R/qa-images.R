@@ -50,7 +50,8 @@ qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRU
     image_data <- validate_snow_data(image_data)
   }
 
-  dplyr::filter(
+  # Get only rows with QA issues
+  out <- dplyr::filter(
     image_data,
     dplyr::if_any(dplyr::starts_with("QA"))
   )
@@ -249,16 +250,27 @@ validate_snow_data <- function(x) {
   )
 }
 
-plot_snow <- function(image_data, interactive = FALSE) {
+#' Plot snow depths across deployments
+#'
+#' @inheritParams qa_image_data
+#' @inheritParams plot_deployments
+#'
+#' @inherit plot_deployments return
+#' @export
+plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE) {
   x <- dplyr::filter(image_data, .data$trigger_mode == "Time Lapse")
   x$id <- seq_len(nrow(x))
+  x$tooltip <- glue::glue(
+    "Date: {x$date_time}
+     Snow Depth: {x$snow_depth}"
+  )
 
   p <- ggplot2::ggplot(
     mapping = ggplot2::aes(
       x = .data$date_time,
       colour = .data$snow_is_est,
       data_id = .data$id,
-      tooltip = .data$snow_depth
+      tooltip = .data$tooltip
     )
   ) +
     ggiraph::geom_point_interactive(
@@ -273,7 +285,9 @@ plot_snow <- function(image_data, interactive = FALSE) {
     ) +
     ggplot2::facet_wrap(ggplot2::vars(.data$deployment_label)) +
     ggplot2::scale_colour_manual(values = c("TRUE" = "#f7941d", "FALSE" = "#400456")) +
+    ggplot2::scale_x_datetime(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
+    ggplot2::theme(strip.text = ggplot2::element_text(size = 10), legend.position = "bottom") +
     ggplot2::labs(
       title = paste0("Snow depths at ", image_data$study_area_name[1], " Deployments"),
       x = "Date", y = "Snow Depth (cm)", colour = "Depth Estimated"
@@ -282,6 +296,8 @@ plot_snow <- function(image_data, interactive = FALSE) {
   if (interactive) {
     p <- ggiraph::girafe(
       ggobj = p,
+      width_svg = 7,
+      pointsize = 8,
       options = list(ggiraph::opts_zoom(max = 10))
     )
   }

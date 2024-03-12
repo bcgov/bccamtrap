@@ -142,7 +142,7 @@ qa_deployment_images <- function(deployments, image_data) {
 #' Plot detections over sample deployments to check for misaligned time stamps
 #'
 #' @inheritParams plot_deployments
-#' @param image_data data.frame of image sequence data, as read via [read_image_data()]
+#' @inheritParams qa_image_data
 #'
 #' @inherit plot_deployments return
 #' @export
