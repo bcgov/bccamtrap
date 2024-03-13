@@ -86,7 +86,7 @@ sample_stations
     #> Simple feature collection with 21 features and 28 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -126.3803 ymin: 47.30585 xmax: -125.6508 ymax: 47.3639
+    #> Bounding box:  xmin: -125.5094 ymin: 49.07976 xmax: -124.7531 ymax: 49.14006
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 21 × 23
     #>    study_area_name study_area_photos sample_station_label station_status
@@ -102,7 +102,7 @@ sample_stations
     #>  9 Test Project    Y                 27                   Camera Moved  
     #> 10 Test Project    Y                 28                   Camera Active 
     #> # ℹ 11 more rows
-    #> # ℹ 19 more variables: number_of_cameras <dbl>, set_date <date>,
+    #> # ℹ 19 more variables: number_of_cameras <dbl>, set_date <dttm>,
     #> #   general_location <chr>, elevation_m <dbl>, slope_percent <dbl>,
     #> #   aspect_degrees <dbl>, crown_closure_percent <dbl>,
     #> #   camera_bearing_degrees <dbl>, camera_height_cm <dbl>,
@@ -130,8 +130,8 @@ summary(sample_stations)
 #> └─────────────────────┘
 #> ℹ 18 sample stations in 21 locations.
 #> ℹ Summary of station distances (m):
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#>     5.11  4224.12  8658.82 11869.30 14477.47 55180.26
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>     5.1  4234.4  8681.7 11898.2 14514.3 55325.3
 #> ✖ Detected 1 potential spatial outlier.
 #> ℹ Station status summary:
 #> Camera Active  Camera Moved 
@@ -179,7 +179,7 @@ camera_info
     #> 10 Test Project    28                          UBC 4        <NA>               
     #> # ℹ 11 more rows
     #> # ℹ 4 more variables: model_of_camera <chr>, camera_comments <chr>,
-    #> #   site_description_comments <chr>, site_description_date <date>
+    #> #   site_description_comments <chr>, site_description_date <dttm>
 
 #### Camera Setup and Checks:
 
@@ -221,12 +221,12 @@ deployments <- make_deployments(metadata_path)
 deployments
 ```
 
-    #> Simple feature collection with 28 features and 58 fields
+    #> Simple feature collection with 28 features and 60 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -123.505 ymin: 51.2599 xmax: -122.7148 ymax: 51.32557
+    #> Bounding box:  xmin: -130.1011 ymin: 52.12789 xmax: -129.2887 ymax: 52.1752
     #> Geodetic CRS:  WGS 84
-    #> # A tibble: 28 × 53
+    #> # A tibble: 28 × 55
     #>    study_area_name sample_station_label deployment_label camera_label surveyors
     #>    <chr>           <chr>                <chr>            <chr>        <chr>    
     #>  1 Test Project    19_1                 19_1_20230605    UBC 2        CM, BT   
@@ -240,7 +240,7 @@ deployments
     #>  9 Test Project    27                   27_20230605      Eco6690      CM, BT   
     #> 10 Test Project    28                   28_20230605      UBC 4        CM, BT   
     #> # ℹ 18 more rows
-    #> # ℹ 48 more variables: date_time_checked <dttm>, deployment_start <dttm>,
+    #> # ℹ 50 more variables: date_time_checked <dttm>, deployment_start <dttm>,
     #> #   deployment_end <dttm>, deployment_duration_days <dbl>,
     #> #   deployment_duration_valid <lgl>, total_visit_or_deployment_time <dbl>,
     #> #   unit_of_total_time_code <chr>, visit_type <chr>,
@@ -360,7 +360,7 @@ images_with_metadata <- merge_deployments_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 images_with_metadata
-#> # A tibble: 11,833 × 93
+#> # A tibble: 11,833 × 95
 #>    root_folder deployment_label date_time           episode species
 #>    <chr>       <chr>            <dttm>              <chr>   <chr>  
 #>  1 100RECNX    19_1_20230605    2022-11-10 15:15:53 1:1|5   <NA>   
@@ -374,7 +374,7 @@ images_with_metadata
 #>  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   <NA>   
 #> 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   <NA>   
 #> # ℹ 11,823 more rows
-#> # ℹ 88 more variables: total_count_episode <dbl>, obj_count_image <int>,
+#> # ℹ 90 more variables: total_count_episode <dbl>, obj_count_image <int>,
 #> #   adult_male <int>, adult_female <int>, adult_unclassified_sex <int>,
 #> #   yearling_male <int>, yearling_female <int>,
 #> #   yearling_unclassified_sex <int>, young_of_year_unclassified_sex <int>,
