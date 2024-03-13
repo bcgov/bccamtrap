@@ -83,10 +83,6 @@ find_blanks <- function(x) {
   )
 }
 
-is_blank <- function(x) {
-  is.na(x) | !nzchar(x) | grepl("^\\s+$", x)
-}
-
 find_unmatched <- function(x, y, z, exclude_human_use) {
   colname <- paste("QA", y, "UNMATCHED", z, sep = "_")
   x[[colname]] <- !is_blank(x[[y]]) & is_blank(x[[z]])
@@ -128,8 +124,6 @@ validate_counts <- function(x,
 
   dplyr::select(x, -dplyr::any_of("sum_counts"))
 }
-
-is_true_vec <- Vectorize(isTRUE)
 
 find_dup_episodes <- function(x) {
 
