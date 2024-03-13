@@ -218,7 +218,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["Date"]
+          "value": ["POSIXct", "POSIXt"]
         },
         {
           "type": "character",
@@ -538,7 +538,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["Date"]
+          "value": ["POSIXct", "POSIXt"]
         },
         {
           "type": "character",
