@@ -7,3 +7,11 @@
 if (exists("%||%", envir = baseenv())) {
   `%||%` <- get("%||%", envir = baseenv())
 }
+
+compact <- function(l) {
+  Filter(Negate(is.null), l)
+}
+
+invert <- function(v) {
+  stats::setNames(names(v), v)
+}
