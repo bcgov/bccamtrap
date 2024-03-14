@@ -8,6 +8,8 @@
 #' @param deployments deployments data, as created by [make_deployments()]
 #' @param date_breaks How to break up the dates on the x axis. See [scales::date_breaks()]. Default `"1 month"`
 #' @param interactive should the plot be interactive? Default `FALSE`
+#' @param study_area_name Study area name for the plot. It will be used if it is
+#'   already in the data in a `study_area_name` column, otherwise provide it here.
 #'
 #' @return a `ggplot2` object if `interactive = FALSE`, a `plotly` object if `TRUE`
 #' @export

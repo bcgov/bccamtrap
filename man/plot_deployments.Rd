@@ -4,12 +4,20 @@
 \alias{plot_deployments}
 \title{Plot timelines of image deployments}
 \usage{
-plot_deployments(deployments, date_breaks = "1 month", interactive = FALSE)
+plot_deployments(
+  deployments,
+  date_breaks = "1 month",
+  study_area_name = NULL,
+  interactive = FALSE
+)
 }
 \arguments{
 \item{deployments}{deployments data, as created by \code{\link[=make_deployments]{make_deployments()}}}
 
 \item{date_breaks}{How to break up the dates on the x axis. See \code{\link[scales:date_breaks]{scales::date_breaks()}}. Default \code{"1 month"}}
+
+\item{study_area_name}{Study area name for the plot. It will be used if it is
+already in the data in a \code{study_area_name} column, otherwise provide it here.}
 
 \item{interactive}{should the plot be interactive? Default \code{FALSE}}
 }
