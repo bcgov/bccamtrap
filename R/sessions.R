@@ -108,25 +108,29 @@ make_deployments <- function(path, as_sf = TRUE) {
   )
 
   ret <- dplyr::select(ret, -"deployment_start_date")
-  ret <- dplyr::mutate(
-    ret,
-    deployment_duration_days = lubridate::interval(
-      .data$deployment_start,
-      .data$deployment_end
-    ) / lubridate::ddays(1),
-    deployment_duration_valid = !is.na(.data$deployment_duration_days) &
-      !is.na(.data$deployment_end) &
-      .data$deployment_duration_days > 0
-  )
-  ret <- dplyr::relocate(
-    ret,
-    dplyr::starts_with("deployment_duration"),
-    .after = "deployment_end"
-  )
+  ret <- make_deployment_validity_columns(ret)
 
   if (inherits(ss, "sf")) {
     sf::st_geometry(ret) <- attr(ss, "sf_column")
   }
 
   as.deployments(ret)
+}
+
+make_deployment_validity_columns <- function(x) {
+  x <- dplyr::mutate(
+    x,
+    deployment_duration_days = lubridate::interval(
+      as.Date(.data$deployment_start),
+      as.Date(.data$deployment_end)
+    ) / lubridate::ddays(1),
+    deployment_duration_valid = !is.na(.data$deployment_duration_days) &
+      !is.na(.data$deployment_end) &
+      .data$deployment_duration_days > 0
+  )
+  dplyr::relocate(
+    x,
+    dplyr::starts_with("deployment_duration"),
+    .after = "deployment_end"
+  )
 }
