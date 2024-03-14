@@ -23,11 +23,13 @@ read_deployments_csv <- function(path, as_sf = TRUE) {
   if (as_sf) {
     deployments <- sf::st_as_sf(
       deployments,
-      coords = c("longitude", "latitude"),
+      coords = c("longitude_sample_station_dd", "latitude_sample_station_dd"),
       crs = 4326,
       remove = FALSE
     )
   }
+
+  deployments <- make_deployment_validity_columns(deployments)
 
   as.deployments(deployments)
 }
@@ -41,23 +43,23 @@ deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
     ),
     Station_ID = list(
       readr_spec = readr::col_character(),
-      spi_name = "station_id"
+      spi_name = "sample_station_label"
     ),
     Deployment_ID = list(
       readr_spec = readr::col_character(),
-      spi_name = "deployment_id"
+      spi_name = "deployment_label"
     ),
     Longitude = list(
       readr_spec = readr::col_double(),
-      spi_name = "longitude"
+      spi_name = "longitude_sample_station_dd"
     ),
     Latitude = list(
       readr_spec = readr::col_double(),
-      spi_name = "latitude"
+      spi_name = "latitude_sample_station_dd"
     ),
     Date_Set = list(
       readr_spec = readr::col_datetime("%m/%d/%Y %H:%M:%S %p"),
-      spi_name = "date_set"
+      spi_name = "deployment_start"
     ),
     Camera_Label = list(
       readr_spec = readr::col_character(),
@@ -93,43 +95,43 @@ deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
     ),
     Time_Zone_Set = list(
       readr_spec = readr::col_character(),
-      spi_name = "time_zone_set"
+      spi_name = "time_zone"
     ),
     Time_lapse_Start_Set = list(
       readr_spec = readr::col_time(format = ""),
-      spi_name = "time_lapse_start_set"
+      spi_name = "timelapse_time"
     ),
     Time_lapse_End_Set = list(
       readr_spec = readr::col_time(format = ""),
-      spi_name = "time_lapse_end_set"
+      spi_name = "time_lapse_end"
     ),
     Time_lapse_Interval_Set = list(
       readr_spec = readr::col_double(),
-      spi_name = "time_lapse_interval_set"
+      spi_name = "time_lapse_interval"
     ),
     Video_Length_Per_Trigger_Set = list(
       readr_spec = readr::col_double(),
-      spi_name = "video_length_per_trigger_set"
+      spi_name = "video_length_per_trigger_s"
     ),
     Photos_Per_Trigger_Set = list(
       readr_spec = readr::col_double(),
-      spi_name = "photos_per_trigger_set"
+      spi_name = "photos_per_trigger"
     ),
     Trigger_Timing_Set = list(
       readr_spec = readr::col_double(),
-      spi_name = "trigger_timing_set"
+      spi_name = "trigger_timing_s"
     ),
     Trigger_Sensitivity_Set = list(
       readr_spec = readr::col_character(),
-      spi_name = "trigger_sensitivity_set"
+      spi_name = "trigger_sensitivity"
     ),
     Quiet_Period_Set = list(
       readr_spec = readr::col_double(),
-      spi_name = "quiet_period_set"
+      spi_name = "quiet_period_s"
     ),
     Camera_Visit_Comments_Set = list(
       readr_spec = readr::col_character(),
-      spi_name = "camera_visit_comments_set"
+      spi_name = "camera_visit_comments"
     ),
     Form_Status = list(
       readr_spec = readr::col_character(),
@@ -137,7 +139,7 @@ deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
     ),
     Date_Check = list(
       readr_spec = readr::col_datetime("%m/%d/%Y %H:%M:%S %p"),
-      spi_name = "date_check"
+      spi_name = "deployment_end"
     ),
     Visit_Type_Check = list(
       readr_spec = readr::col_character(),
