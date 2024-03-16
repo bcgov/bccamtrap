@@ -2,14 +2,12 @@
 #'
 #' @param path path to the csv file exported from the field form
 #' @param wlrs_project_name If you want to subset to a particular project or projects,
-#'   supply the Project ID(s) as a character vector. If `NULL` (the default),
+#'   supply the WLRS Project Names(s) as a character vector. If `NULL` (the default),
 #'   reads all rows in the csv.
-#' @param
+#' @inheritParams read_sample_station_info
 #'
-#' @return
+#' @return a data.frame (sf object if `as_sf = TRUE`) containing sample station csv contents
 #' @export
-#'
-#' @examples
 read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
 
   spec <- sample_station_csv_spec("readr_spec")
@@ -17,9 +15,10 @@ read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE
 
 
   spi_names <- invert(sample_station_csv_spec("spi_name"))
-  out <- dplyr::rename(ssi, dplyr::any_of(spi_names))
+  ssi <- dplyr::rename(ssi, dplyr::any_of(spi_names))
 
   if (!is.null(wlrs_project_name)) {
+    check_project_name(ssi, wlrs_project_name)
     ssi <- filter(ssi, .data$wlrs_project_name %in% wlrs_project_name)
   }
 
@@ -31,17 +30,24 @@ read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE
   as.sample_station_info(out)
 }
 
+#' Read csv output from deployments field form
+#'
+#' @inheritParams read_sample_station_csv
+#'
+#' @return a data.frame (sf object if `as_sf = TRUE`) containing deployments csv contents
+#' @export
 read_deployments_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
   spec <- deployments_csv_spec("readr_spec")
   deployments <- readr::read_csv(path, col_types = spec, lazy = TRUE)
+
 
   spi_names <- invert(deployments_csv_spec("spi_name"))
   deployments <- dplyr::select(deployments, dplyr::any_of(spi_names))
 
   if (!is.null(wlrs_project_name)) {
+    check_project_name(deployments, wlrs_project_name)
     deployments <- filter(deployments, .data$wlrs_project_name %in% wlrs_project_name)
   }
-
 
   if (as_sf) {
     deployments <- sf::st_as_sf(
@@ -63,6 +69,10 @@ deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
     OBJECTID = list(
       readr_spec = readr::col_skip(),
       spi_name = "objectid"
+    ),
+    WLRS_Project_Name = list(
+      readr_spec = readr::col_character(),
+      spi_name = "wlrs_project_name"
     ),
     Station_ID = list(
       readr_spec = readr::col_character(),
@@ -226,7 +236,7 @@ sample_station_csv_spec <- function(what = c("readr_spec", "spi_name")) {
       readr_spec = readr::col_skip(),
       spi_name = NULL
     ),
-    Project_ID = list(
+    WLRS_Project_Name = list(
       readr_spec = readr::col_character(),
       spi_name = "wlrs_project_name"
     ),
@@ -330,4 +340,15 @@ sample_station_csv_spec <- function(what = c("readr_spec", "spi_name")) {
   }
 
   unlist(compact(ret))
+}
+
+check_project_name <- function(data, project_name, project_name_col = "wlrs_project_name",
+                               arg = rlang::caller_arg(project_name), call = rlang::caller_env()) {
+  if (is.null(project_name)) return(invisible(FALSE))
+  projects <- unique(data[[project_name_col]])
+  if (!project_name %in% projects) {
+    cli::cli_abort("{.arg {arg}} is not present in the data. Choose one of: {.val {projects}}",
+                   arg = arg, call = call)
+  }
+  invisible(TRUE)
 }

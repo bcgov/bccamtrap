@@ -69,8 +69,7 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
 #' This will read in the camera information from a RISC worksheet following the
 #' 'v20230518' template
 #'
-#' @inheritParams read_project_info
-#' @param as_sf should the data be returned as an `sf` object of the station locations? Default `TRUE`
+#' @inheritParams read_sample_station_info
 #'
 #' @return a `data.frame` of station information, as an `sf` object if specified.
 #' @export
