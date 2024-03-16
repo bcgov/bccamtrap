@@ -1,24 +1,47 @@
-read_sample_station_csv <- function(path, as_sf = TRUE) {
+#' Read csv output from sample station field form
+#'
+#' @param path path to the csv file exported from the field form
+#' @param wlrs_project_name If you want to subset to a particular project or projects,
+#'   supply the Project ID(s) as a character vector. If `NULL` (the default),
+#'   reads all rows in the csv.
+#' @param
+#'
+#' @return
+#' @export
+#'
+#' @examples
+read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
 
   spec <- sample_station_csv_spec("readr_spec")
-  ssi <- readr::read_csv(path, col_types = spec)
+  ssi <- readr::read_csv(path, col_types = spec, lazy = TRUE)
+
+
+  spi_names <- invert(sample_station_csv_spec("spi_name"))
+  out <- dplyr::rename(ssi, dplyr::any_of(spi_names))
+
+  if (!is.null(wlrs_project_name)) {
+    ssi <- filter(ssi, .data$wlrs_project_name %in% wlrs_project_name)
+  }
 
   if (as_sf) {
     ssi <- sf::st_as_sf(ssi, coords = c("x", "y"), crs = 4326, remove = FALSE)
   }
 
-  spi_names <- invert(sample_station_csv_spec("spi_name"))
-  out <- dplyr::rename(ssi, dplyr::any_of(spi_names))
 
   as.sample_station_info(out)
 }
 
-read_deployments_csv <- function(path, as_sf = TRUE) {
+read_deployments_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
   spec <- deployments_csv_spec("readr_spec")
-  deployments <- readr::read_csv(path, col_types = spec)
+  deployments <- readr::read_csv(path, col_types = spec, lazy = TRUE)
 
   spi_names <- invert(deployments_csv_spec("spi_name"))
   deployments <- dplyr::select(deployments, dplyr::any_of(spi_names))
+
+  if (!is.null(wlrs_project_name)) {
+    deployments <- filter(deployments, .data$wlrs_project_name %in% wlrs_project_name)
+  }
+
 
   if (as_sf) {
     deployments <- sf::st_as_sf(
@@ -205,7 +228,7 @@ sample_station_csv_spec <- function(what = c("readr_spec", "spi_name")) {
     ),
     Project_ID = list(
       readr_spec = readr::col_character(),
-      spi_name = "project_id"
+      spi_name = "wlrs_project_name"
     ),
     General_Location = list(
       readr_spec = readr::col_character(),
