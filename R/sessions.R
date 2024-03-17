@@ -116,7 +116,7 @@ make_deployments <- function(path, as_sf = TRUE) {
     sf::st_geometry(ret) <- attr(ss, "sf_column")
   }
 
-  as.deployments(ret)
+  as.deployments(ret, "spi-sheet")
 }
 
 make_deployment_validity_columns <- function(x) {

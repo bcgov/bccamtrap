@@ -59,9 +59,9 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
 
   ss_info <- add_project_name_from_spi_sheet(path, ss_info)
 
-  ss_info <- as.sample_station_info(ss_info)
+  ss_info <- as.sample_station_info(ss_info, "spi-sheet")
   if (as_sf) {
-    ss_info <- to_sf(ss_info)
+    ss_info <- to_sf(ss_info, subclass = "spi-sheet")
   }
   ss_info
 }
@@ -98,7 +98,7 @@ read_camera_info <- function(path, as_sf = TRUE, ...) {
   cam_info <- as.camera_info(cam_info)
 
   if (as_sf) {
-    cam_info <- to_sf(cam_info)
+    cam_info <- to_sf(cam_info, sublass = "spi-sheet")
   }
   cam_info
 }
@@ -328,17 +328,17 @@ to_sf.default <- function(x, ...) {
 
 #' @export
 to_sf.camera_info <- function(x, ...) {
-  out <- to_sf_impl_(x, type = "camera", ...)
-  as.camera_info(out)
+  out <- to_sf_impl_(x, type = "camera")
+  as.camera_info(out, ...)
 }
 
 #' @export
 to_sf.sample_station_info <- function(x, ...) {
-  out <- to_sf_impl_(x, type = "sample_station", ...)
-  as.sample_station_info(out)
+  out <- to_sf_impl_(x, type = "sample_station")
+  as.sample_station_info(out, ...)
 }
 
-to_sf_impl_ <- function(x, type = c("camera", "sample_station"), ...) {
+to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
 
   type <- match.arg(type)
   zone_col <- paste0("utm_zone_", type)

@@ -31,7 +31,7 @@ read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE
     )
   }
 
-  as.sample_station_info(ssi)
+  as.sample_station_info(ssi, "field-form")
 }
 
 #' Read csv output from deployments field form
@@ -64,7 +64,7 @@ read_deployments_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
 
   deployments <- make_deployment_validity_columns(deployments)
 
-  as.deployments(deployments)
+  as.deployments(deployments, "field-form")
 }
 
 deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
