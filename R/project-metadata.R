@@ -379,8 +379,7 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
       x_ll,
       coords = c(lon_col, lat_col),
       crs = "EPSG:4326",
-      remove = FALSE,
-      ...
+      remove = FALSE
     )
   }
 
