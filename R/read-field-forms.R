@@ -192,7 +192,7 @@ deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
     ),
     Camera_Status_Check = list(
       readr_spec = readr::col_character(),
-      spi_name = "camera_status_check"
+      spi_name = "camera_status_on_arrival"
     ),
     Surveyor_Check = list(
       readr_spec = readr::col_character(),
