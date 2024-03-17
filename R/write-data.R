@@ -4,7 +4,7 @@
 #' function directly for more control
 #'
 #'
-#' @param image_data image data object.
+#' @inheritParams qa_image_data
 #' @param file path to the output csv file
 #' @param na How should missing values be written. Default empty (`""`)
 #' @param ... other parameters passed on to [readr::write_csv()]
@@ -34,7 +34,7 @@ write_image_data <- function(image_data, file, na = "", ...) {
 #' @param sample_station_info object of class `sample_station_info`
 #' @param camera_info object of class `camera_info`
 #' @param camera_setup_checks object of class `camera_setup_checks`
-#' @param image_data object of class `image_data`
+#' @inheritParams qa_image_data
 #' @inheritParams write_to_spi_sheet
 #'
 #' @return path to the output `file`
@@ -69,6 +69,85 @@ fill_spi_template <- function(sample_station_info,
   write_to_spi_sheet(camera_info, file, template = file)
   write_to_spi_sheet(camera_setup_checks, file, template = file)
   write_to_spi_sheet(image_data, file, template = file)
+
+  invisible(file)
+}
+
+#' Write data to a new SPI submission file from field form data
+#'
+#' This will write only the default columns for each of the tabs in the SPI
+#' template.
+#'
+#' `sample_station_info` and `deployments` are required. If you want to only
+#' write to the metadata tabs and not the Sequence Image Data, you can leave the
+#' `image_data` argument as `NULL`, and write to the file another time with
+#' [write_to_spi_sheet()].
+#'
+#' @param sample_station_info object of class `c("sample_station_info",
+#'   "field-form")`
+#' @param deployments object of class `c("deployments", "field-form")`
+#' @param wlrs_project_name the name of the project to write, if there is more
+#'   than one project in `sample_station_info` and/or `deployments`.
+#' @inheritParams qa_image_data
+#' @inheritParams write_to_spi_sheet
+#'
+#' @return path to the output `file`
+#' @export
+fill_spi_template_ff <- function(sample_station_info,
+                              deployments,
+                              image_data = NULL,
+                              wlrs_project_name = NULL,
+                              file,
+                              template = default_spi_template()) {
+
+  check_sample_station_info(sample_station_info)
+  stopifnot(inherits(sample_station_info, "field-form"))
+  check_deployments(deployments)
+  stopifnot(inherits(deployments, "field-form"))
+  if (!is.null(image_data)) check_image_data(image_data)
+  check_name(file)
+
+  if (!tools::file_ext(file) %in% c("xls", "xlsx", "xlsm")) {
+    cli::cli_abort("file must be an Excel file name")
+  }
+
+  if (!is.null(wlrs_project_name)) {
+    check_project_name(sample_station_info, wlrs_project_name)
+    sample_station_info <- dplyr::filter(
+      sample_station_info,
+      .data$wlrs_project_name %in% {{wlrs_project_name}}
+    )
+
+    check_project_name(deployments, wlrs_project_name)
+    deployments <- dplyr::filter(
+      deployments,
+      .data$wlrs_project_name %in% {{wlrs_project_name}}
+    )
+  }
+
+  if (!is.null(image_data) && !"camera_label" %in% names(image_data)) {
+    image_data <- dplyr::left_join(
+      image_data,
+      dplyr::select(deployments, "deployment_label", "camera_label"),
+      by = "deployment_label"
+    )
+  }
+
+  # First one uses the template, subsequent ones need to write to the new file
+  write_to_spi_sheet_ff(
+    sample_station_info,
+    deployments,
+    file,
+    template = template
+  )
+
+  if (!is.null(image_data)) {
+    write_to_spi_sheet(
+      image_data,
+      file,
+      template = file
+    )
+  }
 
   invisible(file)
 }
@@ -172,9 +251,43 @@ write_to_spi_sheet.image_data <- function(x,
   )
 }
 
+write_to_spi_sheet_ff <- function(sample_station_info,
+                                  deployments,
+                                  file,
+                                  ...,
+                                  template = default_spi_template()) {
+  deployments <- dplyr::left_join(
+    deployments,
+    sf::st_drop_geometry(sample_station_info),
+    by = c("wlrs_project_name", "sample_station_label")
+  )
+  write_to_spi_sheet_impl_(
+    sample_station_info,
+    file,
+    sheet = "Sample Station Information",
+    template = template
+  )
+  write_to_spi_sheet_impl_(
+    deployments,
+    file,
+    sheet = "Camera Information",
+    template = file
+  )
+  write_to_spi_sheet_impl_(
+    deployments,
+    file,
+    sheet = "Camera Setup and Checks",
+    dep_start_col = "deployment_start",
+    dep_end_col = "deployment_end",
+    template = file
+  )
+}
+
 write_to_spi_sheet_impl_ <- function(x,
                                      output_file,
                                      sheet,
+                                     dep_start_col = "sampling_start",
+                                     dep_end_col = "sampling_end",
                                      ...,
                                      template = default_spi_template()) {
   wb <- openxlsx2::wb_load(template)
@@ -194,7 +307,12 @@ write_to_spi_sheet_impl_ <- function(x,
     dimnames = list(NULL, template_colnames)
   ))
 
-  default_columns <- get_default_columns(x, sheet)
+  default_columns <- get_default_columns(
+    x,
+    sheet,
+    dep_start_col = dep_start_col,
+    dep_end_col = dep_end_col
+  )
 
   other_columns <- eval(substitute(list(...)), envir = x)
 
@@ -223,7 +341,7 @@ write_to_spi_sheet_impl_ <- function(x,
   invisible(x)
 }
 
-get_default_columns <- function(x, sheet) {
+get_default_columns <- function(x, sheet, dep_start_col, dep_end_col) {
   switch(
     sheet,
     "Sample Station Information" = list(
@@ -241,8 +359,8 @@ get_default_columns <- function(x, sheet) {
     "Camera Setup and Checks" = list(
       `Study Area Name` = x$study_area_name,
       `Camera Label` = x$camera_label,
-      `Date` = format(x$sampling_start, "%d-%b-%Y"),
-      `Visit End Date` = format(x$sampling_end, "%d-%b-%Y")
+      `Date` = format(x[[dep_start_col]], "%d-%b-%Y"),
+      `Visit End Date` = format(x[[dep_end_col]], "%d-%b-%Y")
     ),
     "Sequence Image Data" = list(
       `Study Area Name` = x$study_area_name,

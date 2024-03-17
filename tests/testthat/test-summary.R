@@ -5,8 +5,8 @@ test_that("summary.sample_stations works", {
   expect_snapshot(summary(ss1))
   expect_snapshot(summary(ss2))
 
-  ss1 <- check_stations_spatial(ss1)
-  ss2 <- check_stations_spatial(ss2)
+  ss1 <- qa_stations_spatial(ss1)
+  ss2 <- qa_stations_spatial(ss2)
 
   expect_snapshot(summary(ss1))
   expect_snapshot(summary(ss2))
@@ -26,4 +26,20 @@ test_that("summary.image_data works", {
 
   expect_snapshot(summary(id1))
   expect_snapshot(summary(id2))
+})
+
+test_that("summary.sample_stations works - field forms", {
+  ss_csv <- read_sample_station_csv(test_path("sample-station-field-form.csv"))
+
+  expect_snapshot(summary(ss_csv))
+
+  ss_csv <- qa_stations_spatial(ss_csv)
+
+  expect_snapshot(summary(ss_csv))
+})
+
+test_that("summary.deployments works - field forms", {
+  dep_csv <- read_deployments_csv(test_path("deployments-field-form.csv"))
+
+  expect_snapshot(summary(dep_csv))
 })

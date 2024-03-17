@@ -29,7 +29,7 @@ summary.sample_station_info <- function(object, ...) {
     )
   } else {
     cli::cli_alert_warning(
-      "Run {.fn check_stations_spatial} to validate the spatial information."
+      "Run {.fn qa_stations_spatial} to validate the spatial information."
     )
   }
   cli::cat_line("")
@@ -45,7 +45,13 @@ summary.sample_station_info <- function(object, ...) {
 
 #' @export
 summary.deployments <- function(object, ...) {
-  cli::cat_boxx("Deployments", object$study_area_name[1], col = "lightgreen")
+  study_area_name <- if ("study_area_name" %in% names(object)) {
+  object$study_area_name[1]
+  } else {
+    ""
+  }
+
+  cli::cat_boxx("Deployments", study_area_name, col = "lightgreen")
   cli::cli_alert_info(c(
     "{.val {length(unique(object$sample_station_label))}}",
     " sample station{?s} in {.val {length(unique(object$deployment_label))}} deployments{?s}."
@@ -64,11 +70,17 @@ summary.deployments <- function(object, ...) {
     "Camera status on arrival summary:"
   )
   table_print_helper(object$camera_status_on_arrival)
+
+  if (!"number_of_photos" %in% names(object))
+    return(invisible(object))
+
   n_photos_range <- range(object$number_of_photos, na.rm = TRUE)
   cli::cli_alert_info(c(
     "There are {.val {sum(object$number_of_photos, na.rm = TRUE)}} images. ",
     "Photos per deployment range betwen {.val {n_photos_range}}."
   ))
+
+  invisible(object)
 }
 
 #' @export
@@ -113,7 +125,12 @@ summary.image_data <- function(object, ...) {
 
   cli::cat_line("")
   cli::cli_alert_warning(
-    "Run {.fn check_deployment_images} to crosscheck images with deployments."
+    "Run {.fn qa_deployment_images} to crosscheck images with deployments."
+  )
+
+    cli::cat_line("")
+  cli::cli_alert_warning(
+    "Run {.fn qa_image_data} to run various QA checks."
   )
 }
 

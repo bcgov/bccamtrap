@@ -60,7 +60,7 @@ data_path <- "~/data/wc-wlrs-cam-data/camera-data/project_1/"
 Read in project metadata from the SPI worksheet. There are functions to
 read the relevant tabs:
 
-### Project Information
+#### Project Information
 
 ``` r
 proj <- read_project_info(metadata_path)
@@ -83,37 +83,37 @@ sample_stations <- read_sample_station_info(metadata_path)
 sample_stations
 ```
 
-    #> Simple feature collection with 21 features and 28 fields
+    #> Simple feature collection with 21 features and 29 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -129.4015 ymin: 51.71167 xmax: -128.5966 ymax: 51.76095
+    #> Bounding box:  xmin: -124.0718 ymin: 45.4409 xmax: -123.3717 ymax: 45.5056
     #> Geodetic CRS:  WGS 84
-    #> # A tibble: 21 × 23
-    #>    study_area_name study_area_photos sample_station_label station_status
-    #>    <chr>           <chr>             <chr>                <chr>         
-    #>  1 Test Project    Y                 19_1                 Camera Active 
-    #>  2 Test Project    Y                 19_2                 Camera Active 
-    #>  3 Test Project    Y                 20                   Camera Active 
-    #>  4 Test Project    Y                 21_1                 Camera Active 
-    #>  5 Test Project    Y                 21_2                 Camera Active 
-    #>  6 Test Project    Y                 24                   Camera Active 
-    #>  7 Test Project    Y                 25                   Camera Active 
-    #>  8 Test Project    Y                 26                   Camera Active 
-    #>  9 Test Project    Y                 27                   Camera Moved  
-    #> 10 Test Project    Y                 28                   Camera Active 
+    #> # A tibble: 21 × 24
+    #>    wlrs_project_name      study_area_name study_area_photos sample_station_label
+    #>    <chr>                  <chr>           <chr>             <chr>               
+    #>  1 2022 - ongoing - Roos… Test Project    Y                 19_1                
+    #>  2 2022 - ongoing - Roos… Test Project    Y                 19_2                
+    #>  3 2022 - ongoing - Roos… Test Project    Y                 20                  
+    #>  4 2022 - ongoing - Roos… Test Project    Y                 21_1                
+    #>  5 2022 - ongoing - Roos… Test Project    Y                 21_2                
+    #>  6 2022 - ongoing - Roos… Test Project    Y                 24                  
+    #>  7 2022 - ongoing - Roos… Test Project    Y                 25                  
+    #>  8 2022 - ongoing - Roos… Test Project    Y                 26                  
+    #>  9 2022 - ongoing - Roos… Test Project    Y                 27                  
+    #> 10 2022 - ongoing - Roos… Test Project    Y                 28                  
     #> # ℹ 11 more rows
-    #> # ℹ 19 more variables: number_of_cameras <dbl>, set_date <date>,
-    #> #   general_location <chr>, elevation_m <dbl>, slope_percent <dbl>,
-    #> #   aspect_degrees <dbl>, crown_closure_percent <dbl>,
+    #> # ℹ 20 more variables: station_status <chr>, number_of_cameras <dbl>,
+    #> #   set_date <dttm>, general_location <chr>, elevation_m <dbl>,
+    #> #   slope_percent <dbl>, aspect_degrees <dbl>, crown_closure_percent <dbl>,
     #> #   camera_bearing_degrees <dbl>, camera_height_cm <dbl>,
     #> #   distance_to_feature_m <dbl>, visible_range_m <dbl>, habitat_feature <chr>,
     #> #   lock <chr>, code <chr>, sample_station_comments <chr>, …
 
-Use the `check_stations_spatial()` function to run some basic spatial
+Use the `qa_stations_spatial()` function to run some basic spatial
 validation on the data - namely checking for spatial outliers:
 
 ``` r
-sample_stations <- check_stations_spatial(sample_stations)
+sample_stations <- qa_stations_spatial(sample_stations)
 #> ! Station 19_1 appears to be very far away from other stations. Please check
 #> its coordinates.
 ```
@@ -131,7 +131,7 @@ summary(sample_stations)
 #> ℹ 18 sample stations in 21 locations.
 #> ℹ Summary of station distances (m):
 #>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#>     5.08  4244.60  8704.57 11926.88 14550.71 55469.98
+#>     5.13  4211.96  8630.12 11834.38 14433.11 54998.97
 #> ✖ Detected 1 potential spatial outlier.
 #> ℹ Station status summary:
 #> Camera Active  Camera Moved 
@@ -159,27 +159,29 @@ camera_info <- read_camera_info(metadata_path)
 camera_info
 ```
 
-    #> Simple feature collection with 21 features and 13 fields
+    #> Simple feature collection with 21 features and 14 fields
     #> Geometry type: POINT
     #> Dimension:     XY
     #> Bounding box:  xmin: -125.5219 ymin: 49.28703 xmax: -125.2213 ymax: 49.34728
     #> Geodetic CRS:  WGS 84
-    #> # A tibble: 21 × 8
-    #>    study_area_name parent_sample_station_label camera_label make_of_camera_code
-    #>    <chr>           <chr>                       <chr>        <chr>              
-    #>  1 Test Project    19_1                        UBC 2        <NA>               
-    #>  2 Test Project    19_2                        UBC 1        <NA>               
-    #>  3 Test Project    20                          Eco1059      <NA>               
-    #>  4 Test Project    21_1                        Eco1057      <NA>               
-    #>  5 Test Project    21_2                        Eco7998      <NA>               
-    #>  6 Test Project    24                          Eco1050      <NA>               
-    #>  7 Test Project    25                          Eco1040      <NA>               
-    #>  8 Test Project    26                          Eco7939      <NA>               
-    #>  9 Test Project    27                          Eco6690      <NA>               
-    #> 10 Test Project    28                          UBC 4        <NA>               
+    #> # A tibble: 21 × 9
+    #>    wlrs_project_name         study_area_name parent_sample_statio…¹ camera_label
+    #>    <chr>                     <chr>           <chr>                  <chr>       
+    #>  1 2022 - ongoing - Rooseve… Test Project    19_1                   UBC 2       
+    #>  2 2022 - ongoing - Rooseve… Test Project    19_2                   UBC 1       
+    #>  3 2022 - ongoing - Rooseve… Test Project    20                     Eco1059     
+    #>  4 2022 - ongoing - Rooseve… Test Project    21_1                   Eco1057     
+    #>  5 2022 - ongoing - Rooseve… Test Project    21_2                   Eco7998     
+    #>  6 2022 - ongoing - Rooseve… Test Project    24                     Eco1050     
+    #>  7 2022 - ongoing - Rooseve… Test Project    25                     Eco1040     
+    #>  8 2022 - ongoing - Rooseve… Test Project    26                     Eco7939     
+    #>  9 2022 - ongoing - Rooseve… Test Project    27                     Eco6690     
+    #> 10 2022 - ongoing - Rooseve… Test Project    28                     UBC 4       
     #> # ℹ 11 more rows
-    #> # ℹ 4 more variables: model_of_camera <chr>, camera_comments <chr>,
-    #> #   site_description_comments <chr>, site_description_date <date>
+    #> # ℹ abbreviated name: ¹​parent_sample_station_label
+    #> # ℹ 5 more variables: make_of_camera_code <chr>, model_of_camera <chr>,
+    #> #   camera_comments <chr>, site_description_comments <chr>,
+    #> #   site_description_date <dttm>
 
 #### Camera Setup and Checks:
 
@@ -188,24 +190,24 @@ camera_setup_checks <- read_cam_setup_checks(metadata_path)
 camera_setup_checks
 ```
 
-    #> # A tibble: 43 × 30
-    #>    study_area_name sample_station_label deployment_label camera_label surveyors
-    #>    <chr>           <chr>                <chr>            <chr>        <chr>    
-    #>  1 Test Project    19_1                 <NA>             UBC 2        MB,MS    
-    #>  2 Test Project    19_2                 <NA>             UBC 1        MB,MS    
-    #>  3 Test Project    20                   <NA>             Eco1059      MB,MS    
-    #>  4 Test Project    21_1                 <NA>             Eco1057      MB,MS    
-    #>  5 Test Project    21_2                 <NA>             Eco7998      MB,MS    
-    #>  6 Test Project    24                   <NA>             Eco1050      MB,MS    
-    #>  7 Test Project    25                   <NA>             Eco1040      MB,MS    
-    #>  8 Test Project    26                   <NA>             Eco7939      MB,MS    
-    #>  9 Test Project    27                   <NA>             Eco6690      MB,MS    
-    #> 10 Test Project    28                   <NA>             UBC 4        MB,MS    
+    #> # A tibble: 43 × 31
+    #>    wlrs_project_name       study_area_name sample_station_label deployment_label
+    #>    <chr>                   <chr>           <chr>                <chr>           
+    #>  1 2022 - ongoing - Roose… Test Project    19_1                 <NA>            
+    #>  2 2022 - ongoing - Roose… Test Project    19_2                 <NA>            
+    #>  3 2022 - ongoing - Roose… Test Project    20                   <NA>            
+    #>  4 2022 - ongoing - Roose… Test Project    21_1                 <NA>            
+    #>  5 2022 - ongoing - Roose… Test Project    21_2                 <NA>            
+    #>  6 2022 - ongoing - Roose… Test Project    24                   <NA>            
+    #>  7 2022 - ongoing - Roose… Test Project    25                   <NA>            
+    #>  8 2022 - ongoing - Roose… Test Project    26                   <NA>            
+    #>  9 2022 - ongoing - Roose… Test Project    27                   <NA>            
+    #> 10 2022 - ongoing - Roose… Test Project    28                   <NA>            
     #> # ℹ 33 more rows
-    #> # ℹ 25 more variables: date_time_checked <dttm>, sampling_start <dttm>,
-    #> #   sampling_end <dttm>, total_visit_or_deployment_time <dbl>,
-    #> #   unit_of_total_time_code <chr>, visit_type <chr>,
-    #> #   camera_status_on_arrival <chr>, battery_level <chr>,
+    #> # ℹ 27 more variables: camera_label <chr>, surveyors <chr>,
+    #> #   date_time_checked <dttm>, sampling_start <dttm>, sampling_end <dttm>,
+    #> #   total_visit_or_deployment_time <dbl>, unit_of_total_time_code <chr>,
+    #> #   visit_type <chr>, camera_status_on_arrival <chr>, battery_level <chr>,
     #> #   batteries_changed <chr>, number_of_photos <dbl>, quiet_period_s <chr>,
     #> #   trigger_sensitivity <chr>, trigger_timing_s <dbl>, …
 
@@ -221,30 +223,30 @@ deployments <- make_deployments(metadata_path)
 deployments
 ```
 
-    #> Simple feature collection with 28 features and 58 fields
+    #> Simple feature collection with 28 features and 61 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -122.3968 ymin: 51.21333 xmax: -121.6091 ymax: 51.28496
+    #> Bounding box:  xmin: -125.217 ymin: 45.24355 xmax: -124.5189 ymax: 45.30508
     #> Geodetic CRS:  WGS 84
-    #> # A tibble: 28 × 53
-    #>    study_area_name sample_station_label deployment_label camera_label surveyors
-    #>    <chr>           <chr>                <chr>            <chr>        <chr>    
-    #>  1 Test Project    19_1                 19_1_20230605    UBC 2        CM, BT   
-    #>  2 Test Project    19_2                 19_2_20230605    UBC 1        CM, BT   
-    #>  3 Test Project    20                   20_20230605      Eco1059      CM, BT   
-    #>  4 Test Project    21_1                 21_20230605      Eco1057      CM, BT   
-    #>  5 Test Project    21_2                 21_2_20230605    Eco7998      CM, BT   
-    #>  6 Test Project    24                   24_20230708      Eco1050      MB,MS    
-    #>  7 Test Project    25                   25_20230710      Eco1040      MB,MS    
-    #>  8 Test Project    26                   26_20230710      Eco7939      MB,MS    
-    #>  9 Test Project    27                   27_20230605      Eco6690      CM, BT   
-    #> 10 Test Project    28                   28_20230605      UBC 4        CM, BT   
+    #> # A tibble: 28 × 56
+    #>    wlrs_project_name       study_area_name sample_station_label deployment_label
+    #>    <chr>                   <chr>           <chr>                <chr>           
+    #>  1 2022 - ongoing - Roose… Test Project    19_1                 19_1_20230605   
+    #>  2 2022 - ongoing - Roose… Test Project    19_2                 19_2_20230605   
+    #>  3 2022 - ongoing - Roose… Test Project    20                   20_20230605     
+    #>  4 2022 - ongoing - Roose… Test Project    21_1                 21_20230605     
+    #>  5 2022 - ongoing - Roose… Test Project    21_2                 21_2_20230605   
+    #>  6 2022 - ongoing - Roose… Test Project    24                   24_20230708     
+    #>  7 2022 - ongoing - Roose… Test Project    25                   25_20230710     
+    #>  8 2022 - ongoing - Roose… Test Project    26                   26_20230710     
+    #>  9 2022 - ongoing - Roose… Test Project    27                   27_20230605     
+    #> 10 2022 - ongoing - Roose… Test Project    28                   28_20230605     
     #> # ℹ 18 more rows
-    #> # ℹ 48 more variables: date_time_checked <dttm>, deployment_start <dttm>,
-    #> #   deployment_end <dttm>, deployment_duration_days <dbl>,
-    #> #   deployment_duration_valid <lgl>, total_visit_or_deployment_time <dbl>,
-    #> #   unit_of_total_time_code <chr>, visit_type <chr>,
-    #> #   camera_status_on_arrival <chr>, battery_level <chr>,
+    #> # ℹ 52 more variables: camera_label <chr>, surveyors <chr>,
+    #> #   date_time_checked <dttm>, deployment_start <dttm>, deployment_end <dttm>,
+    #> #   deployment_duration_days <dbl>, deployment_duration_valid <lgl>,
+    #> #   total_visit_or_deployment_time <dbl>, unit_of_total_time_code <chr>,
+    #> #   visit_type <chr>, camera_status_on_arrival <chr>, battery_level <chr>,
     #> #   batteries_changed <chr>, number_of_photos <dbl>, quiet_period_s <chr>, …
 
 There is a handy `summary()` method for this as well:
@@ -275,6 +277,19 @@ mapview(deployments, zcol = "sample_station_label")
 ```
 
 <img src="man/figures/README-mapview-deployments-1.png" width="100%" />
+
+### Project Metadata: Field Form CSV files
+
+There are also two functions for reading in the different csv outputs
+from the field forms: Sample Stations, and Deployments:
+
+``` r
+sample_station_info <- read_sample_station_csv("path-to-sample-stations.csv")
+```
+
+``` r
+deployments <- read_deployments_csv("path-to-deployments.csv")
+```
 
 ### Image data
 
@@ -335,19 +350,19 @@ summary(image_data)
 #>                1                2                1               88 
 #>             <NA> 
 #>            11438
-#> ! Run `check_deployment_images()` to crosscheck images with deployments.
+#> ! Run `qa_deployment_images()` to crosscheck images with deployments.
+#> ! Run `qa_image_data()` to run various QA checks.
 ```
 
-Use the `check_deployment_images()` function to find deployment labels
-that are in the deployment data but not in the image data, and
-vice-versa. It is usually likely that there will be deployment labels in
-the deployment data that are missing from the image data if not all of
-the images have been processed yet. Deployment labels that are present
-in the image data but not in the deployment data indicate a potential
-problem.
+Use the `qa_deployment_images()` function to find deployment labels that
+are in the deployment data but not in the image data, and vice-versa. It
+is usually likely that there will be deployment labels in the deployment
+data that are missing from the image data if not all of the images have
+been processed yet. Deployment labels that are present in the image data
+but not in the deployment data indicate a potential problem.
 
 ``` r
-check_deployment_images(deployments, image_data)
+qa_deployment_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 ```
@@ -360,7 +375,7 @@ images_with_metadata <- merge_deployments_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 images_with_metadata
-#> # A tibble: 11,833 × 93
+#> # A tibble: 11,833 × 96
 #>    root_folder deployment_label date_time           episode species
 #>    <chr>       <chr>            <dttm>              <chr>   <chr>  
 #>  1 100RECNX    19_1_20230605    2022-11-10 15:15:53 1:1|5   <NA>   
@@ -374,12 +389,101 @@ images_with_metadata
 #>  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   <NA>   
 #> 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   <NA>   
 #> # ℹ 11,823 more rows
-#> # ℹ 88 more variables: total_count_episode <dbl>, obj_count_image <int>,
+#> # ℹ 91 more variables: total_count_episode <dbl>, obj_count_image <int>,
 #> #   adult_male <int>, adult_female <int>, adult_unclassified_sex <int>,
 #> #   yearling_male <int>, yearling_female <int>,
 #> #   yearling_unclassified_sex <int>, young_of_year_unclassified_sex <int>,
 #> #   juvenile_unclassified_sex <int>, male_unclassified_age <int>,
 #> #   female_unclassified_age <int>, unclassified_life_stage_and_sex <int>, …
+```
+
+#### Image Data QA
+
+There are a number of common data quality issues that we can check for
+in the image data itself, aside from those addressed above when
+reconciling deployments and images.
+
+We can use the `qa_image_data()` function to detect the following
+problems:
+
+- Check for blanks in key fields: study area, station label, deployment
+  date, surveyor, trigger mode, temperature, episode
+- Species detected with no count data
+- Count data with no species
+- Sum of individual count fields equals Total Count
+- Multiple entries under same Episode number (indicating possible double
+  entry)
+- Ensure dates for timelapse images are continuous and in order.
+- Snow data
+  - No blanks unless lens obscured is `TRUE`
+  - Look for snow depth outliers (e.g., 10, 10, 110, 10, 15, 20)
+
+Run the `qa_image_data()` function:
+
+``` r
+image_data_qa <- qa_image_data(image_data)
+dim(image_data_qa)
+#> [1] 24 53
+```
+
+We can see that this has identified 24 records with potential problems.
+This dataset has a number of fields starting with `QA_` which help us
+know which images we should have a closer look at. All of the original
+fields, plus any `QA_` fields that have at least one `TRUE` value are
+returned:
+
+``` r
+names(image_data_qa)
+#>  [1] "root_folder"                     "study_area_name"                
+#>  [3] "sample_station_label"            "deployment_label"               
+#>  [5] "date_time"                       "episode_num"                    
+#>  [7] "episode"                         "species"                        
+#>  [9] "total_count_episode"             "obj_count_image"                
+#> [11] "adult_male"                      "adult_female"                   
+#> [13] "adult_unclassified_sex"          "yearling_male"                  
+#> [15] "yearling_female"                 "yearling_unclassified_sex"      
+#> [17] "young_of_year_unclassified_sex"  "juvenile_unclassified_sex"      
+#> [19] "male_unclassified_age"           "female_unclassified_age"        
+#> [21] "unclassified_life_stage_and_sex" "antler_class"                   
+#> [23] "animal_identifiable"             "animal_tagged"                  
+#> [25] "behaviour_1"                     "behaviour_2"                    
+#> [27] "behaviour_3"                     "human_use_type"                 
+#> [29] "human_transport_mode"            "temperature"                    
+#> [31] "snow_depth"                      "snow_is_est"                    
+#> [33] "snow_depth_lower"                "snow_depth_upper"               
+#> [35] "lens_obscured"                   "starred"                        
+#> [37] "needs_review"                    "comment"                        
+#> [39] "surveyor"                        "trigger_mode"                   
+#> [41] "file"                            "relative_path"                  
+#> [43] "delete_flag"                     "QA_BLANK_study_area_name"       
+#> [45] "QA_BLANK_sample_station_label"   "QA_BLANK_deployment_label"      
+#> [47] "QA_BLANK_date_time"              "QA_BLANK_surveyor"              
+#> [49] "QA_BLANK_trigger_mode"           "QA_BLANK_temperature"           
+#> [51] "QA_BLANK_episode"                "QA_timelapse_lag"               
+#> [53] "QA_snow_outlier"
+```
+
+``` r
+select(image_data_qa, root_folder, file, starts_with("QA_"))
+#> # A tibble: 24 × 12
+#>    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹
+#>    <chr>         <chr>        <lgl>                    <lgl>                    
+#>  1 27_20230605   RCNX0030.JPG FALSE                    FALSE                    
+#>  2 100RECNX      RCNX0114.JPG FALSE                    FALSE                    
+#>  3 100RECNX      RCNX0118.JPG FALSE                    FALSE                    
+#>  4 21_2_20230605 RCNX0010.JPG FALSE                    FALSE                    
+#>  5 100RECNX      RCNX0261.JPG FALSE                    FALSE                    
+#>  6 100RECNX      RCNX0339.JPG FALSE                    FALSE                    
+#>  7 100RECNX      RCNX0376.JPG FALSE                    FALSE                    
+#>  8 29_2_20230605 IMG_0252.JPG FALSE                    FALSE                    
+#>  9 100RECNX      IMG_0134.JPG FALSE                    FALSE                    
+#> 10 102RECNX      RCNX0041.JPG FALSE                    FALSE                    
+#> # ℹ 14 more rows
+#> # ℹ abbreviated name: ¹​QA_BLANK_sample_station_label
+#> # ℹ 8 more variables: QA_BLANK_deployment_label <lgl>,
+#> #   QA_BLANK_date_time <lgl>, QA_BLANK_surveyor <lgl>,
+#> #   QA_BLANK_trigger_mode <lgl>, QA_BLANK_temperature <lgl>,
+#> #   QA_BLANK_episode <lgl>, QA_timelapse_lag <lgl>, QA_snow_outlier <lgl>
 ```
 
 ### Plots
@@ -405,6 +509,21 @@ plot_deployments(deployments, date_breaks = "2 months")
 
 ``` r
 # plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")
+```
+
+#### Snow depth plot
+
+We can plot the recorded snow depths across deployments using the
+`plot_snow()` function with our image data:
+
+``` r
+plot_snow(image_data, date_breaks = "2 months")
+```
+
+<img src="man/figures/README-plot-snow-1.png" width="100%" />
+
+``` r
+# plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)
 ```
 
 #### Detection plot
@@ -475,6 +594,28 @@ write_to_spi_sheet(
   file = "~/Desktop/SPI_output.xlsx",
   `Number of Cameras` = number_of_cameras,
   template = "~/Desktop/SPI_output.xlsx"
+)
+```
+
+#### Writing to SPI template using field form data
+
+To write data imported from field form data, you must use the
+`fill_spi_template_ff()` function, passing in both the
+`sample_station_info` and `deployments`, as well as the `image_data`.
+
+If you want to only write to the metadata tabs and not the Sequence
+Image Data, you can leave the `image_data` argument as `NULL`, and write
+to the file another time with `write_to_spi_sheet()`.
+
+``` r
+sample_station_info <- read_sample_station_csv("path-to-sample-stations.csv")
+deployments <- read_deployments_csv("path-to-deployments.csv")
+
+fill_spi_template_ff(
+  sample_stations,
+  depllyments,
+  image_data,
+  file = "~/Desktop/SPI_output_from_ff.xlsx"
 )
 ```
 

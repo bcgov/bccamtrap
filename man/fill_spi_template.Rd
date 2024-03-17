@@ -20,7 +20,7 @@ fill_spi_template(
 
 \item{camera_setup_checks}{object of class \code{camera_setup_checks}}
 
-\item{image_data}{object of class \code{image_data}}
+\item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
 
 \item{file}{path to the output file (\verb{.xls*})}
 
