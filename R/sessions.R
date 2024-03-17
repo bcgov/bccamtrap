@@ -37,6 +37,7 @@ make_deployments <- function(path, as_sf = TRUE) {
 
   ci <- dplyr::select(
     ci,
+    "wlrs_project_name",
     "study_area_name",
     sample_station_label = "parent_sample_station_label",
     camera_make = "make_of_camera_code",
@@ -92,13 +93,14 @@ make_deployments <- function(path, as_sf = TRUE) {
 
   ci_ss <- dplyr::left_join(
     ss, ci,
-    by = c("study_area_name", "sample_station_label")
+    by = c("wlrs_project_name", "study_area_name", "sample_station_label")
   )
 
   ret <- dplyr::left_join(
     csc,
     ci_ss,
     by = dplyr::join_by(
+      "wlrs_project_name",
       "study_area_name",
       "sample_station_label",
       # Join it to the most recent location, in case a sample station has moved

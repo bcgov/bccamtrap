@@ -23,11 +23,15 @@ read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE
   }
 
   if (as_sf) {
-    ssi <- sf::st_as_sf(ssi, coords = c("x", "y"), crs = 4326, remove = FALSE)
+    ssi <- sf::st_as_sf(
+      ssi,
+      coords = c("longitude_sample_station_dd", "latitude_sample_station_dd"),
+      crs = 4326,
+      remove = FALSE
+    )
   }
 
-
-  as.sample_station_info(out)
+  as.sample_station_info(ssi)
 }
 
 #' Read csv output from deployments field form
@@ -159,7 +163,7 @@ deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
       spi_name = "trigger_sensitivity"
     ),
     Quiet_Period_Set = list(
-      readr_spec = readr::col_double(),
+      readr_spec = readr::col_character(),
       spi_name = "quiet_period_s"
     ),
     Camera_Visit_Comments_Set = list(

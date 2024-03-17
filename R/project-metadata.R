@@ -57,6 +57,8 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
     set_date = excel_to_date(.data$set_date)
   )
 
+  ss_info <- add_project_name_from_spi_sheet(path, ss_info)
+
   ss_info <- as.sample_station_info(ss_info)
   if (as_sf) {
     ss_info <- to_sf(ss_info)
@@ -91,6 +93,8 @@ read_camera_info <- function(path, as_sf = TRUE, ...) {
     site_description_date = excel_to_date(.data$site_description_date)
   )
 
+  cam_info <- add_project_name_from_spi_sheet(path, cam_info)
+
   cam_info <- as.camera_info(cam_info)
 
   if (as_sf) {
@@ -117,6 +121,9 @@ read_cam_setup_checks <- function(path, ...) {
   raw_inp <- read_sheet_impl_(path, sheet, col_types = col_types)
 
   ret <- parse_cam_setup_checks_fields(raw_inp)
+
+  ret <- add_project_name_from_spi_sheet(path, ret)
+
   as.cam_setup_checks(ret)
 }
 
@@ -245,7 +252,7 @@ parse_cam_setup_checks_fields <- function(x) {
     .after = "surveyors"
   )
 
-  ret$timelapse_time = format(ret$timelapse_time, "%H:%M:%S")
+  ret$timelapse_time = readr::parse_time(format(ret$timelapse_time, "%H:%M:%S"))
 
   dplyr::select(
     ret,
@@ -394,3 +401,9 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station"), ...) {
   res
 }
 
+add_project_name_from_spi_sheet <- function(path, data) {
+  proj_info <- read_project_info(path)
+  proj_name <- proj_info$project_name[1]
+
+  dplyr::mutate(data, wlrs_project_name = proj_name, .before = 1)
+}

@@ -3,175 +3,180 @@
     Code
       names(ssi1)
     Output
-       [1] "study_area_name"             "study_area_photos"          
-       [3] "sample_station_label"        "utm_zone_sample_station"    
-       [5] "easting_sample_station"      "northing_sample_station"    
-       [7] "latitude_sample_station_dd"  "longitude_sample_station_dd"
-       [9] "station_status"              "number_of_cameras"          
-      [11] "set_date"                    "general_location"           
-      [13] "elevation_m"                 "slope_percent"              
-      [15] "aspect_degrees"              "crown_closure_percent"      
-      [17] "camera_bearing_degrees"      "camera_height_cm"           
-      [19] "distance_to_feature_m"       "visible_range_m"            
-      [21] "habitat_feature"             "lock"                       
-      [23] "code"                        "sample_station_comments"    
-      [25] "sample_station_photos"       "site_description_comments"  
-      [27] "site_description_date"       "access_notes"               
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "study_area_photos"           "sample_station_label"       
+       [5] "utm_zone_sample_station"     "easting_sample_station"     
+       [7] "northing_sample_station"     "latitude_sample_station_dd" 
+       [9] "longitude_sample_station_dd" "station_status"             
+      [11] "number_of_cameras"           "set_date"                   
+      [13] "general_location"            "elevation_m"                
+      [15] "slope_percent"               "aspect_degrees"             
+      [17] "crown_closure_percent"       "camera_bearing_degrees"     
+      [19] "camera_height_cm"            "distance_to_feature_m"      
+      [21] "visible_range_m"             "habitat_feature"            
+      [23] "lock"                        "code"                       
+      [25] "sample_station_comments"     "sample_station_photos"      
+      [27] "site_description_comments"   "site_description_date"      
+      [29] "access_notes"               
 
 ---
 
     Code
       names(ssi2)
     Output
-       [1] "study_area_name"             "study_area_photos"          
-       [3] "sample_station_label"        "utm_zone_sample_station"    
-       [5] "easting_sample_station"      "northing_sample_station"    
-       [7] "latitude_sample_station_dd"  "longitude_sample_station_dd"
-       [9] "station_status"              "number_of_cameras"          
-      [11] "set_date"                    "general_location"           
-      [13] "elevation_m"                 "slope_percent"              
-      [15] "aspect_degrees"              "crown_closure_percent"      
-      [17] "camera_bearing_degrees"      "camera_height_cm"           
-      [19] "distance_to_feature_m"       "visible_range_m"            
-      [21] "habitat_feature"             "lock"                       
-      [23] "code"                        "sample_station_comments"    
-      [25] "sample_station_photos"       "site_description_comments"  
-      [27] "site_description_date"       "access_notes"               
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "study_area_photos"           "sample_station_label"       
+       [5] "utm_zone_sample_station"     "easting_sample_station"     
+       [7] "northing_sample_station"     "latitude_sample_station_dd" 
+       [9] "longitude_sample_station_dd" "station_status"             
+      [11] "number_of_cameras"           "set_date"                   
+      [13] "general_location"            "elevation_m"                
+      [15] "slope_percent"               "aspect_degrees"             
+      [17] "crown_closure_percent"       "camera_bearing_degrees"     
+      [19] "camera_height_cm"            "distance_to_feature_m"      
+      [21] "visible_range_m"             "habitat_feature"            
+      [23] "lock"                        "code"                       
+      [25] "sample_station_comments"     "sample_station_photos"      
+      [27] "site_description_comments"   "site_description_date"      
+      [29] "access_notes"               
 
 # read_sample_station_info works as sf
 
     Code
       names(ssi_sf1)
     Output
-       [1] "study_area_name"             "study_area_photos"          
-       [3] "sample_station_label"        "utm_zone_sample_station"    
-       [5] "easting_sample_station"      "northing_sample_station"    
-       [7] "latitude_sample_station_dd"  "longitude_sample_station_dd"
-       [9] "station_status"              "number_of_cameras"          
-      [11] "set_date"                    "general_location"           
-      [13] "elevation_m"                 "slope_percent"              
-      [15] "aspect_degrees"              "crown_closure_percent"      
-      [17] "camera_bearing_degrees"      "camera_height_cm"           
-      [19] "distance_to_feature_m"       "visible_range_m"            
-      [21] "habitat_feature"             "lock"                       
-      [23] "code"                        "sample_station_comments"    
-      [25] "sample_station_photos"       "site_description_comments"  
-      [27] "site_description_date"       "access_notes"               
-      [29] "geometry"                   
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "study_area_photos"           "sample_station_label"       
+       [5] "utm_zone_sample_station"     "easting_sample_station"     
+       [7] "northing_sample_station"     "latitude_sample_station_dd" 
+       [9] "longitude_sample_station_dd" "station_status"             
+      [11] "number_of_cameras"           "set_date"                   
+      [13] "general_location"            "elevation_m"                
+      [15] "slope_percent"               "aspect_degrees"             
+      [17] "crown_closure_percent"       "camera_bearing_degrees"     
+      [19] "camera_height_cm"            "distance_to_feature_m"      
+      [21] "visible_range_m"             "habitat_feature"            
+      [23] "lock"                        "code"                       
+      [25] "sample_station_comments"     "sample_station_photos"      
+      [27] "site_description_comments"   "site_description_date"      
+      [29] "access_notes"                "geometry"                   
 
 ---
 
     Code
       names(ssi_sf2)
     Output
-       [1] "study_area_name"             "study_area_photos"          
-       [3] "sample_station_label"        "utm_zone_sample_station"    
-       [5] "latitude_sample_station_dd"  "longitude_sample_station_dd"
-       [7] "station_status"              "number_of_cameras"          
-       [9] "set_date"                    "general_location"           
-      [11] "elevation_m"                 "slope_percent"              
-      [13] "aspect_degrees"              "crown_closure_percent"      
-      [15] "camera_bearing_degrees"      "camera_height_cm"           
-      [17] "distance_to_feature_m"       "visible_range_m"            
-      [19] "habitat_feature"             "lock"                       
-      [21] "code"                        "sample_station_comments"    
-      [23] "sample_station_photos"       "site_description_comments"  
-      [25] "site_description_date"       "access_notes"               
-      [27] "easting_sample_station"      "northing_sample_station"    
-      [29] "geometry"                   
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "study_area_photos"           "sample_station_label"       
+       [5] "utm_zone_sample_station"     "latitude_sample_station_dd" 
+       [7] "longitude_sample_station_dd" "station_status"             
+       [9] "number_of_cameras"           "set_date"                   
+      [11] "general_location"            "elevation_m"                
+      [13] "slope_percent"               "aspect_degrees"             
+      [15] "crown_closure_percent"       "camera_bearing_degrees"     
+      [17] "camera_height_cm"            "distance_to_feature_m"      
+      [19] "visible_range_m"             "habitat_feature"            
+      [21] "lock"                        "code"                       
+      [23] "sample_station_comments"     "sample_station_photos"      
+      [25] "site_description_comments"   "site_description_date"      
+      [27] "access_notes"                "easting_sample_station"     
+      [29] "northing_sample_station"     "geometry"                   
 
 # read_camera_info works
 
     Code
       names(ci1)
     Output
-       [1] "study_area_name"             "parent_sample_station_label"
-       [3] "camera_label"                "utm_zone_camera"            
-       [5] "easting_camera"              "northing_camera"            
-       [7] "longitude_camera_dd"         "latitude_camera_dd"         
-       [9] "make_of_camera_code"         "model_of_camera"            
-      [11] "camera_comments"             "site_description_comments"  
-      [13] "site_description_date"      
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "parent_sample_station_label" "camera_label"               
+       [5] "utm_zone_camera"             "easting_camera"             
+       [7] "northing_camera"             "longitude_camera_dd"        
+       [9] "latitude_camera_dd"          "make_of_camera_code"        
+      [11] "model_of_camera"             "camera_comments"            
+      [13] "site_description_comments"   "site_description_date"      
 
 ---
 
     Code
       names(ci2)
     Output
-       [1] "study_area_name"             "parent_sample_station_label"
-       [3] "camera_label"                "utm_zone_camera"            
-       [5] "easting_camera"              "northing_camera"            
-       [7] "longitude_camera_dd"         "latitude_camera_dd"         
-       [9] "make_of_camera_code"         "model_of_camera"            
-      [11] "camera_comments"             "site_description_comments"  
-      [13] "site_description_date"      
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "parent_sample_station_label" "camera_label"               
+       [5] "utm_zone_camera"             "easting_camera"             
+       [7] "northing_camera"             "longitude_camera_dd"        
+       [9] "latitude_camera_dd"          "make_of_camera_code"        
+      [11] "model_of_camera"             "camera_comments"            
+      [13] "site_description_comments"   "site_description_date"      
 
 # read_camera_info works as sf
 
     Code
       names(ci_sf1)
     Output
-       [1] "study_area_name"             "parent_sample_station_label"
-       [3] "camera_label"                "utm_zone_camera"            
-       [5] "easting_camera"              "northing_camera"            
-       [7] "longitude_camera_dd"         "latitude_camera_dd"         
-       [9] "make_of_camera_code"         "model_of_camera"            
-      [11] "camera_comments"             "site_description_comments"  
-      [13] "site_description_date"       "geometry"                   
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "parent_sample_station_label" "camera_label"               
+       [5] "utm_zone_camera"             "easting_camera"             
+       [7] "northing_camera"             "longitude_camera_dd"        
+       [9] "latitude_camera_dd"          "make_of_camera_code"        
+      [11] "model_of_camera"             "camera_comments"            
+      [13] "site_description_comments"   "site_description_date"      
+      [15] "geometry"                   
 
 ---
 
     Code
       names(ci_sf2)
     Output
-       [1] "study_area_name"             "parent_sample_station_label"
-       [3] "camera_label"                "utm_zone_camera"            
-       [5] "longitude_camera_dd"         "latitude_camera_dd"         
-       [7] "make_of_camera_code"         "model_of_camera"            
-       [9] "camera_comments"             "site_description_comments"  
-      [11] "site_description_date"       "easting_camera"             
-      [13] "northing_camera"             "geometry"                   
+       [1] "wlrs_project_name"           "study_area_name"            
+       [3] "parent_sample_station_label" "camera_label"               
+       [5] "utm_zone_camera"             "longitude_camera_dd"        
+       [7] "latitude_camera_dd"          "make_of_camera_code"        
+       [9] "model_of_camera"             "camera_comments"            
+      [11] "site_description_comments"   "site_description_date"      
+      [13] "easting_camera"              "northing_camera"            
+      [15] "geometry"                   
 
 # read_cam_setup_checks works
 
     Code
       names(csc1)
     Output
-       [1] "study_area_name"                "sample_station_label"          
-       [3] "deployment_label"               "camera_label"                  
-       [5] "surveyors"                      "date_time_checked"             
-       [7] "sampling_start"                 "sampling_end"                  
-       [9] "total_visit_or_deployment_time" "unit_of_total_time_code"       
-      [11] "visit_type"                     "camera_status_on_arrival"      
-      [13] "battery_level"                  "batteries_changed"             
-      [15] "number_of_photos"               "quiet_period_s"                
-      [17] "trigger_sensitivity"            "trigger_timing_s"              
-      [19] "photos_per_trigger"             "video_length_per_trigger_s"    
-      [21] "timelapse_photos"               "timelapse_time"                
-      [23] "time_zone"                      "bait_lure_type"                
-      [25] "camera_visit_comments"          "camera_visit_photos"           
-      [27] "sd_downloaded_y_n"              "images_classified_y_n"         
-      [29] "timelapse_template_used"        "data_qc_complete"              
-      [31] "general_sampling_comments"     
+       [1] "wlrs_project_name"              "study_area_name"               
+       [3] "sample_station_label"           "deployment_label"              
+       [5] "camera_label"                   "surveyors"                     
+       [7] "date_time_checked"              "sampling_start"                
+       [9] "sampling_end"                   "total_visit_or_deployment_time"
+      [11] "unit_of_total_time_code"        "visit_type"                    
+      [13] "camera_status_on_arrival"       "battery_level"                 
+      [15] "batteries_changed"              "number_of_photos"              
+      [17] "quiet_period_s"                 "trigger_sensitivity"           
+      [19] "trigger_timing_s"               "photos_per_trigger"            
+      [21] "video_length_per_trigger_s"     "timelapse_photos"              
+      [23] "timelapse_time"                 "time_zone"                     
+      [25] "bait_lure_type"                 "camera_visit_comments"         
+      [27] "camera_visit_photos"            "sd_downloaded_y_n"             
+      [29] "images_classified_y_n"          "timelapse_template_used"       
+      [31] "data_qc_complete"               "general_sampling_comments"     
 
 ---
 
     Code
       names(csc2)
     Output
-       [1] "study_area_name"                "sample_station_label"          
-       [3] "deployment_label"               "camera_label"                  
-       [5] "surveyors"                      "date_time_checked"             
-       [7] "sampling_start"                 "sampling_end"                  
-       [9] "total_visit_or_deployment_time" "unit_of_total_time_code"       
-      [11] "visit_type"                     "camera_status_on_arrival"      
-      [13] "battery_level"                  "batteries_changed"             
-      [15] "number_of_photos"               "quiet_period_s"                
-      [17] "trigger_sensitivity"            "trigger_timing_s"              
-      [19] "photos_per_trigger"             "video_length_per_trigger_s"    
-      [21] "timelapse_photos"               "timelapse_time"                
-      [23] "time_zone"                      "bait_lure_type"                
-      [25] "camera_visit_comments"          "camera_visit_photos"           
-      [27] "sd_downloaded_y_n"              "images_classified_y_n"         
-      [29] "timelapse_template_used"        "general_sampling_comments"     
+       [1] "wlrs_project_name"              "study_area_name"               
+       [3] "sample_station_label"           "deployment_label"              
+       [5] "camera_label"                   "surveyors"                     
+       [7] "date_time_checked"              "sampling_start"                
+       [9] "sampling_end"                   "total_visit_or_deployment_time"
+      [11] "unit_of_total_time_code"        "visit_type"                    
+      [13] "camera_status_on_arrival"       "battery_level"                 
+      [15] "batteries_changed"              "number_of_photos"              
+      [17] "quiet_period_s"                 "trigger_sensitivity"           
+      [19] "trigger_timing_s"               "photos_per_trigger"            
+      [21] "video_length_per_trigger_s"     "timelapse_photos"              
+      [23] "timelapse_time"                 "time_zone"                     
+      [25] "bait_lure_type"                 "camera_visit_comments"         
+      [27] "camera_visit_photos"            "sd_downloaded_y_n"             
+      [29] "images_classified_y_n"          "timelapse_template_used"       
+      [31] "general_sampling_comments"     
 
