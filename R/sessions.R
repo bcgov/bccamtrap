@@ -110,7 +110,7 @@ make_deployments <- function(path, as_sf = TRUE) {
     )
   )
 
-  ret <- dplyr::select(ret, -"deployment_start_date")
+  ret <- dplyr::select(ret, -"deployment_start_date", -"sampling_start")
   ret <- make_deployment_validity_columns(ret)
 
   if (inherits(ss, "sf")) {
@@ -128,7 +128,12 @@ make_deployment_validity_columns <- function(x) {
       as.Date(.data$deployment_end)
     ) / lubridate::ddays(1),
     deployment_duration_valid = !is.na(.data$deployment_duration_days) &
-      !is.na(.data$sampling_end) &
+      !is.na(.data$deployment_end) &
+      if ("sampling_end" %in% names(x)) {
+        !is.na(.data$sampling_end)
+      } else {
+        TRUE
+      } &
       .data$deployment_duration_days > 0
   )
   dplyr::relocate(
