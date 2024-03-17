@@ -129,7 +129,7 @@ obfuscate_location <- function(x) {
 Read in project metadata from the SPI worksheet. There are functions to read
 the relevant tabs:
 
-### Project Information
+#### Project Information
 
 ```{r}
 proj <- read_project_info(metadata_path)
@@ -237,6 +237,20 @@ We can use the [mapview](https://r-spatial.github.io/mapview/) package to quickl
 ```{r, mapview-deployments}
 library(mapview)
 mapview(deployments, zcol = "sample_station_label")
+```
+
+### Project Metadata: Field Form CSV files
+
+There are also two functions for reading in the different csv outputs from the field forms: Sample Stations, and Deployments:
+
+```{r, sample-station-csv}
+#| eval: false
+sample_station_info <- read_sample_station_csv("path-to-sample-stations.csv")
+```
+
+```{r, deployments-csv}
+#| eval: false
+deployments <- read_deployments_csv("path-to-deployments.csv")
 ```
 
 ### Image data
@@ -403,6 +417,28 @@ write_to_spi_sheet(
   file = "~/Desktop/SPI_output.xlsx",
   `Number of Cameras` = number_of_cameras,
   template = "~/Desktop/SPI_output.xlsx"
+)
+```
+
+#### Writing to SPI template using field form data
+
+To write data imported from field form data, you must use the `fill_spi_template_ff()`
+function, passing in both the `sample_station_info` and `deployments`, as well as the `image_data`. 
+
+If you want to only write to the metadata tabs and not the Sequence Image Data, 
+you can leave the `image_data` argument as `NULL`, and write to the file another 
+time with `write_to_spi_sheet()`.
+
+```{r}
+#| eval: false
+sample_station_info <- read_sample_station_csv("path-to-sample-stations.csv")
+deployments <- read_deployments_csv("path-to-deployments.csv")
+
+fill_spi_template_ff(
+  sample_stations,
+  depllyments,
+  image_data,
+  file = "~/Desktop/SPI_output_from_ff.xlsx"
 )
 ```
 

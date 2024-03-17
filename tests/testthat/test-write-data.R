@@ -116,3 +116,54 @@ test_that("write_to_spi_sheet() works", {
     transform = hide_numbers
   )
 })
+
+test_that("fill_spi_template_ff() works", {
+  ss <- read_sample_station_csv(test_path("sample-station-field-form.csv"))
+  dep <- read_deployments_csv(test_path("deployments-field-form.csv"))
+
+  imgs_1 <- read_image_data(test_dir_1, n_max = 1)
+  temp_dir <- withr::local_tempdir()
+  out_xls <- file.path(temp_dir, "out1.xlsm")
+
+  fill_spi_template_ff(ss, dep, imgs_1, file = out_xls)
+
+  expect_true(file.exists(out_xls))
+
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Sample Station Information")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Information")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Setup and Checks")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
+  )
+})
+
+test_that("fill_spi_template_ff() works with project subsetting and no image data", {
+  ss <- read_sample_station_csv(test_path("sample-station-field-form.csv"))
+  dep <- read_deployments_csv(test_path("deployments-field-form.csv"))
+
+  temp_dir <- withr::local_tempdir()
+  out_xls <- file.path(temp_dir, "out1.xlsm")
+
+  fill_spi_template_ff(ss, dep, wlrs_project_name = "Test1", file = out_xls)
+
+  expect_true(file.exists(out_xls))
+
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Sample Station Information")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Information")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Camera Setup and Checks")
+  )
+  expect_snapshot(
+    openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
+  )
+})

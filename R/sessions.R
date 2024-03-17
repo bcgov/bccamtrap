@@ -12,10 +12,11 @@
 
 #' Create a spatial data frame of deployments
 #'
-#' Merge data from "Sample Station Info" and "Camera Setup and Checks" tabs to
-#' create deployments - the time that a camera was deployed and running
-#' at a site. "Invalid" deployments are flagged when there is no sampling end date
-#' in "Camera Setup and Checks" or the sampling period is 0 days
+#' Merge data from "Sample Station Info", "Camera Information",  and "Camera
+#' Setup and Checks" tabs to create deployments - the time that a camera was
+#' deployed and running at a site. "Invalid" deployments are flagged when there
+#' is no sampling end date in "Camera Setup and Checks" or the sampling period
+#' is 0 days
 #'
 #' @inheritParams read_sample_station_info
 #'
@@ -24,6 +25,7 @@
 make_deployments <- function(path, as_sf = TRUE) {
   csc <- read_cam_setup_checks(path)
   ss <- read_sample_station_info(path, as_sf = as_sf)
+  ci <- read_camera_info(path, as_sf = FALSE)
 
   csc <- dplyr::filter(csc, .data$visit_type != "Deployment")
 
@@ -33,17 +35,44 @@ make_deployments <- function(path, as_sf = TRUE) {
     .cols = dplyr::starts_with("sampling")
   )
 
-  # TODO: Decide what columns we want to keep in both datasets
+  ci <- dplyr::select(
+    ci,
+    "wlrs_project_name",
+    "study_area_name",
+    sample_station_label = "parent_sample_station_label",
+    camera_make = "make_of_camera_code",
+    camera_model = "model_of_camera"
+  )
+
+  ci <- dplyr::distinct(ci)
+
   # csc <- dplyr::select(
   #   csc,
   #   "study_area_name",
   #   "sample_station_label",
+  #   # "camera_label",
   #   "deployment_label",
-  #   dplyr::contains("date"),
-  #   dplyr::contains("start"),
-  #   dplyr::contains("end")
+  #   "date_time_checked", # _set and _check
+  #   "deployment_start", # date_set
+  #   "deployment_end", # date_set
+  #   "surveyors", # _set and _check
+  #   "battery_level", # _set and _check
+  #   "batteries_changed", # _set only
+  #   "camera_status_on_arrival", # camera_status _set and _check
+  #   "visit_type", # _set and _check
+  #   "sd_downloaded_y_n", # sd_removed
+  #   "number_of_photos",
+  #   "quiet_period_s",
+  #   "trigger_sensitivity",
+  #   "trigger_timing_s",
+  #   "photos_per_trigger",
+  #   "video_length_per_trigger_s",
+  #   "timelapse_photos",
+  #   "timelapse_time",
+  #   "time_zone",
+  #   "camera_visit_comments"
   # )
-
+  #
   # ss <- dplyr::select(
   #   ss,
   #   "study_area_name",
@@ -56,17 +85,22 @@ make_deployments <- function(path, as_sf = TRUE) {
   #   "station_status",
   #   "set_date",
   #   "elevation_m":"habitat_feature",
-  #   "geometry"
+  #   "site_description_date"
   # )
-
 
   # temporary variable for joining, since
   csc$deployment_start_date <- as.Date(csc$deployment_start)
 
+  ci_ss <- dplyr::left_join(
+    ss, ci,
+    by = c("wlrs_project_name", "study_area_name", "sample_station_label")
+  )
+
   ret <- dplyr::left_join(
     csc,
-    ss,
+    ci_ss,
     by = dplyr::join_by(
+      "wlrs_project_name",
       "study_area_name",
       "sample_station_label",
       # Join it to the most recent location, in case a sample station has moved
@@ -76,25 +110,29 @@ make_deployments <- function(path, as_sf = TRUE) {
   )
 
   ret <- dplyr::select(ret, -"deployment_start_date")
-  ret <- dplyr::mutate(
-    ret,
-    deployment_duration_days = lubridate::interval(
-      .data$deployment_start,
-      .data$deployment_end
-    ) / lubridate::ddays(1),
-    deployment_duration_valid = !is.na(.data$deployment_duration_days) &
-      !is.na(.data$deployment_end) &
-      .data$deployment_duration_days > 0
-  )
-  ret <- dplyr::relocate(
-    ret,
-    dplyr::starts_with("deployment_duration"),
-    .after = "deployment_end"
-  )
+  ret <- make_deployment_validity_columns(ret)
 
   if (inherits(ss, "sf")) {
     sf::st_geometry(ret) <- attr(ss, "sf_column")
   }
 
-  as.deployments(ret)
+  as.deployments(ret, "spi-sheet")
+}
+
+make_deployment_validity_columns <- function(x) {
+  x <- dplyr::mutate(
+    x,
+    deployment_duration_days = lubridate::interval(
+      as.Date(.data$deployment_start),
+      as.Date(.data$deployment_end)
+    ) / lubridate::ddays(1),
+    deployment_duration_valid = !is.na(.data$deployment_duration_days) &
+      !is.na(.data$deployment_end) &
+      .data$deployment_duration_days > 0
+  )
+  dplyr::relocate(
+    x,
+    dplyr::starts_with("deployment_duration"),
+    .after = "deployment_end"
+  )
 }

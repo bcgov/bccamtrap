@@ -35,3 +35,11 @@ test_that("map_stations works", {
     }
   )
 })
+
+test_that("Spatial QA works - field forms", {
+  ss_csv <- read_sample_station_csv(test_path("sample-station-field-form.csv"))
+  expect_silent(checked <- qa_stations_spatial(ss_csv))
+  expect_s3_class(checked, "sf")
+  expect_named(checked, c(names(ss_csv), "spatial_outlier"))
+  expect_type(checked$spatial_outlier, "logical")
+})

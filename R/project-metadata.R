@@ -57,9 +57,11 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
     set_date = excel_to_date(.data$set_date)
   )
 
-  ss_info <- as.sample_station_info(ss_info)
+  ss_info <- add_project_name_from_spi_sheet(path, ss_info)
+
+  ss_info <- as.sample_station_info(ss_info, "spi-sheet")
   if (as_sf) {
-    ss_info <- to_sf(ss_info)
+    ss_info <- to_sf(ss_info, subclass = "spi-sheet")
   }
   ss_info
 }
@@ -69,8 +71,7 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
 #' This will read in the camera information from a RISC worksheet following the
 #' 'v20230518' template
 #'
-#' @inheritParams read_project_info
-#' @param as_sf should the data be returned as an `sf` object of the station locations? Default `TRUE`
+#' @inheritParams read_sample_station_info
 #'
 #' @return a `data.frame` of station information, as an `sf` object if specified.
 #' @export
@@ -92,10 +93,12 @@ read_camera_info <- function(path, as_sf = TRUE, ...) {
     site_description_date = excel_to_date(.data$site_description_date)
   )
 
+  cam_info <- add_project_name_from_spi_sheet(path, cam_info)
+
   cam_info <- as.camera_info(cam_info)
 
   if (as_sf) {
-    cam_info <- to_sf(cam_info)
+    cam_info <- to_sf(cam_info, sublass = "spi-sheet")
   }
   cam_info
 }
@@ -118,6 +121,9 @@ read_cam_setup_checks <- function(path, ...) {
   raw_inp <- read_sheet_impl_(path, sheet, col_types = col_types)
 
   ret <- parse_cam_setup_checks_fields(raw_inp)
+
+  ret <- add_project_name_from_spi_sheet(path, ret)
+
   as.cam_setup_checks(ret)
 }
 
@@ -246,7 +252,7 @@ parse_cam_setup_checks_fields <- function(x) {
     .after = "surveyors"
   )
 
-  ret$timelapse_time = format(ret$timelapse_time, "%H:%M:%S")
+  ret$timelapse_time = readr::parse_time(format(ret$timelapse_time, "%H:%M:%S"))
 
   dplyr::select(
     ret,
@@ -276,7 +282,7 @@ excel_to_date <- function(x) {
   # Fill in the elements from above
   out_dt <- out_dateish
   out_dt[numberish] <- out_numberish
-  out_dt
+  as.POSIXct(out_dt)
 }
 
 excel_to_time <- function(x) {
@@ -322,17 +328,17 @@ to_sf.default <- function(x, ...) {
 
 #' @export
 to_sf.camera_info <- function(x, ...) {
-  out <- to_sf_impl_(x, type = "camera", ...)
-  as.camera_info(out)
+  out <- to_sf_impl_(x, type = "camera")
+  as.camera_info(out, ...)
 }
 
 #' @export
 to_sf.sample_station_info <- function(x, ...) {
-  out <- to_sf_impl_(x, type = "sample_station", ...)
-  as.sample_station_info(out)
+  out <- to_sf_impl_(x, type = "sample_station")
+  as.sample_station_info(out, ...)
 }
 
-to_sf_impl_ <- function(x, type = c("camera", "sample_station"), ...) {
+to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
 
   type <- match.arg(type)
   zone_col <- paste0("utm_zone_", type)
@@ -373,8 +379,7 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station"), ...) {
       x_ll,
       coords = c(lon_col, lat_col),
       crs = "EPSG:4326",
-      remove = FALSE,
-      ...
+      remove = FALSE
     )
   }
 
@@ -395,3 +400,9 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station"), ...) {
   res
 }
 
+add_project_name_from_spi_sheet <- function(path, data) {
+  proj_info <- read_project_info(path)
+  proj_name <- proj_info$project_name[1]
+
+  dplyr::mutate(data, wlrs_project_name = proj_name, .before = 1)
+}

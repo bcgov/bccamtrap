@@ -259,3 +259,94 @@
     Message
       ! Run `qa_image_data()` to run various QA checks.
 
+# summary.sample_stations works - field forms
+
+    Code
+      summary(ss_csv)
+    Output
+      + 2080 labieux -------+
+      |                     |
+      |   Sample Stations   |
+      |                     |
+      +---------------------+
+    Message
+      i 8 sample stations in 8 locations.
+    Output
+      
+    Message
+      i Summary of station distances (m):
+    Output
+         Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+            0    1410    2497    8404   11999   24296 
+    Message
+      ! Run `qa_stations_spatial()` to validate the spatial information.
+    Output
+      
+    Message
+      i Station status summary:
+    Output
+        Active Inactive  Retired 
+             4        3        1 
+      
+    Message
+      i Set dates: Between 2024-03-07 18:56:00 and 2024-03-16 17:54:00
+    Output
+      
+    Message
+      ! Run `map_stations(object)` to view stations on a map.
+
+---
+
+    Code
+      summary(ss_csv)
+    Output
+      + 2080 labieux -------+
+      |                     |
+      |   Sample Stations   |
+      |                     |
+      +---------------------+
+    Message
+      i 8 sample stations in 8 locations.
+    Output
+      
+    Message
+      i Summary of station distances (m):
+    Output
+         Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+            0    1410    2497    8404   11999   24296 
+    Message
+      x Detected 0 potential spatial outliers.
+    Output
+      
+    Message
+      i Station status summary:
+    Output
+        Active Inactive  Retired 
+             4        3        1 
+      
+    Message
+      i Set dates: Between 2024-03-07 18:56:00 and 2024-03-16 17:54:00
+    Output
+      
+    Message
+      ! Run `map_stations(object)` to view stations on a map.
+
+# summary.deployments works - field forms
+
+    Code
+      summary(dep_csv)
+    Output
+      +-----------------+
+      |                 |
+      |   Deployments   |
+      |                 |
+      +-----------------+
+    Message
+      i 3 sample stations in 3 deploymentss.
+      i Deployment lengths range between 8 and 8 days.
+      x There are 2 invalid deployments.
+      i Camera status on arrival summary:
+    Output
+      Removed    <NA> 
+            1       2 
+

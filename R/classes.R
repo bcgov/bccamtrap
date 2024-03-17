@@ -2,8 +2,8 @@ as.project_info <- function(x, ...) {
   structure(x, class = c("cam_project_info", class(x)), ...)
 }
 
-as.sample_station_info <- function(x, ...) {
-  structure(x, class = c("sample_station_info", class(x)), ...)
+as.sample_station_info <- function(x, subclass, ...) {
+  structure(x, class = c("sample_station_info", subclass, class(x)), ...)
 }
 
 as.camera_info <- function(x, ...) {
@@ -14,10 +14,10 @@ as.cam_setup_checks <- function(x, ...) {
   structure(x, class = c("cam_setup_checks", class(x)), ...)
 }
 
-as.deployments <- function(x, ...) {
+as.deployments <- function(x, subclass, ...) {
   structure(
     x,
-    class = c("deployments", setdiff(class(x), "cam_setup_checks")),
+    class = c("deployments", subclass,  setdiff(class(x), "cam_setup_checks")),
     ...
   )
 }

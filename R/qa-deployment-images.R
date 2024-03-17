@@ -8,15 +8,22 @@
 #' @param deployments deployments data, as created by [make_deployments()]
 #' @param date_breaks How to break up the dates on the x axis. See [scales::date_breaks()]. Default `"1 month"`
 #' @param interactive should the plot be interactive? Default `FALSE`
+#' @param study_area_name Study area name for the plot. It will be used if it is
+#'   already in the data in a `study_area_name` column, otherwise provide it here.
 #'
 #' @return a `ggplot2` object if `interactive = FALSE`, a `plotly` object if `TRUE`
 #' @export
 plot_deployments <- function(deployments,
                              date_breaks = "1 month",
+                             study_area_name = NULL,
                              interactive = FALSE) {
   check_deployments(deployments)
 
   deployments <- process_invalid_deployments(deployments)
+
+  if (!is.null(study_area_name) && "study_area_name" %in% names(deployments)) {
+    study_area_name <- deployments$study_area_name[1]
+  }
 
   p <- ggplot2::ggplot(deployments) +
     ggplot2::geom_linerange(
@@ -58,7 +65,7 @@ plot_deployments <- function(deployments,
     ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
-      title = paste0("Camera Deployments at ", deployments$study_area_name[1]),
+      title = paste0("Camera Deployments at ", study_area_name),
       x = "Date", y = "Sample Station", size = "Valid Session", shape = "Valid Session",
       colour = "Valid Session"
     )
@@ -79,7 +86,9 @@ process_invalid_deployments <- function(deployments) {
 
   invalid_rows <- is.na(deployments$deployment_end) & !deployments$deployment_duration_valid
 
-  deployments$deployment_end_date[invalid_rows] <- as.Date(deployments$date_time_checked)[invalid_rows]
+  if ("date_time_checked" %in% names(deployments)) {
+    deployments$deployment_end_date[invalid_rows] <- as.Date(deployments$date_time_checked)[invalid_rows]
+  }
   deployments$valid_deployment <- ifelse(deployments$deployment_duration_valid, "Valid", "Invalid")
   deployments
 }
