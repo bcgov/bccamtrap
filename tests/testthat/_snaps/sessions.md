@@ -1,4 +1,4 @@
-# creating a sessions table works
+# creating a deployments table works
 
     {
       "type": "list",
@@ -657,4 +657,76 @@
         }
       ]
     }
+
+# make_sessions()
+
+    Code
+      sf::st_drop_geometry(sessions)
+    Output
+      # A tibble: 11 x 13
+         wlrs_project_name     sample_station_label deployment_label sample_start_date
+       * <chr>                 <chr>                <chr>            <date>           
+       1 2022 - ongoing - Roo~ A4                   A4_20230517      2022-12-16       
+       2 2022 - ongoing - Roo~ B3                   B3_20220517      2022-11-28       
+       3 2022 - ongoing - Roo~ B4                   B4_20230517      2022-12-16       
+       4 2022 - ongoing - Roo~ C1                   C1_20230517      2022-12-17       
+       5 2022 - ongoing - Roo~ C2                   C2_20230517      2022-12-16       
+       6 2022 - ongoing - Roo~ C3                   C3_20230517      2022-11-28       
+       7 2022 - ongoing - Roo~ C4                   C4_20230517      2022-12-17       
+       8 2022 - ongoing - Roo~ C5                   C5_20230517      2022-12-16       
+       9 2022 - ongoing - Roo~ D2                   D2_20230517      2022-11-28       
+      10 2022 - ongoing - Roo~ D3                   D3_20230517      2022-11-28       
+      11 2022 - ongoing - Roo~ D5                   D5_20230517      2022-12-16       
+      # i 9 more variables: deployment_end_date <date>, min_tl_date <date>,
+      #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
+      #   n_motion_photos <int>, sample_gaps <lgl>, sample_gap_length <int>,
+      #   sample_period_length <drtn>
+
+---
+
+    Code
+      sessions_no_sf
+    Output
+      # A tibble: 11 x 13
+         wlrs_project_name     sample_station_label deployment_label sample_start_date
+       * <chr>                 <chr>                <chr>            <date>           
+       1 2022 - ongoing - Roo~ A4                   A4_20230517      2022-12-16       
+       2 2022 - ongoing - Roo~ B3                   B3_20220517      2022-11-28       
+       3 2022 - ongoing - Roo~ B4                   B4_20230517      2022-12-16       
+       4 2022 - ongoing - Roo~ C1                   C1_20230517      2022-12-17       
+       5 2022 - ongoing - Roo~ C2                   C2_20230517      2022-12-16       
+       6 2022 - ongoing - Roo~ C3                   C3_20230517      2022-11-28       
+       7 2022 - ongoing - Roo~ C4                   C4_20230517      2022-12-17       
+       8 2022 - ongoing - Roo~ C5                   C5_20230517      2022-12-16       
+       9 2022 - ongoing - Roo~ D2                   D2_20230517      2022-11-28       
+      10 2022 - ongoing - Roo~ D3                   D3_20230517      2022-11-28       
+      11 2022 - ongoing - Roo~ D5                   D5_20230517      2022-12-16       
+      # i 9 more variables: deployment_end_date <date>, min_tl_date <date>,
+      #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
+      #   n_motion_photos <int>, sample_gaps <lgl>, sample_gap_length <int>,
+      #   sample_period_length <drtn>
+
+---
+
+    Code
+      sf::st_drop_geometry(sessions)
+    Output
+      # A tibble: 11 x 13
+         wlrs_project_name     sample_station_label deployment_label sample_start_date
+       * <chr>                 <chr>                <chr>            <date>           
+       1 2022 - ongoing - Roo~ A4                   A4_20230517      2022-12-16       
+       2 2022 - ongoing - Roo~ B3                   B3_20220517      2022-11-28       
+       3 2022 - ongoing - Roo~ B4                   B4_20230517      2022-12-16       
+       4 2022 - ongoing - Roo~ C1                   C1_20230517      2022-12-17       
+       5 2022 - ongoing - Roo~ C2                   C2_20230517      2022-12-16       
+       6 2022 - ongoing - Roo~ C3                   C3_20230517      2022-11-28       
+       7 2022 - ongoing - Roo~ C4                   C4_20230517      2022-12-17       
+       8 2022 - ongoing - Roo~ C5                   C5_20230517      2022-12-16       
+       9 2022 - ongoing - Roo~ D2                   D2_20230517      2022-11-28       
+      10 2022 - ongoing - Roo~ D3                   D3_20230517      2022-11-28       
+      11 2022 - ongoing - Roo~ D5                   D5_20230517      2022-12-16       
+      # i 9 more variables: deployment_end_date <date>, min_tl_date <date>,
+      #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
+      #   n_motion_photos <int>, sample_gaps <lgl>, sample_gap_length <int>,
+      #   sample_period_length <drtn>
 

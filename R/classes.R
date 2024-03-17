@@ -26,11 +26,17 @@ as.image_data <- function(x, ...) {
   structure(x, class = c("image_data", class(x)), ...)
 }
 
+as.sample_sessions <- function(x, ...) {
+  structure(x, class = c("sample_sessions", class(x)), ...)
+}
+
+
 # Define classes as a subclass of sf so that it works
 # with S4 methods for sf (eg mapview)
 methods::setOldClass(c("deployments", "sf"))
 methods::setOldClass(c("camera_info", "sf"))
 methods::setOldClass(c("sample_station_info", "sf"))
+methods::setOldClass(c("sample_sessions", "sf"))
 
 ## Checkers
 check_project_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {

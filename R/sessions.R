@@ -147,22 +147,45 @@ make_deployment_validity_columns <- function(x) {
 #'
 #' This function:
 #' - Sets sampling_start as deployment_start
-#' - If sampling_end < deployment_end, sets that as the sampling end
-#' - If sampling_end == deployment_end, looks in image data for indication
-#'   of valid sampling ending early:
-#'      - end of daily time lapse photos
-#'      - lens obscured constantly until end of deployment
+#' - Notes dates of first and last photos of deployment
+#' - Counts photos (total, and motion-detection)
+#' - Determines if the sampling period is less than the deployment period
+#' - Determines gaps in sampling period due to obscured lens
+#' - Determines total length of sample period (last photo date - first photo date - number of days with lens obscured)
 #'
 #' @inheritParams plot_deployment_detections
 #' @inheritParams make_deployments
 #'
-#' @return a data.frame with one or more rows (sample sessions) per deployment
+#' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
 #' @export
 make_sessions <- function(deployments, image_data, as_sf = TRUE) {
-  merged <- merge_deployments_images(deployments, image_data, as_sf = FALSE)
+  merged <- merge_deployments_images(deployments, image_data, as_sf = as_sf)
 
-  merged %>%
-    dplyr::filter(tolower(.data$trigger_mode) %in% c("t", "time lapse")) %>%
-    dplyr::group_by(.data$deployment_label) %>%
-    dplyr::summarize(max_tl_date = max(.data$date_time))
+  merged <- dplyr::mutate(
+    merged,
+    trigger_mode = ifelse(grepl("^[Mm]", .data$trigger_mode), "motion", "timelapse")
+  )
+
+  merged <- dplyr::group_by(
+    merged,
+    dplyr::across(c("wlrs_project_name", "sample_station_label", "deployment_label"))
+  )
+
+  out <- dplyr::summarize(
+    merged,
+    sample_start_date = as.Date(min(.data$deployment_start, na.rm = TRUE)),
+    deployment_end_date = as.Date(max(.data$deployment_end, na.rm = TRUE)),
+    min_tl_date = as.Date(min(.data$date_time, na.rm = TRUE)),
+    max_tl_date = as.Date(max(.data$date_time, na.rm = TRUE)),
+    sample_truncated = .data$deployment_end_date > .data$max_tl_date,
+    n_photos = dplyr::n(),
+    n_motion_photos = sum(.data$trigger_mode == "motion"),
+    sample_gaps = any(.data$lens_obscured),
+    sample_gap_length = sum(.data$lens_obscured, na.rm = TRUE),
+    sample_period_length = .data$max_tl_date - .data$min_tl_date -
+      .data$sample_gap_length,
+    .groups = "drop"
+  )
+
+  as.sample_sessions(out)
 }

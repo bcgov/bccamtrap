@@ -2,7 +2,7 @@
 % Please edit documentation in R/qa-deployment-images.R
 \name{qa_deployment_images}
 \alias{qa_deployment_images}
-\title{Check for mismatched deployment labels in session data and image data}
+\title{Check for mismatched deployment labels in deployment data and image data}
 \usage{
 qa_deployment_images(deployments, image_data)
 }
@@ -16,5 +16,5 @@ a list of two vectors containing mismatched deployment labels
 }
 \description{
 This function is mainly called for its messaging - alerting you to deployment labels that are
-in the sample session data but not in the image data, and vice versa.
+in the sample deployment data but not in the image data, and vice versa.
 }
