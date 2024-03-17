@@ -25,6 +25,9 @@
     <loc>https://bcgov.github.io/bccamtrap/reference/fill_spi_template.html</loc>
   </url>
   <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/fill_spi_template_ff.html</loc>
+  </url>
+  <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/index.html</loc>
   </url>
   <url>
@@ -64,10 +67,16 @@
     <loc>https://bcgov.github.io/bccamtrap/reference/read_camera_info.html</loc>
   </url>
   <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/read_deployments_csv.html</loc>
+  </url>
+  <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/read_image_data.html</loc>
   </url>
   <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/read_project_info.html</loc>
+  </url>
+  <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/read_sample_station_csv.html</loc>
   </url>
   <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/read_sample_station_info.html</loc>

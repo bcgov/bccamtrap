@@ -92,10 +92,9 @@
 <h3 id="project-and-station-metadata">Project and station metadata<a class="anchor" aria-label="anchor" href="#project-and-station-metadata"></a>
 </h3>
 <p>Read in project metadata from the SPI worksheet. There are functions to read the relevant tabs:</p>
-</div>
-<div class="section level3">
-<h3 id="project-information">Project Information<a class="anchor" aria-label="anchor" href="#project-information"></a>
-</h3>
+<div class="section level4">
+<h4 id="project-information">Project Information<a class="anchor" aria-label="anchor" href="#project-information"></a>
+</h4>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">proj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_project_info.html">read_project_info</a></span><span class="op">(</span><span class="va">metadata_path</span><span class="op">)</span></span>
 <span><span class="va">proj</span></span>
@@ -103,6 +102,7 @@
 <span><span class="co">#&gt;   spi_project_id project_name                  survey_name survey_intensity_code</span></span>
 <span><span class="co">#&gt; * &lt;chr&gt;          &lt;chr&gt;                         &lt;chr&gt;       &lt;chr&gt;                </span></span>
 <span><span class="co">#&gt; 1 &lt;NA&gt;           2022 - ongoing - Roosevelt E… 2022-2023 … &lt;NA&gt;</span></span></code></pre></div>
+</div>
 <div class="section level4">
 <h4 id="sample-station-information">Sample station information<a class="anchor" aria-label="anchor" href="#sample-station-information"></a>
 </h4>
@@ -110,28 +110,28 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sample_stations</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_sample_station_info.html">read_sample_station_info</a></span><span class="op">(</span><span class="va">metadata_path</span><span class="op">)</span></span>
 <span><span class="va">sample_stations</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 21 features and 28 fields</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 21 features and 29 fields</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; Geometry type: POINT</span></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -126.3803 ymin: 47.30585 xmax: -125.6508 ymax: 47.3639</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -124.0718 ymin: 45.4409 xmax: -123.3717 ymax: 45.5056</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 21 × 23</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;    study_area_name study_area_photos sample_station_label station_status</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;             &lt;chr&gt;                &lt;chr&gt;         </span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;  1 Test Project    Y                 19_1                 Camera Active </span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt;  2 Test Project    Y                 19_2                 Camera Active </span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;  3 Test Project    Y                 20                   Camera Active </span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt;  4 Test Project    Y                 21_1                 Camera Active </span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt;  5 Test Project    Y                 21_2                 Camera Active </span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;  6 Test Project    Y                 24                   Camera Active </span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;  7 Test Project    Y                 25                   Camera Active </span></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt;  8 Test Project    Y                 26                   Camera Active </span></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;  9 Test Project    Y                 27                   Camera Moved  </span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 10 Test Project    Y                 28                   Camera Active </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 21 × 24</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name      study_area_name study_area_photos sample_station_label</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                  &lt;chr&gt;           &lt;chr&gt;             &lt;chr&gt;               </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Roos… Test Project    Y                 19_1                </span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Roos… Test Project    Y                 19_2                </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Roos… Test Project    Y                 20                  </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Roos… Test Project    Y                 21_1                </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Roos… Test Project    Y                 21_2                </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Roos… Test Project    Y                 24                  </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Roos… Test Project    Y                 25                  </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Roos… Test Project    Y                 26                  </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Roos… Test Project    Y                 27                  </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Roos… Test Project    Y                 28                  </span></span>
 <span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; # ℹ 11 more rows</span></span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 19 more variables: number_of_cameras &lt;dbl&gt;, set_date &lt;date&gt;,</span></span>
-<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; #   general_location &lt;chr&gt;, elevation_m &lt;dbl&gt;, slope_percent &lt;dbl&gt;,</span></span>
-<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; #   aspect_degrees &lt;dbl&gt;, crown_closure_percent &lt;dbl&gt;,</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 20 more variables: station_status &lt;chr&gt;, number_of_cameras &lt;dbl&gt;,</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; #   set_date &lt;dttm&gt;, general_location &lt;chr&gt;, elevation_m &lt;dbl&gt;,</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; #   slope_percent &lt;dbl&gt;, aspect_degrees &lt;dbl&gt;, crown_closure_percent &lt;dbl&gt;,</span></span>
 <span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; #   camera_bearing_degrees &lt;dbl&gt;, camera_height_cm &lt;dbl&gt;,</span></span>
 <span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; #   distance_to_feature_m &lt;dbl&gt;, visible_range_m &lt;dbl&gt;, habitat_feature &lt;chr&gt;,</span></span>
 <span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; #   lock &lt;chr&gt;, code &lt;chr&gt;, sample_station_comments &lt;chr&gt;, …</span></span></code></pre></div>
@@ -151,7 +151,7 @@
 <span><span class="co">#&gt; ℹ 18 sample stations in 21 locations.</span></span>
 <span><span class="co">#&gt; ℹ Summary of station distances (m):</span></span>
 <span><span class="co">#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. </span></span>
-<span><span class="co">#&gt;     5.11  4224.12  8658.82 11869.30 14477.47 55180.26</span></span>
+<span><span class="co">#&gt;     5.13  4211.96  8630.12 11834.38 14433.11 54998.97</span></span>
 <span><span class="co">#&gt; ✖ Detected 1 potential spatial outlier.</span></span>
 <span><span class="co">#&gt; ℹ Station status summary:</span></span>
 <span><span class="co">#&gt; Camera Active  Camera Moved </span></span>
@@ -170,27 +170,29 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">camera_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_camera_info.html">read_camera_info</a></span><span class="op">(</span><span class="va">metadata_path</span><span class="op">)</span></span>
 <span><span class="va">camera_info</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 21 features and 13 fields</span></span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 21 features and 14 fields</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; Geometry type: POINT</span></span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -125.5219 ymin: 49.28703 xmax: -125.2213 ymax: 49.34728</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 21 × 8</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;    study_area_name parent_sample_station_label camera_label make_of_camera_code</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;                       &lt;chr&gt;        &lt;chr&gt;              </span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;  1 Test Project    19_1                        UBC 2        &lt;NA&gt;               </span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt;  2 Test Project    19_2                        UBC 1        &lt;NA&gt;               </span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt;  3 Test Project    20                          Eco1059      &lt;NA&gt;               </span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;  4 Test Project    21_1                        Eco1057      &lt;NA&gt;               </span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt;  5 Test Project    21_2                        Eco7998      &lt;NA&gt;               </span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt;  6 Test Project    24                          Eco1050      &lt;NA&gt;               </span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt;  7 Test Project    25                          Eco1040      &lt;NA&gt;               </span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt;  8 Test Project    26                          Eco7939      &lt;NA&gt;               </span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt;  9 Test Project    27                          Eco6690      &lt;NA&gt;               </span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; 10 Test Project    28                          UBC 4        &lt;NA&gt;               </span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 21 × 9</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name         study_area_name parent_sample_statio…¹ camera_label</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                     &lt;chr&gt;           &lt;chr&gt;                  &lt;chr&gt;       </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Rooseve… Test Project    19_1                   UBC 2       </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Rooseve… Test Project    19_2                   UBC 1       </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Rooseve… Test Project    20                     Eco1059     </span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Rooseve… Test Project    21_1                   Eco1057     </span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Rooseve… Test Project    21_2                   Eco7998     </span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Rooseve… Test Project    24                     Eco1050     </span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Rooseve… Test Project    25                     Eco1040     </span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Rooseve… Test Project    26                     Eco7939     </span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Rooseve… Test Project    27                     Eco6690     </span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Rooseve… Test Project    28                     UBC 4       </span></span>
 <span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; # ℹ 11 more rows</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 4 more variables: model_of_camera &lt;chr&gt;, camera_comments &lt;chr&gt;,</span></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; #   site_description_comments &lt;chr&gt;, site_description_date &lt;date&gt;</span></span></code></pre></div>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated name: ¹​parent_sample_station_label</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: make_of_camera_code &lt;chr&gt;, model_of_camera &lt;chr&gt;,</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; #   camera_comments &lt;chr&gt;, site_description_comments &lt;chr&gt;,</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; #   site_description_date &lt;dttm&gt;</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="camera-setup-and-checks">Camera Setup and Checks:<a class="anchor" aria-label="anchor" href="#camera-setup-and-checks"></a>
@@ -198,24 +200,24 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">camera_setup_checks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_cam_setup_checks.html">read_cam_setup_checks</a></span><span class="op">(</span><span class="va">metadata_path</span><span class="op">)</span></span>
 <span><span class="va">camera_setup_checks</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 × 30</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt;    study_area_name sample_station_label deployment_label camera_label surveyors</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;    </span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt;  1 Test Project    19_1                 &lt;NA&gt;             UBC 2        MB,MS    </span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;  2 Test Project    19_2                 &lt;NA&gt;             UBC 1        MB,MS    </span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;  3 Test Project    20                   &lt;NA&gt;             Eco1059      MB,MS    </span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;  4 Test Project    21_1                 &lt;NA&gt;             Eco1057      MB,MS    </span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  5 Test Project    21_2                 &lt;NA&gt;             Eco7998      MB,MS    </span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  6 Test Project    24                   &lt;NA&gt;             Eco1050      MB,MS    </span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;  7 Test Project    25                   &lt;NA&gt;             Eco1040      MB,MS    </span></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;  8 Test Project    26                   &lt;NA&gt;             Eco7939      MB,MS    </span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;  9 Test Project    27                   &lt;NA&gt;             Eco6690      MB,MS    </span></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt; 10 Test Project    28                   &lt;NA&gt;             UBC 4        MB,MS    </span></span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 × 31</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name       study_area_name sample_station_label deployment_label</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                   &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Roose… Test Project    19_1                 &lt;NA&gt;            </span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Roose… Test Project    19_2                 &lt;NA&gt;            </span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Roose… Test Project    20                   &lt;NA&gt;            </span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Roose… Test Project    21_1                 &lt;NA&gt;            </span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Roose… Test Project    21_2                 &lt;NA&gt;            </span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Roose… Test Project    24                   &lt;NA&gt;            </span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Roose… Test Project    25                   &lt;NA&gt;            </span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Roose… Test Project    26                   &lt;NA&gt;            </span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Roose… Test Project    27                   &lt;NA&gt;            </span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Roose… Test Project    28                   &lt;NA&gt;            </span></span>
 <span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 33 more rows</span></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 25 more variables: date_time_checked &lt;dttm&gt;, sampling_start &lt;dttm&gt;,</span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; #   sampling_end &lt;dttm&gt;, total_visit_or_deployment_time &lt;dbl&gt;,</span></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt; #   unit_of_total_time_code &lt;chr&gt;, visit_type &lt;chr&gt;,</span></span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; #   camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 27 more variables: camera_label &lt;chr&gt;, surveyors &lt;chr&gt;,</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; #   date_time_checked &lt;dttm&gt;, sampling_start &lt;dttm&gt;, sampling_end &lt;dttm&gt;,</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt; #   total_visit_or_deployment_time &lt;dbl&gt;, unit_of_total_time_code &lt;chr&gt;,</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; #   visit_type &lt;chr&gt;, camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
 <span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt; #   batteries_changed &lt;chr&gt;, number_of_photos &lt;dbl&gt;, quiet_period_s &lt;chr&gt;,</span></span>
 <span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt; #   trigger_sensitivity &lt;chr&gt;, trigger_timing_s &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
@@ -226,30 +228,30 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deployments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_deployments.html">make_deployments</a></span><span class="op">(</span><span class="va">metadata_path</span><span class="op">)</span></span>
 <span><span class="va">deployments</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 28 features and 58 fields</span></span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 28 features and 61 fields</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; Geometry type: POINT</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -123.505 ymin: 51.2599 xmax: -122.7148 ymax: 51.32557</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -125.217 ymin: 45.24355 xmax: -124.5189 ymax: 45.30508</span></span>
 <span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 53</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt;    study_area_name sample_station_label deployment_label camera_label surveyors</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;    </span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt;  1 Test Project    19_1                 19_1_20230605    UBC 2        CM, BT   </span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt;  2 Test Project    19_2                 19_2_20230605    UBC 1        CM, BT   </span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt;  3 Test Project    20                   20_20230605      Eco1059      CM, BT   </span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt;  4 Test Project    21_1                 21_20230605      Eco1057      CM, BT   </span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt;  5 Test Project    21_2                 21_2_20230605    Eco7998      CM, BT   </span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt;  6 Test Project    24                   24_20230708      Eco1050      MB,MS    </span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt;  7 Test Project    25                   25_20230710      Eco1040      MB,MS    </span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt;  8 Test Project    26                   26_20230710      Eco7939      MB,MS    </span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt;  9 Test Project    27                   27_20230605      Eco6690      CM, BT   </span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; 10 Test Project    28                   28_20230605      UBC 4        CM, BT   </span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 56</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name       study_area_name sample_station_label deployment_label</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                   &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Roose… Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Roose… Test Project    19_2                 19_2_20230605   </span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Roose… Test Project    20                   20_20230605     </span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Roose… Test Project    21_1                 21_20230605     </span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Roose… Test Project    21_2                 21_2_20230605   </span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Roose… Test Project    24                   24_20230708     </span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Roose… Test Project    25                   25_20230710     </span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Roose… Test Project    26                   26_20230710     </span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Roose… Test Project    27                   27_20230605     </span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Roose… Test Project    28                   28_20230605     </span></span>
 <span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 48 more variables: date_time_checked &lt;dttm&gt;, deployment_start &lt;dttm&gt;,</span></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt; #   deployment_end &lt;dttm&gt;, deployment_duration_days &lt;dbl&gt;,</span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#&gt; #   deployment_duration_valid &lt;lgl&gt;, total_visit_or_deployment_time &lt;dbl&gt;,</span></span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#&gt; #   unit_of_total_time_code &lt;chr&gt;, visit_type &lt;chr&gt;,</span></span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt; #   camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 52 more variables: camera_label &lt;chr&gt;, surveyors &lt;chr&gt;,</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt; #   date_time_checked &lt;dttm&gt;, deployment_start &lt;dttm&gt;, deployment_end &lt;dttm&gt;,</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#&gt; #   deployment_duration_days &lt;dbl&gt;, deployment_duration_valid &lt;lgl&gt;,</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#&gt; #   total_visit_or_deployment_time &lt;dbl&gt;, unit_of_total_time_code &lt;chr&gt;,</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt; #   visit_type &lt;chr&gt;, camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
 <span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#&gt; #   batteries_changed &lt;chr&gt;, number_of_photos &lt;dbl&gt;, quiet_period_s &lt;chr&gt;, …</span></span></code></pre></div>
 <p>There is a handy <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for this as well:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -273,34 +275,43 @@
 </div>
 </div>
 <div class="section level3">
+<h3 id="project-metadata-field-form-csv-files">Project Metadata: Field Form CSV files<a class="anchor" aria-label="anchor" href="#project-metadata-field-form-csv-files"></a>
+</h3>
+<p>There are also two functions for reading in the different csv outputs from the field forms: Sample Stations, and Deployments:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sample_station_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_sample_station_csv.html">read_sample_station_csv</a></span><span class="op">(</span><span class="st">"path-to-sample-stations.csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deployments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_deployments_csv.html">read_deployments_csv</a></span><span class="op">(</span><span class="st">"path-to-deployments.csv"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="image-data">Image data<a class="anchor" aria-label="anchor" href="#image-data"></a>
 </h3>
 <p>We can read in an entire directory of image data from multiple csv files, as long as they all follow the same TimeLapse template. Currently it is expected that they follow the <code>v20230518</code> template.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">image_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_image_data.html">read_image_data</a></span><span class="op">(</span><span class="va">data_path</span><span class="op">)</span></span>
 <span><span class="va">image_data</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11,833 × 42</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#&gt;    root_folder study_area_name sample_station_label deployment_label</span></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt;  1 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt;  2 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt;  3 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt;  4 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt;  5 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt;  6 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt;  7 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="co">#&gt;  8 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="co">#&gt;  9 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="co">#&gt; 10 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 11,823 more rows</span></span>
-<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 38 more variables: date_time &lt;dttm&gt;, episode &lt;chr&gt;, species &lt;chr&gt;,</span></span>
-<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="co">#&gt; #   total_count_episode &lt;dbl&gt;, obj_count_image &lt;int&gt;, adult_male &lt;int&gt;,</span></span>
-<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a><span class="co">#&gt; #   adult_female &lt;int&gt;, adult_unclassified_sex &lt;int&gt;, yearling_male &lt;int&gt;,</span></span>
-<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a><span class="co">#&gt; #   yearling_female &lt;int&gt;, yearling_unclassified_sex &lt;int&gt;,</span></span>
-<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a><span class="co">#&gt; #   young_of_year_unclassified_sex &lt;int&gt;, juvenile_unclassified_sex &lt;int&gt;,</span></span>
-<span id="cb18-20"><a href="#cb18-20" tabindex="-1"></a><span class="co">#&gt; #   male_unclassified_age &lt;int&gt;, female_unclassified_age &lt;int&gt;, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11,833 × 42</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt;    root_folder study_area_name sample_station_label deployment_label</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;  1 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt;  2 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt;  3 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt;  4 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt;  5 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt;  6 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt;  7 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt;  8 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt;  9 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co">#&gt; 10 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 11,823 more rows</span></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 38 more variables: date_time &lt;dttm&gt;, episode &lt;chr&gt;, species &lt;chr&gt;,</span></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co">#&gt; #   total_count_episode &lt;dbl&gt;, obj_count_image &lt;int&gt;, adult_male &lt;int&gt;,</span></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="co">#&gt; #   adult_female &lt;int&gt;, adult_unclassified_sex &lt;int&gt;, yearling_male &lt;int&gt;,</span></span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt; #   yearling_female &lt;int&gt;, yearling_unclassified_sex &lt;int&gt;,</span></span>
+<span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="co">#&gt; #   young_of_year_unclassified_sex &lt;int&gt;, juvenile_unclassified_sex &lt;int&gt;,</span></span>
+<span id="cb20-20"><a href="#cb20-20" tabindex="-1"></a><span class="co">#&gt; #   male_unclassified_age &lt;int&gt;, female_unclassified_age &lt;int&gt;, …</span></span></code></pre></div>
 <p>Again, we can use the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method to get an overview of the image data.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌ Test Project ─────┐</span></span>
 <span><span class="co">#&gt; │                   │</span></span>
@@ -327,17 +338,17 @@
 <span><span class="co">#&gt; ! Run `qa_deployment_images()` to crosscheck images with deployments.</span></span>
 <span><span class="co">#&gt; ! Run `qa_image_data()` to run various QA checks.</span></span></code></pre></div>
 <p>Use the <code><a href="reference/qa_deployment_images.html">qa_deployment_images()</a></code> function to find deployment labels that are in the deployment data but not in the image data, and vice-versa. It is usually likely that there will be deployment labels in the deployment data that are missing from the image data if not all of the images have been processed yet. Deployment labels that are present in the image data but not in the deployment data indicate a potential problem.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/qa_deployment_images.html">qa_deployment_images</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"</span></span>
 <span><span class="co">#&gt; ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"</span></span></code></pre></div>
 <p>Use <code><a href="reference/merge_deployments_images.html">merge_deployments_images()</a></code> to join the deployment metadata to the images:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">images_with_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/merge_deployments_images.html">merge_deployments_images</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"</span></span>
 <span><span class="co">#&gt; ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"</span></span>
 <span><span class="va">images_with_metadata</span></span>
-<span><span class="co">#&gt; # A tibble: 11,833 × 93</span></span>
+<span><span class="co">#&gt; # A tibble: 11,833 × 96</span></span>
 <span><span class="co">#&gt;    root_folder deployment_label date_time           episode species</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;            &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;  </span></span>
 <span><span class="co">#&gt;  1 100RECNX    19_1_20230605    2022-11-10 15:15:53 1:1|5   &lt;NA&gt;   </span></span>
@@ -351,7 +362,7 @@
 <span><span class="co">#&gt;  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   &lt;NA&gt;   </span></span>
 <span><span class="co">#&gt; 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   &lt;NA&gt;   </span></span>
 <span><span class="co">#&gt; # ℹ 11,823 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 88 more variables: total_count_episode &lt;dbl&gt;, obj_count_image &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 91 more variables: total_count_episode &lt;dbl&gt;, obj_count_image &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   adult_male &lt;int&gt;, adult_female &lt;int&gt;, adult_unclassified_sex &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   yearling_male &lt;int&gt;, yearling_female &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   yearling_unclassified_sex &lt;int&gt;, young_of_year_unclassified_sex &lt;int&gt;,</span></span>
@@ -378,12 +389,12 @@
 </li>
 </ul>
 <p>Run the <code><a href="reference/qa_image_data.html">qa_image_data()</a></code> function:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">image_data_qa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qa_image_data.html">qa_image_data</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 24 53</span></span></code></pre></div>
 <p>We can see that this has identified 24 records with potential problems. This dataset has a number of fields starting with <code>QA_</code> which help us know which images we should have a closer look at. All of the original fields, plus any <code>QA_</code> fields that have at least one <code>TRUE</code> value are returned:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "root_folder"                     "study_area_name"                </span></span>
 <span><span class="co">#&gt;  [3] "sample_station_label"            "deployment_label"               </span></span>
@@ -412,7 +423,7 @@
 <span><span class="co">#&gt; [49] "QA_BLANK_trigger_mode"           "QA_BLANK_temperature"           </span></span>
 <span><span class="co">#&gt; [51] "QA_BLANK_episode"                "QA_timelapse_lag"               </span></span>
 <span><span class="co">#&gt; [53] "QA_snow_outlier"</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">select</span><span class="op">(</span><span class="va">image_data_qa</span>, <span class="va">root_folder</span>, <span class="va">file</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">"QA_"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 24 × 12</span></span>
 <span><span class="co">#&gt;    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹</span></span>
@@ -443,40 +454,40 @@
 <h4 id="deployment-plot">Deployment plot<a class="anchor" aria-label="anchor" href="#deployment-plot"></a>
 </h4>
 <p>We can plot deployments to see that the start and ends of our deployments are as expected, and flag any “invalid” deployments (i.e., where we don’t know the end time because a camera was stolen, bumped, ran out of batteries etc.). You can make static or interactive plots:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployments.html">plot_deployments</a></span><span class="op">(</span><span class="va">deployments</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-deployments-1.png" width="100%"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="snow-depth-plot">Snow depth plot<a class="anchor" aria-label="anchor" href="#snow-depth-plot"></a>
 </h4>
 <p>We can plot the recorded snow depths across deployments using the <code><a href="reference/plot_snow.html">plot_snow()</a></code> function with our image data:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_snow.html">plot_snow</a></span><span class="op">(</span><span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-snow-1.png" width="100%"></p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="detection-plot">Detection plot<a class="anchor" aria-label="anchor" href="#detection-plot"></a>
 </h4>
 <p>We can also plot image timestamps over the deployment durations to alert us to potential time mismatches between the session data and image time labels. Mismatches could indicate wrong time settings on cameras, errors in deployment labels (as the below indicates), or any number of data entry errors.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployment_detections.html">plot_deployment_detections</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-detections-1.png" width="100%"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot_deployment_detections(deployments, image_data, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="daily-detection-patterns">Daily detection patterns<a class="anchor" aria-label="anchor" href="#daily-detection-patterns"></a>
 </h4>
 <p>We can plot the patterns of daily detections by species:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_diel_activity.html">plot_diel_activity</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-diel-1.png" width="100%"></p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot_diel_activity(image_data, interactive = TRUE)</span></span></code></pre></div>
 </div>
 </div>
@@ -485,7 +496,7 @@
 </h3>
 <p>bccamtrap also has functionality to write out data to a SPI template for submission.</p>
 <p>Use <code><a href="reference/fill_spi_template.html">fill_spi_template()</a></code> to write all of the data to a SPI template, filling in just the default required fields. This will fill in all of the tabs except for the Project Info sheet which you must fill in manually.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/fill_spi_template.html">fill_spi_template</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_stations</span>,</span>
 <span>  <span class="va">camera_info</span>, </span>
@@ -495,13 +506,29 @@
 <span><span class="op">)</span></span></code></pre></div>
 <p>If you want more control, such as adding data to other fields in the SPI template, use <code><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet()</a></code>.</p>
 <p>If you want to write to an existing file, specify the same file name in both the <code>file</code> and the <code>template</code> parameters. To write columns other than the default columns, specify paired column names in the form <code>`Destination Column` = data_column</code>. If the left-hand side is a syntactically valid name it can be provided as-is, but if it has spaces in it it must be wrapped in backticks or quotes.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_stations</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"~/Desktop/SPI_output.xlsx"</span>,</span>
 <span>  `Number of Cameras` <span class="op">=</span> <span class="va">number_of_cameras</span>,</span>
 <span>  template <span class="op">=</span> <span class="st">"~/Desktop/SPI_output.xlsx"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="writing-to-spi-template-using-field-form-data">Writing to SPI template using field form data<a class="anchor" aria-label="anchor" href="#writing-to-spi-template-using-field-form-data"></a>
+</h4>
+<p>To write data imported from field form data, you must use the <code><a href="reference/fill_spi_template_ff.html">fill_spi_template_ff()</a></code> function, passing in both the <code>sample_station_info</code> and <code>deployments</code>, as well as the <code>image_data</code>.</p>
+<p>If you want to only write to the metadata tabs and not the Sequence Image Data, you can leave the <code>image_data</code> argument as <code>NULL</code>, and write to the file another time with <code><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet()</a></code>.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sample_station_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_sample_station_csv.html">read_sample_station_csv</a></span><span class="op">(</span><span class="st">"path-to-sample-stations.csv"</span><span class="op">)</span></span>
+<span><span class="va">deployments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_deployments_csv.html">read_deployments_csv</a></span><span class="op">(</span><span class="st">"path-to-deployments.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/fill_spi_template_ff.html">fill_spi_template_ff</a></span><span class="op">(</span></span>
+<span>  <span class="va">sample_stations</span>,</span>
+<span>  <span class="va">depllyments</span>,</span>
+<span>  <span class="va">image_data</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"~/Desktop/SPI_output_from_ff.xlsx"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="project-status">Project Status<a class="anchor" aria-label="anchor" href="#project-status"></a>
@@ -521,17 +548,17 @@
 <div class="section level3">
 <h3 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h3>
-<div class="sourceCode" id="cb35"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
-<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
-<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
-<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
-<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
-<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
 </div>
 </div>
 </div>
