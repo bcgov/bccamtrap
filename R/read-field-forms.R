@@ -19,7 +19,7 @@ read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE
 
   if (!is.null(wlrs_project_name)) {
     check_project_name(ssi, wlrs_project_name)
-    ssi <- filter(ssi, .data$wlrs_project_name %in% wlrs_project_name)
+    ssi <- dplyr::filter(ssi, .data$wlrs_project_name %in% wlrs_project_name)
   }
 
   if (as_sf) {
@@ -50,7 +50,7 @@ read_deployments_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
 
   if (!is.null(wlrs_project_name)) {
     check_project_name(deployments, wlrs_project_name)
-    deployments <- filter(deployments, .data$wlrs_project_name %in% wlrs_project_name)
+    deployments <- dplyr::filter(deployments, .data$wlrs_project_name %in% wlrs_project_name)
   }
 
   if (as_sf) {
