@@ -48,7 +48,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">merge_deployments_images</span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span>, as_sf <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">merge_deployments_images</span><span class="op">(</span></span>
+<span>  <span class="va">deployments</span>,</span>
+<span>  <span class="va">image_data</span>,</span>
+<span>  drop_unjoined <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  as_sf <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -59,6 +64,12 @@
 
 <dt>image_data</dt>
 <dd><p>data.frame of class <code>image_data</code>, as read in by <code><a href="read_image_data.html">read_image_data()</a></code>.</p></dd>
+
+
+<dt>drop_unjoined</dt>
+<dd><p>if there are unmatched <code>deployment_labels</code> between
+deployments and image data, should they be dropped from the output
+(this is equivalent to a <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::inner_join()</a></code>)? Default is <code>FALSE</code>.</p></dd>
 
 
 <dt>as_sf</dt>
