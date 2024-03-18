@@ -29,11 +29,12 @@ make_deployments <- function(path, as_sf = TRUE) {
 
   csc <- dplyr::filter(csc, .data$visit_type != "Deployment")
 
-  csc <- dplyr::rename_with(
-    csc,
-    function(x) gsub("sampling_", "deployment_", x),
-    .cols = dplyr::starts_with("sampling")
-  )
+  # sample session starts when deployment starts
+  csc$deployment_start <- csc$sampling_start
+
+  # Make the *deployment* end be when the card was pulled.
+  # Session end manually set in sampling_end
+  csc$deployment_end <- csc$date_time_checked
 
   ci <- dplyr::select(
     ci,
@@ -109,7 +110,7 @@ make_deployments <- function(path, as_sf = TRUE) {
     )
   )
 
-  ret <- dplyr::select(ret, -"deployment_start_date")
+  ret <- dplyr::select(ret, -"deployment_start_date", -"sampling_start")
   ret <- make_deployment_validity_columns(ret)
 
   if (inherits(ss, "sf")) {
@@ -128,6 +129,11 @@ make_deployment_validity_columns <- function(x) {
     ) / lubridate::ddays(1),
     deployment_duration_valid = !is.na(.data$deployment_duration_days) &
       !is.na(.data$deployment_end) &
+      if ("sampling_end" %in% names(x)) {
+        !is.na(.data$sampling_end)
+      } else {
+        TRUE
+      } &
       .data$deployment_duration_days > 0
   )
   dplyr::relocate(
@@ -135,4 +141,60 @@ make_deployment_validity_columns <- function(x) {
     dplyr::starts_with("deployment_duration"),
     .after = "deployment_end"
   )
+}
+
+#' Identify distinct sample sessions from deployments
+#'
+#' This function:
+#' - Sets sampling_start as deployment_start
+#' - Notes dates of first and last photos of deployment
+#' - Counts photos (total, and motion-detection)
+#' - Determines if the sampling period is less than the deployment period
+#' - Determines gaps in sampling period due to obscured lens
+#' - Determines total length of sample period (last photo date - first photo date - number of days with lens obscured)
+#'
+#' @inheritParams plot_deployment_detections
+#' @inheritParams make_deployments
+#' @param drop_unjoined if there are unmatched `deployment_labels` between
+#'   deployments and image data, should they be dropped from the output
+#'   (this is equivalent to a [dplyr::inner_join()])? Default is `TRUE`, with a
+#'   warning.
+#'
+#' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
+#' @export
+make_sessions <- function(deployments, image_data, drop_unjoined = TRUE, as_sf = TRUE) {
+  merged <- merge_deployments_images(
+    deployments,
+    image_data,
+    drop_unjoined = drop_unjoined,
+    as_sf = as_sf
+  )
+
+  merged <- dplyr::mutate(
+    merged,
+    trigger_mode = ifelse(grepl("^[Mm]", .data$trigger_mode), "motion", "timelapse")
+  )
+
+  merged <- dplyr::group_by(
+    merged,
+    dplyr::across(c("wlrs_project_name", "sample_station_label", "deployment_label"))
+  )
+
+  out <- dplyr::summarize(
+    merged,
+    sample_start_date = as.Date(min(.data$deployment_start, na.rm = TRUE)),
+    deployment_end_date = as.Date(max(.data$deployment_end, na.rm = TRUE)),
+    min_tl_date = as.Date(min(.data$date_time, na.rm = TRUE)),
+    max_tl_date = as.Date(max(.data$date_time, na.rm = TRUE)),
+    sample_truncated = .data$deployment_end_date > .data$max_tl_date,
+    n_photos = dplyr::n(),
+    n_motion_photos = sum(.data$trigger_mode == "motion"),
+    sample_gaps = any(.data$lens_obscured),
+    sample_gap_length = sum(.data$lens_obscured, na.rm = TRUE),
+    sample_period_length = .data$max_tl_date - .data$min_tl_date -
+      .data$sample_gap_length,
+    .groups = "drop"
+  )
+
+  as.sample_sessions(out)
 }

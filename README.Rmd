@@ -21,6 +21,8 @@ withr::local_options(
 library(bccamtrap)
 library(dplyr)
 library(sf)
+
+set.seed(13)
 ```
 
 # bccamtrap
@@ -334,6 +336,29 @@ names(image_data_qa)
 select(image_data_qa, root_folder, file, starts_with("QA_"))
 ```
 
+### Sampling sessions
+
+Define sampling sessions based on deployment metadata and image data using the 
+`make_sessions()` function. This function will:
+
+- Set sampling_start as deployment_start
+- Notes dates of first and last photos of deployment
+- Counts photos (total, and motion-detection)
+- Determines if the sampling period is less than the deployment period
+- Determines gaps in sampling period due to obscured lens
+- Determines total length of sample period (last photo date - first photo date - number of days with lens obscured)
+
+```{r}
+#| eval: false
+make_sessions(deployments, image_data)
+```
+
+```{r}
+#| echo: false
+make_sessions(deployments, image_data, as_sf = FALSE) %>% 
+  select(-wlrs_project_name, -sample_station_label)
+```
+
 ### Plots
 
 There are several plotting functions available to help you visualize your data
@@ -436,7 +461,7 @@ deployments <- read_deployments_csv("path-to-deployments.csv")
 
 fill_spi_template_ff(
   sample_stations,
-  depllyments,
+  deployments,
   image_data,
   file = "~/Desktop/SPI_output_from_ff.xlsx"
 )

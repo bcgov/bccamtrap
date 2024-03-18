@@ -86,7 +86,7 @@ sample_stations
     #> Simple feature collection with 21 features and 29 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -124.0718 ymin: 45.4409 xmax: -123.3717 ymax: 45.5056
+    #> Bounding box:  xmin: -125.8534 ymin: 53.6787 xmax: -125.0136 ymax: 53.73782
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 21 × 24
     #>    wlrs_project_name      study_area_name study_area_photos sample_station_label
@@ -131,7 +131,7 @@ summary(sample_stations)
 #> ℹ 18 sample stations in 21 locations.
 #> ℹ Summary of station distances (m):
 #>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#>     5.13  4211.96  8630.12 11834.38 14433.11 54998.97
+#>     5.08  4247.81  8712.00 11935.96 14562.39 55516.29
 #> ✖ Detected 1 potential spatial outlier.
 #> ℹ Station status summary:
 #> Camera Active  Camera Moved 
@@ -223,12 +223,12 @@ deployments <- make_deployments(metadata_path)
 deployments
 ```
 
-    #> Simple feature collection with 28 features and 61 fields
+    #> Simple feature collection with 28 features and 62 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -125.217 ymin: 45.24355 xmax: -124.5189 ymax: 45.30508
+    #> Bounding box:  xmin: -130.3966 ymin: 52.92087 xmax: -129.569 ymax: 52.96732
     #> Geodetic CRS:  WGS 84
-    #> # A tibble: 28 × 56
+    #> # A tibble: 28 × 57
     #>    wlrs_project_name       study_area_name sample_station_label deployment_label
     #>    <chr>                   <chr>           <chr>                <chr>           
     #>  1 2022 - ongoing - Roose… Test Project    19_1                 19_1_20230605   
@@ -242,12 +242,12 @@ deployments
     #>  9 2022 - ongoing - Roose… Test Project    27                   27_20230605     
     #> 10 2022 - ongoing - Roose… Test Project    28                   28_20230605     
     #> # ℹ 18 more rows
-    #> # ℹ 52 more variables: camera_label <chr>, surveyors <chr>,
-    #> #   date_time_checked <dttm>, deployment_start <dttm>, deployment_end <dttm>,
-    #> #   deployment_duration_days <dbl>, deployment_duration_valid <lgl>,
+    #> # ℹ 53 more variables: camera_label <chr>, surveyors <chr>,
+    #> #   date_time_checked <dttm>, sampling_end <dttm>,
     #> #   total_visit_or_deployment_time <dbl>, unit_of_total_time_code <chr>,
     #> #   visit_type <chr>, camera_status_on_arrival <chr>, battery_level <chr>,
-    #> #   batteries_changed <chr>, number_of_photos <dbl>, quiet_period_s <chr>, …
+    #> #   batteries_changed <chr>, number_of_photos <dbl>, quiet_period_s <chr>,
+    #> #   trigger_sensitivity <chr>, trigger_timing_s <dbl>, …
 
 There is a handy `summary()` method for this as well:
 
@@ -375,6 +375,11 @@ images_with_metadata <- merge_deployments_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 images_with_metadata
+#> Simple feature collection with 11833 features and 101 fields (with 1208 geometries empty)
+#> Geometry type: POINT
+#> Dimension:     XY
+#> Bounding box:  xmin: -130.3966 ymin: 52.92237 xmax: -129.569 ymax: 52.96732
+#> Geodetic CRS:  WGS 84
 #> # A tibble: 11,833 × 96
 #>    root_folder deployment_label date_time           episode species
 #>    <chr>       <chr>            <dttm>              <chr>   <chr>  
@@ -485,6 +490,46 @@ select(image_data_qa, root_folder, file, starts_with("QA_"))
 #> #   QA_BLANK_trigger_mode <lgl>, QA_BLANK_temperature <lgl>,
 #> #   QA_BLANK_episode <lgl>, QA_timelapse_lag <lgl>, QA_snow_outlier <lgl>
 ```
+
+### Sampling sessions
+
+Define sampling sessions based on deployment metadata and image data
+using the `make_sessions()` function. This function will:
+
+- Set sampling_start as deployment_start
+- Notes dates of first and last photos of deployment
+- Counts photos (total, and motion-detection)
+- Determines if the sampling period is less than the deployment period
+- Determines gaps in sampling period due to obscured lens
+- Determines total length of sample period (last photo date - first
+  photo date - number of days with lens obscured)
+
+``` r
+make_sessions(deployments, image_data)
+```
+
+    #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
+    #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
+    #> # A tibble: 14 × 11
+    #>    deployment_label sample_start_date deployment_end_date min_tl_date
+    #>    <chr>            <date>            <date>              <date>     
+    #>  1 19_1_20230605    2022-11-10        2023-06-05          2022-11-10 
+    #>  2 19_2_20230605    2022-11-15        2023-06-05          2022-11-15 
+    #>  3 20_20230605      2022-11-10        2023-06-05          2022-11-10 
+    #>  4 21_2_20230605    2022-11-18        2023-06-05          2022-11-18 
+    #>  5 24_20230708      2022-11-18        2023-07-08          2022-11-18 
+    #>  6 25_20230710      2022-11-18        2023-07-10          2022-11-18 
+    #>  7 26_20230710      2022-11-07        2023-07-10          2022-11-07 
+    #>  8 27_20230605      2022-11-07        2023-06-05          2022-11-07 
+    #>  9 28_20230605      2022-11-15        2023-06-05          2022-11-15 
+    #> 10 29_1_20230605    2022-11-07        2023-06-05          2022-11-07 
+    #> 11 29_2_20230605    2022-11-07        2023-06-05          2022-11-10 
+    #> 12 29_3_20230605    2022-11-18        2023-06-05          2022-11-18 
+    #> 13 31_20230605      2022-11-15        2023-06-05          2023-01-25 
+    #> 14 35_20230708      2022-11-18        2023-07-08          2022-11-18 
+    #> # ℹ 7 more variables: max_tl_date <date>, sample_truncated <lgl>,
+    #> #   n_photos <int>, n_motion_photos <int>, sample_gaps <lgl>,
+    #> #   sample_gap_length <int>, sample_period_length <drtn>
 
 ### Plots
 
@@ -613,7 +658,7 @@ deployments <- read_deployments_csv("path-to-deployments.csv")
 
 fill_spi_template_ff(
   sample_stations,
-  depllyments,
+  deployments,
   image_data,
   file = "~/Desktop/SPI_output_from_ff.xlsx"
 )
