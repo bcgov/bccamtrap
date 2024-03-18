@@ -42,5 +42,5 @@ test_that("make_sessions()", {
   expect_s3_class(sessions2, "sample_sessions")
   expect_s3_class(sessions2, "sf")
 
-  expect_snapshot(sf::st_drop_geometry(sessions))
+  expect_snapshot(sf::st_drop_geometry(sessions2))
 })

@@ -155,11 +155,20 @@ make_deployment_validity_columns <- function(x) {
 #'
 #' @inheritParams plot_deployment_detections
 #' @inheritParams make_deployments
+#' @param drop_unjoined if there are unmatched `deployment_labels` between
+#'   deployments and image data, should they be dropped from the output
+#'   (this is equivalent to a [dplyr::inner_join()])? Default is `TRUE`, with a
+#'   warning.
 #'
 #' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
 #' @export
-make_sessions <- function(deployments, image_data, as_sf = TRUE) {
-  merged <- merge_deployments_images(deployments, image_data, as_sf = as_sf)
+make_sessions <- function(deployments, image_data, drop_unjoined = TRUE, as_sf = TRUE) {
+  merged <- merge_deployments_images(
+    deployments,
+    image_data,
+    drop_unjoined = drop_unjoined,
+    as_sf = as_sf
+  )
 
   merged <- dplyr::mutate(
     merged,

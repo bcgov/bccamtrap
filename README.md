@@ -491,6 +491,46 @@ select(image_data_qa, root_folder, file, starts_with("QA_"))
 #> #   QA_BLANK_episode <lgl>, QA_timelapse_lag <lgl>, QA_snow_outlier <lgl>
 ```
 
+### Sampling sessions
+
+Define sampling sessions based on deployment metadata and image data
+using the `make_sessions()` function. This function will:
+
+- Set sampling_start as deployment_start
+- Notes dates of first and last photos of deployment
+- Counts photos (total, and motion-detection)
+- Determines if the sampling period is less than the deployment period
+- Determines gaps in sampling period due to obscured lens
+- Determines total length of sample period (last photo date - first
+  photo date - number of days with lens obscured)
+
+``` r
+make_sessions(deployments, image_data)
+```
+
+    #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
+    #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
+    #> # A tibble: 14 × 11
+    #>    deployment_label sample_start_date deployment_end_date min_tl_date
+    #>    <chr>            <date>            <date>              <date>     
+    #>  1 19_1_20230605    2022-11-10        2023-06-05          2022-11-10 
+    #>  2 19_2_20230605    2022-11-15        2023-06-05          2022-11-15 
+    #>  3 20_20230605      2022-11-10        2023-06-05          2022-11-10 
+    #>  4 21_2_20230605    2022-11-18        2023-06-05          2022-11-18 
+    #>  5 24_20230708      2022-11-18        2023-07-08          2022-11-18 
+    #>  6 25_20230710      2022-11-18        2023-07-10          2022-11-18 
+    #>  7 26_20230710      2022-11-07        2023-07-10          2022-11-07 
+    #>  8 27_20230605      2022-11-07        2023-06-05          2022-11-07 
+    #>  9 28_20230605      2022-11-15        2023-06-05          2022-11-15 
+    #> 10 29_1_20230605    2022-11-07        2023-06-05          2022-11-07 
+    #> 11 29_2_20230605    2022-11-07        2023-06-05          2022-11-10 
+    #> 12 29_3_20230605    2022-11-18        2023-06-05          2022-11-18 
+    #> 13 31_20230605      2022-11-15        2023-06-05          2023-01-25 
+    #> 14 35_20230708      2022-11-18        2023-07-08          2022-11-18 
+    #> # ℹ 7 more variables: max_tl_date <date>, sample_truncated <lgl>,
+    #> #   n_photos <int>, n_motion_photos <int>, sample_gaps <lgl>,
+    #> #   sample_gap_length <int>, sample_period_length <drtn>
+
 ### Plots
 
 There are several plotting functions available to help you visualize

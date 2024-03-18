@@ -278,10 +278,13 @@ plot_diel_activity <- function(image_data, interactive = FALSE) {
 #'
 #' @inheritParams qa_deployment_images
 #' @inheritParams read_sample_station_info
+#' @param drop_unjoined if there are unmatched `deployment_labels` between
+#'   deployments and image data, should they be dropped from the output
+#'   (this is equivalent to a [dplyr::inner_join()])? Default is `FALSE`.
 #'
 #' @return `data.frame` of class `image_data`, with `deployment` columns attached
 #' @export
-merge_deployments_images <- function(deployments, image_data, as_sf = TRUE) {
+merge_deployments_images <- function(deployments, image_data, drop_unjoined = FALSE, as_sf = TRUE) {
 
   qa_deployment_images(deployments, image_data)
 
@@ -289,7 +292,13 @@ merge_deployments_images <- function(deployments, image_data, as_sf = TRUE) {
     deployments <- sf::st_drop_geometry(deployments)
   }
 
-  all_data <- dplyr::left_join(
+  join_fun <- if (drop_unjoined) {
+    dplyr::inner_join
+  } else {
+    dplyr::left_join
+  }
+
+  all_data <- join_fun(
     dplyr::select(image_data, -"study_area_name", -"sample_station_label"),
     deployments,
     by = "deployment_label"

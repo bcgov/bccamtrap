@@ -4,12 +4,17 @@
 \alias{make_sessions}
 \title{Identify distinct sample sessions from deployments}
 \usage{
-make_sessions(deployments, image_data, as_sf = TRUE)
+make_sessions(deployments, image_data, drop_unjoined = TRUE, as_sf = TRUE)
 }
 \arguments{
 \item{deployments}{deployments data, as created by \code{\link[=make_deployments]{make_deployments()}}}
 
 \item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
+
+\item{drop_unjoined}{if there are unmatched \code{deployment_labels} between
+deployments and image data, should they be dropped from the output
+(this is equivalent to a \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}})? Default is \code{TRUE}, with a
+warning.}
 
 \item{as_sf}{should the data be returned as an \code{sf} object of the station locations? Default \code{TRUE}}
 }
