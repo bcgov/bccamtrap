@@ -16,6 +16,9 @@ rai <- function(sessions, image_data, deployment_label = NULL, species = NULL, s
 
   dat <- dplyr::filter(dat, !is.na(.data$species))
 
+  dat <- filter_if_not_null(dat, deployment_label)
+  dat <- filter_if_not_null(dat, species)
+
   # check for missing counts
 
   dplyr::summarize(
@@ -25,4 +28,13 @@ rai <- function(sessions, image_data, deployment_label = NULL, species = NULL, s
     .groups = "drop"
   )
 
+}
+
+filter_if_not_null <- function(data, var, env = rlang::current_env()) {
+  if (is.null(var)) return(data)
+  varname <- deparse(substitute(var, env = env))
+  if (!var %in% data[[varname]]) {
+    cli::cli_abort("{.val {var}} is not a valid value in {.var {varname}}")
+  }
+  dplyr::filter(data, .data[[varname]] %in% var)
 }
