@@ -23,8 +23,8 @@ rai <- function(sessions, image_data, deployment_label = NULL, species = NULL, s
 
   dplyr::summarize(
     dat,
-    n_animals = sum(.data$total_count_episode, na.rm = TRUE),
-    rai = sum(.data$n_animals, na.rm = TRUE) / max(as.numeric(.data$sample_period_length, units = "days")),
+    total_count = sum(.data$total_count_episode, na.rm = TRUE),
+    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$sample_period_length, units = "days")),
     .groups = "drop"
   )
 
@@ -38,3 +38,5 @@ filter_if_not_null <- function(data, var, env = rlang::current_env()) {
   }
   dplyr::filter(data, .data[[varname]] %in% var)
 }
+
+
