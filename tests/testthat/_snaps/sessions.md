@@ -661,81 +661,81 @@
 # make_sample_sessions()
 
     Code
-      sf::st_drop_geometry(sessions)
+      sessions
     Output
-      # A tibble: 11 x 17
-         wlrs_project_name     sample_station_label deployment_label sample_start_date
-       * <chr>                 <chr>                <chr>            <date>           
-       1 2022 - ongoing - Roo~ A4                   A4_20230517      2022-12-16       
-       2 2022 - ongoing - Roo~ B3                   B3_20220517      2022-11-28       
-       3 2022 - ongoing - Roo~ B4                   B4_20230517      2022-12-16       
-       4 2022 - ongoing - Roo~ C1                   C1_20230517      2022-12-17       
-       5 2022 - ongoing - Roo~ C2                   C2_20230517      2022-12-16       
-       6 2022 - ongoing - Roo~ C3                   C3_20230517      2022-11-28       
-       7 2022 - ongoing - Roo~ C4                   C4_20230517      2022-12-17       
-       8 2022 - ongoing - Roo~ C5                   C5_20230517      2022-12-16       
-       9 2022 - ongoing - Roo~ D2                   D2_20230517      2022-11-28       
-      10 2022 - ongoing - Roo~ D3                   D3_20230517      2022-11-28       
-      11 2022 - ongoing - Roo~ D5                   D5_20230517      2022-12-16       
-      # i 13 more variables: deployment_end_date <date>, min_tl_date <date>,
-      #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
-      #   n_photos_spp_id <int>, n_motion_photos <int>,
-      #   n_motion_photos_lens_obscured <int>, n_tl_photos <int>,
-      #   n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
-      #   sample_gap_length <int>, sample_period_length <drtn>
+      # A tibble: 11 x 15
+         study_area_name sample_station_label deployment_label sample_start_date
+       * <chr>           <chr>                <chr>            <date>           
+       1 McKay Lake      A4                   A4_20230517      2022-12-16       
+       2 McKay Lake      B3                   B3_20220517      2022-11-28       
+       3 McKay Lake      B4                   B4_20230517      2022-12-16       
+       4 McKay Lake      C1                   C1_20230517      2022-12-17       
+       5 McKay Lake      C2                   C2_20230517      2022-12-16       
+       6 McKay Lake      C3                   C3_20230517      2022-11-28       
+       7 McKay Lake      C4                   C4_20230517      2022-12-17       
+       8 McKay Lake      C5                   C5_20230517      2022-12-16       
+       9 McKay Lake      D2                   D2_20230517      2022-11-28       
+      10 McKay Lake      D3                   D3_20230517      2022-11-28       
+      11 McKay Lake      D5                   D5_20230517      2022-12-16       
+      # i 11 more variables: sample_end_date <date>, n_photos <int>,
+      #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
+      #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
+      #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+      #   sample_period_length <int>
 
 ---
 
     Code
-      sessions_no_sf
+      sessions_diff_start_end
     Output
-      # A tibble: 11 x 17
-         wlrs_project_name     sample_station_label deployment_label sample_start_date
-       * <chr>                 <chr>                <chr>            <date>           
-       1 2022 - ongoing - Roo~ A4                   A4_20230517      2022-12-16       
-       2 2022 - ongoing - Roo~ B3                   B3_20220517      2022-11-28       
-       3 2022 - ongoing - Roo~ B4                   B4_20230517      2022-12-16       
-       4 2022 - ongoing - Roo~ C1                   C1_20230517      2022-12-17       
-       5 2022 - ongoing - Roo~ C2                   C2_20230517      2022-12-16       
-       6 2022 - ongoing - Roo~ C3                   C3_20230517      2022-11-28       
-       7 2022 - ongoing - Roo~ C4                   C4_20230517      2022-12-17       
-       8 2022 - ongoing - Roo~ C5                   C5_20230517      2022-12-16       
-       9 2022 - ongoing - Roo~ D2                   D2_20230517      2022-11-28       
-      10 2022 - ongoing - Roo~ D3                   D3_20230517      2022-11-28       
-      11 2022 - ongoing - Roo~ D5                   D5_20230517      2022-12-16       
-      # i 13 more variables: deployment_end_date <date>, min_tl_date <date>,
-      #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
-      #   n_photos_spp_id <int>, n_motion_photos <int>,
-      #   n_motion_photos_lens_obscured <int>, n_tl_photos <int>,
-      #   n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
-      #   sample_gap_length <int>, sample_period_length <drtn>
+      # A tibble: 11 x 15
+         study_area_name sample_station_label deployment_label sample_start_date
+       * <chr>           <chr>                <chr>            <date>           
+       1 McKay Lake      A4                   A4_20230517      2022-12-16       
+       2 McKay Lake      B3                   B3_20220517      2022-12-16       
+       3 McKay Lake      B4                   B4_20230517      2022-12-16       
+       4 McKay Lake      C1                   C1_20230517      2022-12-17       
+       5 McKay Lake      C2                   C2_20230517      2022-12-16       
+       6 McKay Lake      C3                   C3_20230517      2022-12-16       
+       7 McKay Lake      C4                   C4_20230517      2022-12-17       
+       8 McKay Lake      C5                   C5_20230517      2022-12-16       
+       9 McKay Lake      D2                   D2_20230517      2022-12-16       
+      10 McKay Lake      D3                   D3_20230517      2022-12-16       
+      11 McKay Lake      D5                   D5_20230517      2022-12-16       
+      # i 11 more variables: sample_end_date <date>, n_photos <int>,
+      #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
+      #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
+      #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+      #   sample_period_length <int>
 
 ---
 
     Code
-      sf::st_drop_geometry(sessions2)
+      sessions2
     Output
-      # A tibble: 14 x 17
-         wlrs_project_name     sample_station_label deployment_label sample_start_date
-       * <chr>                 <chr>                <chr>            <date>           
-       1 2022 - ongoing - Roo~ 19_1                 19_1_20230605    2022-11-10       
-       2 2022 - ongoing - Roo~ 19_2                 19_2_20230605    2022-11-15       
-       3 2022 - ongoing - Roo~ 20                   20_20230605      2022-11-10       
-       4 2022 - ongoing - Roo~ 21_2                 21_2_20230605    2022-11-18       
-       5 2022 - ongoing - Roo~ 24                   24_20230708      2022-11-18       
-       6 2022 - ongoing - Roo~ 25                   25_20230710      2022-11-18       
-       7 2022 - ongoing - Roo~ 26                   26_20230710      2022-11-07       
-       8 2022 - ongoing - Roo~ 27                   27_20230605      2022-11-07       
-       9 2022 - ongoing - Roo~ 28                   28_20230605      2022-11-15       
-      10 2022 - ongoing - Roo~ 29_1                 29_1_20230605    2022-11-07       
-      11 2022 - ongoing - Roo~ 29_2                 29_2_20230605    2022-11-07       
-      12 2022 - ongoing - Roo~ 29_3                 29_3_20230605    2022-11-18       
-      13 2022 - ongoing - Roo~ 31                   31_20230605      2022-11-15       
-      14 2022 - ongoing - Roo~ 35                   35_20230708      2022-11-18       
-      # i 13 more variables: deployment_end_date <date>, min_tl_date <date>,
-      #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
-      #   n_photos_spp_id <int>, n_motion_photos <int>,
-      #   n_motion_photos_lens_obscured <int>, n_tl_photos <int>,
-      #   n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
-      #   sample_gap_length <int>, sample_period_length <drtn>
+      # A tibble: 17 x 15
+         study_area_name sample_station_label deployment_label sample_start_date
+       * <chr>           <chr>                <chr>            <date>           
+       1 Taylor River    19_1                 19_1_20230605    2022-11-10       
+       2 Taylor River    19_2                 19_2_20230605    2022-11-15       
+       3 Taylor River    20                   20_20230605      2022-11-10       
+       4 Taylor River    21_1                 21_1_20230605    2022-11-10       
+       5 Taylor River    21_2                 21_2_20230605    2022-11-18       
+       6 Taylor River    24                   24_20230708      2022-11-18       
+       7 Taylor River    25                   25_20230710      2022-11-18       
+       8 Taylor River    26                   26_20230710      2022-11-07       
+       9 Taylor River    27                   27_20230605      2022-11-07       
+      10 Taylor River    28                   28_20230605      2022-11-15       
+      11 Taylor River    29_1                 29_1_20230605    2022-11-07       
+      12 Taylor River    29_2                 2022-11-10       2022-11-07       
+      13 Taylor River    29_2                 29_2_20230605    2022-11-10       
+      14 Taylor River    29_3                 29_3_20230605    2022-11-18       
+      15 Taylor River    31                   2023-01-10       2022-11-15       
+      16 Taylor River    31                   31_20230605      2023-01-25       
+      17 Taylor River    35                   35_20230708      2022-11-18       
+      # i 11 more variables: sample_end_date <date>, n_photos <int>,
+      #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
+      #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
+      #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+      #   sample_period_length <int>
 

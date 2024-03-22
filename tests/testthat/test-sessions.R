@@ -17,30 +17,29 @@ test_that("creating a deployments table works", {
 })
 
 test_that("make_sample_sessions()", {
-  deps <- make_deployments(test_meta_file1)
   imgs <- read_image_data(test_dir_1)
 
-  sessions <- make_sample_sessions(deps, imgs)
+  sessions <- make_sample_sessions(imgs)
 
   expect_s3_class(sessions, "sample_sessions")
-  expect_s3_class(sessions, "sf")
 
-  expect_snapshot(sf::st_drop_geometry(sessions))
+  expect_snapshot(sessions)
 
-  sessions_no_sf <- make_sample_sessions(deps, imgs, as_sf = FALSE)
+  sessions_diff_start_end <- make_sample_sessions(
+    imgs,
+    sample_start_date = "2022-12-16",
+    sample_end_date = "2023-02-05"
+  )
 
-  expect_s3_class(sessions_no_sf, "sample_sessions")
-  expect_false(inherits(sessions_no_sf, "sf"))
+  expect_true(all(sessions_diff_start_end$sample_start_date >= lubridate::as_datetime("2022-12-16")))
+  expect_true(all(sessions_diff_start_end$sample_end_date <= lubridate::as_datetime("2023-02-05")))
+  expect_snapshot(sessions_diff_start_end)
 
-  expect_snapshot(sessions_no_sf)
-
-  deps2 <- make_deployments(test_meta_file2)
   imgs2 <- read_image_data(test_dir_2)
 
-  sessions2 <- make_sample_sessions(deps2, imgs2)
+  sessions2 <- make_sample_sessions(imgs2)
 
   expect_s3_class(sessions2, "sample_sessions")
-  expect_s3_class(sessions2, "sf")
 
-  expect_snapshot(sf::st_drop_geometry(sessions2))
+  expect_snapshot(sessions2)
 })

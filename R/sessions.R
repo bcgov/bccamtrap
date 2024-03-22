@@ -155,40 +155,31 @@ make_deployment_validity_columns <- function(x) {
 #'
 #' @inheritParams plot_deployment_detections
 #' @inheritParams make_deployments
-#' @param drop_unjoined if there are unmatched `deployment_labels` between
-#'   deployments and image data, should they be dropped from the output
-#'   (this is equivalent to a [dplyr::inner_join()])? Default is `TRUE`, with a
-#'   warning.
 #'
 #' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
 #' @export
-make_sample_sessions <- function(deployments, image_data, drop_unjoined = TRUE, as_sf = TRUE) {
-  merged <- merge_deployments_images(
-    deployments,
-    image_data,
-    drop_unjoined = drop_unjoined,
-    as_sf = as_sf
-  )
+make_sample_sessions <- function(image_data, sample_start_date = NULL, sample_end_date = NULL) {
 
-  merged <- dplyr::mutate(
-    merged,
+  dat <- dplyr::mutate(
+    image_data,
     trigger_mode = ifelse(grepl("^[Mm]", .data$trigger_mode), "motion", "timelapse")
   )
 
-  merged <- dplyr::group_by(
-    merged,
-    dplyr::across(c("wlrs_project_name", "sample_station_label", "deployment_label"))
+  dat <- filter_start_end(dat, sample_start_date, sample_end_date)
+
+  dat <- dplyr::group_by(
+    dat,
+    dplyr::across(c("study_area_name", "sample_station_label", "deployment_label"))
   )
 
   out <- dplyr::summarize(
-    merged,
-    sample_start_date = as.Date(min(.data$deployment_start, na.rm = TRUE)),
-    deployment_end_date = as.Date(max(.data$deployment_end, na.rm = TRUE)),
-    min_tl_date = as.Date(min(.data$date_time, na.rm = TRUE)),
-    max_tl_date = as.Date(max(.data$date_time, na.rm = TRUE)),
-    sample_truncated = .data$deployment_end_date > .data$max_tl_date,
+    dat,
+    sample_start_date = as.Date(min(.data$date_time, na.rm = TRUE)),
+    sample_end_date = as.Date(max(.data$date_time, na.rm = TRUE)),
     n_photos = dplyr::n(),
     n_photos_spp_id = sum(.data$total_count_episode > 0, na.rm = TRUE),
+    n_species = dplyr::n_distinct(.data$species, na.rm = TRUE),
+    n_individuals = sum(.data$total_count_episode, na.rm = TRUE),
     n_motion_photos = sum(.data$trigger_mode == "motion", na.rm = TRUE),
     n_motion_photos_lens_obscured = sum(
       .data$trigger_mode == "motion" & .data$lens_obscured,
@@ -199,12 +190,27 @@ make_sample_sessions <- function(deployments, image_data, drop_unjoined = TRUE, 
       .data$trigger_mode == "timelapse" & .data$lens_obscured,
       na.rm = TRUE
     ),
-    sample_gaps = any(.data$lens_obscured),
-    sample_gap_length = sum(.data$lens_obscured, na.rm = TRUE),
-    sample_period_length = .data$max_tl_date - .data$min_tl_date -
-      .data$sample_gap_length,
+    sample_gaps = .data$n_tl_photos_lens_obscured > 0,,
+    sample_period_length = .data$n_tl_photos - .data$n_tl_photos_lens_obscured,
     .groups = "drop"
   )
 
   as.sample_sessions(out)
+}
+
+filter_start_end <- function(x, sample_start_date, sample_end_date) {
+  if (!is.null(sample_start_date)) {
+    x <- dplyr::filter(
+      x,
+      .data$date_time >= lubridate::as_datetime(paste(sample_start_date, "00:00:00"))
+    )
+  }
+
+  if (!is.null(sample_end_date)) {
+    x <- dplyr::filter(
+      x,
+      .data$date_time <= lubridate::as_datetime(paste(sample_end_date, "23:59:59"))
+    )
+  }
+  x
 }
