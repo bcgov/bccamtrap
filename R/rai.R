@@ -86,14 +86,40 @@ rai <- function(sample_sessions,
 
 }
 
+rai_by_time <- function(image_data, by = c("day", "week", "month", "year"), roll = FALSE) {
+
+  check_image_data(image_data)
+
+  dat <- dplyr::group_by(
+    image_data,
+    .data$study_area_name,
+    .data$sample_station_label,
+    .data$deployment_label,
+    month = format(.data$date_time, "%Y-%m")
+  )
+
+  dat <- dplyr::mutate(
+    dat,
+    start_date = min(as.Date(.data$date_time)),
+    end_date = max(as.Date(.data$date_time)),
+    trap_days = n_distinct(as.Date(.data$date_time)) - sum(.data$lens_obscured)
+  )
+
+  dat <- dplyr::group_by(
+    dat,
+    .data$start_date,
+    .data$end_date,
+    .data$trap_days,
+    .data$species,
+    .add = TRUE
+  )
 
   dplyr::summarize(
     dat,
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
-    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$sample_period_length, units = "days")),
+    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$trap_days, units = "days")),
     .groups = "drop"
   )
-
 }
 
 filter_if_not_null <- function(data, var, env = rlang::current_env()) {
