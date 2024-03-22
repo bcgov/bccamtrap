@@ -42,44 +42,55 @@ sample_rai <- function(image_data,
     dat <- dplyr::group_by(dat, .data$deployment_label)
   }
 
-  dat <- dplyr::group_by(
-    dat,
-    .data$sample_start_date,
-    .data$sample_end_date,
-    .data$sample_period_length,
-    .add = TRUE
-  )
-
   if (isTRUE(by_species)) {
     dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
   }
 
-  dplyr::summarize(
+  out <- dplyr::summarize(
     dat,
+    sample_start_date = min(.data$sample_start_date, na.rm = TRUE),
+    sample_end_date = max(.data$sample_end_date, na.rm = TRUE),
+    sample_period_length = max(.data$sample_period_length, na.rm = TRUE),
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
     rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$sample_period_length, units = "days")),
     .groups = "drop"
   )
 
+  dplyr::relocate(out, dplyr::any_of("species"), .before = "total_count")
+
 }
 
-rai_by_time <- function(image_data, by = c("day", "week", "month", "year"), roll = FALSE) {
+rai_by_time <- function(image_data, by = c("day", "week", "month", "year"), roll = FALSE, k = 7) {
 
   check_image_data(image_data)
 
-  dat <- dplyr::group_by(
+  by <- match.arg(by)
+  by_fmt <- switch(
+    by,
+    "day" = "%Y-%m-%d",
+    "week" = "%Y-W-%V",
+    "month" = "%Y-%m",
+    "year" = "%Y"
+  )
+
+  dat <- dplyr::mutate(
     image_data,
+    !!by := format(.data$date_time, by_fmt)
+  )
+
+  dat <- dplyr::group_by(
+    dat,
     .data$study_area_name,
     .data$sample_station_label,
     .data$deployment_label,
-    month = format(.data$date_time, "%Y-%m")
+    .data[[by]]
   )
 
   dat <- dplyr::mutate(
     dat,
     start_date = min(as.Date(.data$date_time)),
     end_date = max(as.Date(.data$date_time)),
-    trap_days = n_distinct(as.Date(.data$date_time)) - sum(.data$lens_obscured)
+    trap_days = dplyr::n_distinct(as.Date(.data$date_time)) - sum(.data$lens_obscured)
   )
 
   dat <- dplyr::group_by(
@@ -95,6 +106,8 @@ rai_by_time <- function(image_data, by = c("day", "week", "month", "year"), roll
     dat,
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
     rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$trap_days, units = "days")),
+    mean_snow = mean(.data$snow_depth_lower, na.rm = TRUE),
+    mean_temp = mean(.data$temperature, na.rm = TRUE),
     .groups = "drop"
   )
 }
