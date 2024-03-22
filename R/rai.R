@@ -1,6 +1,8 @@
 #' Calculate Relative Activity Index (RAI)
 #'
-#' Calculate the RAI
+#' Calculate the RAI for sample sessions and species. Optionally set start date
+#' and end date, deployment label(s), and species. You can choose to calculate
+#' RAI by species and deployment label, or as a whole.
 #'
 #' @param sample_sessions A data.frame of `sample_sessions`, from
 #'   [make_sample_sessions()]
@@ -23,8 +25,6 @@
 #'
 #' @return a data.frame of RAI, by deployment label and species (if `by_species = TRUE`)
 #' @export
-#'
-#' @examples
 rai <- function(sample_sessions,
                 image_data,
                 deployment_label = NULL,
