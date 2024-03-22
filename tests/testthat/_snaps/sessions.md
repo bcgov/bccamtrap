@@ -663,7 +663,7 @@
     Code
       sf::st_drop_geometry(sessions)
     Output
-      # A tibble: 11 x 13
+      # A tibble: 11 x 17
          wlrs_project_name     sample_station_label deployment_label sample_start_date
        * <chr>                 <chr>                <chr>            <date>           
        1 2022 - ongoing - Roo~ A4                   A4_20230517      2022-12-16       
@@ -677,17 +677,19 @@
        9 2022 - ongoing - Roo~ D2                   D2_20230517      2022-11-28       
       10 2022 - ongoing - Roo~ D3                   D3_20230517      2022-11-28       
       11 2022 - ongoing - Roo~ D5                   D5_20230517      2022-12-16       
-      # i 9 more variables: deployment_end_date <date>, min_tl_date <date>,
+      # i 13 more variables: deployment_end_date <date>, min_tl_date <date>,
       #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
-      #   n_motion_photos <int>, sample_gaps <lgl>, sample_gap_length <int>,
-      #   sample_period_length <drtn>
+      #   n_photos_spp_id <int>, n_motion_photos <int>,
+      #   n_motion_photos_lens_obscured <int>, n_tl_photos <int>,
+      #   n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+      #   sample_gap_length <int>, sample_period_length <drtn>
 
 ---
 
     Code
       sessions_no_sf
     Output
-      # A tibble: 11 x 13
+      # A tibble: 11 x 17
          wlrs_project_name     sample_station_label deployment_label sample_start_date
        * <chr>                 <chr>                <chr>            <date>           
        1 2022 - ongoing - Roo~ A4                   A4_20230517      2022-12-16       
@@ -701,17 +703,19 @@
        9 2022 - ongoing - Roo~ D2                   D2_20230517      2022-11-28       
       10 2022 - ongoing - Roo~ D3                   D3_20230517      2022-11-28       
       11 2022 - ongoing - Roo~ D5                   D5_20230517      2022-12-16       
-      # i 9 more variables: deployment_end_date <date>, min_tl_date <date>,
+      # i 13 more variables: deployment_end_date <date>, min_tl_date <date>,
       #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
-      #   n_motion_photos <int>, sample_gaps <lgl>, sample_gap_length <int>,
-      #   sample_period_length <drtn>
+      #   n_photos_spp_id <int>, n_motion_photos <int>,
+      #   n_motion_photos_lens_obscured <int>, n_tl_photos <int>,
+      #   n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+      #   sample_gap_length <int>, sample_period_length <drtn>
 
 ---
 
     Code
       sf::st_drop_geometry(sessions2)
     Output
-      # A tibble: 14 x 13
+      # A tibble: 14 x 17
          wlrs_project_name     sample_station_label deployment_label sample_start_date
        * <chr>                 <chr>                <chr>            <date>           
        1 2022 - ongoing - Roo~ 19_1                 19_1_20230605    2022-11-10       
@@ -728,8 +732,10 @@
       12 2022 - ongoing - Roo~ 29_3                 29_3_20230605    2022-11-18       
       13 2022 - ongoing - Roo~ 31                   31_20230605      2022-11-15       
       14 2022 - ongoing - Roo~ 35                   35_20230708      2022-11-18       
-      # i 9 more variables: deployment_end_date <date>, min_tl_date <date>,
+      # i 13 more variables: deployment_end_date <date>, min_tl_date <date>,
       #   max_tl_date <date>, sample_truncated <lgl>, n_photos <int>,
-      #   n_motion_photos <int>, sample_gaps <lgl>, sample_gap_length <int>,
-      #   sample_period_length <drtn>
+      #   n_photos_spp_id <int>, n_motion_photos <int>,
+      #   n_motion_photos_lens_obscured <int>, n_tl_photos <int>,
+      #   n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+      #   sample_gap_length <int>, sample_period_length <drtn>
 
