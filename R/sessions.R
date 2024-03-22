@@ -143,18 +143,20 @@ make_deployment_validity_columns <- function(x) {
   )
 }
 
-#' Identify distinct sample sessions from deployments
+#' Identify distinct sample sessions from timelapse image data
 #'
-#' This function:
-#' - Sets sampling_start as deployment_start
-#' - Notes dates of first and last photos of deployment
+#' For each deployment label, this function:
+#' - Sets sampling_start as first image date
 #' - Counts photos (total, and motion-detection)
-#' - Determines if the sampling period is less than the deployment period
 #' - Determines gaps in sampling period due to obscured lens
-#' - Determines total length of sample period (last photo date - first photo date - number of days with lens obscured)
+#' - Determines total length of sample period (number of days with Time Lapse photos - number of days with lens obscured)
 #'
-#' @inheritParams plot_deployment_detections
-#' @inheritParams make_deployments
+#'
+#' @inheritParams qa_image_data
+#' @param sample_start_date a custom start date. Note that this will apply the
+#'   same start date to all deployments/sessions in the data.
+#' @param sample_end_date a custom end date. Note that this will apply the same
+#'   start date to all deployments/sessions in the data.
 #'
 #' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
 #' @export

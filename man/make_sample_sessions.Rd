@@ -2,38 +2,32 @@
 % Please edit documentation in R/sessions.R
 \name{make_sample_sessions}
 \alias{make_sample_sessions}
-\title{Identify distinct sample sessions from deployments}
+\title{Identify distinct sample sessions from timelapse image data}
 \usage{
 make_sample_sessions(
-  deployments,
   image_data,
-  drop_unjoined = TRUE,
-  as_sf = TRUE
+  sample_start_date = NULL,
+  sample_end_date = NULL
 )
 }
 \arguments{
-\item{deployments}{deployments data, as created by \code{\link[=make_deployments]{make_deployments()}}}
-
 \item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
 
-\item{drop_unjoined}{if there are unmatched \code{deployment_labels} between
-deployments and image data, should they be dropped from the output
-(this is equivalent to a \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}})? Default is \code{TRUE}, with a
-warning.}
+\item{sample_start_date}{a custom start date. Note that this will apply the
+same start date to all deployments/sessions in the data.}
 
-\item{as_sf}{should the data be returned as an \code{sf} object of the station locations? Default \code{TRUE}}
+\item{sample_end_date}{a custom end date. Note that this will apply the same
+start date to all deployments/sessions in the data.}
 }
 \value{
 a data.frame of class \code{sample_sessions} with one row (sample session) per deployment
 }
 \description{
-This function:
+For each deployment label, this function:
 \itemize{
-\item Sets sampling_start as deployment_start
-\item Notes dates of first and last photos of deployment
+\item Sets sampling_start as first image date
 \item Counts photos (total, and motion-detection)
-\item Determines if the sampling period is less than the deployment period
 \item Determines gaps in sampling period due to obscured lens
-\item Determines total length of sample period (last photo date - first photo date - number of days with lens obscured)
+\item Determines total length of sample period (number of days with Time Lapse photos - number of days with lens obscured)
 }
 }
