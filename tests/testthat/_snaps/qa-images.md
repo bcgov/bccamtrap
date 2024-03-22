@@ -65,13 +65,13 @@
       4                 FALSE                FALSE            FALSE            FALSE
       5                 FALSE                FALSE            FALSE            FALSE
       6                 FALSE                FALSE            FALSE            FALSE
-        QA_snow_outlier
-      1           FALSE
-      2           FALSE
-      3           FALSE
-      4           FALSE
-      5           FALSE
-      6           FALSE
+        QA_wrong_tl_time QA_snow_outlier
+      1            FALSE           FALSE
+      2            FALSE           FALSE
+      3            FALSE           FALSE
+      4            FALSE           FALSE
+      5            FALSE           FALSE
+      6            FALSE           FALSE
 
 # find_blanks
 
@@ -177,4 +177,14 @@
       2           4  4:1|17                b 2024-03-10    y       q          FALSE
       3           3  3:2|17                a 2024-03-11    z       p           TRUE
       4           4  4:1|17                c 2024-03-12   zz       s          FALSE
+
+# valideate_tl_time
+
+    Code
+      validate_tl_time(d, "12:00:00")
+    Output
+                  date_time trigger_mode QA_wrong_tl_time
+      1 2020-01-01 12:00:00   Time Lapse            FALSE
+      2 2020-01-02 00:00:00   Time Lapse             TRUE
+      3 2020-01-03 18:27:45       Motion            FALSE
 

@@ -72,6 +72,16 @@ test_that("find_dup_episodes", {
   expect_snapshot(find_dup_episodes(d))
 })
 
+test_that("valideate_tl_time", {
+  d <- data.frame(
+    date_time = lubridate::as_datetime(c("2020-01-01 12:00:00", "2020-01-02 00:00:00", "2020-01-03 18:27:45")),
+    trigger_mode = c("Time Lapse", "Time Lapse", "Motion")
+  )
+
+  expect_error(validate_tl_time(d, "27:06:25"))
+  expect_snapshot(validate_tl_time(d, "12:00:00"))
+})
+
 test_that("validate_timestamp_order", {
  # TODO
 })

@@ -116,6 +116,17 @@ qa_deployment_images <- function(deployments, image_data) {
   i_dep_labs_ok <- length(i_dep_labs_extra) == 0
   s_dep_labs_ok <- length(s_dep_labs_extra) == 0
 
+  bad_tl_times <- check_timelapse_times(deployments, image_data)
+
+  if (length(bad_tl_times) > 0) {
+    cli::cli_alert_warning(c(
+      "There is a mismatch in {.var timelapse_time} in {.arg {rlang::caller_arg(deployments)}}",
+      "and {.var date_time} in {.arg {rlang::caller_arg(image_data)}} for ",
+      "timelapse images in the following deployments: {.val {bad_tl_times}}."
+    )
+    )
+  }
+
   if (length(intersect(s_dep_labs, i_dep_labs)) == 0) {
     cli::cli_abort(
       "There are no matching deployment labels in {.arg {rlang::caller_arg(deployments)}}
@@ -142,9 +153,31 @@ qa_deployment_images <- function(deployments, image_data) {
   invisible(
     list(
       img_dep_labels_not_in_deployments = i_dep_labs_extra,
-      deployment_dep_labels_not_in_images = s_dep_labs_extra
+      deployment_dep_labels_not_in_images = s_dep_labs_extra,
+      mismatched_timelapse_image_times = bad_tl_times
     )
   )
+}
+
+check_timelapse_times <- function(deployments, image_data) {
+  image_data <- image_data[grepl("^[Tt]", image_data$trigger_mode),
+                           c("deployment_label", "date_time")]
+
+  image_data$time <- format(image_data$date_time, "%H:%M:%S")
+
+  deployments$tl_time = format(deployments$timelapse_time, "%H:%M:%S")
+
+  dat <- dplyr::left_join(
+    dplyr::select(deployments, "deployment_label", "tl_time"),
+    dplyr::distinct(image_data, .data$deployment_label, .data$time),
+    by = "deployment_label"
+  )
+
+  bad_tl_times <- dat$deployment_label[dat$tl_time != dat$time]
+
+  bad_tl_times <- bad_tl_times[!is.na(bad_tl_times)]
+
+  bad_tl_times
 }
 
 #' Plot image timestamps over deployment periods
