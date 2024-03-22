@@ -21,7 +21,7 @@ test_that("find_blanks", {
     "study_area_name" = c("a", "b", " ", "", NA_character_),
     "sample_station_label" = c("a", "b", " ", "", NA_character_),
     "deployment_label" = c("a", "b", " ", "", NA_character_),
-    "date_time" = as.POSIXct(c(NA, rep("2024-03-11 05:16:42", 4))),
+    "date_time" = lubridate::as_datetime(c(NA, rep("2024-03-11 05:16:42", 4))),
     "surveyor" = c("", NA_character_, "a", "b", " "),
     "trigger_mode" = LETTERS[1:5],
     "temperature" = c(NaN, NA_real_, 1:3),
