@@ -45,37 +45,47 @@ rai <- function(sample_sessions,
 
   dat$sample_end_date <- dat$max_tl_date
 
+  dat <- dplyr::filter(dat, !is.na(.data$species))
+  dat <- filter_if_not_null(dat, deployment_label)
+  dat <- filter_if_not_null(dat, species)
+
   if (!is.null(sample_start_date)) {
-    dat <- dplyr::filter(.data$date_time >= as.POSIXct(sample_start_date))
+    dat <- dplyr::filter(.data$date_time >= lubridate::as_datetime(sample_start_date))
     dat$sample_start_date <- sample_start_date
   }
 
   if (!is.null(sample_end_date)) {
-    dat <- dplyr::filter(.data$date_time <= as.POSIXct(sample_end_date))
+    dat <- dplyr::filter(.data$date_time <= lubridate::as_datetime(sample_end_date))
     dat$sample_end_date <- sample_end_date
+  }
+
+  if (isTRUE(by_deployment_label)) {
+    dat <- dplyr::group_by(dat, .data$deployment_label)
   }
 
   dat <- dplyr::group_by(
     dat,
     .data$sample_start_date,
     .data$sample_end_date,
-    .data$sample_period_length
+    .data$sample_period_length,
+    .add = TRUE
   )
 
   if (isTRUE(by_species)) {
     dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
   }
 
-    if (isTRUE(by_deployment_label)) {
-    dat <- dplyr::group_by(dat, .data$deployment_label, .add = TRUE)
-  }
-
-  dat <- dplyr::filter(dat, !is.na(.data$species))
-
-  dat <- filter_if_not_null(dat, deployment_label)
-  dat <- filter_if_not_null(dat, species)
-
   # check for missing counts
+
+  dplyr::summarize(
+    dat,
+    total_count = sum(.data$total_count_episode, na.rm = TRUE),
+    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$sample_period_length, units = "days")),
+    .groups = "drop"
+  )
+
+}
+
 
   dplyr::summarize(
     dat,
