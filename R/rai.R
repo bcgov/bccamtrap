@@ -34,6 +34,8 @@ sample_rai <- function(image_data,
     sample_end_date
   )
 
+  dat <- dplyr::filter(dat, !is.na(species))
+
   out <- dplyr::summarize(
     dat,
     sample_start_date = min(.data$sample_start_date, na.rm = TRUE),
@@ -139,7 +141,6 @@ prep_rai <- function(image_data,
     by = c("sample_station_label", "deployment_label")
   )
 
-  dat <- dplyr::filter(dat, !is.na(.data$species))
   dat <- filter_if_not_null(dat, deployment_label)
   dat <- filter_if_not_null(dat, species)
 
