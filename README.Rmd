@@ -339,7 +339,7 @@ select(image_data_qa, root_folder, file, starts_with("QA_"))
 ### Sampling sessions
 
 Define sampling sessions based on deployment metadata and image data using the 
-`make_sessions()` function. This function will:
+`make_sample_sessions()` function. This function will:
 
 - Set sampling_start as deployment_start
 - Notes dates of first and last photos of deployment
@@ -350,12 +350,12 @@ Define sampling sessions based on deployment metadata and image data using the
 
 ```{r}
 #| eval: false
-make_sessions(deployments, image_data)
+make_sample_sessions(deployments, image_data)
 ```
 
 ```{r}
 #| echo: false
-make_sessions(deployments, image_data, as_sf = FALSE) %>% 
+make_sample_sessions(deployments, image_data, as_sf = FALSE) %>% 
   select(-wlrs_project_name, -sample_station_label)
 ```
 

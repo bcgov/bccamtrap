@@ -162,7 +162,7 @@ make_deployment_validity_columns <- function(x) {
 #'
 #' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
 #' @export
-make_sessions <- function(deployments, image_data, drop_unjoined = TRUE, as_sf = TRUE) {
+make_sample_sessions <- function(deployments, image_data, drop_unjoined = TRUE, as_sf = TRUE) {
   merged <- merge_deployments_images(
     deployments,
     image_data,

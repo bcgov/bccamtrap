@@ -16,18 +16,18 @@ test_that("creating a deployments table works", {
   expect_snapshot_value(lapply(out2, class), style = "json2")
 })
 
-test_that("make_sessions()", {
+test_that("make_sample_sessions()", {
   deps <- make_deployments(test_meta_file1)
   imgs <- read_image_data(test_dir_1)
 
-  sessions <- make_sessions(deps, imgs)
+  sessions <- make_sample_sessions(deps, imgs)
 
   expect_s3_class(sessions, "sample_sessions")
   expect_s3_class(sessions, "sf")
 
   expect_snapshot(sf::st_drop_geometry(sessions))
 
-  sessions_no_sf <- make_sessions(deps, imgs, as_sf = FALSE)
+  sessions_no_sf <- make_sample_sessions(deps, imgs, as_sf = FALSE)
 
   expect_s3_class(sessions_no_sf, "sample_sessions")
   expect_false(inherits(sessions_no_sf, "sf"))
@@ -37,7 +37,7 @@ test_that("make_sessions()", {
   deps2 <- make_deployments(test_meta_file2)
   imgs2 <- read_image_data(test_dir_2)
 
-  sessions2 <- make_sessions(deps2, imgs2)
+  sessions2 <- make_sample_sessions(deps2, imgs2)
 
   expect_s3_class(sessions2, "sample_sessions")
   expect_s3_class(sessions2, "sf")

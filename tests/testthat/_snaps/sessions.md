@@ -658,7 +658,7 @@
       ]
     }
 
-# make_sessions()
+# make_sample_sessions()
 
     Code
       sf::st_drop_geometry(sessions)

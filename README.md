@@ -494,7 +494,7 @@ select(image_data_qa, root_folder, file, starts_with("QA_"))
 ### Sampling sessions
 
 Define sampling sessions based on deployment metadata and image data
-using the `make_sessions()` function. This function will:
+using the `make_sample_sessions()` function. This function will:
 
 - Set sampling_start as deployment_start
 - Notes dates of first and last photos of deployment
@@ -505,7 +505,7 @@ using the `make_sessions()` function. This function will:
   photo date - number of days with lens obscured)
 
 ``` r
-make_sessions(deployments, image_data)
+make_sample_sessions(deployments, image_data)
 ```
 
     #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
