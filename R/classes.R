@@ -79,6 +79,14 @@ check_deployments <- function(x, arg = rlang::caller_arg(x), call = rlang::calle
   }
 }
 
+check_sample_sessions <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+  if (!inherits(x, "sample_sessions")) {
+    cli::cli_abort("{.arg {arg}} must be a 'sample_sessions' object, a result of {.fn make_sample_sessions}",
+                   arg = arg,
+                   call = call)
+  }
+}
+
 check_image_data <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
   if (!inherits(x, "image_data")) {
     cli::cli_abort("{.arg {arg}} must be a 'image_data' object.",
