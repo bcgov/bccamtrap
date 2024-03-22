@@ -681,7 +681,7 @@
       #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
       #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
       #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
-      #   sample_period_length <int>
+      #   trap_days <int>
 
 ---
 
@@ -706,7 +706,7 @@
       #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
       #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
       #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
-      #   sample_period_length <int>
+      #   trap_days <int>
 
 ---
 
@@ -737,5 +737,5 @@
       #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
       #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
       #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
-      #   sample_period_length <int>
+      #   trap_days <int>
 

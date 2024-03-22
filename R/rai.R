@@ -24,35 +24,23 @@ sample_rai <- function(image_data,
                        sample_start_date = NULL,
                        sample_end_date = NULL) {
 
-  sessions <- make_sample_sessions(image_data, sample_start_date, sample_end_date)
-
-  dat <- dplyr::right_join(
-    sessions,
+  dat <- prep_rai(
     image_data,
-    by = c("sample_station_label", "deployment_label")
+    deployment_label,
+    species,
+    by_deployment_label,
+    by_species,
+    sample_start_date,
+    sample_end_date
   )
-
-  dat <- dplyr::filter(dat, !is.na(.data$species))
-  dat <- filter_if_not_null(dat, deployment_label)
-  dat <- filter_if_not_null(dat, species)
-
-  dat <- filter_start_end(dat, sample_start_date, sample_end_date)
-
-  if (isTRUE(by_deployment_label)) {
-    dat <- dplyr::group_by(dat, .data$deployment_label)
-  }
-
-  if (isTRUE(by_species)) {
-    dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
-  }
 
   out <- dplyr::summarize(
     dat,
     sample_start_date = min(.data$sample_start_date, na.rm = TRUE),
     sample_end_date = max(.data$sample_end_date, na.rm = TRUE),
-    sample_period_length = max(.data$sample_period_length, na.rm = TRUE),
+    trap_days = max(.data$trap_days, na.rm = TRUE),
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
-    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$sample_period_length, units = "days")),
+    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$trap_days, units = "days")),
     .groups = "drop"
   )
 
@@ -60,9 +48,26 @@ sample_rai <- function(image_data,
 
 }
 
-rai_by_time <- function(image_data, by = c("day", "week", "month", "year"), roll = FALSE, k = 7) {
+rai_by_time <- function(image_data,
+                        by = c("day", "week", "month", "year"),
+                        roll = FALSE,
+                        k = 7,
+                        deployment_label = NULL,
+                        species = NULL,
+                        by_deployment_label = TRUE,
+                        by_species = TRUE,
+                        sample_start_date = NULL,
+                        sample_end_date = NULL) {
 
-  check_image_data(image_data)
+  dat <- prep_rai(
+    image_data,
+    deployment_label,
+    species,
+    by_deployment_label,
+    by_species,
+    sample_start_date,
+    sample_end_date
+  )
 
   by <- match.arg(by)
   by_fmt <- switch(
@@ -74,16 +79,14 @@ rai_by_time <- function(image_data, by = c("day", "week", "month", "year"), roll
   )
 
   dat <- dplyr::mutate(
-    image_data,
+    dat,
     !!by := format(.data$date_time, by_fmt)
   )
 
   dat <- dplyr::group_by(
     dat,
-    .data$study_area_name,
-    .data$sample_station_label,
-    .data$deployment_label,
-    .data[[by]]
+    .data[[by]],
+    .add = TRUE
   )
 
   dat <- dplyr::mutate(
@@ -119,6 +122,38 @@ filter_if_not_null <- function(data, var, env = rlang::current_env()) {
     cli::cli_abort("{.val {var}} is not a valid value in {.var {varname}}")
   }
   dplyr::filter(data, .data[[varname]] %in% var)
+}
+
+prep_rai <- function(image_data,
+                     deployment_label,
+                     species,
+                     by_deployment_label,
+                     by_species,
+                     sample_start_date,
+                     sample_end_date) {
+  sessions <- make_sample_sessions(image_data, sample_start_date, sample_end_date)
+
+  dat <- dplyr::right_join(
+    sessions,
+    image_data,
+    by = c("sample_station_label", "deployment_label")
+  )
+
+  dat <- dplyr::filter(dat, !is.na(.data$species))
+  dat <- filter_if_not_null(dat, deployment_label)
+  dat <- filter_if_not_null(dat, species)
+
+  dat <- filter_start_end(dat, sample_start_date, sample_end_date)
+
+  if (isTRUE(by_deployment_label)) {
+    dat <- dplyr::group_by(dat, .data$deployment_label)
+  }
+
+  if (isTRUE(by_species)) {
+    dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
+  }
+
+  dat
 }
 
 

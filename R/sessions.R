@@ -193,7 +193,7 @@ make_sample_sessions <- function(image_data, sample_start_date = NULL, sample_en
       na.rm = TRUE
     ),
     sample_gaps = .data$n_tl_photos_lens_obscured > 0,,
-    sample_period_length = .data$n_tl_photos - .data$n_tl_photos_lens_obscured,
+    trap_days = .data$n_tl_photos - .data$n_tl_photos_lens_obscured,
     .groups = "drop"
   )
 
