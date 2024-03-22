@@ -188,7 +188,17 @@ make_sessions <- function(deployments, image_data, drop_unjoined = TRUE, as_sf =
     max_tl_date = as.Date(max(.data$date_time, na.rm = TRUE)),
     sample_truncated = .data$deployment_end_date > .data$max_tl_date,
     n_photos = dplyr::n(),
-    n_motion_photos = sum(.data$trigger_mode == "motion"),
+    n_photos_spp_id = sum(.data$total_count_episode > 0, na.rm = TRUE),
+    n_motion_photos = sum(.data$trigger_mode == "motion", na.rm = TRUE),
+    n_motion_photos_lens_obscured = sum(
+      .data$trigger_mode == "motion" & .data$lens_obscured,
+      na.rm = TRUE
+    ),
+    n_tl_photos = sum(.data$trigger_mode == "timelapse", na.rm = TRUE),
+    n_tl_photos_lens_obscured = sum(
+      .data$trigger_mode == "timelapse" & .data$lens_obscured,
+      na.rm = TRUE
+    ),
     sample_gaps = any(.data$lens_obscured),
     sample_gap_length = sum(.data$lens_obscured, na.rm = TRUE),
     sample_period_length = .data$max_tl_date - .data$min_tl_date -
