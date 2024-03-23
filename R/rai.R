@@ -50,6 +50,21 @@ sample_rai <- function(image_data,
 
 }
 
+#' Calculate RAI over a window of time, optionally rolling
+#'
+#' This function takes a data frame of image data and calculates
+#' snow, temperature, effort, count, and RAI metrics aggregated
+#' over a specified time window. These can optionally be calculated
+#' using a moving window ("rolling") calculation.
+#'
+#' @inheritParams sample_rai
+#' @param by time to aggregate by: One of `"date"` (default), `"week"`, `"month"`, or `"year"`.
+#' @param roll should it use a rolling window? Default `FALSE`
+#' @param k the size of the rolling window. Default `7`.
+#' @param by_deployment Should it be calculated by `deployment`. Default `FALSE`
+#'
+#' @return a data.frame of above calculated metrics
+#' @export
 rai_by_time <- function(image_data,
                         by = c("date", "week", "month", "year"),
                         roll = FALSE,
@@ -77,7 +92,6 @@ rai_by_time <- function(image_data,
 
   dat <- filter_if_not_null(image_data, species)
 
-
   dat <- add_groups(dat, by_deployment = FALSE, by_species)
 
   dat$date <- as.Date(dat$date_time)
@@ -103,6 +117,8 @@ rai_by_time <- function(image_data,
   dat <- tidyr::complete(
     dat,
     tidyr::nesting(
+      # .data pronoun doesn't work inside nesting, so need this
+      # awkward data-masking syntax
       !!rlang::sym("study_area_name"),
       !!rlang::sym("sample_station_label"),
       !!rlang::sym("deployment_label"),
@@ -116,20 +132,24 @@ rai_by_time <- function(image_data,
     dplyr::filter(!is.na(.data$species))
 
   if (by == "date" && !roll && by_deployment && by_species) {
+  # This is what we've made so far - a data frame, by deployment, date,
+  # and species, of snow, temperature, and species counts
     return(dat)
   }
 
-dat <- add_groups(dat, by_deployment, by_species)
+  if (by != "date") {
+    dat[[by]] <- format(dat$date, by_fmt)
+  }
 
-  dat[[by]] <- format(dat$date, by_fmt)
-
-  dat <- dplyr::group_by(
-    dat,
-    .data$study_area_name,
-    .data[[by]],
-    .add = TRUE
-  ) %>%
+  dat <- add_groups(dat, by_deployment, by_species) %>%
+    dplyr::group_by(
+      .data$study_area_name,
+      .data[[by]],
+      .add = TRUE
+    ) %>%
     dplyr::summarise(
+      start_date = min(.data$date),
+      end_date = max(.data$date),
       max_snow_index = max(.data$snow_index, na.rm = TRUE),
       mean_temperature = mean(.data$temperature, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
@@ -138,11 +158,14 @@ dat <- add_groups(dat, by_deployment, by_species)
       .groups = "drop"
     )
 
-  if (isTRUE(roll)) {
-    dat <- add_groups(dat, by_deployment, by_species)
+  if (by == "date") {
+    # don't need these since they are the same when grouped by date
+    dat <- dplyr::select(dat, -"start_date", -"end_date")
+  }
 
-    dat <- dplyr::group_by(
-      dat,
+  if (isTRUE(roll)) {
+    dat <- add_groups(dat, by_deployment, by_species) %>%
+      dplyr::group_by(
       .data$study_area_name,
       .add = TRUE
     ) %>%
