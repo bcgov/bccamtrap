@@ -51,39 +51,60 @@ sample_rai <- function(image_data,
 }
 
 rai_by_time <- function(image_data,
-                        by = c("day", "week", "month", "year"),
+                        by = c("date", "week", "month", "year"),
                         roll = FALSE,
                         k = 7,
                         deployment_label = NULL,
                         species = NULL,
-                        by_deployment_label = TRUE,
+                        by_deployment = TRUE,
                         by_species = TRUE,
                         sample_start_date = NULL,
                         sample_end_date = NULL) {
 
-  dat <- prep_rai(
-    image_data,
-    deployment_label,
-    species,
-    by_deployment_label,
-    by_species,
-    sample_start_date,
-    sample_end_date
-  )
-
   by <- match.arg(by)
   by_fmt <- switch(
     by,
-    "day" = "%Y-%m-%d",
+    "date" = "%Y-%m-%d",
     "week" = "%Y-W-%V",
     "month" = "%Y-%m",
     "year" = "%Y"
   )
 
-  dat <- dplyr::mutate(
-    dat,
-    !!by := format(.data$date_time, by_fmt)
-  )
+  image_data <- filter_if_not_null(image_data, deployment_label)
+  image_data <- filter_start_end(image_data, sample_start_date, sample_end_date)
+
+  effort <- make_effort(image_data)
+
+  effort <- dplyr::mutate(
+    effort,
+    !!by := format(.data$date, by_fmt)
+  ) %>%
+    dplyr::group_by(
+      .data$deployment_label,
+      .data[[by]],
+      .add = TRUE
+    ) %>%
+    dplyr::summarize(
+      first_day = min(as.Date(.data$date)),
+      last_day = max(as.Date(.data$date)),
+      mean_snow_index = mean(.data$snow_index, na.rm = TRUE),
+      mean_temperature = mean(.data$temperature, na.rm = TRUE),
+      trap_days = n(),
+      .groups = "drop"
+    )
+
+  dat <- filter_if_not_null(image_data, species)
+
+  dat$date <- as.Date(dat$date_time)
+  dat[[by]] <- format(dat$date_time, by_fmt)
+
+  if (isTRUE(by_deployment)) {
+    dat <- dplyr::group_by(dat, .data$deployment_label)
+  }
+
+  if (isTRUE(by_species)) {
+    dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
+  }
 
   dat <- dplyr::group_by(
     dat,
@@ -91,29 +112,36 @@ rai_by_time <- function(image_data,
     .add = TRUE
   )
 
-  dat <- dplyr::mutate(
-    dat,
-    start_date = min(as.Date(.data$date_time)),
-    end_date = max(as.Date(.data$date_time)),
-    trap_days = dplyr::n_distinct(as.Date(.data$date_time)) - sum(.data$lens_obscured)
-  )
-
-  dat <- dplyr::group_by(
-    dat,
-    .data$start_date,
-    .data$end_date,
-    .data$trap_days,
-    .data$species,
-    .add = TRUE
-  )
-
-  dplyr::summarize(
+  dat <- dplyr::summarise(
     dat,
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
-    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$trap_days, units = "days")),
-    mean_snow = mean(.data$snow_depth_lower, na.rm = TRUE),
-    mean_temp = mean(.data$temperature, na.rm = TRUE),
-    .groups = "drop"
+  )
+
+  out <- dplyr::left_join(
+    effort,
+    dat,
+    by = c("deployment_label", by)
+  )
+
+  out <- tidyr::complete(
+    out,
+    tidyr::nesting(
+      !!rlang::sym("deployment_label"),
+      !!rlang::sym(by),
+      !!rlang::sym("first_day"),
+      !!rlang::sym("last_day"),
+      !!rlang::sym("mean_snow_index"),
+      !!rlang::sym("mean_temperature"),
+      !!rlang::sym("trap_days")
+    ),
+    .data$species,
+    fill = list(total_count = 0)
+  ) %>%
+    dplyr::filter(!is.na(.data$species))
+
+  dplyr::mutate(
+    out,
+    rai = .data$total_count / .data$trap_days
   )
 }
 
@@ -155,6 +183,27 @@ prep_rai <- function(image_data,
   }
 
   dat
+}
+
+make_effort <- function(image_data) {
+  check_image_data(image_data)
+  dplyr::filter(
+    image_data,
+    .data$trigger_mode == "Time Lapse",
+    !.data$lens_obscured
+  ) %>%
+    dplyr::mutate(
+      date = as.Date(.data$date_time)
+    ) %>%
+    dplyr::select(
+      "study_area_name",
+      "sample_station_label",
+      "deployment_label",
+      "date",
+      "snow_index",
+      "temperature"
+    ) %>%
+    dplyr::distinct()
 }
 
 
