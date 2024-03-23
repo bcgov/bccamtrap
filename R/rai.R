@@ -54,12 +54,12 @@ rai_by_time <- function(image_data,
                         by = c("date", "week", "month", "year"),
                         roll = FALSE,
                         k = 7,
-                        species = NULL,
-                        deployment_label = NULL,
                         by_species = TRUE,
+                        species = NULL,
                         by_deployment = FALSE,
-                        start_date = NULL,
-                        end_date = NULL) {
+                        deployment_label = NULL,
+                        sample_start_date = NULL,
+                        sample_end_date = NULL) {
 
   by <- match.arg(by)
   by_fmt <- switch(
@@ -71,7 +71,7 @@ rai_by_time <- function(image_data,
   )
 
   image_data <- filter_if_not_null(image_data, deployment_label)
-  image_data <- filter_start_end(image_data, start_date, end_date)
+  image_data <- filter_start_end(image_data, sample_start_date, sample_end_date)
 
   effort <- make_effort(image_data)
 
