@@ -8,7 +8,7 @@ sample_rai(
   image_data,
   deployment_label = NULL,
   species = NULL,
-  by_deployment_label = TRUE,
+  by_deployment = TRUE,
   by_species = TRUE,
   sample_start_date = NULL,
   sample_end_date = NULL
@@ -22,7 +22,7 @@ sample_rai(
 \item{species}{One or more species as a character vector. Default \code{NULL} to
 calculate RAI for each species detected.}
 
-\item{by_deployment_label}{Should an RAI be calculated for each deployment
+\item{by_deployment}{Should an RAI be calculated for each deployment
 label (\code{TRUE}, default), or one RAI for all deployment labels (\code{FALSE})}
 
 \item{by_species}{Should an RAI be calculated for each species (\code{TRUE},

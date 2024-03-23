@@ -56,7 +56,7 @@
 ---
 
     Code
-      sample_rai(imgs1, by_deployment_label = FALSE, by_species = FALSE)
+      sample_rai(imgs1, by_deployment = FALSE, by_species = FALSE)
     Output
       # A tibble: 1 x 5
         sample_start_date sample_end_date trap_days total_count   rai
@@ -66,7 +66,7 @@
 ---
 
     Code
-      sample_rai(imgs1, by_deployment_label = FALSE)
+      sample_rai(imgs1, by_deployment = FALSE)
     Output
       # A tibble: 7 x 6
         sample_start_date sample_end_date trap_days species        total_count     rai

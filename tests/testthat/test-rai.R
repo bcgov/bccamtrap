@@ -7,8 +7,8 @@ test_that(
     expect_snapshot(sample_rai(imgs1))
     expect_snapshot(sample_rai(imgs1, deployment_label = "A4_20230517"))
     expect_snapshot(sample_rai(imgs1, species = "Roosevelt Elk"))
-    expect_snapshot(sample_rai(imgs1, by_deployment_label = FALSE, by_species = FALSE))
-    expect_snapshot(sample_rai(imgs1, by_deployment_label = FALSE))
+    expect_snapshot(sample_rai(imgs1, by_deployment = FALSE, by_species = FALSE))
+    expect_snapshot(sample_rai(imgs1, by_deployment = FALSE))
     expect_snapshot(sample_rai(imgs1, by_species = FALSE))
     expect_snapshot(sample_rai(
       imgs1,
