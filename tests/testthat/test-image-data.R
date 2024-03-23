@@ -36,3 +36,10 @@ test_that("check_template() works", {
   expect_snapshot(check_template("temp_foobar.csv"), error = TRUE)
 })
 
+test_that("bin_snow_depths() works", {
+  expect_equal(
+    bin_snow_depths(c(0,0.1,4.9,5, 14.99, 15, 29.9, 30, 59.9, 60, 119.999, 120, 130, NA)),
+    c(0,1,1,2, 2, 3, 3, 4, 4, 5, 5, 6, 6, NA)
+  )
+})
+

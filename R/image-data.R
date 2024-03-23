@@ -157,9 +157,10 @@ make_snow_range_cols <- function(x) {
       grepl("Est\\. Very Deep", .data$snow_depth) ~ 120,
       grepl("Est\\. Over", .data$snow_depth) ~ Inf,
       .default = .data$snow_depth_lower
-    )
+    ),
+    snow_index = bin_snow_depths(.data$snow_depth_lower)
   )
-    dplyr::relocate(x, "snow_is_est", "snow_depth_lower", "snow_depth_upper",
+    dplyr::relocate(x, "snow_index", "snow_is_est", "snow_depth_lower", "snow_depth_upper",
                     .after = "snow_depth")
 }
 
@@ -175,4 +176,12 @@ standardize_trigger_mode <- function(x) {
     )
   }
   x
+}
+
+bin_snow_depths <- function(x) {
+  out <- cut(x, breaks = c(0,5,15,30,60,120), labels = FALSE,
+      include.lowest = TRUE, right = FALSE)
+  out[x == 0] <- 0
+  out[x >= 120] <- 6
+  out
 }
