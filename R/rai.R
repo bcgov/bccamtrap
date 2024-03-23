@@ -75,28 +75,9 @@ rai_by_time <- function(image_data,
 
   effort <- make_effort(image_data)
 
-  effort <- dplyr::mutate(
-    effort,
-    !!by := format(.data$date, by_fmt)
-  ) %>%
-    dplyr::group_by(
-      .data$deployment_label,
-      .data[[by]],
-      .add = TRUE
-    ) %>%
-    dplyr::summarize(
-      first_day = min(as.Date(.data$date)),
-      last_day = max(as.Date(.data$date)),
-      mean_snow_index = mean(.data$snow_index, na.rm = TRUE),
-      mean_temperature = mean(.data$temperature, na.rm = TRUE),
-      trap_days = n(),
-      .groups = "drop"
-    )
-
   dat <- filter_if_not_null(image_data, species)
 
   dat$date <- as.Date(dat$date_time)
-  dat[[by]] <- format(dat$date_time, by_fmt)
 
   if (isTRUE(by_species)) {
     dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
@@ -105,7 +86,7 @@ rai_by_time <- function(image_data,
   dat <- dplyr::group_by(
     dat,
     .data$deployment_label,
-    .data[[by]],
+    .data$date,
     .add = TRUE
   )
 
@@ -114,32 +95,63 @@ rai_by_time <- function(image_data,
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
   )
 
-  out <- dplyr::left_join(
+  dat <- dplyr::left_join(
     effort,
     dat,
-    by = c("deployment_label", by)
+    by = c("deployment_label", "date")
   )
 
-  out <- tidyr::complete(
-    out,
+  dat <- tidyr::complete(
+    dat,
     tidyr::nesting(
+      !!rlang::sym("study_area_name"),
+      !!rlang::sym("sample_station_label"),
       !!rlang::sym("deployment_label"),
-      !!rlang::sym(by),
-      !!rlang::sym("first_day"),
-      !!rlang::sym("last_day"),
-      !!rlang::sym("mean_snow_index"),
-      !!rlang::sym("mean_temperature"),
-      !!rlang::sym("trap_days")
+      !!rlang::sym("date"),
+      !!rlang::sym("snow_index"),
+      !!rlang::sym("temperature")
     ),
     .data$species,
     fill = list(total_count = 0)
   ) %>%
     dplyr::filter(!is.na(.data$species))
 
-  dplyr::mutate(
-    out,
-    rai = .data$total_count / .data$trap_days
-  )
+  if (by == "date" && !roll && by_deployment) {
+    return(dat)
+  }
+
+  if (by == "date" && !by_deployment) {
+    dat <- dplyr::group_by(
+      dat,
+      .data$study_area_name,
+      .data$date,
+      .data$species
+    ) %>%
+      dplyr::summarise(
+        max_snow_index = max(.data$snow_index, na.rm = TRUE),
+        mean_temperature = mean(.data$temperature, na.rm = TRUE),
+        total_count = sum(.data$total_count, na.rm = TRUE),
+        trap_days = n_distinct(.data$deployment_label),
+        rai = .data$total_count / .data$trap_days,
+        .groups = "drop"
+      )
+  }
+
+  if (roll) {
+    dat <- dplyr::group_by(
+      dat,
+      .data$study_area_name,
+      .data$species
+    ) %>%
+      dplyr::mutate(
+        roll_mean_max_snow = zoo::rollmean(.data$max_snow_index, k = k, fill = NA, na.rm = TRUE),
+        roll_mean_temp = zoo::rollmean(.data$mean_temperature, k = k, fill = NA, na.rm = TRUE),
+        roll_trap_days = zoo::rollsum(.data$trap_days, k = k, fill = NA, na.rm = TRUE),
+        roll_count = zoo::rollsum(.data$total_count, k = k, fill = NA, na.rm = TRUE),
+        roll_rai = .data$roll_count / .data$roll_trap_days * 100
+      )
+  }
+  dat
 }
 
 filter_if_not_null <- function(data, var, env = rlang::current_env()) {
