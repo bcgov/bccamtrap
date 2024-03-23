@@ -98,16 +98,13 @@ rai_by_time <- function(image_data,
   dat$date <- as.Date(dat$date_time)
   dat[[by]] <- format(dat$date_time, by_fmt)
 
-  if (isTRUE(by_deployment)) {
-    dat <- dplyr::group_by(dat, .data$deployment_label)
-  }
-
   if (isTRUE(by_species)) {
     dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
   }
 
   dat <- dplyr::group_by(
     dat,
+    .data$deployment_label,
     .data[[by]],
     .add = TRUE
   )
