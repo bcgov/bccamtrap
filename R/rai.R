@@ -9,7 +9,7 @@
 #' @param deployment_label One or more deployment labels to select
 #' @param species One or more species as a character vector. Default `NULL` to
 #'   calculate RAI for each species detected.
-#' @param by_deployment_label Should an RAI be calculated for each deployment
+#' @param by_deployment Should an RAI be calculated for each deployment
 #'   label (`TRUE`, default), or one RAI for all deployment labels (`FALSE`)
 #' @param by_species Should an RAI be calculated for each species (`TRUE`,
 #'   default), or one RAI for all species (`FALSE`)
@@ -19,7 +19,7 @@
 sample_rai <- function(image_data,
                        deployment_label = NULL,
                        species = NULL,
-                       by_deployment_label = TRUE,
+                       by_deployment = TRUE,
                        by_species = TRUE,
                        sample_start_date = NULL,
                        sample_end_date = NULL) {
@@ -28,7 +28,7 @@ sample_rai <- function(image_data,
     image_data,
     deployment_label,
     species,
-    by_deployment_label,
+    by_deployment,
     by_species,
     sample_start_date,
     sample_end_date
@@ -54,12 +54,12 @@ rai_by_time <- function(image_data,
                         by = c("date", "week", "month", "year"),
                         roll = FALSE,
                         k = 7,
-                        deployment_label = NULL,
                         species = NULL,
-                        by_deployment = TRUE,
+                        deployment_label = NULL,
                         by_species = TRUE,
-                        sample_start_date = NULL,
-                        sample_end_date = NULL) {
+                        by_deployment = FALSE,
+                        start_date = NULL,
+                        end_date = NULL) {
 
   by <- match.arg(by)
   by_fmt <- switch(
@@ -71,17 +71,16 @@ rai_by_time <- function(image_data,
   )
 
   image_data <- filter_if_not_null(image_data, deployment_label)
-  image_data <- filter_start_end(image_data, sample_start_date, sample_end_date)
+  image_data <- filter_start_end(image_data, start_date, end_date)
 
   effort <- make_effort(image_data)
 
   dat <- filter_if_not_null(image_data, species)
 
-  dat$date <- as.Date(dat$date_time)
 
-  if (isTRUE(by_species)) {
-    dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
-  }
+  dat <- add_groups(dat, by_deployment = FALSE, by_species)
+
+  dat$date <- as.Date(dat$date_time)
 
   dat <- dplyr::group_by(
     dat,
@@ -116,32 +115,36 @@ rai_by_time <- function(image_data,
   ) %>%
     dplyr::filter(!is.na(.data$species))
 
-  if (by == "date" && !roll && by_deployment) {
+  if (by == "date" && !roll && by_deployment && by_species) {
     return(dat)
   }
 
-  if (by == "date" && !by_deployment) {
-    dat <- dplyr::group_by(
-      dat,
-      .data$study_area_name,
-      .data$date,
-      .data$species
-    ) %>%
-      dplyr::summarise(
-        max_snow_index = max(.data$snow_index, na.rm = TRUE),
-        mean_temperature = mean(.data$temperature, na.rm = TRUE),
-        total_count = sum(.data$total_count, na.rm = TRUE),
-        trap_days = n_distinct(.data$deployment_label),
-        rai = .data$total_count / .data$trap_days,
-        .groups = "drop"
-      )
-  }
+dat <- add_groups(dat, by_deployment, by_species)
 
-  if (roll) {
+  dat[[by]] <- format(dat$date, by_fmt)
+
+  dat <- dplyr::group_by(
+    dat,
+    .data$study_area_name,
+    .data[[by]],
+    .add = TRUE
+  ) %>%
+    dplyr::summarise(
+      max_snow_index = max(.data$snow_index, na.rm = TRUE),
+      mean_temperature = mean(.data$temperature, na.rm = TRUE),
+      total_count = sum(.data$total_count, na.rm = TRUE),
+      trap_days = dplyr::n_distinct(.data$deployment_label),
+      rai = .data$total_count / .data$trap_days * 100,
+      .groups = "drop"
+    )
+
+  if (isTRUE(roll)) {
+    dat <- add_groups(dat, by_deployment, by_species)
+
     dat <- dplyr::group_by(
       dat,
       .data$study_area_name,
-      .data$species
+      .add = TRUE
     ) %>%
       dplyr::mutate(
         roll_mean_max_snow = zoo::rollmean(.data$max_snow_index, k = k, fill = NA, na.rm = TRUE),
@@ -166,7 +169,7 @@ filter_if_not_null <- function(data, var, env = rlang::current_env()) {
 prep_rai <- function(image_data,
                      deployment_label,
                      species,
-                     by_deployment_label,
+                     by_deployment,
                      by_species,
                      sample_start_date,
                      sample_end_date) {
@@ -183,13 +186,7 @@ prep_rai <- function(image_data,
 
   dat <- filter_start_end(dat, sample_start_date, sample_end_date)
 
-  if (isTRUE(by_deployment_label)) {
-    dat <- dplyr::group_by(dat, .data$deployment_label)
-  }
-
-  if (isTRUE(by_species)) {
-    dat <- dplyr::group_by(dat, .data$species, .add = TRUE)
-  }
+  dat <- add_groups(dat, by_deployment, by_species)
 
   dat
 }
@@ -202,7 +199,8 @@ make_effort <- function(image_data) {
     !.data$lens_obscured
   ) %>%
     dplyr::mutate(
-      date = as.Date(.data$date_time)
+      date = as.Date(.data$date_time),
+      snow_index = ifelse(is.na(.data$snow_index), 0, .data$snow_index)
     ) %>%
     dplyr::select(
       "study_area_name",
@@ -215,4 +213,13 @@ make_effort <- function(image_data) {
     dplyr::distinct()
 }
 
+add_groups <- function(x, by_deployment, by_species) {
+  if (isTRUE(by_deployment)) {
+    x <- dplyr::group_by(x, .data$deployment_label)
+  }
+  if (isTRUE(by_species)) {
+    x <- dplyr::group_by(x, .data$species, .add = TRUE)
+  }
+  x
+}
 
