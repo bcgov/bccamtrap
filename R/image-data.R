@@ -13,16 +13,20 @@
 #' @return a `data.frame` of Timelapse image data from the files found in `path`
 #' @export
 read_image_data <- function(path, pattern, recursive = FALSE, ...) {
-  if (!dir.exists(path)) {
+  if (!file.exists(path)) {
     cli::cli_abort("Directory {.path {path}} does not exist")
   }
 
-  csvfiles <- list.files(
-    path,
-    pattern = ".csv$",
-    full.names = TRUE,
-    recursive = recursive
-  )
+  if (grepl("\\.csv$", path)) {
+    csvfiles <- path
+  } else {
+    csvfiles <- list.files(
+      path,
+      pattern = ".csv$",
+      full.names = TRUE,
+      recursive = recursive
+    )
+  }
 
   if (!missing(pattern)) {
     csvfiles <- grep(pattern, csvfiles, value = TRUE)
