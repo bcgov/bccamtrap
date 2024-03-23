@@ -54,3 +54,11 @@ file.remove(merged_2)
 test_files_2 <- setdiff(test_files_2, merged_2)
 test_meta_file2 <- grep(".xls[xm]?$", test_files_2, value = TRUE)
 
+
+drv3 <- googledrive::drive_get(id = "1XArm3JspluuIRn48tgjWH56lUWQX8Mju") # BD image data
+test_bd_img_csv_gd <- googledrive::drive_download(
+  drv3,
+  path = file.path(test_dir, drv3$name),
+  overwrite = TRUE
+)
+test_bd_img_csv <- test_bd_img_csv_gd$local_path
