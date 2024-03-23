@@ -3,8 +3,8 @@ test_that("read_image_data() works", {
   imgs_2 <- read_image_data(test_dir_2)
   expect_s3_class(imgs_1, c("image_data", "tbl"))
   expect_s3_class(imgs_2, c("image_data", "tbl"))
-  expect_equal(ncol(imgs_1), 42)
-  expect_equal(ncol(imgs_2), 42)
+  expect_equal(ncol(imgs_1), 43)
+  expect_equal(ncol(imgs_2), 43)
   expect_equal(names(imgs_1), names(imgs_2))
 
   expect_snapshot_value(lapply(imgs_1, class), style = "json2")

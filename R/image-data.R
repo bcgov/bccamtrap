@@ -1,5 +1,9 @@
 #' Read image data from a collection of csvs from TimeLapse
 #'
+#' In addition to reading in the data, this function copies snow depth data
+#' from the timelapse photo for each day into the motion photos for that day,
+#' to facilitate analysis.
+#'
 #' @param path path to directory of image files.
 #' @param pattern an optional regular expression. Only file names which match
 #'   the regular expression will read. Default `FALSE`.
@@ -36,9 +40,11 @@ read_image_data <- function(path, pattern, recursive = FALSE, ...) {
   df <- janitor::clean_names(df)
   df <- dplyr::relocate(df, "date_time", .after = "deployment_label")
 
+  df <- standardize_trigger_mode(df)
+  df <- fill_snow_values(df)
   df <- make_snow_range_cols(df)
-  ret <- standardize_trigger_mode(df)
-  as.image_data(ret)
+
+  as.image_data(df)
 }
 
 check_template <- function(files) {
@@ -184,4 +190,24 @@ bin_snow_depths <- function(x) {
   out[x == 0] <- 0
   out[x >= 120] <- 6
   out
+}
+
+fill_snow_values <- function(x) {
+  snow_vals <- dplyr::filter(
+    x,
+    !is.na(.data$snow_depth),
+    .data$trigger_mode == "Time Lapse"
+  ) %>%
+    dplyr::mutate(date = as.Date(.data$date_time)) %>%
+    dplyr::select("deployment_label", "date", "snow_depth_src" = "snow_depth")
+
+  x <- dplyr::left_join(
+    dplyr::mutate(x, date = as.Date(.data$date_time)),
+    snow_vals,
+    by = c("deployment_label", "date")
+  )
+
+  x$snow_depth[is.na(x$snow_depth)] <- x$snow_depth_src[is.na(x$snow_depth)]
+
+  dplyr::select(x, , -"date", -"snow_depth_src")
 }
