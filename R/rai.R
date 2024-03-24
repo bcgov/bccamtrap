@@ -6,15 +6,17 @@
 #'
 #' @inheritParams qa_image_data
 #' @inheritParams make_sample_sessions
-#' @param deployment_label One or more deployment labels to select
-#' @param species One or more species as a character vector. Default `NULL` to
-#'   calculate RAI for each species detected.
-#' @param by_deployment Should an RAI be calculated for each deployment
-#'   label (`TRUE`, default), or one RAI for all deployment labels (`FALSE`)
+#' @param deployment_label Optionally, one or more deployment labels to select.
+#'   Default `NULL` to use all deployments.
+#' @param species Optionally, or more species as a character vector. Default
+#'   `NULL` to calculate RAI for each species detected.
+#' @param by_deployment Should an RAI be calculated for each deployment label
+#'   (`TRUE`, default), or one RAI for all deployment labels (`FALSE`)
 #' @param by_species Should an RAI be calculated for each species (`TRUE`,
 #'   default), or one RAI for all species (`FALSE`)
 #'
-#' @return a data.frame of RAI, by deployment label and species (if `by_species = TRUE`)
+#' @return a data.frame of RAI, by deployment label and species (if `by_species
+#'   = TRUE`)
 #' @export
 sample_rai <- function(image_data,
                        deployment_label = NULL,
@@ -42,7 +44,7 @@ sample_rai <- function(image_data,
     sample_end_date = max(.data$sample_end_date, na.rm = TRUE),
     trap_days = max(.data$trap_days, na.rm = TRUE),
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
-    rai = sum(.data$total_count, na.rm = TRUE) / max(as.numeric(.data$trap_days, units = "days")),
+    rai = sum(.data$total_count, na.rm = TRUE) / max(.data$trap_days, na.rm = TRUE),
     .groups = "drop"
   )
 
@@ -114,26 +116,11 @@ rai_by_time <- function(image_data,
     by = c("deployment_label", "date")
   )
 
-  dat <- tidyr::complete(
-    dat,
-    tidyr::nesting(
-      # .data pronoun doesn't work inside nesting, so need this
-      # awkward data-masking syntax
-      !!rlang::sym("study_area_name"),
-      !!rlang::sym("sample_station_label"),
-      !!rlang::sym("deployment_label"),
-      !!rlang::sym("date"),
-      !!rlang::sym("snow_index"),
-      !!rlang::sym("temperature")
-    ),
-    .data$species,
-    fill = list(total_count = 0)
-  ) %>%
-    dplyr::filter(!is.na(.data$species))
+  dat <- complete_daily_counts(dat)
 
   if (by == "date" && !roll && by_deployment && by_species) {
-  # This is what we've made so far - a data frame, by deployment, date,
-  # and species, of snow, temperature, and species counts
+    # This is what we've made so far - a data frame, by deployment, date,
+    # and species, of snow, temperature, and species counts
     return(dat)
   }
 
@@ -154,7 +141,7 @@ rai_by_time <- function(image_data,
       mean_temperature = mean(.data$temperature, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
       trap_days = dplyr::n_distinct(.data$deployment_label),
-      rai = .data$total_count / .data$trap_days * 100,
+      rai = .data$total_count / .data$trap_days,
       .groups = "drop"
     )
 
@@ -166,15 +153,15 @@ rai_by_time <- function(image_data,
   if (isTRUE(roll)) {
     dat <- add_groups(dat, by_deployment, by_species) %>%
       dplyr::group_by(
-      .data$study_area_name,
-      .add = TRUE
-    ) %>%
+        .data$study_area_name,
+        .add = TRUE
+      ) %>%
       dplyr::mutate(
         roll_mean_max_snow = zoo::rollmean(.data$max_snow_index, k = k, fill = NA, na.rm = TRUE),
         roll_mean_temp = zoo::rollmean(.data$mean_temperature, k = k, fill = NA, na.rm = TRUE),
         roll_trap_days = zoo::rollsum(.data$trap_days, k = k, fill = NA, na.rm = TRUE),
         roll_count = zoo::rollsum(.data$total_count, k = k, fill = NA, na.rm = TRUE),
-        roll_rai = .data$roll_count / .data$roll_trap_days * 100
+        roll_rai = .data$roll_count / .data$roll_trap_days
       )
   }
   dat
@@ -245,4 +232,44 @@ add_groups <- function(x, by_deployment, by_species) {
   }
   x
 }
+
+complete_daily_counts <- function(x) {
+  if ("species" %in% names(x)) {
+    # This mostly duplicated complete() is annoying but I couldn't figure out
+    # how to conditionally include .data$species in ... if the column exists...
+    out <- tidyr::complete(
+      x,
+      tidyr::nesting(
+        # .data pronoun doesn't work inside nesting, so need this
+        # awkward data-masking syntax
+        !!rlang::sym("study_area_name"),
+        !!rlang::sym("sample_station_label"),
+        !!rlang::sym("deployment_label"),
+        !!rlang::sym("date"),
+        !!rlang::sym("snow_index"),
+        !!rlang::sym("temperature")
+      ),
+      .data$species,
+      fill = list(total_count = 0)
+    ) %>%
+      dplyr::filter(!is.na(.data$species))
+  } else {
+    out <- tidyr::complete(
+      x,
+      tidyr::nesting(
+
+        !!rlang::sym("study_area_name"),
+        !!rlang::sym("sample_station_label"),
+        !!rlang::sym("deployment_label"),
+        !!rlang::sym("date"),
+        !!rlang::sym("snow_index"),
+        !!rlang::sym("temperature")
+      ),
+      fill = list(total_count = 0)
+    )
+  }
+
+  out
+}
+
 
