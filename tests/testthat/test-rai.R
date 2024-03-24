@@ -28,30 +28,30 @@ test_that("rai_by_time works", {
   imgs2 <- read_image_data(test_dir_2)
   imgs_bd <- read_image_data(test_bd_img_csv)
 
-  expect_snapshot(rai_by_time(imgs1))
-  expect_snapshot(rai_by_time(imgs2))
-  expect_snapshot(rai_by_time(imgs_bd))
+  expect_snapshot(rm_id_cols(rai_by_time(imgs1)))
+  expect_snapshot(rm_id_cols(rai_by_time(imgs2)))
+  expect_snapshot(rm_id_cols(rai_by_time(imgs_bd)))
 
-  expect_snapshot(rai_by_time(
+  expect_snapshot(rm_id_cols(rai_by_time(
     imgs1,
     sample_start_date = "2022-12-16",
     sample_end_date = "2023-02-05"
-  ))
-  expect_snapshot(rai_by_time(
+  )))
+  expect_snapshot(rm_id_cols(rai_by_time(
     imgs2,
     deployment_label = "19_1_20230605",
     species = "Roosevelt Elk",
     sample_start_date = "2022-12-16",
     sample_end_date = "2023-02-05"
-  ))
-  expect_snapshot(rai_by_time(
+  )))
+  expect_snapshot(rm_id_cols(rai_by_time(
     imgs1,
     by_species = FALSE
-  ))
-  expect_snapshot(rai_by_time(
+  )))
+  expect_snapshot(rm_id_cols(rai_by_time(
     imgs_bd,
     by_deployment = TRUE,
     sample_start_date = "2021-12-16",
     sample_end_date = "2022-05-05"
-  ))
+  )))
 })

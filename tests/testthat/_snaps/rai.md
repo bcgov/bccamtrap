@@ -137,3 +137,151 @@
       1 19_1_20230605    2022-12-16        2023-02-05             52 Roosevelt Elk
       # i 2 more variables: total_count <dbl>, rai <dbl>
 
+# rai_by_time works
+
+    Code
+      rm_id_cols(rai_by_time(imgs1))
+    Output
+      # A tibble: 1,197 x 7
+         species      date       max_snow_index mean_temperature total_count trap_days
+         <chr>        <date>              <dbl>            <dbl>       <dbl>     <int>
+       1 Avian (comm~ 2022-11-28              1             3              0         1
+       2 Avian (comm~ 2022-11-29              1            -3.67           0         3
+       3 Avian (comm~ 2022-11-30              2            -3.5            0         2
+       4 Avian (comm~ 2022-12-01              2            -4.33           0         3
+       5 Avian (comm~ 2022-12-02              2            -6              0         1
+       6 Avian (comm~ 2022-12-03              3            -1.33           0         3
+       7 Avian (comm~ 2022-12-04              2            -4              0         3
+       8 Avian (comm~ 2022-12-05              2            -5.33           0         3
+       9 Avian (comm~ 2022-12-06              2            -1.33           0         3
+      10 Avian (comm~ 2022-12-07              2            -1.67           0         3
+      # i 1,187 more rows
+      # i 1 more variable: rai <dbl>
+
+---
+
+    Code
+      rm_id_cols(rai_by_time(imgs2))
+    Output
+      # A tibble: 1,960 x 7
+         species      date       max_snow_index mean_temperature total_count trap_days
+         <chr>        <date>              <dbl>            <dbl>       <dbl>     <int>
+       1 Avian (comm~ 2022-11-07              2             6              0         1
+       2 Avian (comm~ 2022-11-08              2            -1.75           0         4
+       3 Avian (comm~ 2022-11-09              2            -3.25           0         4
+       4 Avian (comm~ 2022-11-10              2             1.2            0         5
+       5 Avian (comm~ 2022-11-11              2             1              0         7
+       6 Avian (comm~ 2022-11-12              2             1.57           0         7
+       7 Avian (comm~ 2022-11-13              2             2.57           0         7
+       8 Avian (comm~ 2022-11-14              2             1.71           0         7
+       9 Avian (comm~ 2022-11-15              2             0.5            0         8
+      10 Avian (comm~ 2022-11-16              2            -1              0        10
+      # i 1,950 more rows
+      # i 1 more variable: rai <dbl>
+
+---
+
+    Code
+      rm_id_cols(rai_by_time(imgs_bd))
+    Output
+      # A tibble: 1,872 x 7
+         species    date       max_snow_index mean_temperature total_count trap_days
+         <chr>      <date>              <dbl>            <dbl>       <dbl>     <int>
+       1 Black Bear 2020-10-02              0               15           0         1
+       2 Black Bear 2020-10-03              0               12           0         1
+       3 Black Bear 2020-10-04              0               11           0         1
+       4 Black Bear 2020-10-05              0               12           0         1
+       5 Black Bear 2020-10-06              0               12           0         1
+       6 Black Bear 2020-10-07              0               12           0         1
+       7 Black Bear 2020-10-08              0               11           0         1
+       8 Black Bear 2020-10-09              0               11           0         1
+       9 Black Bear 2020-10-10              0                7           0         1
+      10 Black Bear 2020-10-11              0                6           0         1
+      # i 1,862 more rows
+      # i 1 more variable: rai <dbl>
+
+---
+
+    Code
+      rm_id_cols(rai_by_time(imgs1, sample_start_date = "2022-12-16",
+        sample_end_date = "2023-02-05"))
+    Output
+      # A tibble: 104 x 7
+         species   date       max_snow_index mean_temperature total_count trap_days
+         <chr>     <date>              <dbl>            <dbl>       <dbl>     <int>
+       1 Mule Deer 2022-12-16              3           -2               1         7
+       2 Mule Deer 2022-12-17              3           -2.18            0        11
+       3 Mule Deer 2022-12-18              3           -3.91            0        11
+       4 Mule Deer 2022-12-19              3           -7.73            2        11
+       5 Mule Deer 2022-12-20              3           -7.6             0         5
+       6 Mule Deer 2022-12-21              3           -8.25            0         4
+       7 Mule Deer 2022-12-22              3          -11.5             0         4
+       8 Mule Deer 2022-12-23              3           -6.38            0         8
+       9 Mule Deer 2022-12-24              3           -1.7             2        10
+      10 Mule Deer 2022-12-25              3           -0.818           0        11
+      # i 94 more rows
+      # i 1 more variable: rai <dbl>
+
+---
+
+    Code
+      rm_id_cols(rai_by_time(imgs2, deployment_label = "19_1_20230605", species = "Roosevelt Elk",
+        sample_start_date = "2022-12-16", sample_end_date = "2023-02-05"))
+    Output
+      # A tibble: 52 x 7
+         species      date       max_snow_index mean_temperature total_count trap_days
+         <chr>        <date>              <dbl>            <dbl>       <dbl>     <int>
+       1 Roosevelt E~ 2022-12-16              4               -1           0         1
+       2 Roosevelt E~ 2022-12-17              4               -1           0         1
+       3 Roosevelt E~ 2022-12-18              4               -1           0         1
+       4 Roosevelt E~ 2022-12-19              4               -5           0         1
+       5 Roosevelt E~ 2022-12-20              4               -4           0         1
+       6 Roosevelt E~ 2022-12-21              4               -6           0         1
+       7 Roosevelt E~ 2022-12-22              4               -6           0         1
+       8 Roosevelt E~ 2022-12-23              5               -5           0         1
+       9 Roosevelt E~ 2022-12-24              5               -1           0         1
+      10 Roosevelt E~ 2022-12-25              5                0           1         1
+      # i 42 more rows
+      # i 1 more variable: rai <dbl>
+
+---
+
+    Code
+      rm_id_cols(rai_by_time(imgs1, by_species = FALSE))
+    Output
+      # A tibble: 171 x 6
+         date       max_snow_index mean_temperature total_count trap_days   rai
+         <date>              <dbl>            <dbl>       <dbl>     <int> <dbl>
+       1 2022-11-28              1             3              1         1 1    
+       2 2022-11-29              1            -3.67           1         3 0.333
+       3 2022-11-30              2            -3.5            0         2 0    
+       4 2022-12-01              2            -4.33           5         3 1.67 
+       5 2022-12-02              2            -6              0         1 0    
+       6 2022-12-03              3            -1.33           1         3 0.333
+       7 2022-12-04              2            -4              0         3 0    
+       8 2022-12-05              2            -5.33           4         3 1.33 
+       9 2022-12-06              2            -1.33           0         3 0    
+      10 2022-12-07              2            -1.67           0         3 0    
+      # i 161 more rows
+
+---
+
+    Code
+      rm_id_cols(rai_by_time(imgs_bd, by_deployment = TRUE, sample_start_date = "2021-12-16",
+        sample_end_date = "2022-05-05"))
+    Output
+      # A tibble: 141 x 6
+         deployment_label        date       snow_index temperature species total_count
+         <chr>                   <date>          <dbl>       <dbl> <chr>         <dbl>
+       1 COU_AlberniInlet_1_202~ 2021-12-16          0          -1 Mule D~           0
+       2 COU_AlberniInlet_1_202~ 2021-12-17          0          -2 Mule D~           0
+       3 COU_AlberniInlet_1_202~ 2021-12-18          0          -1 Mule D~           0
+       4 COU_AlberniInlet_1_202~ 2021-12-19          0          -1 Mule D~           0
+       5 COU_AlberniInlet_1_202~ 2021-12-20          0          -4 Mule D~           0
+       6 COU_AlberniInlet_1_202~ 2021-12-21          0          -3 Mule D~           0
+       7 COU_AlberniInlet_1_202~ 2021-12-22          0           2 Mule D~           0
+       8 COU_AlberniInlet_1_202~ 2021-12-23          0          -1 Mule D~           0
+       9 COU_AlberniInlet_1_202~ 2021-12-24          0          -2 Mule D~           0
+      10 COU_AlberniInlet_1_202~ 2021-12-25          0          -4 Mule D~           0
+      # i 131 more rows
+

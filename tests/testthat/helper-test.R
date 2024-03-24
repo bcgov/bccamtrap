@@ -10,3 +10,10 @@ hide_names <- function(x) {
   }
   x
 }
+
+rm_id_cols <- function(x) {
+  dplyr::select(
+    x,
+  -dplyr::any_of(c("study_area_name", "sample_station_label"))
+  )
+}
