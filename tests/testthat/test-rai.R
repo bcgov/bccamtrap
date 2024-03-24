@@ -54,4 +54,18 @@ test_that("rai_by_time works", {
     sample_start_date = "2021-12-16",
     sample_end_date = "2022-05-05"
   )))
+  expect_snapshot(rm_id_cols(rai_by_time(
+    imgs2,
+    "week",
+    species = "Roosevelt Elk",
+    by_deployment = FALSE,
+    roll = TRUE
+  )))
+  expect_snapshot(rm_id_cols(rai_by_time(
+    imgs_bd,
+    "year",
+    by_species = TRUE,
+    by_deployment = TRUE,
+    roll = TRUE
+  )))
 })

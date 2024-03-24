@@ -94,13 +94,14 @@ rai_by_time <- function(image_data,
 
   dat <- filter_if_not_null(image_data, species)
 
-  dat <- add_groups(dat, by_deployment = FALSE, by_species)
-
   dat$date <- as.Date(dat$date_time)
 
+  # Always do stats by deployment first because need to join with
+  # effort, then collapse later if by_deployment = FALSE
   dat <- dplyr::group_by(
     dat,
     .data$deployment_label,
+    .data$species,
     .data$date,
     .add = TRUE
   )
@@ -234,10 +235,7 @@ add_groups <- function(x, by_deployment, by_species) {
 }
 
 complete_daily_counts <- function(x) {
-  if ("species" %in% names(x)) {
-    # This mostly duplicated complete() is annoying but I couldn't figure out
-    # how to conditionally include .data$species in ... if the column exists...
-    out <- tidyr::complete(
+    tidyr::complete(
       x,
       tidyr::nesting(
         # .data pronoun doesn't work inside nesting, so need this
@@ -251,25 +249,7 @@ complete_daily_counts <- function(x) {
       ),
       .data$species,
       fill = list(total_count = 0)
-    ) %>%
-      dplyr::filter(!is.na(.data$species))
-  } else {
-    out <- tidyr::complete(
-      x,
-      tidyr::nesting(
-
-        !!rlang::sym("study_area_name"),
-        !!rlang::sym("sample_station_label"),
-        !!rlang::sym("deployment_label"),
-        !!rlang::sym("date"),
-        !!rlang::sym("snow_index"),
-        !!rlang::sym("temperature")
-      ),
-      fill = list(total_count = 0)
     )
-  }
-
-  out
 }
 
 
