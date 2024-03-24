@@ -17,13 +17,14 @@ sample_rai(
 \arguments{
 \item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
 
-\item{deployment_label}{One or more deployment labels to select}
+\item{deployment_label}{Optionally, one or more deployment labels to select.
+Default \code{NULL} to use all deployments.}
 
-\item{species}{One or more species as a character vector. Default \code{NULL} to
-calculate RAI for each species detected.}
+\item{species}{Optionally, or more species as a character vector. Default
+\code{NULL} to calculate RAI for each species detected.}
 
-\item{by_deployment}{Should an RAI be calculated for each deployment
-label (\code{TRUE}, default), or one RAI for all deployment labels (\code{FALSE})}
+\item{by_deployment}{Should an RAI be calculated for each deployment label
+(\code{TRUE}, default), or one RAI for all deployment labels (\code{FALSE})}
 
 \item{by_species}{Should an RAI be calculated for each species (\code{TRUE},
 default), or one RAI for all species (\code{FALSE})}

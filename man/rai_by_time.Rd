@@ -29,12 +29,13 @@ rai_by_time(
 \item{by_species}{Should an RAI be calculated for each species (\code{TRUE},
 default), or one RAI for all species (\code{FALSE})}
 
-\item{species}{One or more species as a character vector. Default \code{NULL} to
-calculate RAI for each species detected.}
+\item{species}{Optionally, or more species as a character vector. Default
+\code{NULL} to calculate RAI for each species detected.}
 
 \item{by_deployment}{Should it be calculated by \code{deployment}. Default \code{FALSE}}
 
-\item{deployment_label}{One or more deployment labels to select}
+\item{deployment_label}{Optionally, one or more deployment labels to select.
+Default \code{NULL} to use all deployments.}
 
 \item{sample_start_date}{a custom start date. Note that this will apply the
 same start date to all deployments/sessions in the data.}
