@@ -164,7 +164,7 @@ rai_by_time <- function(image_data,
         roll_rai = .data$roll_count / .data$roll_trap_days
       )
   }
-  dat
+  dplyr::ungroup(dat)
 }
 
 filter_if_not_null <- function(data, var, env = rlang::current_env()) {
@@ -248,7 +248,8 @@ complete_daily_counts <- function(x) {
       ),
       !!rlang::sym("species"),
       fill = list(total_count = 0)
-    )
+    ) %>%
+    dplyr::ungroup()
 }
 
 
