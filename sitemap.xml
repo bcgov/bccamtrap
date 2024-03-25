@@ -34,7 +34,7 @@
     <loc>https://bcgov.github.io/bccamtrap/reference/make_deployments.html</loc>
   </url>
   <url>
-    <loc>https://bcgov.github.io/bccamtrap/reference/make_sessions.html</loc>
+    <loc>https://bcgov.github.io/bccamtrap/reference/make_sample_sessions.html</loc>
   </url>
   <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/map_stations.html</loc>
@@ -64,6 +64,9 @@
     <loc>https://bcgov.github.io/bccamtrap/reference/qa_stations_spatial.html</loc>
   </url>
   <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/rai_by_time.html</loc>
+  </url>
+  <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/read_cam_setup_checks.html</loc>
   </url>
   <url>
@@ -83,6 +86,9 @@
   </url>
   <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/read_sample_station_info.html</loc>
+  </url>
+  <url>
+    <loc>https://bcgov.github.io/bccamtrap/reference/sample_rai.html</loc>
   </url>
   <url>
     <loc>https://bcgov.github.io/bccamtrap/reference/to_sf.html</loc>

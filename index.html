@@ -290,7 +290,7 @@
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">image_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_image_data.html">read_image_data</a></span><span class="op">(</span><span class="va">data_path</span><span class="op">)</span></span>
 <span><span class="va">image_data</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11,833 × 42</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11,833 × 43</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt;    root_folder study_area_name sample_station_label deployment_label</span></span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt;  1 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
@@ -304,7 +304,7 @@
 <span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt;  9 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
 <span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co">#&gt; 10 100RECNX    Test Project    19_1                 19_1_20230605   </span></span>
 <span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 11,823 more rows</span></span>
-<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 38 more variables: date_time &lt;dttm&gt;, episode &lt;chr&gt;, species &lt;chr&gt;,</span></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 39 more variables: date_time &lt;dttm&gt;, episode &lt;chr&gt;, species &lt;chr&gt;,</span></span>
 <span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co">#&gt; #   total_count_episode &lt;dbl&gt;, obj_count_image &lt;int&gt;, adult_male &lt;int&gt;,</span></span>
 <span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="co">#&gt; #   adult_female &lt;int&gt;, adult_unclassified_sex &lt;int&gt;, yearling_male &lt;int&gt;,</span></span>
 <span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt; #   yearling_female &lt;int&gt;, yearling_unclassified_sex &lt;int&gt;,</span></span>
@@ -348,12 +348,12 @@
 <span><span class="co">#&gt; ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"</span></span>
 <span><span class="co">#&gt; ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"</span></span>
 <span><span class="va">images_with_metadata</span></span>
-<span><span class="co">#&gt; Simple feature collection with 11833 features and 101 fields (with 1208 geometries empty)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 11833 features and 102 fields (with 1208 geometries empty)</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -130.3966 ymin: 52.92237 xmax: -129.569 ymax: 52.96732</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; # A tibble: 11,833 × 96</span></span>
+<span><span class="co">#&gt; # A tibble: 11,833 × 97</span></span>
 <span><span class="co">#&gt;    root_folder deployment_label date_time           episode species</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;            &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;  </span></span>
 <span><span class="co">#&gt;  1 100RECNX    19_1_20230605    2022-11-10 15:15:53 1:1|5   &lt;NA&gt;   </span></span>
@@ -367,7 +367,7 @@
 <span><span class="co">#&gt;  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   &lt;NA&gt;   </span></span>
 <span><span class="co">#&gt; 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   &lt;NA&gt;   </span></span>
 <span><span class="co">#&gt; # ℹ 11,823 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 91 more variables: total_count_episode &lt;dbl&gt;, obj_count_image &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 92 more variables: total_count_episode &lt;dbl&gt;, obj_count_image &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   adult_male &lt;int&gt;, adult_female &lt;int&gt;, adult_unclassified_sex &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   yearling_male &lt;int&gt;, yearling_female &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   yearling_unclassified_sex &lt;int&gt;, young_of_year_unclassified_sex &lt;int&gt;,</span></span>
@@ -397,7 +397,7 @@
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">image_data_qa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qa_image_data.html">qa_image_data</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 24 53</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 24 55</span></span></code></pre></div>
 <p>We can see that this has identified 24 records with potential problems. This dataset has a number of fields starting with <code>QA_</code> which help us know which images we should have a closer look at. All of the original fields, plus any <code>QA_</code> fields that have at least one <code>TRUE</code> value are returned:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
@@ -416,21 +416,22 @@
 <span><span class="co">#&gt; [25] "behaviour_1"                     "behaviour_2"                    </span></span>
 <span><span class="co">#&gt; [27] "behaviour_3"                     "human_use_type"                 </span></span>
 <span><span class="co">#&gt; [29] "human_transport_mode"            "temperature"                    </span></span>
-<span><span class="co">#&gt; [31] "snow_depth"                      "snow_is_est"                    </span></span>
-<span><span class="co">#&gt; [33] "snow_depth_lower"                "snow_depth_upper"               </span></span>
-<span><span class="co">#&gt; [35] "lens_obscured"                   "starred"                        </span></span>
-<span><span class="co">#&gt; [37] "needs_review"                    "comment"                        </span></span>
-<span><span class="co">#&gt; [39] "surveyor"                        "trigger_mode"                   </span></span>
-<span><span class="co">#&gt; [41] "file"                            "relative_path"                  </span></span>
-<span><span class="co">#&gt; [43] "delete_flag"                     "QA_BLANK_study_area_name"       </span></span>
-<span><span class="co">#&gt; [45] "QA_BLANK_sample_station_label"   "QA_BLANK_deployment_label"      </span></span>
-<span><span class="co">#&gt; [47] "QA_BLANK_date_time"              "QA_BLANK_surveyor"              </span></span>
-<span><span class="co">#&gt; [49] "QA_BLANK_trigger_mode"           "QA_BLANK_temperature"           </span></span>
-<span><span class="co">#&gt; [51] "QA_BLANK_episode"                "QA_timelapse_lag"               </span></span>
-<span><span class="co">#&gt; [53] "QA_snow_outlier"</span></span></code></pre></div>
+<span><span class="co">#&gt; [31] "snow_depth"                      "snow_index"                     </span></span>
+<span><span class="co">#&gt; [33] "snow_is_est"                     "snow_depth_lower"               </span></span>
+<span><span class="co">#&gt; [35] "snow_depth_upper"                "lens_obscured"                  </span></span>
+<span><span class="co">#&gt; [37] "starred"                         "needs_review"                   </span></span>
+<span><span class="co">#&gt; [39] "comment"                         "surveyor"                       </span></span>
+<span><span class="co">#&gt; [41] "trigger_mode"                    "file"                           </span></span>
+<span><span class="co">#&gt; [43] "relative_path"                   "delete_flag"                    </span></span>
+<span><span class="co">#&gt; [45] "QA_BLANK_study_area_name"        "QA_BLANK_sample_station_label"  </span></span>
+<span><span class="co">#&gt; [47] "QA_BLANK_deployment_label"       "QA_BLANK_date_time"             </span></span>
+<span><span class="co">#&gt; [49] "QA_BLANK_surveyor"               "QA_BLANK_trigger_mode"          </span></span>
+<span><span class="co">#&gt; [51] "QA_BLANK_temperature"            "QA_BLANK_episode"               </span></span>
+<span><span class="co">#&gt; [53] "QA_timelapse_lag"                "QA_wrong_tl_time"               </span></span>
+<span><span class="co">#&gt; [55] "QA_snow_outlier"</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">select</span><span class="op">(</span><span class="va">image_data_qa</span>, <span class="va">root_folder</span>, <span class="va">file</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">"QA_"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 24 × 12</span></span>
+<span><span class="co">#&gt; # A tibble: 24 × 13</span></span>
 <span><span class="co">#&gt;    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;        &lt;lgl&gt;                    &lt;lgl&gt;                    </span></span>
 <span><span class="co">#&gt;  1 27_20230605   RCNX0030.JPG FALSE                    FALSE                    </span></span>
@@ -445,16 +446,64 @@
 <span><span class="co">#&gt; 10 102RECNX      RCNX0041.JPG FALSE                    FALSE                    </span></span>
 <span><span class="co">#&gt; # ℹ 14 more rows</span></span>
 <span><span class="co">#&gt; # ℹ abbreviated name: ¹​QA_BLANK_sample_station_label</span></span>
-<span><span class="co">#&gt; # ℹ 8 more variables: QA_BLANK_deployment_label &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 9 more variables: QA_BLANK_deployment_label &lt;lgl&gt;,</span></span>
 <span><span class="co">#&gt; #   QA_BLANK_date_time &lt;lgl&gt;, QA_BLANK_surveyor &lt;lgl&gt;,</span></span>
 <span><span class="co">#&gt; #   QA_BLANK_trigger_mode &lt;lgl&gt;, QA_BLANK_temperature &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   QA_BLANK_episode &lt;lgl&gt;, QA_timelapse_lag &lt;lgl&gt;, QA_snow_outlier &lt;lgl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; #   QA_BLANK_episode &lt;lgl&gt;, QA_timelapse_lag &lt;lgl&gt;, QA_wrong_tl_time &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   QA_snow_outlier &lt;lgl&gt;</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="built-in-plotting-functions">Built-in plotting functions<a class="anchor" aria-label="anchor" href="#built-in-plotting-functions"></a>
+</h3>
+<p>There are several plotting functions available to help you visualize your data and spot any potential problems. By default, all plots render as static images, but can be created as interactive plots by setting <code>interactive = TRUE</code>. Interactive plots are not shown here as they don’t render in the <code>README</code>.</p>
+<div class="section level4">
+<h4 id="deployment-plot">Deployment plot<a class="anchor" aria-label="anchor" href="#deployment-plot"></a>
+</h4>
+<p>We can plot deployments to see that the start and ends of our deployments are as expected, and flag any “invalid” deployments (i.e., where we don’t know the end time because a camera was stolen, bumped, ran out of batteries etc.). You can make static or interactive plots:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployments.html">plot_deployments</a></span><span class="op">(</span><span class="va">deployments</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-plot-deployments-1.png" width="100%"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="snow-depth-plot">Snow depth plot<a class="anchor" aria-label="anchor" href="#snow-depth-plot"></a>
+</h4>
+<p>We can plot the recorded snow depths across deployments using the <code><a href="reference/plot_snow.html">plot_snow()</a></code> function with our image data:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_snow.html">plot_snow</a></span><span class="op">(</span><span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 109 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_interactive_point()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-plot-snow-1.png" width="100%"></p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="detection-plot">Detection plot<a class="anchor" aria-label="anchor" href="#detection-plot"></a>
+</h4>
+<p>We can also plot image timestamps over the deployment durations to alert us to potential time mismatches between the session data and image time labels. Mismatches could indicate wrong time settings on cameras, errors in deployment labels (as the below indicates), or any number of data entry errors.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployment_detections.html">plot_deployment_detections</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-plot-detections-1.png" width="100%"></p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot_deployment_detections(deployments, image_data, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="daily-detection-patterns">Daily detection patterns<a class="anchor" aria-label="anchor" href="#daily-detection-patterns"></a>
+</h4>
+<p>We can plot the patterns of daily detections by species:</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_diel_activity.html">plot_diel_activity</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-plot-diel-1.png" width="100%"></p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot_diel_activity(image_data, interactive = TRUE)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="sampling-sessions">Sampling sessions<a class="anchor" aria-label="anchor" href="#sampling-sessions"></a>
 </h3>
-<p>Define sampling sessions based on deployment metadata and image data using the <code><a href="reference/make_sessions.html">make_sessions()</a></code> function. This function will:</p>
+<p>Define sampling sessions based on image data using the <code><a href="reference/make_sample_sessions.html">make_sample_sessions()</a></code> function. This function will:</p>
 <ul>
 <li>Set sampling_start as deployment_start</li>
 <li>Notes dates of first and last photos of deployment</li>
@@ -463,74 +512,339 @@
 <li>Determines gaps in sampling period due to obscured lens</li>
 <li>Determines total length of sample period (last photo date - first photo date - number of days with lens obscured)</li>
 </ul>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/make_sessions.html">make_sessions</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co">#&gt; ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"</span></span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#&gt; ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"</span></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 11</span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt;    deployment_label sample_start_date deployment_end_date min_tl_date</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;            &lt;date&gt;            &lt;date&gt;              &lt;date&gt;     </span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt;  1 19_1_20230605    2022-11-10        2023-06-05          2022-11-10 </span></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="co">#&gt;  2 19_2_20230605    2022-11-15        2023-06-05          2022-11-15 </span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="co">#&gt;  3 20_20230605      2022-11-10        2023-06-05          2022-11-10 </span></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="co">#&gt;  4 21_2_20230605    2022-11-18        2023-06-05          2022-11-18 </span></span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a><span class="co">#&gt;  5 24_20230708      2022-11-18        2023-07-08          2022-11-18 </span></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="co">#&gt;  6 25_20230710      2022-11-18        2023-07-10          2022-11-18 </span></span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="co">#&gt;  7 26_20230710      2022-11-07        2023-07-10          2022-11-07 </span></span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="co">#&gt;  8 27_20230605      2022-11-07        2023-06-05          2022-11-07 </span></span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a><span class="co">#&gt;  9 28_20230605      2022-11-15        2023-06-05          2022-11-15 </span></span>
-<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a><span class="co">#&gt; 10 29_1_20230605    2022-11-07        2023-06-05          2022-11-07 </span></span>
-<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a><span class="co">#&gt; 11 29_2_20230605    2022-11-07        2023-06-05          2022-11-10 </span></span>
-<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a><span class="co">#&gt; 12 29_3_20230605    2022-11-18        2023-06-05          2022-11-18 </span></span>
-<span id="cb28-18"><a href="#cb28-18" tabindex="-1"></a><span class="co">#&gt; 13 31_20230605      2022-11-15        2023-06-05          2023-01-25 </span></span>
-<span id="cb28-19"><a href="#cb28-19" tabindex="-1"></a><span class="co">#&gt; 14 35_20230708      2022-11-18        2023-07-08          2022-11-18 </span></span>
-<span id="cb28-20"><a href="#cb28-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 7 more variables: max_tl_date &lt;date&gt;, sample_truncated &lt;lgl&gt;,</span></span>
-<span id="cb28-21"><a href="#cb28-21" tabindex="-1"></a><span class="co">#&gt; #   n_photos &lt;int&gt;, n_motion_photos &lt;int&gt;, sample_gaps &lt;lgl&gt;,</span></span>
-<span id="cb28-22"><a href="#cb28-22" tabindex="-1"></a><span class="co">#&gt; #   sample_gap_length &lt;int&gt;, sample_period_length &lt;drtn&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/make_sample_sessions.html">make_sample_sessions</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 17 × 13</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="co">#&gt;    deployment_label sample_start_date sample_end_date n_photos n_photos_spp_id</span></span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;            &lt;date&gt;            &lt;date&gt;             &lt;int&gt;           &lt;int&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="co">#&gt;  1 19_1_20230605    2022-11-10        2023-06-05           285              11</span></span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="co">#&gt;  2 19_2_20230605    2022-11-15        2023-06-05           411              26</span></span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co">#&gt;  3 20_20230605      2022-11-10        2023-06-05          1857             101</span></span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="co">#&gt;  4 21_1_20230605    2022-11-10        2023-06-05           959              78</span></span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="co">#&gt;  5 21_2_20230605    2022-11-18        2023-06-05           569              23</span></span>
+<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a><span class="co">#&gt;  6 24_20230708      2022-11-18        2023-07-08           521              18</span></span>
+<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a><span class="co">#&gt;  7 25_20230710      2022-11-18        2023-07-10          3554              24</span></span>
+<span id="cb36-11"><a href="#cb36-11" tabindex="-1"></a><span class="co">#&gt;  8 26_20230710      2022-11-07        2023-07-10           621              50</span></span>
+<span id="cb36-12"><a href="#cb36-12" tabindex="-1"></a><span class="co">#&gt;  9 27_20230605      2022-11-07        2023-06-05           259               7</span></span>
+<span id="cb36-13"><a href="#cb36-13" tabindex="-1"></a><span class="co">#&gt; 10 28_20230605      2022-11-15        2023-06-05           566              14</span></span>
+<span id="cb36-14"><a href="#cb36-14" tabindex="-1"></a><span class="co">#&gt; 11 29_1_20230605    2022-11-07        2023-06-05           390              10</span></span>
+<span id="cb36-15"><a href="#cb36-15" tabindex="-1"></a><span class="co">#&gt; 12 2022-11-10       2022-11-07        2022-11-10            52               5</span></span>
+<span id="cb36-16"><a href="#cb36-16" tabindex="-1"></a><span class="co">#&gt; 13 29_2_20230605    2022-11-10        2023-06-05           530              34</span></span>
+<span id="cb36-17"><a href="#cb36-17" tabindex="-1"></a><span class="co">#&gt; 14 29_3_20230605    2022-11-18        2023-06-05           419              15</span></span>
+<span id="cb36-18"><a href="#cb36-18" tabindex="-1"></a><span class="co">#&gt; 15 2023-01-10       2022-11-15        2023-01-10           197               8</span></span>
+<span id="cb36-19"><a href="#cb36-19" tabindex="-1"></a><span class="co">#&gt; 16 31_20230605      2023-01-25        2023-06-05           382              15</span></span>
+<span id="cb36-20"><a href="#cb36-20" tabindex="-1"></a><span class="co">#&gt; 17 35_20230708      2022-11-18        2023-07-08           261               3</span></span>
+<span id="cb36-21"><a href="#cb36-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 8 more variables: n_species &lt;int&gt;, n_individuals &lt;dbl&gt;,</span></span>
+<span id="cb36-22"><a href="#cb36-22" tabindex="-1"></a><span class="co">#&gt; #   n_motion_photos &lt;int&gt;, n_motion_photos_lens_obscured &lt;int&gt;,</span></span>
+<span id="cb36-23"><a href="#cb36-23" tabindex="-1"></a><span class="co">#&gt; #   n_tl_photos &lt;int&gt;, n_tl_photos_lens_obscured &lt;int&gt;, sample_gaps &lt;lgl&gt;,</span></span>
+<span id="cb36-24"><a href="#cb36-24" tabindex="-1"></a><span class="co">#&gt; #   trap_days &lt;int&gt;</span></span></code></pre></div>
+<p>You can set custom start and end dates for your sample session as well:</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/make_sample_sessions.html">make_sample_sessions</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  sample_start_date <span class="op">=</span> <span class="st">"2022-12-01"</span>, </span>
+<span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 16 × 13</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="co">#&gt;    deployment_label sample_start_date sample_end_date n_photos n_photos_spp_id</span></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;            &lt;date&gt;            &lt;date&gt;             &lt;int&gt;           &lt;int&gt;</span></span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="co">#&gt;  1 19_1_20230605    2022-12-01        2023-04-30           191               6</span></span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="co">#&gt;  2 19_2_20230605    2022-12-01        2023-04-30           290              16</span></span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="co">#&gt;  3 20_20230605      2022-12-01        2023-04-30           662              31</span></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="co">#&gt;  4 21_1_20230605    2022-12-01        2023-04-30           684              62</span></span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a><span class="co">#&gt;  5 21_2_20230605    2022-12-01        2023-04-30           450              15</span></span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a><span class="co">#&gt;  6 24_20230708      2022-12-01        2023-04-30           166               3</span></span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a><span class="co">#&gt;  7 25_20230710      2022-12-01        2023-04-30           165               0</span></span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a><span class="co">#&gt;  8 26_20230710      2022-12-01        2023-04-30           163               1</span></span>
+<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a><span class="co">#&gt;  9 27_20230605      2022-12-01        2023-04-30           152               1</span></span>
+<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a><span class="co">#&gt; 10 28_20230605      2022-12-01        2023-04-30           162               3</span></span>
+<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a><span class="co">#&gt; 11 29_1_20230605    2022-12-01        2023-04-30           241               5</span></span>
+<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a><span class="co">#&gt; 12 29_2_20230605    2022-12-01        2023-04-30           415              18</span></span>
+<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a><span class="co">#&gt; 13 29_3_20230605    2022-12-01        2023-04-30           226               5</span></span>
+<span id="cb38-17"><a href="#cb38-17" tabindex="-1"></a><span class="co">#&gt; 14 2023-01-10       2022-12-01        2023-01-10            95               4</span></span>
+<span id="cb38-18"><a href="#cb38-18" tabindex="-1"></a><span class="co">#&gt; 15 31_20230605      2023-01-25        2023-04-30           311               8</span></span>
+<span id="cb38-19"><a href="#cb38-19" tabindex="-1"></a><span class="co">#&gt; 16 35_20230708      2022-12-01        2023-04-30           152               0</span></span>
+<span id="cb38-20"><a href="#cb38-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 8 more variables: n_species &lt;int&gt;, n_individuals &lt;dbl&gt;,</span></span>
+<span id="cb38-21"><a href="#cb38-21" tabindex="-1"></a><span class="co">#&gt; #   n_motion_photos &lt;int&gt;, n_motion_photos_lens_obscured &lt;int&gt;,</span></span>
+<span id="cb38-22"><a href="#cb38-22" tabindex="-1"></a><span class="co">#&gt; #   n_tl_photos &lt;int&gt;, n_tl_photos_lens_obscured &lt;int&gt;, sample_gaps &lt;lgl&gt;,</span></span>
+<span id="cb38-23"><a href="#cb38-23" tabindex="-1"></a><span class="co">#&gt; #   trap_days &lt;int&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="plots">Plots<a class="anchor" aria-label="anchor" href="#plots"></a>
+<h3 id="analysis-data">Analysis data<a class="anchor" aria-label="anchor" href="#analysis-data"></a>
 </h3>
-<p>There are several plotting functions available to help you visualize your data and spot any potential problems. By default, all plots render as static images, but can be created as interactive plots by setting <code>interactive = TRUE</code>. Interactive plots are not shown here as they don’t render in the <code>README</code>.</p>
 <div class="section level4">
-<h4 id="deployment-plot">Deployment plot<a class="anchor" aria-label="anchor" href="#deployment-plot"></a>
+<h4 id="relative-activity-index-rai">Relative Activity Index (RAI)<a class="anchor" aria-label="anchor" href="#relative-activity-index-rai"></a>
 </h4>
-<p>We can plot deployments to see that the start and ends of our deployments are as expected, and flag any “invalid” deployments (i.e., where we don’t know the end time because a camera was stolen, bumped, ran out of batteries etc.). You can make static or interactive plots:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployments.html">plot_deployments</a></span><span class="op">(</span><span class="va">deployments</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-plot-deployments-1.png" width="100%"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
+<p>Calculate Relative Activity Index for sample sessions using <code><a href="reference/sample_rai.html">sample_rai()</a></code>. By default, it calculates RAI per species using the sample start and end dates in the data for each deployment:</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 53 × 7</span></span>
+<span><span class="co">#&gt;    deployment_label sample_start_date sample_end_date trap_days species      </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;            &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;        </span></span>
+<span><span class="co">#&gt;  1 19_1_20230605    2022-11-10        2023-06-05            207 Black Bear   </span></span>
+<span><span class="co">#&gt;  2 19_1_20230605    2022-11-10        2023-06-05            207 Cougar       </span></span>
+<span><span class="co">#&gt;  3 19_1_20230605    2022-11-10        2023-06-05            207 Roosevelt Elk</span></span>
+<span><span class="co">#&gt;  4 19_2_20230605    2022-11-15        2023-06-05            201 Black Bear   </span></span>
+<span><span class="co">#&gt;  5 19_2_20230605    2022-11-15        2023-06-05            201 Mule Deer    </span></span>
+<span><span class="co">#&gt;  6 19_2_20230605    2022-11-15        2023-06-05            201 Roosevelt Elk</span></span>
+<span><span class="co">#&gt;  7 2022-11-10       2022-11-07        2022-11-10              3 Mule Deer    </span></span>
+<span><span class="co">#&gt;  8 2022-11-10       2022-11-07        2022-11-10              3 Roosevelt Elk</span></span>
+<span><span class="co">#&gt;  9 2023-01-10       2022-11-15        2023-01-10             56 Cougar       </span></span>
+<span><span class="co">#&gt; 10 2023-01-10       2022-11-15        2023-01-10             56 Roosevelt Elk</span></span>
+<span><span class="co">#&gt; # ℹ 43 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 2 more variables: total_count &lt;dbl&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
+<p>You can set it to do a subset of species and/or deployment labels, and similar to <code><a href="reference/make_sample_sessions.html">make_sample_sessions()</a></code>, set custom session start and end dates:</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  species <span class="op">=</span> <span class="st">"Roosevelt Elk"</span>, </span>
+<span>  deployment_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"19_2_20230605"</span>, <span class="st">"29_1_20230605"</span><span class="op">)</span>,</span>
+<span>  sample_start_date <span class="op">=</span> <span class="st">"2022-12-01"</span>, </span>
+<span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 7</span></span>
+<span><span class="co">#&gt;   deployment_label sample_start_date sample_end_date trap_days species      </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;            &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;        </span></span>
+<span><span class="co">#&gt; 1 19_2_20230605    2022-12-01        2023-04-30            151 Roosevelt Elk</span></span>
+<span><span class="co">#&gt; 2 29_1_20230605    2022-12-01        2023-04-30            148 Roosevelt Elk</span></span>
+<span><span class="co">#&gt; # ℹ 2 more variables: total_count &lt;dbl&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
+<p>You can also calculate RAI across all deployments by setting <code>by_deployment = FALSE</code>:</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  species <span class="op">=</span> <span class="st">"Roosevelt Elk"</span>, </span>
+<span>  by_deployment <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sample_start_date <span class="op">=</span> <span class="st">"2022-12-01"</span>, </span>
+<span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 6</span></span>
+<span><span class="co">#&gt;   sample_start_date sample_end_date trap_days species       total_count   rai</span></span>
+<span><span class="co">#&gt;   &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 2022-12-01        2023-04-30            151 Roosevelt Elk         146 0.967</span></span></code></pre></div>
+<p>We can compare total count and RAI across species:</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spp_comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  by_deployment <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  by_species <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sample_start_date <span class="op">=</span> <span class="st">"2022-12-01"</span>, </span>
+<span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">spp_comp</span></span>
+<span><span class="co">#&gt; # A tibble: 7 × 6</span></span>
+<span><span class="co">#&gt;   sample_start_date sample_end_date trap_days species        total_count     rai</span></span>
+<span><span class="co">#&gt;   &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;                &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 2022-12-01        2023-04-30            131 Avian (commen…           1 0.00763</span></span>
+<span><span class="co">#&gt; 2 2022-12-01        2023-04-30            151 Black Bear              28 0.185  </span></span>
+<span><span class="co">#&gt; 3 2022-12-01        2023-04-30            151 Cougar                   8 0.0530 </span></span>
+<span><span class="co">#&gt; 4 2022-12-01        2023-04-30            151 Mule Deer              105 0.695  </span></span>
+<span><span class="co">#&gt; 5 2022-12-01        2023-04-30            131 Other (commen…           1 0.00763</span></span>
+<span><span class="co">#&gt; 6 2022-12-01        2023-04-30            151 Pacific Marten           2 0.0132 </span></span>
+<span><span class="co">#&gt; 7 2022-12-01        2023-04-30            151 Roosevelt Elk          146 0.967</span></span></code></pre></div>
+<p>Using the <a href="https://ggplot2.tidyverse.org/" class="external-link">ggplot2</a> package, we can plot this:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">spp_comp</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rai</span>, y <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">total_count</span><span class="op">)</span>, nudge_x <span class="op">=</span> <span class="fl">0.05</span>, nudge_y <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"RAI of all species detected, across all deployments"</span>, </span>
+<span>       caption <span class="op">=</span> <span class="st">"Numbers beside points represent total number of individuals detected"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Relative Activity Index"</span>, y <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-sample-rai4-plot-1.png" width="100%"></p>
+<p>We can group by deployment to compare across deployments:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spp_comp_by_dep</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  by_deployment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  by_species <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sample_start_date <span class="op">=</span> <span class="st">"2022-12-01"</span>, </span>
+<span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">spp_comp_by_dep</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rai</span>, y <span class="op">=</span> <span class="va">species</span>, colour <span class="op">=</span> <span class="va">deployment_label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">total_count</span><span class="op">)</span>, nudge_x <span class="op">=</span> <span class="fl">0.01</span>, nudge_y <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"RAI of all species detected, across all deployments"</span>, </span>
+<span>       caption <span class="op">=</span> <span class="st">"Numbers beside points represent total number of individuals detected"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Relative Activity Index"</span>, y <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-sample-rai-5-1.png" width="100%"></p>
 </div>
 <div class="section level4">
-<h4 id="snow-depth-plot">Snow depth plot<a class="anchor" aria-label="anchor" href="#snow-depth-plot"></a>
+<h4 id="relative-activity-index-rai-over-time">Relative Activity Index (RAI) over time<a class="anchor" aria-label="anchor" href="#relative-activity-index-rai-over-time"></a>
 </h4>
-<p>We can plot the recorded snow depths across deployments using the <code><a href="reference/plot_snow.html">plot_snow()</a></code> function with our image data:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_snow.html">plot_snow</a></span><span class="op">(</span><span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-plot-snow-1.png" width="100%"></p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="detection-plot">Detection plot<a class="anchor" aria-label="anchor" href="#detection-plot"></a>
-</h4>
-<p>We can also plot image timestamps over the deployment durations to alert us to potential time mismatches between the session data and image time labels. Mismatches could indicate wrong time settings on cameras, errors in deployment labels (as the below indicates), or any number of data entry errors.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_deployment_detections.html">plot_deployment_detections</a></span><span class="op">(</span><span class="va">deployments</span>, <span class="va">image_data</span>, date_breaks <span class="op">=</span> <span class="st">"2 months"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-plot-detections-1.png" width="100%"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot_deployment_detections(deployments, image_data, interactive = TRUE, date_breaks = "2 months")</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="daily-detection-patterns">Daily detection patterns<a class="anchor" aria-label="anchor" href="#daily-detection-patterns"></a>
-</h4>
-<p>We can plot the patterns of daily detections by species:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_diel_activity.html">plot_diel_activity</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-plot-diel-1.png" width="100%"></p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot_diel_activity(image_data, interactive = TRUE)</span></span></code></pre></div>
+<p>Use <code><a href="reference/rai_by_time.html">rai_by_time()</a></code> to calculate RAI over a time window, optionally calculating statistics using a moving window aggregation. You can calculate daily statistics, or aggregate by week, month, or year. By default, it calculates daily metrics, aggregating across deployments.</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2,205 × 8</span></span>
+<span><span class="co">#&gt;    species          study_area_name date       max_snow_index mean_temperature</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;           &lt;date&gt;              &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Avian (comments) Test Project    2022-11-07              2             6   </span></span>
+<span><span class="co">#&gt;  2 Avian (comments) Test Project    2022-11-08              2            -1.75</span></span>
+<span><span class="co">#&gt;  3 Avian (comments) Test Project    2022-11-09              2            -3.25</span></span>
+<span><span class="co">#&gt;  4 Avian (comments) Test Project    2022-11-10              2             1.2 </span></span>
+<span><span class="co">#&gt;  5 Avian (comments) Test Project    2022-11-11              2             1   </span></span>
+<span><span class="co">#&gt;  6 Avian (comments) Test Project    2022-11-12              2             1.57</span></span>
+<span><span class="co">#&gt;  7 Avian (comments) Test Project    2022-11-13              2             2.57</span></span>
+<span><span class="co">#&gt;  8 Avian (comments) Test Project    2022-11-14              2             1.71</span></span>
+<span><span class="co">#&gt;  9 Avian (comments) Test Project    2022-11-15              2             0.5 </span></span>
+<span><span class="co">#&gt; 10 Avian (comments) Test Project    2022-11-16              2            -1   </span></span>
+<span><span class="co">#&gt; # ℹ 2,195 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: total_count &lt;dbl&gt;, trap_days &lt;int&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
+<p>We can select a single species, and calculate daily rolling values. The default window size is 7, but it can be changed with the <code>k</code> parameter.</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elk_roll_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  by <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>  species <span class="op">=</span> <span class="st">"Roosevelt Elk"</span>,</span>
+<span>  roll <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">elk_roll_avg</span></span>
+<span><span class="co">#&gt; # A tibble: 245 × 13</span></span>
+<span><span class="co">#&gt;    species       study_area_name date       max_snow_index mean_temperature</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;           &lt;date&gt;              &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Roosevelt Elk Test Project    2022-11-07              2             6   </span></span>
+<span><span class="co">#&gt;  2 Roosevelt Elk Test Project    2022-11-08              2            -1.75</span></span>
+<span><span class="co">#&gt;  3 Roosevelt Elk Test Project    2022-11-09              2            -3.25</span></span>
+<span><span class="co">#&gt;  4 Roosevelt Elk Test Project    2022-11-10              2             1.2 </span></span>
+<span><span class="co">#&gt;  5 Roosevelt Elk Test Project    2022-11-11              2             1   </span></span>
+<span><span class="co">#&gt;  6 Roosevelt Elk Test Project    2022-11-12              2             1.57</span></span>
+<span><span class="co">#&gt;  7 Roosevelt Elk Test Project    2022-11-13              2             2.57</span></span>
+<span><span class="co">#&gt;  8 Roosevelt Elk Test Project    2022-11-14              2             1.71</span></span>
+<span><span class="co">#&gt;  9 Roosevelt Elk Test Project    2022-11-15              2             0.5 </span></span>
+<span><span class="co">#&gt; 10 Roosevelt Elk Test Project    2022-11-16              2            -1   </span></span>
+<span><span class="co">#&gt; # ℹ 235 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 8 more variables: total_count &lt;dbl&gt;, trap_days &lt;int&gt;, rai &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   roll_mean_max_snow &lt;dbl&gt;, roll_mean_temp &lt;dbl&gt;, roll_trap_days &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   roll_count &lt;dbl&gt;, roll_rai &lt;dbl&gt;</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">roll_rai</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of Elk RAI"</span>, </span>
+<span>    x <span class="op">=</span> <span class="st">"Date"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"7 day rolling average RAI"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 6 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-rai-by-time2-1.png" width="100%"></p>
+<p>Since the data returned by <code>rai_by_time</code> also includes snow and temperature data, we can plot these, and then compare RAI to these environment variables:</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">roll_mean_max_snow</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of average maximum snow index across sites"</span>, </span>
+<span>    x <span class="op">=</span> <span class="st">"Date"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"7 day rolling average of maximum snow index"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 6 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-27-1.png" width="100%"></p>
+<p>We can change the way snow measurements are aggregated across sites when <code>by_deployment = FALSE</code>. By default it uses <code>max</code>, but we can set it to any aggregation function, like <code>mean</code>:</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elk_roll_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  by <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>  species <span class="op">=</span> <span class="st">"Roosevelt Elk"</span>,</span>
+<span>  roll <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  snow_agg <span class="op">=</span> <span class="va">mean</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">roll_mean_mean_snow</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of average mean snow index across sites"</span>, </span>
+<span>    x <span class="op">=</span> <span class="st">"Date"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"7 day rolling average of mean snow index"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 6 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-28-1.png" width="100%"></p>
+<p>And we can compare Elk activity to snow levels:</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">roll_mean_mean_snow</span>, y <span class="op">=</span> <span class="va">roll_rai</span>, colour <span class="op">=</span> <span class="va">mean_temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_c</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of Elk RAI compared to Snow Index"</span>, </span>
+<span>    x <span class="op">=</span> <span class="st">"7 day rolling average of mean Snow Index across sites"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"7 day rolling average RAI"</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"Temperature"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 6 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-29-1.png" width="100%"></p>
+<p>And temperature:</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">roll_mean_temp</span>, y <span class="op">=</span> <span class="va">roll_rai</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of Elk RAI compared to Temperature"</span>, </span>
+<span>    x <span class="op">=</span> <span class="st">"7 day rolling average of mean temperature across sites"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"7 day rolling average RAI"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 6 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-30-1.png" width="100%"></p>
+<p>We can compare raw counts vs snow depth across deployments. Note that for daily counts (<code>by = "date"</code>) when <code>by_deployment = TRUE</code>, the “trap_days” in each row is equal to 1, so RAI is a bit meaningless and we can just compare raw counts:</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">elk_rai_by_dep</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  by <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>  species <span class="op">=</span> <span class="st">"Roosevelt Elk"</span>,</span>
+<span>  by_deployment <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_rai_by_dep</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">snow_index</span>, y <span class="op">=</span> <span class="va">total_count</span>, colour <span class="op">=</span> <span class="va">deployment_label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">deployment_label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-31-1.png" width="100%"></p>
+<p>If we want to compare the RAI of two species, we can specify them in the <code>species</code> argument, and colour our plot by species (if we left the <code>species</code> argument blank we would get a line per species, but that looks visually very busy).</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">all_spp_roll_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  by <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>  species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Roosevelt Elk"</span>, <span class="st">"Cougar"</span><span class="op">)</span>,</span>
+<span>  by_species <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  roll <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">all_spp_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">roll_rai</span>, colour <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of RAI for Cougar and Elk"</span>, </span>
+<span>    x <span class="op">=</span> <span class="st">"Date"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"7 day rolling average RAI"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 12 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
+<p><img src="reference/figures/README-rai-by-time3-1.png" width="100%"></p>
+<p>Here we use it to compare the total monthly activity by all species among all deployments:</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">total_rai_by_month</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span></span>
+<span>  <span class="va">image_data</span>, </span>
+<span>  by <span class="op">=</span> <span class="st">"month"</span>,</span>
+<span>  by_species <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  by_deployment <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">total_rai_by_month</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">month</span>, y <span class="op">=</span> <span class="va">rai</span>, fill <span class="op">=</span> <span class="va">deployment_label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Monthly RAI of all species"</span>, </span>
+<span>    x <span class="op">=</span> <span class="st">"Month"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"RAI"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-rai-by-time4-1.png" width="100%"></p>
 </div>
 </div>
 <div class="section level3">
@@ -538,7 +852,7 @@
 </h3>
 <p>bccamtrap also has functionality to write out data to a SPI template for submission.</p>
 <p>Use <code><a href="reference/fill_spi_template.html">fill_spi_template()</a></code> to write all of the data to a SPI template, filling in just the default required fields. This will fill in all of the tabs except for the Project Info sheet which you must fill in manually.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/fill_spi_template.html">fill_spi_template</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_stations</span>,</span>
 <span>  <span class="va">camera_info</span>, </span>
@@ -548,7 +862,7 @@
 <span><span class="op">)</span></span></code></pre></div>
 <p>If you want more control, such as adding data to other fields in the SPI template, use <code><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet()</a></code>.</p>
 <p>If you want to write to an existing file, specify the same file name in both the <code>file</code> and the <code>template</code> parameters. To write columns other than the default columns, specify paired column names in the form <code>`Destination Column` = data_column</code>. If the left-hand side is a syntactically valid name it can be provided as-is, but if it has spaces in it it must be wrapped in backticks or quotes.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_stations</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"~/Desktop/SPI_output.xlsx"</span>,</span>
@@ -560,7 +874,7 @@
 </h4>
 <p>To write data imported from field form data, you must use the <code><a href="reference/fill_spi_template_ff.html">fill_spi_template_ff()</a></code> function, passing in both the <code>sample_station_info</code> and <code>deployments</code>, as well as the <code>image_data</code>.</p>
 <p>If you want to only write to the metadata tabs and not the Sequence Image Data, you can leave the <code>image_data</code> argument as <code>NULL</code>, and write to the file another time with <code><a href="reference/write_to_spi_sheet.html">write_to_spi_sheet()</a></code>.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sample_station_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_sample_station_csv.html">read_sample_station_csv</a></span><span class="op">(</span><span class="st">"path-to-sample-stations.csv"</span><span class="op">)</span></span>
 <span><span class="va">deployments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_deployments_csv.html">read_deployments_csv</a></span><span class="op">(</span><span class="st">"path-to-deployments.csv"</span><span class="op">)</span></span>
 <span></span>
@@ -590,17 +904,17 @@
 <div class="section level3">
 <h3 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h3>
-<div class="sourceCode" id="cb40"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
-<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
-<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a></span>
-<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
-<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span id="cb40-11"><a href="#cb40-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
+<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
+<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
+<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
+<span id="cb57-6"><a href="#cb57-6" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
+<span id="cb57-8"><a href="#cb57-8" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="#cb57-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
+<span id="cb57-10"><a href="#cb57-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span id="cb57-11"><a href="#cb57-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
 </div>
 </div>
 </div>
