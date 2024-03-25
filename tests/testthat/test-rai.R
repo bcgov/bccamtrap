@@ -68,4 +68,11 @@ test_that("rai_by_time works", {
     by_deployment = TRUE,
     roll = TRUE
   )))
+  expect_snapshot(rai_by_time(
+    imgs2,
+    by = "date",
+    species = "Roosevelt Elk",
+    by_station = FALSE,
+    roll = TRUE
+  )[["roll_rai"]])
 })
