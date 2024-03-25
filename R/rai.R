@@ -170,7 +170,7 @@ rai_by_time <- function(image_data,
 filter_if_not_null <- function(data, var, env = rlang::current_env()) {
   if (is.null(var)) return(data)
   varname <- deparse(substitute(var, env = env))
-  if (!var %in% data[[varname]]) {
+  if (!all(var %in% data[[varname]])) {
     cli::cli_abort("{.val {var}} is not a valid value in {.var {varname}}")
   }
   dplyr::filter(data, .data[[varname]] %in% var)
