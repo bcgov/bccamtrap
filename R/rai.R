@@ -128,6 +128,10 @@ rai_by_time <- function(image_data,
     dat[[by]] <- format(dat$date, by_fmt)
   }
 
+  if (!is.null(species)) {
+    dat <- dplyr::filter(dat, !is.na(.data$species))
+  }
+
   dat <- add_groups(dat, by_deployment, by_species) %>%
     dplyr::group_by(
       .data$study_area_name,
