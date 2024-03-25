@@ -21,7 +21,7 @@ test_that("find_blanks", {
     "study_area_name" = c("a", "b", " ", "", NA_character_),
     "sample_station_label" = c("a", "b", " ", "", NA_character_),
     "deployment_label" = c("a", "b", " ", "", NA_character_),
-    "date_time" = as.POSIXct(c(NA, rep("2024-03-11 05:16:42", 4))),
+    "date_time" = lubridate::as_datetime(c(NA, rep("2024-03-11 05:16:42", 4))),
     "surveyor" = c("", NA_character_, "a", "b", " "),
     "trigger_mode" = LETTERS[1:5],
     "temperature" = c(NaN, NA_real_, 1:3),
@@ -70,6 +70,16 @@ test_that("find_dup_episodes", {
     "species" = c("p", "q", "p", "s")
   )
   expect_snapshot(find_dup_episodes(d))
+})
+
+test_that("valideate_tl_time", {
+  d <- data.frame(
+    date_time = lubridate::as_datetime(c("2020-01-01 12:00:00", "2020-01-02 00:00:00", "2020-01-03 18:27:45")),
+    trigger_mode = c("Time Lapse", "Time Lapse", "Motion")
+  )
+
+  expect_error(validate_tl_time(d, "27:06:25"))
+  expect_snapshot(validate_tl_time(d, "12:00:00"))
 })
 
 test_that("validate_timestamp_order", {

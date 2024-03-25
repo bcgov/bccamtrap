@@ -31,7 +31,9 @@ Imports:
     readr,
     readxl,
     rlang (>= 1.1.0),
-    sf
+    sf,
+    tidyr,
+    zoo
 URL: https://github.com/ateucher/bccamtrap, https://bcgov.github.io/bccamtrap/
 BugReports: https://github.com/ateucher/bccamtrap/issues
 Suggests: 

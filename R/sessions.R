@@ -143,58 +143,78 @@ make_deployment_validity_columns <- function(x) {
   )
 }
 
-#' Identify distinct sample sessions from deployments
+#' Identify distinct sample sessions from timelapse image data
 #'
-#' This function:
-#' - Sets sampling_start as deployment_start
-#' - Notes dates of first and last photos of deployment
+#' For each deployment label, this function:
+#' - Sets sampling_start as first image date
 #' - Counts photos (total, and motion-detection)
-#' - Determines if the sampling period is less than the deployment period
 #' - Determines gaps in sampling period due to obscured lens
-#' - Determines total length of sample period (last photo date - first photo date - number of days with lens obscured)
+#' - Determines total length of sample period (number of days with Time Lapse photos - number of days with lens obscured)
 #'
-#' @inheritParams plot_deployment_detections
-#' @inheritParams make_deployments
-#' @param drop_unjoined if there are unmatched `deployment_labels` between
-#'   deployments and image data, should they be dropped from the output
-#'   (this is equivalent to a [dplyr::inner_join()])? Default is `TRUE`, with a
-#'   warning.
+#'
+#' @inheritParams qa_image_data
+#' @param sample_start_date a custom start date. Note that this will apply the
+#'   same start date to all deployments/sessions in the data.
+#' @param sample_end_date a custom end date. Note that this will apply the same
+#'   start date to all deployments/sessions in the data.
 #'
 #' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
 #' @export
-make_sessions <- function(deployments, image_data, drop_unjoined = TRUE, as_sf = TRUE) {
-  merged <- merge_deployments_images(
-    deployments,
-    image_data,
-    drop_unjoined = drop_unjoined,
-    as_sf = as_sf
-  )
+make_sample_sessions <- function(image_data, sample_start_date = NULL, sample_end_date = NULL) {
 
-  merged <- dplyr::mutate(
-    merged,
+  dat <- dplyr::mutate(
+    image_data,
     trigger_mode = ifelse(grepl("^[Mm]", .data$trigger_mode), "motion", "timelapse")
   )
 
-  merged <- dplyr::group_by(
-    merged,
-    dplyr::across(c("wlrs_project_name", "sample_station_label", "deployment_label"))
+  dat <- filter_start_end(dat, sample_start_date, sample_end_date)
+
+  dat <- dplyr::group_by(
+    dat,
+    dplyr::across(c("study_area_name", "sample_station_label", "deployment_label"))
   )
 
   out <- dplyr::summarize(
-    merged,
-    sample_start_date = as.Date(min(.data$deployment_start, na.rm = TRUE)),
-    deployment_end_date = as.Date(max(.data$deployment_end, na.rm = TRUE)),
-    min_tl_date = as.Date(min(.data$date_time, na.rm = TRUE)),
-    max_tl_date = as.Date(max(.data$date_time, na.rm = TRUE)),
-    sample_truncated = .data$deployment_end_date > .data$max_tl_date,
+    dat,
+    sample_start_date = as.Date(min(.data$date_time, na.rm = TRUE)),
+    sample_end_date = as.Date(max(.data$date_time, na.rm = TRUE)),
     n_photos = dplyr::n(),
-    n_motion_photos = sum(.data$trigger_mode == "motion"),
-    sample_gaps = any(.data$lens_obscured),
-    sample_gap_length = sum(.data$lens_obscured, na.rm = TRUE),
-    sample_period_length = .data$max_tl_date - .data$min_tl_date -
-      .data$sample_gap_length,
+    n_photos_spp_id = sum(.data$total_count_episode > 0, na.rm = TRUE),
+    n_species = dplyr::n_distinct(.data$species, na.rm = TRUE),
+    n_individuals = sum(.data$total_count_episode, na.rm = TRUE),
+    n_motion_photos = sum(.data$trigger_mode == "motion", na.rm = TRUE),
+    n_motion_photos_lens_obscured = sum(
+      .data$trigger_mode == "motion" & .data$lens_obscured,
+      na.rm = TRUE
+    ),
+    n_tl_photos = sum(.data$trigger_mode == "timelapse", na.rm = TRUE),
+    n_tl_photos_lens_obscured = sum(
+      .data$trigger_mode == "timelapse" & .data$lens_obscured,
+      na.rm = TRUE
+    ),
+    sample_gaps = .data$n_tl_photos_lens_obscured > 0,
+    trap_days = .data$n_tl_photos - .data$n_tl_photos_lens_obscured,
     .groups = "drop"
   )
 
   as.sample_sessions(out)
+}
+
+filter_start_end <- function(x, sample_start_date, sample_end_date) {
+  if (!is.null(sample_start_date)) {
+    sstart <- lubridate::as_datetime(paste(sample_start_date, "00:00:00"))
+    x <- dplyr::filter(
+      x,
+      .data$date_time >= sstart
+    )
+  }
+
+  if (!is.null(sample_end_date)) {
+    send <- lubridate::as_datetime(paste(sample_end_date, "23:59:59"))
+    x <- dplyr::filter(
+      x,
+      .data$date_time <= send
+    )
+  }
+  x
 }

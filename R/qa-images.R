@@ -7,6 +7,7 @@
 #' * Sum of subcount fields equals Total Count
 #' * Multiple entries under same Episode number (indicating possible double entry)
 #' * Ensure dates for timelapse images are continuous and in order.
+#' * Ensure daily timelapse photos are at the expected time
 #' * Snow data
 #'     - No blanks unless lens obscured is TRUE
 #'     - Look for snow depth outliers (e.g., 10, 10, 110, 10, 15, 20)
@@ -15,11 +16,12 @@
 #' @param exclude_human_use should images where `human_use_type` indicates a motion
 #'   detection event from humans be excluded from the count/species checks? Default `TRUE`.
 #' @param check_snow show `QA` be performed on snow measurements? Default `TRUE`
+#' @param tl_time the time of day timelapse images should be set at. Default "12:00:00"
 #'
 #' @return input data frame with additional `QA_*` columns appended, and
 #'   subset only to rows where a QA issue was flagged.
 #' @export
-qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRUE) {
+qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRUE, tl_time = "12:00:00") {
   check_image_data(image_data)
 
   image_data <- find_blanks(image_data)
@@ -30,6 +32,7 @@ qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRU
     "total_count_episode",
     exclude_human_use = exclude_human_use
   )
+
   image_data <- find_unmatched(
     image_data,
     "total_count_episode",
@@ -45,6 +48,8 @@ qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRU
   image_data <- find_dup_episodes(image_data)
 
   image_data <- validate_timestamp_order(image_data)
+
+  image_data <- validate_tl_time(image_data, tl_time)
 
   if (check_snow) {
     image_data <- validate_snow_data(image_data)
@@ -199,6 +204,18 @@ validate_timestamp_order <- function(x) {
   dplyr::select(x, -dplyr::any_of("tdiff"))
 }
 
+validate_tl_time <- function(x, tl_time) {
+  if (is.na(lubridate::ymd_hms(paste("2020-01-01",  tl_time), quiet = TRUE))) {
+    cli::cli_abort("{.var tl_time} must be in the format 'HH:MM:SS'")
+  }
+
+  dplyr::mutate(
+    x,
+    QA_wrong_tl_time = grepl("^[Tt]", .data$trigger_mode) &
+      format(.data$date_time, "%H:%M:%S") != tl_time
+  )
+}
+
 validate_snow_data <- function(x) {
   x <- dplyr::arrange(x, .data$date_time)
 
@@ -256,35 +273,33 @@ plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE) 
   x$id <- seq_len(nrow(x))
   x$tooltip <- glue::glue(
     "Date: {x$date_time}
-     Snow Depth: {x$snow_depth}"
+     Snow Depth : {x$snow_depth}"
   )
 
   p <- ggplot2::ggplot(
+    data = x,
     mapping = ggplot2::aes(
       x = .data$date_time,
-      colour = .data$snow_is_est,
-      data_id = .data$id,
-      tooltip = .data$tooltip
+      y = .data$snow_index
     )
   ) +
-    ggiraph::geom_point_interactive(
-      data = dplyr::filter(x, !.data$snow_is_est, !is.na(.data$snow_depth)),
-      ggplot2::aes(y = as.numeric(.data$snow_depth)),
+    ggiraph::geom_line_interactive(
       size = 0.5
     ) +
-    ggiraph::geom_linerange_interactive(
-      data = dplyr::filter(x, .data$snow_is_est),
-      ggplot2::aes(ymin = .data$snow_depth_lower, ymax = .data$snow_depth_upper),
-      size = 0.5
+    ggiraph::geom_point_interactive(
+      mapping  = ggplot2::aes(
+        data_id = .data$id,
+        tooltip = .data$tooltip
+      ),
+      size = 0.05
     ) +
     ggplot2::facet_wrap(ggplot2::vars(.data$deployment_label)) +
-    ggplot2::scale_colour_manual(values = c("TRUE" = "#f7941d", "FALSE" = "#400456")) +
     ggplot2::scale_x_datetime(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
-    ggplot2::theme(strip.text = ggplot2::element_text(size = 10), legend.position = "bottom") +
+    ggplot2::theme(strip.text = ggplot2::element_text(size = 10)) +
     ggplot2::labs(
       title = paste0("Snow depths at ", image_data$study_area_name[1], " Deployments"),
-      x = "Date", y = "Snow Depth (cm)", colour = "Depth Estimated"
+      x = "Date", y = "Snow Depth Index"
     )
 
   if (interactive) {

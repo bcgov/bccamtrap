@@ -4,7 +4,12 @@
 \alias{qa_image_data}
 \title{Perform a series of QA checks on the Timelapse Image data}
 \usage{
-qa_image_data(image_data, exclude_human_use = TRUE, check_snow = TRUE)
+qa_image_data(
+  image_data,
+  exclude_human_use = TRUE,
+  check_snow = TRUE,
+  tl_time = "12:00:00"
+)
 }
 \arguments{
 \item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
@@ -13,6 +18,8 @@ qa_image_data(image_data, exclude_human_use = TRUE, check_snow = TRUE)
 detection event from humans be excluded from the count/species checks? Default \code{TRUE}.}
 
 \item{check_snow}{show \code{QA} be performed on snow measurements? Default \code{TRUE}}
+
+\item{tl_time}{the time of day timelapse images should be set at. Default "12:00:00"}
 }
 \value{
 input data frame with additional \verb{QA_*} columns appended, and
@@ -27,6 +34,7 @@ surveyor, trigger mode, temperature, episode)
 \item Sum of subcount fields equals Total Count
 \item Multiple entries under same Episode number (indicating possible double entry)
 \item Ensure dates for timelapse images are continuous and in order.
+\item Ensure daily timelapse photos are at the expected time
 \item Snow data
 \itemize{
 \item No blanks unless lens obscured is TRUE

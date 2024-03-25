@@ -282,7 +282,7 @@ excel_to_date <- function(x) {
   # Fill in the elements from above
   out_dt <- out_dateish
   out_dt[numberish] <- out_numberish
-  as.POSIXct(out_dt)
+  lubridate::as_datetime(out_dt)
 }
 
 excel_to_time <- function(x) {

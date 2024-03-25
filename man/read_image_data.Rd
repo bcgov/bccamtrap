@@ -20,5 +20,7 @@ the regular expression will read. Default \code{FALSE}.}
 a \code{data.frame} of Timelapse image data from the files found in \code{path}
 }
 \description{
-Read image data from a collection of csvs from TimeLapse
+In addition to reading in the data, this function copies snow depth data
+from the timelapse photo for each day into the motion photos for that day,
+to facilitate analysis.
 }
