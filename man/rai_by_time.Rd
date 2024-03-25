@@ -45,7 +45,7 @@ same start date to all deployments/sessions in the data.}
 start date to all deployments/sessions in the data.}
 
 \item{snow_agg}{if \code{by_deployment = FALSE}, how to aggregate snow measurements
-across sites. Takes the name of an aggregation function (e.g., \code{mean}). Default \code{max}}
+across sites. Takes an aggregation function (e.g., \code{mean}). Default \code{max}}
 }
 \value{
 a data.frame of above calculated metrics
