@@ -76,7 +76,10 @@ rai_by_time <- function(image_data,
                         by_deployment = FALSE,
                         deployment_label = NULL,
                         sample_start_date = NULL,
-                        sample_end_date = NULL) {
+                        sample_end_date = NULL,
+                        snow_agg = max) {
+
+  snow_agg_name <- deparse(substitute(snow_agg))
 
   by <- match.arg(by)
   by_fmt <- switch(
@@ -141,7 +144,7 @@ rai_by_time <- function(image_data,
     dplyr::summarise(
       start_date = min(.data$date),
       end_date = max(.data$date),
-      max_snow_index = max(.data$snow_index, na.rm = TRUE),
+      "{snow_agg_name}_snow_index" := snow_agg(.data$snow_index, na.rm = TRUE),
       mean_temperature = mean(.data$temperature, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
       trap_days = dplyr::n_distinct(.data$deployment_label),
@@ -161,7 +164,12 @@ rai_by_time <- function(image_data,
         .add = TRUE
       ) %>%
       dplyr::mutate(
-        roll_mean_max_snow = zoo::rollmean(.data$max_snow_index, k = k, fill = NA, na.rm = TRUE),
+        "roll_mean_{snow_agg_name}_snow" := zoo::rollmean(
+          .data[[paste0(snow_agg_name, "_snow_index")]],
+          k = k,
+          fill = NA,
+          na.rm = TRUE
+        ),
         roll_mean_temp = zoo::rollmean(.data$mean_temperature, k = k, fill = NA, na.rm = TRUE),
         roll_trap_days = zoo::rollsum(.data$trap_days, k = k, fill = NA, na.rm = TRUE),
         roll_count = zoo::rollsum(.data$total_count, k = k, fill = NA, na.rm = TRUE),
