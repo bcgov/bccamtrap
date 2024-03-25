@@ -94,12 +94,11 @@ rai_by_time <- function(image_data,
 
   dat <- filter_if_not_null(image_data, species)
 
-  dat$date <- as.Date(dat$date_time)
-
   # Always do stats by deployment first because need to join with
   # effort, then collapse later if by_deployment = FALSE
-  dat <- dplyr::group_by(
-    dat,
+  dat <- dat %>%
+    dplyr::mutate(date = as.Date(.data$date_time)) %>%
+    dplyr::group_by(
     .data$deployment_label,
     .data$species,
     .data$date,
@@ -108,7 +107,7 @@ rai_by_time <- function(image_data,
 
   dat <- dplyr::summarise(
     dat,
-    total_count = sum(.data$total_count_episode, na.rm = TRUE),
+    total_count = sum(.data$total_count_episode, na.rm = TRUE)
   )
 
   dat <- dplyr::left_join(
@@ -247,7 +246,7 @@ complete_daily_counts <- function(x) {
         !!rlang::sym("snow_index"),
         !!rlang::sym("temperature")
       ),
-      .data$species,
+      !!rlang::sym("species"),
       fill = list(total_count = 0)
     )
 }
