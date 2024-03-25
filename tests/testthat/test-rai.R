@@ -77,8 +77,7 @@ test_that("rai_by_time works", {
       roll = TRUE
     ),
     dplyr::contains("roll")
-  ),
-  )
+  ))
   expect_snapshot(rai_by_time(
     imgs2,
     by = "date",
@@ -86,4 +85,19 @@ test_that("rai_by_time works", {
     by_deployment = FALSE,
     roll = TRUE
   )[["roll_rai"]])
+  expect_snapshot(rai_by_time(
+    imgs2,
+    by = "date",
+    species = "Roosevelt Elk",
+    by_deployment = FALSE,
+    roll = TRUE
+  )[["roll_mean_max_snow"]])
+  expect_snapshot(rai_by_time(
+    imgs2,
+    by = "date",
+    species = "Roosevelt Elk",
+    by_deployment = FALSE,
+    roll = TRUE,
+    snow_agg = mean
+  )[["roll_mean_mean_snow"]])
 })
