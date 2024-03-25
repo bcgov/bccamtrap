@@ -302,7 +302,7 @@ image_data <- read_image_data(data_path)
 image_data
 ```
 
-    #> # A tibble: 11,833 × 42
+    #> # A tibble: 11,833 × 43
     #>    root_folder study_area_name sample_station_label deployment_label
     #>    <chr>       <chr>           <chr>                <chr>           
     #>  1 100RECNX    Test Project    19_1                 19_1_20230605   
@@ -316,7 +316,7 @@ image_data
     #>  9 100RECNX    Test Project    19_1                 19_1_20230605   
     #> 10 100RECNX    Test Project    19_1                 19_1_20230605   
     #> # ℹ 11,823 more rows
-    #> # ℹ 38 more variables: date_time <dttm>, episode <chr>, species <chr>,
+    #> # ℹ 39 more variables: date_time <dttm>, episode <chr>, species <chr>,
     #> #   total_count_episode <dbl>, obj_count_image <int>, adult_male <int>,
     #> #   adult_female <int>, adult_unclassified_sex <int>, yearling_male <int>,
     #> #   yearling_female <int>, yearling_unclassified_sex <int>,
@@ -375,12 +375,12 @@ images_with_metadata <- merge_deployments_images(deployments, image_data)
 #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
 #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
 images_with_metadata
-#> Simple feature collection with 11833 features and 101 fields (with 1208 geometries empty)
+#> Simple feature collection with 11833 features and 102 fields (with 1208 geometries empty)
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -130.3966 ymin: 52.92237 xmax: -129.569 ymax: 52.96732
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 11,833 × 96
+#> # A tibble: 11,833 × 97
 #>    root_folder deployment_label date_time           episode species
 #>    <chr>       <chr>            <dttm>              <chr>   <chr>  
 #>  1 100RECNX    19_1_20230605    2022-11-10 15:15:53 1:1|5   <NA>   
@@ -394,7 +394,7 @@ images_with_metadata
 #>  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   <NA>   
 #> 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   <NA>   
 #> # ℹ 11,823 more rows
-#> # ℹ 91 more variables: total_count_episode <dbl>, obj_count_image <int>,
+#> # ℹ 92 more variables: total_count_episode <dbl>, obj_count_image <int>,
 #> #   adult_male <int>, adult_female <int>, adult_unclassified_sex <int>,
 #> #   yearling_male <int>, yearling_female <int>,
 #> #   yearling_unclassified_sex <int>, young_of_year_unclassified_sex <int>,
@@ -428,7 +428,7 @@ Run the `qa_image_data()` function:
 ``` r
 image_data_qa <- qa_image_data(image_data)
 dim(image_data_qa)
-#> [1] 24 53
+#> [1] 24 55
 ```
 
 We can see that this has identified 24 records with potential problems.
@@ -454,23 +454,24 @@ names(image_data_qa)
 #> [25] "behaviour_1"                     "behaviour_2"                    
 #> [27] "behaviour_3"                     "human_use_type"                 
 #> [29] "human_transport_mode"            "temperature"                    
-#> [31] "snow_depth"                      "snow_is_est"                    
-#> [33] "snow_depth_lower"                "snow_depth_upper"               
-#> [35] "lens_obscured"                   "starred"                        
-#> [37] "needs_review"                    "comment"                        
-#> [39] "surveyor"                        "trigger_mode"                   
-#> [41] "file"                            "relative_path"                  
-#> [43] "delete_flag"                     "QA_BLANK_study_area_name"       
-#> [45] "QA_BLANK_sample_station_label"   "QA_BLANK_deployment_label"      
-#> [47] "QA_BLANK_date_time"              "QA_BLANK_surveyor"              
-#> [49] "QA_BLANK_trigger_mode"           "QA_BLANK_temperature"           
-#> [51] "QA_BLANK_episode"                "QA_timelapse_lag"               
-#> [53] "QA_snow_outlier"
+#> [31] "snow_depth"                      "snow_index"                     
+#> [33] "snow_is_est"                     "snow_depth_lower"               
+#> [35] "snow_depth_upper"                "lens_obscured"                  
+#> [37] "starred"                         "needs_review"                   
+#> [39] "comment"                         "surveyor"                       
+#> [41] "trigger_mode"                    "file"                           
+#> [43] "relative_path"                   "delete_flag"                    
+#> [45] "QA_BLANK_study_area_name"        "QA_BLANK_sample_station_label"  
+#> [47] "QA_BLANK_deployment_label"       "QA_BLANK_date_time"             
+#> [49] "QA_BLANK_surveyor"               "QA_BLANK_trigger_mode"          
+#> [51] "QA_BLANK_temperature"            "QA_BLANK_episode"               
+#> [53] "QA_timelapse_lag"                "QA_wrong_tl_time"               
+#> [55] "QA_snow_outlier"
 ```
 
 ``` r
 select(image_data_qa, root_folder, file, starts_with("QA_"))
-#> # A tibble: 24 × 12
+#> # A tibble: 24 × 13
 #>    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹
 #>    <chr>         <chr>        <lgl>                    <lgl>                    
 #>  1 27_20230605   RCNX0030.JPG FALSE                    FALSE                    
@@ -485,53 +486,14 @@ select(image_data_qa, root_folder, file, starts_with("QA_"))
 #> 10 102RECNX      RCNX0041.JPG FALSE                    FALSE                    
 #> # ℹ 14 more rows
 #> # ℹ abbreviated name: ¹​QA_BLANK_sample_station_label
-#> # ℹ 8 more variables: QA_BLANK_deployment_label <lgl>,
+#> # ℹ 9 more variables: QA_BLANK_deployment_label <lgl>,
 #> #   QA_BLANK_date_time <lgl>, QA_BLANK_surveyor <lgl>,
 #> #   QA_BLANK_trigger_mode <lgl>, QA_BLANK_temperature <lgl>,
-#> #   QA_BLANK_episode <lgl>, QA_timelapse_lag <lgl>, QA_snow_outlier <lgl>
+#> #   QA_BLANK_episode <lgl>, QA_timelapse_lag <lgl>, QA_wrong_tl_time <lgl>,
+#> #   QA_snow_outlier <lgl>
 ```
 
-### Sampling sessions
-
-Define sampling sessions based on deployment metadata and image data
-using the `make_sample_sessions()` function. This function will:
-
-- Set sampling_start as deployment_start
-- Notes dates of first and last photos of deployment
-- Counts photos (total, and motion-detection)
-- Determines if the sampling period is less than the deployment period
-- Determines gaps in sampling period due to obscured lens
-- Determines total length of sample period (last photo date - first
-  photo date - number of days with lens obscured)
-
-``` r
-make_sample_sessions(deployments, image_data)
-```
-
-    #> ! The following deployment labels are present in `image_data` but not `deployments`: "21_1_20230605", "2022-11-10", and "2023-01-10"
-    #> ! The following deployment labels are present in `deployments` but not `image_data`: "21_20230605", "19_1_20231107", "19_2_20231107", "20_20231107", "21_20231107", "21_2_20231108", "25_20231031", "26_20231031", "27_20231031", "28_20231031", "29_1_20231031", "29_2_20231031", "29_3_20231107", and "31_20231107"
-    #> # A tibble: 14 × 11
-    #>    deployment_label sample_start_date deployment_end_date min_tl_date
-    #>    <chr>            <date>            <date>              <date>     
-    #>  1 19_1_20230605    2022-11-10        2023-06-05          2022-11-10 
-    #>  2 19_2_20230605    2022-11-15        2023-06-05          2022-11-15 
-    #>  3 20_20230605      2022-11-10        2023-06-05          2022-11-10 
-    #>  4 21_2_20230605    2022-11-18        2023-06-05          2022-11-18 
-    #>  5 24_20230708      2022-11-18        2023-07-08          2022-11-18 
-    #>  6 25_20230710      2022-11-18        2023-07-10          2022-11-18 
-    #>  7 26_20230710      2022-11-07        2023-07-10          2022-11-07 
-    #>  8 27_20230605      2022-11-07        2023-06-05          2022-11-07 
-    #>  9 28_20230605      2022-11-15        2023-06-05          2022-11-15 
-    #> 10 29_1_20230605    2022-11-07        2023-06-05          2022-11-07 
-    #> 11 29_2_20230605    2022-11-07        2023-06-05          2022-11-10 
-    #> 12 29_3_20230605    2022-11-18        2023-06-05          2022-11-18 
-    #> 13 31_20230605      2022-11-15        2023-06-05          2023-01-25 
-    #> 14 35_20230708      2022-11-18        2023-07-08          2022-11-18 
-    #> # ℹ 7 more variables: max_tl_date <date>, sample_truncated <lgl>,
-    #> #   n_photos <int>, n_motion_photos <int>, sample_gaps <lgl>,
-    #> #   sample_gap_length <int>, sample_period_length <drtn>
-
-### Plots
+### Built-in plotting functions
 
 There are several plotting functions available to help you visualize
 your data and spot any potential problems. By default, all plots render
@@ -563,6 +525,8 @@ We can plot the recorded snow depths across deployments using the
 
 ``` r
 plot_snow(image_data, date_breaks = "2 months")
+#> Warning: Removed 109 rows containing missing values or values outside the scale range
+#> (`geom_interactive_point()`).
 ```
 
 <img src="man/figures/README-plot-snow-1.png" width="100%" />
@@ -602,6 +566,430 @@ plot_diel_activity(image_data)
 ``` r
 # plot_diel_activity(image_data, interactive = TRUE)
 ```
+
+### Sampling sessions
+
+Define sampling sessions based on image data using the
+`make_sample_sessions()` function. This function will:
+
+- Set sampling_start as deployment_start
+- Notes dates of first and last photos of deployment
+- Counts photos (total, and motion-detection)
+- Determines if the sampling period is less than the deployment period
+- Determines gaps in sampling period due to obscured lens
+- Determines total length of sample period (last photo date - first
+  photo date - number of days with lens obscured)
+
+``` r
+make_sample_sessions(image_data)
+```
+
+    #> # A tibble: 17 × 13
+    #>    deployment_label sample_start_date sample_end_date n_photos n_photos_spp_id
+    #>    <chr>            <date>            <date>             <int>           <int>
+    #>  1 19_1_20230605    2022-11-10        2023-06-05           285              11
+    #>  2 19_2_20230605    2022-11-15        2023-06-05           411              26
+    #>  3 20_20230605      2022-11-10        2023-06-05          1857             101
+    #>  4 21_1_20230605    2022-11-10        2023-06-05           959              78
+    #>  5 21_2_20230605    2022-11-18        2023-06-05           569              23
+    #>  6 24_20230708      2022-11-18        2023-07-08           521              18
+    #>  7 25_20230710      2022-11-18        2023-07-10          3554              24
+    #>  8 26_20230710      2022-11-07        2023-07-10           621              50
+    #>  9 27_20230605      2022-11-07        2023-06-05           259               7
+    #> 10 28_20230605      2022-11-15        2023-06-05           566              14
+    #> 11 29_1_20230605    2022-11-07        2023-06-05           390              10
+    #> 12 2022-11-10       2022-11-07        2022-11-10            52               5
+    #> 13 29_2_20230605    2022-11-10        2023-06-05           530              34
+    #> 14 29_3_20230605    2022-11-18        2023-06-05           419              15
+    #> 15 2023-01-10       2022-11-15        2023-01-10           197               8
+    #> 16 31_20230605      2023-01-25        2023-06-05           382              15
+    #> 17 35_20230708      2022-11-18        2023-07-08           261               3
+    #> # ℹ 8 more variables: n_species <int>, n_individuals <dbl>,
+    #> #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
+    #> #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+    #> #   trap_days <int>
+
+You can set custom start and end dates for your sample session as well:
+
+``` r
+make_sample_sessions(
+  image_data, 
+  sample_start_date = "2022-12-01", 
+  sample_end_date = "2023-04-30"
+)
+```
+
+    #> # A tibble: 16 × 13
+    #>    deployment_label sample_start_date sample_end_date n_photos n_photos_spp_id
+    #>    <chr>            <date>            <date>             <int>           <int>
+    #>  1 19_1_20230605    2022-12-01        2023-04-30           191               6
+    #>  2 19_2_20230605    2022-12-01        2023-04-30           290              16
+    #>  3 20_20230605      2022-12-01        2023-04-30           662              31
+    #>  4 21_1_20230605    2022-12-01        2023-04-30           684              62
+    #>  5 21_2_20230605    2022-12-01        2023-04-30           450              15
+    #>  6 24_20230708      2022-12-01        2023-04-30           166               3
+    #>  7 25_20230710      2022-12-01        2023-04-30           165               0
+    #>  8 26_20230710      2022-12-01        2023-04-30           163               1
+    #>  9 27_20230605      2022-12-01        2023-04-30           152               1
+    #> 10 28_20230605      2022-12-01        2023-04-30           162               3
+    #> 11 29_1_20230605    2022-12-01        2023-04-30           241               5
+    #> 12 29_2_20230605    2022-12-01        2023-04-30           415              18
+    #> 13 29_3_20230605    2022-12-01        2023-04-30           226               5
+    #> 14 2023-01-10       2022-12-01        2023-01-10            95               4
+    #> 15 31_20230605      2023-01-25        2023-04-30           311               8
+    #> 16 35_20230708      2022-12-01        2023-04-30           152               0
+    #> # ℹ 8 more variables: n_species <int>, n_individuals <dbl>,
+    #> #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
+    #> #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
+    #> #   trap_days <int>
+
+### Analysis data
+
+#### Relative Activity Index (RAI)
+
+Calculate Relative Activity Index for sample sessions using
+`sample_rai()`. By default, it calculates RAI per species using the
+sample start and end dates in the data for each deployment:
+
+``` r
+sample_rai(image_data)
+#> # A tibble: 53 × 7
+#>    deployment_label sample_start_date sample_end_date trap_days species      
+#>    <chr>            <date>            <date>              <int> <chr>        
+#>  1 19_1_20230605    2022-11-10        2023-06-05            207 Black Bear   
+#>  2 19_1_20230605    2022-11-10        2023-06-05            207 Cougar       
+#>  3 19_1_20230605    2022-11-10        2023-06-05            207 Roosevelt Elk
+#>  4 19_2_20230605    2022-11-15        2023-06-05            201 Black Bear   
+#>  5 19_2_20230605    2022-11-15        2023-06-05            201 Mule Deer    
+#>  6 19_2_20230605    2022-11-15        2023-06-05            201 Roosevelt Elk
+#>  7 2022-11-10       2022-11-07        2022-11-10              3 Mule Deer    
+#>  8 2022-11-10       2022-11-07        2022-11-10              3 Roosevelt Elk
+#>  9 2023-01-10       2022-11-15        2023-01-10             56 Cougar       
+#> 10 2023-01-10       2022-11-15        2023-01-10             56 Roosevelt Elk
+#> # ℹ 43 more rows
+#> # ℹ 2 more variables: total_count <dbl>, rai <dbl>
+```
+
+You can set it to do a subset of species and/or deployment labels, and
+similar to `make_sample_sessions()`, set custom session start and end
+dates:
+
+``` r
+sample_rai(
+  image_data, 
+  species = "Roosevelt Elk", 
+  deployment_label = c("19_2_20230605", "29_1_20230605"),
+  sample_start_date = "2022-12-01", 
+  sample_end_date = "2023-04-30"
+)
+#> # A tibble: 2 × 7
+#>   deployment_label sample_start_date sample_end_date trap_days species      
+#>   <chr>            <date>            <date>              <int> <chr>        
+#> 1 19_2_20230605    2022-12-01        2023-04-30            151 Roosevelt Elk
+#> 2 29_1_20230605    2022-12-01        2023-04-30            148 Roosevelt Elk
+#> # ℹ 2 more variables: total_count <dbl>, rai <dbl>
+```
+
+You can also calculate RAI across all deployments by setting
+`by_deployment = FALSE`:
+
+``` r
+sample_rai(
+  image_data, 
+  species = "Roosevelt Elk", 
+  by_deployment = FALSE,
+  sample_start_date = "2022-12-01", 
+  sample_end_date = "2023-04-30"
+)
+#> # A tibble: 1 × 6
+#>   sample_start_date sample_end_date trap_days species       total_count   rai
+#>   <date>            <date>              <int> <chr>               <dbl> <dbl>
+#> 1 2022-12-01        2023-04-30            151 Roosevelt Elk         146 0.967
+```
+
+We can compare total count and RAI across species:
+
+``` r
+spp_comp <- sample_rai(
+  image_data, 
+  by_deployment = FALSE,
+  by_species = TRUE,
+  sample_start_date = "2022-12-01", 
+  sample_end_date = "2023-04-30"
+)
+spp_comp
+#> # A tibble: 7 × 6
+#>   sample_start_date sample_end_date trap_days species        total_count     rai
+#>   <date>            <date>              <int> <chr>                <dbl>   <dbl>
+#> 1 2022-12-01        2023-04-30            131 Avian (commen…           1 0.00763
+#> 2 2022-12-01        2023-04-30            151 Black Bear              28 0.185  
+#> 3 2022-12-01        2023-04-30            151 Cougar                   8 0.0530 
+#> 4 2022-12-01        2023-04-30            151 Mule Deer              105 0.695  
+#> 5 2022-12-01        2023-04-30            131 Other (commen…           1 0.00763
+#> 6 2022-12-01        2023-04-30            151 Pacific Marten           2 0.0132 
+#> 7 2022-12-01        2023-04-30            151 Roosevelt Elk          146 0.967
+```
+
+Using the [ggplot2](https://ggplot2.tidyverse.org/) package, we can plot
+this:
+
+``` r
+library(ggplot2)
+
+ggplot(spp_comp, aes(x = rai, y = species)) + 
+  geom_point(colour = "darkgreen") + 
+  geom_text(aes(label = total_count), nudge_x = 0.05, nudge_y = 0.1) +
+  theme_classic() + 
+  labs(title = "RAI of all species detected, across all deployments", 
+       caption = "Numbers beside points represent total number of individuals detected",
+       x = "Relative Activity Index", y = "Species")
+```
+
+<img src="man/figures/README-sample-rai4-plot-1.png" width="100%" />
+
+We can group by deployment to compare across deployments:
+
+``` r
+spp_comp_by_dep <- sample_rai(
+  image_data, 
+  by_deployment = TRUE,
+  by_species = TRUE,
+  sample_start_date = "2022-12-01", 
+  sample_end_date = "2023-04-30"
+)
+
+ggplot(spp_comp_by_dep, aes(x = rai, y = species, colour = deployment_label)) + 
+  geom_point() + 
+  geom_text(aes(label = total_count), nudge_x = 0.01, nudge_y = 0.1) +
+  theme_classic() + 
+  labs(title = "RAI of all species detected, across all deployments", 
+       caption = "Numbers beside points represent total number of individuals detected",
+       x = "Relative Activity Index", y = "Species")
+```
+
+<img src="man/figures/README-sample-rai-5-1.png" width="100%" />
+
+#### Relative Activity Index (RAI) over time
+
+Use `rai_by_time()` to calculate RAI over a time window, optionally
+calculating statistics using a moving window aggregation. You can
+calculate daily statistics, or aggregate by week, month, or year. By
+default, it calculates daily metrics, aggregating across deployments.
+
+``` r
+rai_by_time(image_data)
+#> # A tibble: 2,205 × 8
+#>    species          study_area_name date       max_snow_index mean_temperature
+#>    <chr>            <chr>           <date>              <dbl>            <dbl>
+#>  1 Avian (comments) Test Project    2022-11-07              2             6   
+#>  2 Avian (comments) Test Project    2022-11-08              2            -1.75
+#>  3 Avian (comments) Test Project    2022-11-09              2            -3.25
+#>  4 Avian (comments) Test Project    2022-11-10              2             1.2 
+#>  5 Avian (comments) Test Project    2022-11-11              2             1   
+#>  6 Avian (comments) Test Project    2022-11-12              2             1.57
+#>  7 Avian (comments) Test Project    2022-11-13              2             2.57
+#>  8 Avian (comments) Test Project    2022-11-14              2             1.71
+#>  9 Avian (comments) Test Project    2022-11-15              2             0.5 
+#> 10 Avian (comments) Test Project    2022-11-16              2            -1   
+#> # ℹ 2,195 more rows
+#> # ℹ 3 more variables: total_count <dbl>, trap_days <int>, rai <dbl>
+```
+
+We can select a single species, and calculate daily rolling values. The
+default window size is 7, but it can be changed with the `k` parameter.
+
+``` r
+elk_roll_avg <- rai_by_time(
+  image_data, 
+  by = "date",
+  species = "Roosevelt Elk",
+  roll = TRUE
+)
+elk_roll_avg
+#> # A tibble: 245 × 13
+#>    species       study_area_name date       max_snow_index mean_temperature
+#>    <chr>         <chr>           <date>              <dbl>            <dbl>
+#>  1 Roosevelt Elk Test Project    2022-11-07              2             6   
+#>  2 Roosevelt Elk Test Project    2022-11-08              2            -1.75
+#>  3 Roosevelt Elk Test Project    2022-11-09              2            -3.25
+#>  4 Roosevelt Elk Test Project    2022-11-10              2             1.2 
+#>  5 Roosevelt Elk Test Project    2022-11-11              2             1   
+#>  6 Roosevelt Elk Test Project    2022-11-12              2             1.57
+#>  7 Roosevelt Elk Test Project    2022-11-13              2             2.57
+#>  8 Roosevelt Elk Test Project    2022-11-14              2             1.71
+#>  9 Roosevelt Elk Test Project    2022-11-15              2             0.5 
+#> 10 Roosevelt Elk Test Project    2022-11-16              2            -1   
+#> # ℹ 235 more rows
+#> # ℹ 8 more variables: total_count <dbl>, trap_days <int>, rai <dbl>,
+#> #   roll_mean_max_snow <dbl>, roll_mean_temp <dbl>, roll_trap_days <int>,
+#> #   roll_count <dbl>, roll_rai <dbl>
+
+ggplot(elk_roll_avg, aes(x = date, y = roll_rai)) + 
+  geom_line(colour = "darkgreen") + 
+  theme_classic() + 
+  labs(
+    title = "Rolling seven day average of Elk RAI", 
+    x = "Date", 
+    y = "7 day rolling average RAI"
+  )
+#> Warning: Removed 6 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+```
+
+<img src="man/figures/README-rai-by-time2-1.png" width="100%" />
+
+Since the data returned by `rai_by_time` also includes snow and
+temperature data, we can plot these, and then compare RAI to these
+environment variables:
+
+``` r
+ggplot(elk_roll_avg, aes(x = date, y = roll_mean_max_snow)) + 
+  geom_line(colour = "darkblue") + 
+  theme_classic() + 
+  labs(
+    title = "Rolling seven day average of average maximum snow index across sites", 
+    x = "Date", 
+    y = "7 day rolling average of maximum snow index"
+  )
+#> Warning: Removed 6 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+```
+
+<img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
+
+We can change the way snow measurements are aggregated across sites when
+`by_deployment = FALSE`. By default it uses `max`, but we can set it to
+any aggregation function, like `mean`:
+
+``` r
+elk_roll_avg <- rai_by_time(
+  image_data, 
+  by = "date",
+  species = "Roosevelt Elk",
+  roll = TRUE,
+  snow_agg = mean
+)
+
+ggplot(elk_roll_avg, aes(x = date, y = roll_mean_mean_snow)) + 
+  geom_line(colour = "darkblue") + 
+  theme_classic() + 
+  labs(
+    title = "Rolling seven day average of average mean snow index across sites", 
+    x = "Date", 
+    y = "7 day rolling average of mean snow index"
+  )
+#> Warning: Removed 6 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+```
+
+<img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
+
+And we can compare Elk activity to snow levels:
+
+``` r
+ggplot(elk_roll_avg, aes(x = roll_mean_mean_snow, y = roll_rai, colour = mean_temperature)) + 
+  geom_point() + 
+  scale_colour_viridis_c(option = "inferno") + 
+  theme_classic() + 
+  labs(
+    title = "Rolling seven day average of Elk RAI compared to Snow Index", 
+    x = "7 day rolling average of mean Snow Index across sites", 
+    y = "7 day rolling average RAI",
+    colour = "Temperature"
+  )
+#> Warning: Removed 6 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
+```
+
+<img src="man/figures/README-unnamed-chunk-29-1.png" width="100%" />
+
+And temperature:
+
+``` r
+ggplot(elk_roll_avg, aes(x = roll_mean_temp, y = roll_rai)) + 
+  geom_point() + 
+  theme_classic() + 
+  labs(
+    title = "Rolling seven day average of Elk RAI compared to Temperature", 
+    x = "7 day rolling average of mean temperature across sites", 
+    y = "7 day rolling average RAI"
+  )
+#> Warning: Removed 6 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
+```
+
+<img src="man/figures/README-unnamed-chunk-30-1.png" width="100%" />
+
+We can compare raw counts vs snow depth across deployments. Note that
+for daily counts (`by = "date"`) when `by_deployment = TRUE`, the
+“trap_days” in each row is equal to 1, so RAI is a bit meaningless and
+we can just compare raw counts:
+
+``` r
+elk_rai_by_dep <- rai_by_time(
+  image_data, 
+  by = "date",
+  species = "Roosevelt Elk",
+  by_deployment = TRUE
+)
+
+ggplot(elk_rai_by_dep, aes(x = snow_index, y = total_count, colour = deployment_label)) + 
+  facet_wrap(vars(deployment_label)) + 
+  geom_point()
+```
+
+<img src="man/figures/README-unnamed-chunk-31-1.png" width="100%" />
+
+If we want to compare the RAI of two species, we can specify them in the
+`species` argument, and colour our plot by species (if we left the
+`species` argument blank we would get a line per species, but that looks
+visually very busy).
+
+``` r
+all_spp_roll_avg <- rai_by_time(
+  image_data, 
+  by = "date",
+  species = c("Roosevelt Elk", "Cougar"),
+  by_species = TRUE,
+  roll = TRUE
+  )
+
+ggplot(all_spp_roll_avg, aes(x = date, y = roll_rai, colour = species)) + 
+  geom_line() + 
+  theme_classic() + 
+  labs(
+    title = "Rolling seven day average of RAI for Cougar and Elk", 
+    x = "Date", 
+    y = "7 day rolling average RAI"
+  )
+#> Warning: Removed 12 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+```
+
+<img src="man/figures/README-rai-by-time3-1.png" width="100%" />
+
+Here we use it to compare the total monthly activity by all species
+among all deployments:
+
+``` r
+total_rai_by_month <- rai_by_time(
+  image_data, 
+  by = "month",
+  by_species = FALSE,
+  by_deployment = TRUE
+  )
+
+ggplot(total_rai_by_month, aes(x = month, y = rai, fill = deployment_label)) + 
+  geom_col(position = "dodge") + 
+  theme_classic() + 
+  labs(
+    title = "Monthly RAI of all species", 
+    x = "Month", 
+    y = "RAI"
+  )
+```
+
+<img src="man/figures/README-rai-by-time4-1.png" width="100%" />
 
 ### Write Data to SPI template
 
