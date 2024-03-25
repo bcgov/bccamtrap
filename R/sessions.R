@@ -192,7 +192,7 @@ make_sample_sessions <- function(image_data, sample_start_date = NULL, sample_en
       .data$trigger_mode == "timelapse" & .data$lens_obscured,
       na.rm = TRUE
     ),
-    sample_gaps = .data$n_tl_photos_lens_obscured > 0,,
+    sample_gaps = .data$n_tl_photos_lens_obscured > 0,
     trap_days = .data$n_tl_photos - .data$n_tl_photos_lens_obscured,
     .groups = "drop"
   )
@@ -202,16 +202,18 @@ make_sample_sessions <- function(image_data, sample_start_date = NULL, sample_en
 
 filter_start_end <- function(x, sample_start_date, sample_end_date) {
   if (!is.null(sample_start_date)) {
+    sstart <- lubridate::as_datetime(paste(sample_start_date, "00:00:00"))
     x <- dplyr::filter(
       x,
-      .data$date_time >= lubridate::as_datetime(paste(sample_start_date, "00:00:00"))
+      .data$date_time >= sstart
     )
   }
 
   if (!is.null(sample_end_date)) {
+    send <- lubridate::as_datetime(paste(sample_end_date, "23:59:59"))
     x <- dplyr::filter(
       x,
-      .data$date_time <= lubridate::as_datetime(paste(sample_end_date, "23:59:59"))
+      .data$date_time <= send
     )
   }
   x
