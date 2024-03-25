@@ -64,6 +64,8 @@ sample_rai <- function(image_data,
 #' @param roll should it use a rolling window? Default `FALSE`
 #' @param k the size of the rolling window. Default `7`.
 #' @param by_deployment Should it be calculated by `deployment`. Default `FALSE`
+#' @param snow_agg if `by_deployment = FALSE`, how to aggregate snow measurements
+#'   across sites. Takes an aggregation function (e.g., `mean`). Default `max`
 #'
 #' @return a data.frame of above calculated metrics
 #' @export

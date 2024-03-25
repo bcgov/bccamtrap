@@ -14,7 +14,8 @@ rai_by_time(
   by_deployment = FALSE,
   deployment_label = NULL,
   sample_start_date = NULL,
-  sample_end_date = NULL
+  sample_end_date = NULL,
+  snow_agg = max
 )
 }
 \arguments{
@@ -42,6 +43,9 @@ same start date to all deployments/sessions in the data.}
 
 \item{sample_end_date}{a custom end date. Note that this will apply the same
 start date to all deployments/sessions in the data.}
+
+\item{snow_agg}{if \code{by_deployment = FALSE}, how to aggregate snow measurements
+across sites. Takes the name of an aggregation function (e.g., \code{mean}). Default \code{max}}
 }
 \value{
 a data.frame of above calculated metrics
