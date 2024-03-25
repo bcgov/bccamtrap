@@ -68,11 +68,22 @@ test_that("rai_by_time works", {
     by_deployment = TRUE,
     roll = TRUE
   )))
+  expect_snapshot(dplyr::select(
+    rai_by_time(
+      imgs_bd,
+      "month",
+      by_species = TRUE,
+      by_deployment = TRUE,
+      roll = TRUE
+    ),
+    dplyr::contains("roll")
+  ),
+  )
   expect_snapshot(rai_by_time(
     imgs2,
     by = "date",
     species = "Roosevelt Elk",
-    by_station = FALSE,
+    by_deployment = FALSE,
     roll = TRUE
   )[["roll_rai"]])
 })
