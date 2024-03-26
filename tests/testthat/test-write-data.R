@@ -167,3 +167,9 @@ test_that("fill_spi_template_ff() works with project subsetting and no image dat
     openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
   )
 })
+
+test_that("spp_lookup() works", {
+  species <- c("Black Bear", "aMeriCan Black beaR", "Jaberwocky", "Roosevelt Elk")
+  codes <- spp_lookup(species)
+  expect_equal(codes, c("M-URAM", "M-URAM", "Jaberwocky", "M-CEEL"))
+})

@@ -367,7 +367,7 @@ get_default_columns <- function(x, sheet, dep_start_col, dep_end_col) {
       `Camera Label` = x$camera_label,
       `Detection Date` = format(x$date_time, "%d-%b-%Y"),
       `Detection Time` = format(x$date_time, "%H:%M:%S"),
-      `Species Code` = x$species,
+      `Species Code` = spp_lookup(x$species),
       `Count` = x$total_count_episode
     ),
     cli::cli_abort("Invalid sheet name: {sheet}")
@@ -386,4 +386,11 @@ lon_from_sf <- function(x) {
 
 default_spi_template <- function() {
   system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")
+}
+
+spp_lookup <- function(species) {
+  lu <- stats::setNames(spp_codes$Code, tolower(spp_codes$`English Name`))
+  code <- lu[tolower(species)]
+  code[is.na(code)] <- species[is.na(code)]
+  unname(code)
 }
