@@ -7,24 +7,48 @@ ui <- page_sidebar(
   sidebar = sidebar(
     accordion(
       accordion_panel(
-        title = "Import metadata from SPI sheet",
-        "button here"
+        "Metadata from SPI Worksheet",
+        fileInput(
+          "spi_input",
+          "Choose SPI Excel File",
+          accept = c(".xls", ".xlsx", ".xlsm")
+        )
       ),
       accordion_panel(
-        title = "Import metadata from csv field forms",
-        "button for sample stations",
-        "button for deployments"
+        "Metadata from csv Field Forms",
+        fileInput(
+          "ff_stations_input",
+          "Choose Sample Stations Field Form csv",
+          accept = ".csv"
+        ),
+        fileInput(
+          "ff_deployments_input",
+          "Choose Deployments Field Form csv",
+          accept = c(".csv")
+        )
       ),
       accordion_panel(
-        title = "Import Timelapse image data",
-        "Choose a directory or single file",
-        "button here"
+        "TimeLapse Image Data",
+        fileInput(
+          "image_input",
+          "Import Timelapse image data - select all files",
+          accept = c(".csv"),
+          multiple = TRUE
+        )
       )
     )
   ),
   navset_tab(
     nav_panel(
-      "Project Metadata"
+      "Project Metadata",
+      card(
+        "Project Information",
+        tableOutput("project_table")
+      ),
+      card(
+        "Sample Station Information",
+        tableOutput("ssi_table")
+      )
     ),
     nav_panel(
       "hello"
