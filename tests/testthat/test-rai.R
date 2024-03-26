@@ -20,8 +20,15 @@ test_that("sample_rai works", {
     sample_start_date = "2022-12-16",
     sample_end_date = "2023-02-05"
   ))
-}
-)
+
+  out1 <- sample_rai(imgs1) %>%
+    dplyr::filter(species != "Unknown")
+  expect_true(all(out1$n_detections <= out1$total_count))
+
+  out2 <- sample_rai(imgs2) %>%
+    dplyr::filter(species != "Unknown")
+  expect_true(all(out2$n_detections <= out2$total_count))
+})
 
 test_that("rai_by_time works", {
   imgs1 <- read_image_data(test_dir_1)

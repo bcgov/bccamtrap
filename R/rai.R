@@ -43,12 +43,13 @@ sample_rai <- function(image_data,
     sample_start_date = min(.data$sample_start_date, na.rm = TRUE),
     sample_end_date = max(.data$sample_end_date, na.rm = TRUE),
     trap_days = max(.data$trap_days, na.rm = TRUE),
+    n_detections = n(),
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
     rai = sum(.data$total_count, na.rm = TRUE) / max(.data$trap_days, na.rm = TRUE),
     .groups = "drop"
   )
 
-  dplyr::relocate(out, dplyr::any_of("species"), .before = "total_count")
+  dplyr::relocate(out, dplyr::any_of("species"), .before = "n_detections")
 
 }
 
