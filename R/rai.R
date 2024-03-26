@@ -43,7 +43,7 @@ sample_rai <- function(image_data,
     sample_start_date = min(.data$sample_start_date, na.rm = TRUE),
     sample_end_date = max(.data$sample_end_date, na.rm = TRUE),
     trap_days = max(.data$trap_days, na.rm = TRUE),
-    n_detections = n(),
+    n_detections = sum(!is.na(.data$species), na.rm = TRUE),
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
     rai = sum(.data$total_count, na.rm = TRUE) / max(.data$trap_days, na.rm = TRUE),
     .groups = "drop"
@@ -99,6 +99,7 @@ rai_by_time <- function(image_data,
   effort <- make_effort(image_data)
 
   dat <- filter_if_not_null(image_data, species)
+  # TODO: Should we filter so there are no NA species? #19
 
   # Always do stats by deployment first because need to join with
   # effort, then collapse later if by_deployment = FALSE
@@ -113,6 +114,7 @@ rai_by_time <- function(image_data,
 
   dat <- dplyr::summarise(
     dat,
+    n_detections = sum(!is.na(.data$species), na.rm = TRUE),
     total_count = sum(.data$total_count_episode, na.rm = TRUE)
   )
 
@@ -149,6 +151,7 @@ rai_by_time <- function(image_data,
       end_date = max(.data$date),
       "{snow_agg_name}_snow_index" := snow_agg(.data$snow_index, na.rm = TRUE),
       mean_temperature = mean(.data$temperature, na.rm = TRUE),
+      n_detections = sum(.data$n_detections, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
       trap_days = dplyr::n_distinct(.data$deployment_label),
       rai = .data$total_count / .data$trap_days,
@@ -175,6 +178,7 @@ rai_by_time <- function(image_data,
         ),
         roll_mean_temp = zoo::rollmean(.data$mean_temperature, k = k, fill = NA, na.rm = TRUE),
         roll_trap_days = zoo::rollsum(.data$trap_days, k = k, fill = NA, na.rm = TRUE),
+        roll_detections = zoo::rollsum(.data$n_detections, k = k, fill = NA, na.rm = TRUE),
         roll_count = zoo::rollsum(.data$total_count, k = k, fill = NA, na.rm = TRUE),
         roll_rai = .data$roll_count / .data$roll_trap_days
       )
@@ -262,7 +266,7 @@ complete_daily_counts <- function(x) {
         !!rlang::sym("temperature")
       ),
       !!rlang::sym("species"),
-      fill = list(total_count = 0)
+      fill = list(n_detections = 0, total_count = 0)
     ) %>%
     dplyr::ungroup()
 }

@@ -130,3 +130,24 @@ test_that("rai_by_time with different agg functions", {
     1.697
   )
 })
+
+test_that("n_detections is less or equal to total_count", {
+  imgs1 <- read_image_data(test_dir_1)
+  imgs2 <- read_image_data(test_dir_2)
+  imgs_bd <- read_image_data(test_bd_img_csv)
+
+  out1 <- rai_by_time(imgs1, by_species = TRUE) %>%
+    dplyr::filter(!is.na(species), species != "Unknown")
+
+  expect_true(all(out1$n_detections <= out1$total_count))
+
+  out2 <- rai_by_time(imgs2, by_species = FALSE, by_deployment = TRUE) %>%
+    dplyr::filter(total_count != 0) # #19 - should not need if filter to only species not NA
+
+  expect_true(all(out2$n_detections <= out2$total_count))
+
+  out3 <- rai_by_time(imgs_bd, by = "month") %>%
+    dplyr::filter(!is.na(species), species != "Unknown")
+
+  expect_true(all(out3$n_detections <= out3$total_count))
+})
