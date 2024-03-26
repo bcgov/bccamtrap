@@ -4,7 +4,8 @@
 #' from the timelapse photo for each day into the motion photos for that day,
 #' to facilitate analysis.
 #'
-#' @param path path to directory of image files.
+#' @param path path to directory of image files, a single .csv file, or a character
+#'   vector of .csv files.
 #' @param pattern an optional regular expression. Only file names which match
 #'   the regular expression will read. Default `FALSE`.
 #' @param recursive should files found within subfolders of `path` also be read?
@@ -13,11 +14,11 @@
 #' @return a `data.frame` of Timelapse image data from the files found in `path`
 #' @export
 read_image_data <- function(path, pattern, recursive = FALSE, ...) {
-  if (!file.exists(path)) {
+  if (!all(file.exists(path))) {
     cli::cli_abort("Directory {.path {path}} does not exist")
   }
 
-  if (grepl("\\.csv$", path)) {
+  if (any(grepl("\\.csv$", path))) {
     csvfiles <- path
   } else {
     csvfiles <- list.files(
