@@ -25,7 +25,27 @@ test_that("fill_spi_template() works", {
   ss <- hide_names(read_sample_station_info(test_meta_file1))
   ci <- hide_names(read_camera_info(test_meta_file1))
   csc <- hide_names(read_cam_setup_checks(test_meta_file1))
-  imgs_1 <- hide_names(read_image_data(test_dir_1, n_max = 1))
+  imgs_1 <- hide_names(read_image_data(test_dir_1, n_max = 2))
+  imgs_1$species[1:18] <- c(
+    "Roosevelt Elk",
+    "Mule Deer",
+    "Black Bear",
+    "American Black Bear",
+    "Racoon",
+    "Cougar",
+    "grey wolf",
+    "Ermine anguinae",
+    "Pacific Marten",
+    "Red Squirrel",
+    "Mink",
+    "Beaver",
+    "RIVER OTTER",
+    "Muskrat",
+    "Vancouver Island Marmot",
+    "Jaberwocky",
+    "Avian (Comments)",
+    "Unknown"
+  )
   temp_dir <- withr::local_tempdir()
   out_xls <- file.path(temp_dir, "out1.xlsm")
 
@@ -121,7 +141,7 @@ test_that("fill_spi_template_ff() works", {
   ss <- read_sample_station_csv(test_path("sample-station-field-form.csv"))
   dep <- read_deployments_csv(test_path("deployments-field-form.csv"))
 
-  imgs_1 <- read_image_data(test_dir_1, n_max = 1)
+  imgs_1 <- read_image_data(test_dir_1, n_max = 5)
   temp_dir <- withr::local_tempdir()
   out_xls <- file.path(temp_dir, "out1.xlsm")
 
@@ -166,4 +186,10 @@ test_that("fill_spi_template_ff() works with project subsetting and no image dat
   expect_snapshot(
     openxlsx2::read_xlsx(out_xls, sheet = "Sequence Image Data")
   )
+})
+
+test_that("spp_lookup() works", {
+  species <- c("Black Bear", "aMeriCan Black beaR", "Jaberwocky", "Roosevelt Elk")
+  codes <- spp_lookup(species)
+  expect_equal(codes, c("M-URAM", "M-URAM", "Jaberwocky", "M-CEEL"))
 })

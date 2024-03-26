@@ -40,5 +40,3 @@ tl_template_v20230518_1 <- lapply(seq_len(nrow(template_tbl)), \(i) {
 })
 
 names(tl_template_v20230518_1) <- template_tbl$DataLabel
-
-usethis::use_data(tl_template_v20230518_1, overwrite = TRUE, internal = TRUE)
