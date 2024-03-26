@@ -1,5 +1,3 @@
-library(shiny)
-library(bslib)
 
 ui <- page_sidebar(
   theme = bs_theme(version = 5, bootswatch = "cerulean"),
@@ -45,9 +43,20 @@ ui <- page_sidebar(
         "Project Information",
         tableOutput("project_table")
       ),
-      card(
-        "Sample Station Information",
-        tableOutput("ssi_table")
+      navset_pill(
+        nav_panel(
+          "Sample Station Information",
+          DTOutput("ssi_table")
+        ),
+        nav_panel(
+          "Sample Station Map",
+          card(
+            leafletOutput("ssi_map")
+          ),
+          card(
+            verbatimTextOutput("ssi_qa_spatial")
+          )
+        )
       )
     ),
     nav_panel(

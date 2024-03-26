@@ -17,6 +17,7 @@ Imports:
     bcmaps (>= 2.2.0),
     cli,
     dplyr,
+    DT,
     ggiraph,
     ggplot2,
     glue,
