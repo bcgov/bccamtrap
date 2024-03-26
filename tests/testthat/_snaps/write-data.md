@@ -334,28 +334,50 @@
     Output
          Study Area Name Camera Label Detection Date Detection Time
       X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      X           Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
       X           Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
       X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
       X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
       X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
-      X           Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
       X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
-      X           Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
       XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
       XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
       XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
-         Air Temperature (C) Sequence Definition (s) Species Code Count
-      X                   NA                      NA           NA    NA
-      X                   NA                      NA           NA    NA
-      X                   NA                      NA           NA     X
-      X                   NA                      NA           NA    NA
-      X                   NA                      NA           NA     X
-      X                   NA                      NA           NA    NA
-      X                   NA                      NA           NA    NA
-      X                   NA                      NA           NA    NA
-      XX                  NA                      NA           NA     X
-      XX                  NA                      NA           NA     X
-      XX                  NA                      NA           NA    NA
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Nov-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+      XX          Hidden      EcoXXXX    XX-Dec-XXXX       XX:XX:XX
+         Air Temperature (C) Sequence Definition (s)     Species Code Count
+      X                   NA                      NA           M-CEEL    NA
+      X                   NA                      NA           M-ODHE    NA
+      X                   NA                      NA           M-URAM    NA
+      X                   NA                      NA           M-URAM    NA
+      X                   NA                      NA           M-PRLO     X
+      X                   NA                      NA           M-PUCO    NA
+      X                   NA                      NA           M-CALU    NA
+      X                   NA                      NA           M-MUER    NA
+      XX                  NA                      NA           M-MACA     X
+      XX                  NA                      NA           M-TAHU    NA
+      XX                  NA                      NA           M-NEVI    NA
+      XX                  NA                      NA           M-CACA    NA
+      XX                  NA                      NA           M-LOCA    NA
+      XX                  NA                      NA           M-ONZI    NA
+      XX                  NA                      NA           M-MAVA    NA
+      XX                  NA                      NA       Jaberwocky    NA
+      XX                  NA                      NA Avian (Comments)     X
+      XX                  NA                      NA          Unknown    NA
+      XX                  NA                      NA             <NA>     X
+      XX                  NA                      NA             <NA>    NA
+      XX                  NA                      NA             <NA>    NA
+      XX                  NA                      NA             <NA>    NA
          Life Stage Code Sex Code Adult Males Adult Females Adults - Unclassified Sex
       X               NA       NA          NA            NA                        NA
       X               NA       NA          NA            NA                        NA
@@ -365,6 +387,17 @@
       X               NA       NA          NA            NA                        NA
       X               NA       NA          NA            NA                        NA
       X               NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
+      XX              NA       NA          NA            NA                        NA
       XX              NA       NA          NA            NA                        NA
       XX              NA       NA          NA            NA                        NA
       XX              NA       NA          NA            NA                        NA
@@ -380,6 +413,17 @@
       XX             NA               NA                           NA             NA
       XX             NA               NA                           NA             NA
       XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
+      XX             NA               NA                           NA             NA
          Yearling Females Yearlings - Unclassified Sex
       X                NA                           NA
       X                NA                           NA
@@ -389,6 +433,17 @@
       X                NA                           NA
       X                NA                           NA
       X                NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
+      XX               NA                           NA
       XX               NA                           NA
       XX               NA                           NA
       XX               NA                           NA
@@ -404,6 +459,17 @@
       XX                              NA                                NA
       XX                              NA                                NA
       XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
+      XX                              NA                                NA
          Unclassified Life Stage and Sex Activity Code Animal ID
       X                               NA            NA        NA
       X                               NA            NA        NA
@@ -413,6 +479,17 @@
       X                               NA            NA        NA
       X                               NA            NA        NA
       X                               NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
+      XX                              NA            NA        NA
       XX                              NA            NA        NA
       XX                              NA            NA        NA
       XX                              NA            NA        NA
@@ -428,6 +505,17 @@
       XX                        NA                  NA                        NA
       XX                        NA                  NA                        NA
       XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
+      XX                        NA                  NA                        NA
          Surveyor Comments Add your new column here
       X        NA       NA                       NA
       X        NA       NA                       NA
@@ -437,6 +525,17 @@
       X        NA       NA                       NA
       X        NA       NA                       NA
       X        NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
+      XX       NA       NA                       NA
       XX       NA       NA                       NA
       XX       NA       NA                       NA
       XX       NA       NA                       NA
@@ -1213,28 +1312,116 @@
     Output
          Study Area Name Camera Label Detection Date Detection Time
       2       McKay Lake           NA    16-Dec-2022       00:00:00
-      3       McKay Lake           NA    28-Nov-2022       14:52:04
-      4       McKay Lake           NA    16-Dec-2022       13:16:17
-      5       McKay Lake           NA    17-Dec-2022       12:00:00
-      6       McKay Lake           NA    16-Dec-2022       16:18:28
-      7       McKay Lake           NA    28-Nov-2022       13:00:49
-      8       McKay Lake           NA    17-Dec-2022       12:00:00
-      9       McKay Lake           NA    16-Dec-2022       12:00:00
-      10      McKay Lake           NA    28-Nov-2022       15:50:38
-      11      McKay Lake           NA    28-Nov-2022       11:19:24
-      12      McKay Lake           NA    16-Dec-2022       12:00:00
+      3       McKay Lake           NA    17-Dec-2022       00:00:00
+      4       McKay Lake           NA    18-Dec-2022       00:00:00
+      5       McKay Lake           NA    18-Dec-2022       00:12:21
+      6       McKay Lake           NA    18-Dec-2022       00:12:22
+      7       McKay Lake           NA    28-Nov-2022       14:52:04
+      8       McKay Lake           NA    30-Nov-2022       00:00:00
+      9       McKay Lake           NA    01-Dec-2022       00:00:00
+      10      McKay Lake           NA    02-Dec-2022       00:00:00
+      11      McKay Lake           NA    03-Dec-2022       00:00:00
+      12      McKay Lake           NA    16-Dec-2022       13:16:17
+      13      McKay Lake           NA    16-Dec-2022       13:16:19
+      14      McKay Lake           NA    16-Dec-2022       13:16:22
+      15      McKay Lake           NA    17-Dec-2022       12:00:00
+      16      McKay Lake           NA    18-Dec-2022       12:00:00
+      17      McKay Lake           NA    17-Dec-2022       12:00:00
+      18      McKay Lake           NA    18-Dec-2022       12:00:00
+      19      McKay Lake           NA    18-Dec-2022       15:26:50
+      20      McKay Lake           NA    18-Dec-2022       15:26:51
+      21      McKay Lake           NA    18-Dec-2022       15:26:52
+      22      McKay Lake           NA    16-Dec-2022       16:18:28
+      23      McKay Lake           NA    16-Dec-2022       16:18:29
+      24      McKay Lake           NA    16-Dec-2022       16:18:30
+      25      McKay Lake           NA    16-Dec-2022       16:18:31
+      26      McKay Lake           NA    16-Dec-2022       16:18:37
+      27      McKay Lake           NA    28-Nov-2022       13:00:49
+      28      McKay Lake           NA    28-Nov-2022       14:01:10
+      29      McKay Lake           NA    28-Nov-2022       14:01:25
+      30      McKay Lake           NA    28-Nov-2022       14:01:26
+      31      McKay Lake           NA    29-Nov-2022       12:00:00
+      32      McKay Lake           NA    17-Dec-2022       12:00:00
+      33      McKay Lake           NA    18-Dec-2022       12:00:00
+      34      McKay Lake           NA    19-Dec-2022       12:00:00
+      35      McKay Lake           NA    20-Dec-2022       12:00:00
+      36      McKay Lake           NA    21-Dec-2022       12:00:00
+      37      McKay Lake           NA    16-Dec-2022       12:00:00
+      38      McKay Lake           NA    17-Dec-2022       12:00:00
+      39      McKay Lake           NA    18-Dec-2022       12:00:00
+      40      McKay Lake           NA    19-Dec-2022       12:00:00
+      41      McKay Lake           NA    20-Dec-2022       12:00:00
+      42      McKay Lake           NA    28-Nov-2022       15:50:38
+      43      McKay Lake           NA    28-Nov-2022       15:50:40
+      44      McKay Lake           NA    28-Nov-2022       15:50:41
+      45      McKay Lake           NA    28-Nov-2022       15:50:44
+      46      McKay Lake           NA    29-Nov-2022       00:58:14
+      47      McKay Lake           NA    28-Nov-2022       11:19:24
+      48      McKay Lake           NA    28-Nov-2022       11:21:42
+      49      McKay Lake           NA    28-Nov-2022       11:21:44
+      50      McKay Lake           NA    28-Nov-2022       11:21:45
+      51      McKay Lake           NA    28-Nov-2022       11:21:46
+      52      McKay Lake           NA    16-Dec-2022       12:00:00
+      53      McKay Lake           NA    17-Dec-2022       12:00:00
+      54      McKay Lake           NA    18-Dec-2022       12:00:00
+      55      McKay Lake           NA    19-Dec-2022       12:00:00
+      56      McKay Lake           NA    19-Dec-2022       15:14:56
          Air Temperature (C) Sequence Definition (s) Species Code Count
-      2                   NA                      NA           NA    NA
-      3                   NA                      NA           NA    NA
-      4                   NA                      NA           NA     1
-      5                   NA                      NA           NA    NA
-      6                   NA                      NA           NA     1
-      7                   NA                      NA           NA    NA
-      8                   NA                      NA           NA    NA
-      9                   NA                      NA           NA    NA
-      10                  NA                      NA           NA     1
-      11                  NA                      NA           NA     1
-      12                  NA                      NA           NA    NA
+      2                   NA                      NA         <NA>    NA
+      3                   NA                      NA         <NA>    NA
+      4                   NA                      NA         <NA>    NA
+      5                   NA                      NA         <NA>    NA
+      6                   NA                      NA         <NA>    NA
+      7                   NA                      NA         <NA>    NA
+      8                   NA                      NA         <NA>    NA
+      9                   NA                      NA         <NA>    NA
+      10                  NA                      NA         <NA>    NA
+      11                  NA                      NA         <NA>    NA
+      12                  NA                      NA         <NA>     1
+      13                  NA                      NA         <NA>    NA
+      14                  NA                      NA         <NA>    NA
+      15                  NA                      NA         <NA>    NA
+      16                  NA                      NA         <NA>    NA
+      17                  NA                      NA         <NA>    NA
+      18                  NA                      NA         <NA>    NA
+      19                  NA                      NA         <NA>    NA
+      20                  NA                      NA       M-CEEL     1
+      21                  NA                      NA         <NA>    NA
+      22                  NA                      NA         <NA>     1
+      23                  NA                      NA         <NA>    NA
+      24                  NA                      NA         <NA>    NA
+      25                  NA                      NA         <NA>    NA
+      26                  NA                      NA         <NA>    NA
+      27                  NA                      NA         <NA>    NA
+      28                  NA                      NA         <NA>    NA
+      29                  NA                      NA         <NA>    NA
+      30                  NA                      NA         <NA>    NA
+      31                  NA                      NA         <NA>    NA
+      32                  NA                      NA         <NA>    NA
+      33                  NA                      NA         <NA>    NA
+      34                  NA                      NA         <NA>    NA
+      35                  NA                      NA         <NA>    NA
+      36                  NA                      NA         <NA>    NA
+      37                  NA                      NA         <NA>    NA
+      38                  NA                      NA         <NA>    NA
+      39                  NA                      NA         <NA>    NA
+      40                  NA                      NA         <NA>    NA
+      41                  NA                      NA         <NA>    NA
+      42                  NA                      NA         <NA>     1
+      43                  NA                      NA         <NA>    NA
+      44                  NA                      NA         <NA>    NA
+      45                  NA                      NA         <NA>    NA
+      46                  NA                      NA       M-ODHE     1
+      47                  NA                      NA         <NA>     1
+      48                  NA                      NA         <NA>    NA
+      49                  NA                      NA         <NA>    NA
+      50                  NA                      NA         <NA>    NA
+      51                  NA                      NA         <NA>    NA
+      52                  NA                      NA         <NA>    NA
+      53                  NA                      NA         <NA>    NA
+      54                  NA                      NA         <NA>    NA
+      55                  NA                      NA         <NA>    NA
+      56                  NA                      NA         <NA>    NA
          Life Stage Code Sex Code Adult Males Adult Females Adults - Unclassified Sex
       2               NA       NA          NA            NA                        NA
       3               NA       NA          NA            NA                        NA
@@ -1247,6 +1434,50 @@
       10              NA       NA          NA            NA                        NA
       11              NA       NA          NA            NA                        NA
       12              NA       NA          NA            NA                        NA
+      13              NA       NA          NA            NA                        NA
+      14              NA       NA          NA            NA                        NA
+      15              NA       NA          NA            NA                        NA
+      16              NA       NA          NA            NA                        NA
+      17              NA       NA          NA            NA                        NA
+      18              NA       NA          NA            NA                        NA
+      19              NA       NA          NA            NA                        NA
+      20              NA       NA          NA            NA                        NA
+      21              NA       NA          NA            NA                        NA
+      22              NA       NA          NA            NA                        NA
+      23              NA       NA          NA            NA                        NA
+      24              NA       NA          NA            NA                        NA
+      25              NA       NA          NA            NA                        NA
+      26              NA       NA          NA            NA                        NA
+      27              NA       NA          NA            NA                        NA
+      28              NA       NA          NA            NA                        NA
+      29              NA       NA          NA            NA                        NA
+      30              NA       NA          NA            NA                        NA
+      31              NA       NA          NA            NA                        NA
+      32              NA       NA          NA            NA                        NA
+      33              NA       NA          NA            NA                        NA
+      34              NA       NA          NA            NA                        NA
+      35              NA       NA          NA            NA                        NA
+      36              NA       NA          NA            NA                        NA
+      37              NA       NA          NA            NA                        NA
+      38              NA       NA          NA            NA                        NA
+      39              NA       NA          NA            NA                        NA
+      40              NA       NA          NA            NA                        NA
+      41              NA       NA          NA            NA                        NA
+      42              NA       NA          NA            NA                        NA
+      43              NA       NA          NA            NA                        NA
+      44              NA       NA          NA            NA                        NA
+      45              NA       NA          NA            NA                        NA
+      46              NA       NA          NA            NA                        NA
+      47              NA       NA          NA            NA                        NA
+      48              NA       NA          NA            NA                        NA
+      49              NA       NA          NA            NA                        NA
+      50              NA       NA          NA            NA                        NA
+      51              NA       NA          NA            NA                        NA
+      52              NA       NA          NA            NA                        NA
+      53              NA       NA          NA            NA                        NA
+      54              NA       NA          NA            NA                        NA
+      55              NA       NA          NA            NA                        NA
+      56              NA       NA          NA            NA                        NA
          Juvenile Males Juvenile Females Juveniles - Unclassified Sex Yearling Males
       2              NA               NA                           NA             NA
       3              NA               NA                           NA             NA
@@ -1259,6 +1490,50 @@
       10             NA               NA                           NA             NA
       11             NA               NA                           NA             NA
       12             NA               NA                           NA             NA
+      13             NA               NA                           NA             NA
+      14             NA               NA                           NA             NA
+      15             NA               NA                           NA             NA
+      16             NA               NA                           NA             NA
+      17             NA               NA                           NA             NA
+      18             NA               NA                           NA             NA
+      19             NA               NA                           NA             NA
+      20             NA               NA                           NA             NA
+      21             NA               NA                           NA             NA
+      22             NA               NA                           NA             NA
+      23             NA               NA                           NA             NA
+      24             NA               NA                           NA             NA
+      25             NA               NA                           NA             NA
+      26             NA               NA                           NA             NA
+      27             NA               NA                           NA             NA
+      28             NA               NA                           NA             NA
+      29             NA               NA                           NA             NA
+      30             NA               NA                           NA             NA
+      31             NA               NA                           NA             NA
+      32             NA               NA                           NA             NA
+      33             NA               NA                           NA             NA
+      34             NA               NA                           NA             NA
+      35             NA               NA                           NA             NA
+      36             NA               NA                           NA             NA
+      37             NA               NA                           NA             NA
+      38             NA               NA                           NA             NA
+      39             NA               NA                           NA             NA
+      40             NA               NA                           NA             NA
+      41             NA               NA                           NA             NA
+      42             NA               NA                           NA             NA
+      43             NA               NA                           NA             NA
+      44             NA               NA                           NA             NA
+      45             NA               NA                           NA             NA
+      46             NA               NA                           NA             NA
+      47             NA               NA                           NA             NA
+      48             NA               NA                           NA             NA
+      49             NA               NA                           NA             NA
+      50             NA               NA                           NA             NA
+      51             NA               NA                           NA             NA
+      52             NA               NA                           NA             NA
+      53             NA               NA                           NA             NA
+      54             NA               NA                           NA             NA
+      55             NA               NA                           NA             NA
+      56             NA               NA                           NA             NA
          Yearling Females Yearlings - Unclassified Sex
       2                NA                           NA
       3                NA                           NA
@@ -1271,6 +1546,50 @@
       10               NA                           NA
       11               NA                           NA
       12               NA                           NA
+      13               NA                           NA
+      14               NA                           NA
+      15               NA                           NA
+      16               NA                           NA
+      17               NA                           NA
+      18               NA                           NA
+      19               NA                           NA
+      20               NA                           NA
+      21               NA                           NA
+      22               NA                           NA
+      23               NA                           NA
+      24               NA                           NA
+      25               NA                           NA
+      26               NA                           NA
+      27               NA                           NA
+      28               NA                           NA
+      29               NA                           NA
+      30               NA                           NA
+      31               NA                           NA
+      32               NA                           NA
+      33               NA                           NA
+      34               NA                           NA
+      35               NA                           NA
+      36               NA                           NA
+      37               NA                           NA
+      38               NA                           NA
+      39               NA                           NA
+      40               NA                           NA
+      41               NA                           NA
+      42               NA                           NA
+      43               NA                           NA
+      44               NA                           NA
+      45               NA                           NA
+      46               NA                           NA
+      47               NA                           NA
+      48               NA                           NA
+      49               NA                           NA
+      50               NA                           NA
+      51               NA                           NA
+      52               NA                           NA
+      53               NA                           NA
+      54               NA                           NA
+      55               NA                           NA
+      56               NA                           NA
          Males - Unclassified Life Stage Females - Unclassified Life Stage
       2                               NA                                NA
       3                               NA                                NA
@@ -1283,6 +1602,50 @@
       10                              NA                                NA
       11                              NA                                NA
       12                              NA                                NA
+      13                              NA                                NA
+      14                              NA                                NA
+      15                              NA                                NA
+      16                              NA                                NA
+      17                              NA                                NA
+      18                              NA                                NA
+      19                              NA                                NA
+      20                              NA                                NA
+      21                              NA                                NA
+      22                              NA                                NA
+      23                              NA                                NA
+      24                              NA                                NA
+      25                              NA                                NA
+      26                              NA                                NA
+      27                              NA                                NA
+      28                              NA                                NA
+      29                              NA                                NA
+      30                              NA                                NA
+      31                              NA                                NA
+      32                              NA                                NA
+      33                              NA                                NA
+      34                              NA                                NA
+      35                              NA                                NA
+      36                              NA                                NA
+      37                              NA                                NA
+      38                              NA                                NA
+      39                              NA                                NA
+      40                              NA                                NA
+      41                              NA                                NA
+      42                              NA                                NA
+      43                              NA                                NA
+      44                              NA                                NA
+      45                              NA                                NA
+      46                              NA                                NA
+      47                              NA                                NA
+      48                              NA                                NA
+      49                              NA                                NA
+      50                              NA                                NA
+      51                              NA                                NA
+      52                              NA                                NA
+      53                              NA                                NA
+      54                              NA                                NA
+      55                              NA                                NA
+      56                              NA                                NA
          Unclassified Life Stage and Sex Activity Code Animal ID
       2                               NA            NA        NA
       3                               NA            NA        NA
@@ -1295,6 +1658,50 @@
       10                              NA            NA        NA
       11                              NA            NA        NA
       12                              NA            NA        NA
+      13                              NA            NA        NA
+      14                              NA            NA        NA
+      15                              NA            NA        NA
+      16                              NA            NA        NA
+      17                              NA            NA        NA
+      18                              NA            NA        NA
+      19                              NA            NA        NA
+      20                              NA            NA        NA
+      21                              NA            NA        NA
+      22                              NA            NA        NA
+      23                              NA            NA        NA
+      24                              NA            NA        NA
+      25                              NA            NA        NA
+      26                              NA            NA        NA
+      27                              NA            NA        NA
+      28                              NA            NA        NA
+      29                              NA            NA        NA
+      30                              NA            NA        NA
+      31                              NA            NA        NA
+      32                              NA            NA        NA
+      33                              NA            NA        NA
+      34                              NA            NA        NA
+      35                              NA            NA        NA
+      36                              NA            NA        NA
+      37                              NA            NA        NA
+      38                              NA            NA        NA
+      39                              NA            NA        NA
+      40                              NA            NA        NA
+      41                              NA            NA        NA
+      42                              NA            NA        NA
+      43                              NA            NA        NA
+      44                              NA            NA        NA
+      45                              NA            NA        NA
+      46                              NA            NA        NA
+      47                              NA            NA        NA
+      48                              NA            NA        NA
+      49                              NA            NA        NA
+      50                              NA            NA        NA
+      51                              NA            NA        NA
+      52                              NA            NA        NA
+      53                              NA            NA        NA
+      54                              NA            NA        NA
+      55                              NA            NA        NA
+      56                              NA            NA        NA
          Human Transport Mode Code Human Use Type Code Survey Observation Photos
       2                         NA                  NA                        NA
       3                         NA                  NA                        NA
@@ -1307,6 +1714,50 @@
       10                        NA                  NA                        NA
       11                        NA                  NA                        NA
       12                        NA                  NA                        NA
+      13                        NA                  NA                        NA
+      14                        NA                  NA                        NA
+      15                        NA                  NA                        NA
+      16                        NA                  NA                        NA
+      17                        NA                  NA                        NA
+      18                        NA                  NA                        NA
+      19                        NA                  NA                        NA
+      20                        NA                  NA                        NA
+      21                        NA                  NA                        NA
+      22                        NA                  NA                        NA
+      23                        NA                  NA                        NA
+      24                        NA                  NA                        NA
+      25                        NA                  NA                        NA
+      26                        NA                  NA                        NA
+      27                        NA                  NA                        NA
+      28                        NA                  NA                        NA
+      29                        NA                  NA                        NA
+      30                        NA                  NA                        NA
+      31                        NA                  NA                        NA
+      32                        NA                  NA                        NA
+      33                        NA                  NA                        NA
+      34                        NA                  NA                        NA
+      35                        NA                  NA                        NA
+      36                        NA                  NA                        NA
+      37                        NA                  NA                        NA
+      38                        NA                  NA                        NA
+      39                        NA                  NA                        NA
+      40                        NA                  NA                        NA
+      41                        NA                  NA                        NA
+      42                        NA                  NA                        NA
+      43                        NA                  NA                        NA
+      44                        NA                  NA                        NA
+      45                        NA                  NA                        NA
+      46                        NA                  NA                        NA
+      47                        NA                  NA                        NA
+      48                        NA                  NA                        NA
+      49                        NA                  NA                        NA
+      50                        NA                  NA                        NA
+      51                        NA                  NA                        NA
+      52                        NA                  NA                        NA
+      53                        NA                  NA                        NA
+      54                        NA                  NA                        NA
+      55                        NA                  NA                        NA
+      56                        NA                  NA                        NA
          Surveyor Comments Add your new column here
       2        NA       NA                       NA
       3        NA       NA                       NA
@@ -1319,6 +1770,50 @@
       10       NA       NA                       NA
       11       NA       NA                       NA
       12       NA       NA                       NA
+      13       NA       NA                       NA
+      14       NA       NA                       NA
+      15       NA       NA                       NA
+      16       NA       NA                       NA
+      17       NA       NA                       NA
+      18       NA       NA                       NA
+      19       NA       NA                       NA
+      20       NA       NA                       NA
+      21       NA       NA                       NA
+      22       NA       NA                       NA
+      23       NA       NA                       NA
+      24       NA       NA                       NA
+      25       NA       NA                       NA
+      26       NA       NA                       NA
+      27       NA       NA                       NA
+      28       NA       NA                       NA
+      29       NA       NA                       NA
+      30       NA       NA                       NA
+      31       NA       NA                       NA
+      32       NA       NA                       NA
+      33       NA       NA                       NA
+      34       NA       NA                       NA
+      35       NA       NA                       NA
+      36       NA       NA                       NA
+      37       NA       NA                       NA
+      38       NA       NA                       NA
+      39       NA       NA                       NA
+      40       NA       NA                       NA
+      41       NA       NA                       NA
+      42       NA       NA                       NA
+      43       NA       NA                       NA
+      44       NA       NA                       NA
+      45       NA       NA                       NA
+      46       NA       NA                       NA
+      47       NA       NA                       NA
+      48       NA       NA                       NA
+      49       NA       NA                       NA
+      50       NA       NA                       NA
+      51       NA       NA                       NA
+      52       NA       NA                       NA
+      53       NA       NA                       NA
+      54       NA       NA                       NA
+      55       NA       NA                       NA
+      56       NA       NA                       NA
 
 # fill_spi_template_ff() works with project subsetting and no image data
 
