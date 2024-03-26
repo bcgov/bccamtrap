@@ -67,6 +67,21 @@
 <!-- badges: start -->
 
 <p>Functions for QA and validation of Camera Trap data</p>
+<ol style="list-style-type: decimal">
+<li><a href="#installation">Installation</a></li>
+<li>
+<a href="#example-usage">Example Usage</a>
+<ol style="list-style-type: decimal">
+<li><a href="#project-and-station-metadata">Project and station metadata</a></li>
+<li><a href="#project-metadata-field-form-csv-files">Project Metadata: Field Form CSV files</a></li>
+<li><a href="#image-data">Image data</a></li>
+<li><a href="#built-in-plotting-functions">Built-in plotting functions</a></li>
+<li><a href="#sampling-sessions">Sampling sessions</a></li>
+<li><a href="#analysis-data">Analysis data</a></li>
+<li><a href="#write-data-to-spi-template">Write Data to SPI template</a></li>
+</ol>
+</li>
+</ol>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -573,9 +588,9 @@
 <h3 id="analysis-data">Analysis data<a class="anchor" aria-label="anchor" href="#analysis-data"></a>
 </h3>
 <div class="section level4">
-<h4 id="relative-activity-index-rai">Relative Activity Index (RAI)<a class="anchor" aria-label="anchor" href="#relative-activity-index-rai"></a>
+<h4 id="relative-abundance-index-rai">Relative Abundance Index (RAI)<a class="anchor" aria-label="anchor" href="#relative-abundance-index-rai"></a>
 </h4>
-<p>Calculate Relative Activity Index for sample sessions using <code><a href="reference/sample_rai.html">sample_rai()</a></code>. By default, it calculates RAI per species using the sample start and end dates in the data for each deployment:</p>
+<p>Calculate Relative Abundance Index for sample sessions using <code><a href="reference/sample_rai.html">sample_rai()</a></code>. By default, it calculates RAI per species using the sample start and end dates in the data for each deployment:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 53 × 7</span></span>
@@ -651,7 +666,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"RAI of all species detected, across all deployments"</span>, </span>
 <span>       caption <span class="op">=</span> <span class="st">"Numbers beside points represent total number of individuals detected"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"Relative Activity Index"</span>, y <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
+<span>       x <span class="op">=</span> <span class="st">"Relative Abundance Index"</span>, y <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-sample-rai4-plot-1.png" width="100%"></p>
 <p>We can group by deployment to compare across deployments:</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
@@ -669,11 +684,11 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"RAI of all species detected, across all deployments"</span>, </span>
 <span>       caption <span class="op">=</span> <span class="st">"Numbers beside points represent total number of individuals detected"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"Relative Activity Index"</span>, y <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
+<span>       x <span class="op">=</span> <span class="st">"Relative Abundance Index"</span>, y <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-sample-rai-5-1.png" width="100%"></p>
 </div>
 <div class="section level4">
-<h4 id="relative-activity-index-rai-over-time">Relative Activity Index (RAI) over time<a class="anchor" aria-label="anchor" href="#relative-activity-index-rai-over-time"></a>
+<h4 id="relative-abundance-index-rai-over-time">Relative Abundance Index (RAI) over time<a class="anchor" aria-label="anchor" href="#relative-abundance-index-rai-over-time"></a>
 </h4>
 <p>Use <code><a href="reference/rai_by_time.html">rai_by_time()</a></code> to calculate RAI over a time window, optionally calculating statistics using a moving window aggregation. You can calculate daily statistics, or aggregate by week, month, or year. By default, it calculates daily metrics, aggregating across deployments.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
@@ -758,7 +773,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of average mean snow index across sites"</span>, </span>
+<span>    title <span class="op">=</span> <span class="st">"Rolling seven day average of mean snow index across sites"</span>, </span>
 <span>    x <span class="op">=</span> <span class="st">"Date"</span>, </span>
 <span>    y <span class="op">=</span> <span class="st">"7 day rolling average of mean snow index"</span></span>
 <span>  <span class="op">)</span></span>
