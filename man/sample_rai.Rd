@@ -2,7 +2,7 @@
 % Please edit documentation in R/rai.R
 \name{sample_rai}
 \alias{sample_rai}
-\title{Calculate Relative Activity Index (RAI)}
+\title{Calculate Relative Abundance Index (RAI)}
 \usage{
 sample_rai(
   image_data,
