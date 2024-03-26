@@ -13,6 +13,17 @@ coverage](https://codecov.io/gh/bcgov/bccamtrap/branch/main/graph/badge.svg)](ht
 
 Functions for QA and validation of Camera Trap data
 
+1.  [Installation](#installation)
+2.  [Example Usage](#example-usage)
+    1.  [Project and station metadata](#project-and-station-metadata)
+    2.  [Project Metadata: Field Form CSV
+        files](#project-metadata-field-form-csv-files)
+    3.  [Image data](#image-data)
+    4.  [Built-in plotting functions](#built-in-plotting-functions)
+    5.  [Sampling sessions](#sampling-sessions)
+    6.  [Analysis data](#analysis-data)
+    7.  [Write Data to SPI template](#write-data-to-spi-template)
+
 ## Installation
 
 You can install the development version of bccamtrap from
@@ -874,7 +885,7 @@ ggplot(elk_roll_avg, aes(x = date, y = roll_mean_mean_snow)) +
   geom_line(colour = "darkblue") + 
   theme_classic() + 
   labs(
-    title = "Rolling seven day average of average mean snow index across sites", 
+    title = "Rolling seven day average of mean snow index across sites", 
     x = "Date", 
     y = "7 day rolling average of mean snow index"
   )

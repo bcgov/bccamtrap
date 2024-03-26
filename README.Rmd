@@ -35,6 +35,17 @@ set.seed(13)
 
 Functions for QA and validation of Camera Trap data
 
+1. [Installation](#installation)
+2. [Example Usage](#example-usage)
+    i. [Project and station metadata](#project-and-station-metadata)
+    ii. [Project Metadata: Field Form CSV files](#project-metadata-field-form-csv-files)
+    iii. [Image data](#image-data)
+    iv. [Built-in plotting functions](#built-in-plotting-functions)
+    v. [Sampling sessions](#sampling-sessions)
+    vi. [Analysis data](#analysis-data)
+    vii. [Write Data to SPI template](#write-data-to-spi-template)
+    
+
 ## Installation
 
 You can install the development version of bccamtrap from [GitHub](https://github.com/) using 
