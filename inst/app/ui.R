@@ -66,8 +66,10 @@ ui <- page_sidebar(
     ),
     nav_panel(
       "Deployments",
-      plotlyOutput("deployments_plot"),
-      gt_output("deployments_table")
+      navset_pill(
+        nav_panel("Deployments Plot", plotlyOutput("deployments_plot")),
+        nav_panel("Deployments Table", gt_output("deployments_table"))
+      ),
     ),
     nav_panel(
       "Image Data QA",
@@ -110,14 +112,18 @@ ui <- page_sidebar(
     ),
     nav_panel(
       "QA Deployments vs Images",
-      uiOutput("qa_deps_imgs"),
-      plotlyOutput("deployments_images_plot")
+      navset_pill(
+        navset_panel("Deployments vs Images Table", uiOutput("qa_deps_imgs")),
+        navset_panel("Deployments vs Images Plot", plotlyOutput("deployments_images_plot"))
+      )
     ),
     nav_panel(
       "Sample Sessions",
       card(
+        layout_columns(
         dateInput("ss_start", "Session Start"),
         dateInput("ss_end", "Session End")
+        )
       ),
       gt_output("sessions_table")
     ),
