@@ -66,6 +66,7 @@ ui <- page_sidebar(
     ),
     nav_panel(
       "Deployments",
+      plotlyOutput("deployments_plot"),
       gt_output("deployments_table")
     ),
     nav_panel(
@@ -94,15 +95,13 @@ ui <- page_sidebar(
           timeFormat = "%T",
           timezone = "+0000"
         )),
-        actionButton(
+        card(actionButton(
           "btn_qa_image_data",
           "Check!",
           class = "btn-lg btn-success"
-        )
+        ))
       ),
-      card(
-        verbatimTextOutput("img_qa_summary")
-      ),
+      uiOutput("img_qa_summary"),
       shinycssloaders::withSpinner(
         gt_output("image_qa_table"),
         type = 5,
@@ -110,14 +109,20 @@ ui <- page_sidebar(
       )
     ),
     nav_panel(
+      "QA Deployments vs Images",
+      uiOutput("qa_deps_imgs"),
+      plotlyOutput("deployments_images_plot")
+    ),
+    nav_panel(
       "Sample Sessions",
+      card(
+        dateInput("ss_start", "Session Start"),
+        dateInput("ss_end", "Session End")
+      ),
       gt_output("sessions_table")
     ),
     nav_panel(
       "Analysis data"
-    ),
-    nav_panel(
-      "Export to SPI sheet"
     )
   )
 

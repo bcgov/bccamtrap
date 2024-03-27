@@ -5,13 +5,13 @@ function(input, output, session) {
 
   observeEvent(
     input$spi_input$datapath, {
-    spi_meta$proj_info <- read_project_info(input$spi_input$datapath)
-    spi_meta$sample_station_info <- read_sample_station_info(input$spi_input$datapath) %>%
-      qa_stations_spatial()
-    spi_meta$camera_info <- read_camera_info(input$spi_input$datapath)
-    spi_meta$cam_seup_checks <- read_cam_setup_checks(input$spi_input$datapath)
-    spi_meta$deployments <- make_deployments(input$spi_input$datapath)
-  })
+      spi_meta$proj_info <- read_project_info(input$spi_input$datapath)
+      spi_meta$sample_station_info <- read_sample_station_info(input$spi_input$datapath) %>%
+        qa_stations_spatial()
+      spi_meta$camera_info <- read_camera_info(input$spi_input$datapath)
+      spi_meta$cam_seup_checks <- read_cam_setup_checks(input$spi_input$datapath)
+      spi_meta$deployments <- make_deployments(input$spi_input$datapath)
+    })
 
   image_data <- reactive({
     req(input$image_input)
@@ -25,6 +25,9 @@ function(input, output, session) {
 
 
   output$project_table <- renderTable(spi_meta$proj_info)
+
+
+# Sample station info -----------------------------------------------------
 
   output$ssi_table <- render_gt({
     req(spi_meta$sample_station_info) %>%
@@ -58,6 +61,17 @@ function(input, output, session) {
     capture.output(summary(req(spi_meta$sample_station_info)), type = "message")
   })
 
+
+# Deployments ------------------------------------------------
+
+  output$deployments_plot <- renderPlotly(
+    plot_deployments(
+      req(spi_meta$deployments),
+      study_area_name = req(spi_meta$sample_station_info$study_area_name[1]),
+      interactive = TRUE
+    )
+  )
+
   output$deployments_table <- render_gt({
     req(spi_meta$deployments) %>%
       select(
@@ -81,6 +95,9 @@ function(input, output, session) {
       )
   })
 
+
+# Image Data QA -----------------------------------------------------------
+
   img_data_qa <- eventReactive(input$btn_qa_image_data, {
     qa_image_data(
       req(image_data()),
@@ -90,12 +107,14 @@ function(input, output, session) {
     )
   })
 
-  output$img_qa_summary <- renderText({
+  output$img_qa_summary <- renderUI({
     qa_data <- req(img_data_qa())
-    c(
-    paste("Number of records with potential issues:", nrow(qa_data), "\n"),
-    "\nPotential Issues:\n",
-    paste0(grep("^QA_", names(qa_data), value = TRUE), collapse = "\n")
+    card(
+      h3("Images QA"),
+      h5("Number of records with potential issues:"),
+      p(nrow(qa_data)),
+      h5("Potential Issues:"),
+      p(paste0(grep("^QA_", names(qa_data), value = TRUE), collapse = ","))
     )
   })
 
@@ -107,12 +126,54 @@ function(input, output, session) {
           c("wlrs_project_name", "study_area_name")
         )
       ) %>%
-        gt() %>%
-        data_color(columns = starts_with("QA_"), method = "factor", palette = c("#1E88E5", "#D81B60")) %>%
-        opt_interactive(
-          use_resizers = TRUE,
-          use_compact_mode = TRUE
-        )
+      gt() %>%
+      data_color(columns = starts_with("QA_"), method = "factor", palette = c("#1E88E5", "#D81B60")) %>%
+      opt_interactive(
+        use_resizers = TRUE,
+        use_compact_mode = TRUE
+      )
+  })
+
+# Deployments vs Images QA ------------------------------------------------
+
+  output$deployments_images_plot <- renderPlotly({
+    plot_deployment_detections(
+      req(spi_meta$deployments),
+      req(image_data()),
+      interactive = TRUE
+    )
+  })
+
+  output$qa_deps_imgs <- renderUI({
+    out <- suppressMessages(
+      qa_deployment_images(req(spi_meta$deployments), req(image_data()))
+    )
+
+    card(
+      h3("Deployments vs Images QA"),
+      h5("Image labels not in deployments:"),
+      p(paste0(out$img_dep_labels_not_in_deployments, collapse = ", ")),
+      h5("Deployment labels not in images:"),
+      p(paste0(out$deployment_dep_labels_not_in_images, collapse = ", ")),
+      h5("Image records with different timelapse time than indicated in deployments:"),
+      p(paste0(out$mismatched_timelapse_image_times, collapse = ", "))
+    )
+  })
+
+
+# Sample sessions ---------------------------------------------------------
+
+  sessions <- reactive({
+    make_sample_sessions(req(image_data()))
+  })
+
+  output$sessions_table <- render_gt({
+    sessions() %>%
+      gt() %>%
+      opt_interactive(
+        use_resizers = TRUE,
+        use_compact_mode = TRUE
+      )
   })
 
   output$spi_download <- downloadHandler(
