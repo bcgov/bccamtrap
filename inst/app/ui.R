@@ -34,6 +34,10 @@ ui <- page_sidebar(
           multiple = TRUE
         )
       )
+    ),
+    "Write to SPI worksheet",
+    downloadButton(
+      "spi_download"
     )
   ),
   navset_tab(
@@ -54,13 +58,16 @@ ui <- page_sidebar(
             leafletOutput("ssi_map", height = 600)
           ),
           card(
-            verbatimTextOutput("ssi_qa_spatial")
+            textOutput("ssi_summary")
           )
         )
       )
     ),
     nav_panel(
-      "hello"
+      "Deployments"
+    ),
+    nav_panel(
+      "Sample Sessions"
     ),
     nav_panel(
       "Analysis data"

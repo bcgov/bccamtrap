@@ -18,10 +18,8 @@ read_image_data <- function(path, pattern, recursive = FALSE, ...) {
     cli::cli_abort("Directory {.path {path}} does not exist")
   }
 
-  if (any(grepl("\\.csv$", path))) {
-    csvfiles <- path
-  } else {
-    csvfiles <- list.files(
+  if (!any(grepl("\\.csv$", path))) {
+    path <- list.files(
       path,
       pattern = ".csv$",
       full.names = TRUE,
@@ -30,16 +28,16 @@ read_image_data <- function(path, pattern, recursive = FALSE, ...) {
   }
 
   if (!missing(pattern)) {
-    csvfiles <- grep(pattern, csvfiles, value = TRUE)
+    path <- grep(pattern, path, value = TRUE)
   }
 
-  if (length(csvfiles) == 0) {
+  if (length(path) == 0) {
     cli::cli_abort("No appropriate files found in {.path {path}}")
   }
 
-  template <- check_template(csvfiles)
+  template <- check_template(path)
 
-  df_list <- lapply(csvfiles, read_one_image_csv, template = template, ...)
+  df_list <- lapply(path, read_one_image_csv, template = template, ...)
 
   df <- dplyr::bind_rows(df_list)
   df <- janitor::clean_names(df)
@@ -53,6 +51,10 @@ read_image_data <- function(path, pattern, recursive = FALSE, ...) {
 }
 
 check_template <- function(files) {
+  # This is an escape hatch for shiny - since the file names assigned from
+  # fileInput() are random, we assign the csv files vector names from the original
+  # filenames, and use those here to find the template
+  files <- names(files) %||% files
   pattern <- ".+Template_(v[0-9]{8}.*)\\.csv$"
   if (!any(grepl(pattern, files))) {
     cli::cli_abort("No recognized Timelapse template in filenames")
