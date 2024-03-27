@@ -33,7 +33,8 @@ ui <- page_sidebar(
           accept = c(".csv"),
           multiple = TRUE
         )
-      )
+      ),
+      open = c("Metadata from SPI Worksheet", "TimeLapse Image Data")
     ),
     "Write to SPI worksheet",
     downloadButton(
@@ -64,10 +65,53 @@ ui <- page_sidebar(
       )
     ),
     nav_panel(
-      "Deployments"
+      "Deployments",
+      gt_output("deployments_table")
     ),
     nav_panel(
-      "Sample Sessions"
+      "Image Data QA",
+      layout_columns(
+        card(radioButtons(
+          "rb_exclude_human",
+          "Exclude Human Use?",
+          choices = c("Yes", "No"),
+          selected = "Yes",
+          inline = TRUE
+        )),
+        card(radioButtons(
+          "rb_check_snow",
+          "Check Snow Depth?",
+          choices = c("Yes", "No"),
+          selected = "Yes",
+          inline = TRUE
+        )),
+        card(sliderInput(
+          "tl_time",
+          "TimeLapse photo time",
+          min = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"),
+          max = as.POSIXct("2020-01-01 23:59:59", tz = "UTC"),
+          value = as.POSIXct("2020-01-01 12:00:00", tz = "UTC"),
+          timeFormat = "%T",
+          timezone = "+0000"
+        )),
+        actionButton(
+          "btn_qa_image_data",
+          "Check!",
+          class = "btn-lg btn-success"
+        )
+      ),
+      card(
+        verbatimTextOutput("img_qa_summary")
+      ),
+      shinycssloaders::withSpinner(
+        gt_output("image_qa_table"),
+        type = 5,
+        color = "darkgrey"
+      )
+    ),
+    nav_panel(
+      "Sample Sessions",
+      gt_output("sessions_table")
     ),
     nav_panel(
       "Analysis data"
