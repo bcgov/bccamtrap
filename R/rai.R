@@ -126,7 +126,7 @@ rai_by_time <- function(image_data,
 
   dat <- complete_daily_counts(dat)
 
-  if (by == "date" && !roll && by_deployment && by_species) {
+  if (by == "date" && !isTRUE(roll) && isTRUE(by_deployment) && isTRUE(by_species)) {
     # This is what we've made so far - a data frame, by deployment, date,
     # and species, of snow, temperature, and species counts
     return(dat)

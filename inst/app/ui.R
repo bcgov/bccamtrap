@@ -113,22 +113,29 @@ ui <- page_sidebar(
     nav_panel(
       "QA Deployments vs Images",
       navset_pill(
-        navset_panel("Deployments vs Images Table", uiOutput("qa_deps_imgs")),
-        navset_panel("Deployments vs Images Plot", plotlyOutput("deployments_images_plot"))
+        nav_panel("Deployments vs Images Table", uiOutput("qa_deps_imgs")),
+        nav_panel("Deployments vs Images Plot", plotlyOutput("deployments_images_plot"))
       )
     ),
     nav_panel(
       "Sample Sessions",
-      card(
-        layout_columns(
-        dateInput("ss_start", "Session Start"),
-        dateInput("ss_end", "Session End")
-        )
-      ),
+      uiOutput("ss_date_range"),
       gt_output("sessions_table")
     ),
     nav_panel(
-      "Analysis data"
+      "Analysis data",
+      navset_pill(
+        nav_panel(
+          "Sample RAI",
+          uiOutput("sample_rai_opts"),
+          gt_output("sample_rai_table")
+        ),
+        nav_panel(
+          "RAI over time",
+          uiOutput("rai_by_time_opts"),
+          gt_output("rai_by_time_table")
+        )
+      )
     )
   )
 
