@@ -233,9 +233,9 @@ validate_snow_data <- function(x) {
     y,
     QA_snow_blank = !.data$lens_obscured & is_blank(.data$snow_depth),
     snow_5_avg = c(
-      RcppRoll::roll_mean(
+      zoo::rollmean(
         .data$snow_depth_lower,
-        n = min(5, dplyr::n()),
+        k = min(5, dplyr::n()),
         fill = NA_real_,
         na.rm = TRUE
       )
