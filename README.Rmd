@@ -580,7 +580,7 @@ elk_roll_avg <- rai_by_time(
   by = "date",
   species = "Roosevelt Elk",
   roll = TRUE,
-  snow_agg = mean
+  snow_agg = "mean"
 )
 
 ggplot(elk_roll_avg, aes(x = date, y = roll_mean_mean_snow)) + 

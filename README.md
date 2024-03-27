@@ -439,7 +439,7 @@ Run the `qa_image_data()` function:
 ``` r
 image_data_qa <- qa_image_data(image_data)
 dim(image_data_qa)
-#> [1] 24 55
+#> [1] 24 49
 ```
 
 We can see that this has identified 24 records with potential problems.
@@ -450,58 +450,76 @@ returned:
 
 ``` r
 names(image_data_qa)
-#>  [1] "root_folder"                     "study_area_name"                
-#>  [3] "sample_station_label"            "deployment_label"               
-#>  [5] "date_time"                       "episode_num"                    
-#>  [7] "episode"                         "species"                        
-#>  [9] "total_count_episode"             "obj_count_image"                
-#> [11] "adult_male"                      "adult_female"                   
-#> [13] "adult_unclassified_sex"          "yearling_male"                  
-#> [15] "yearling_female"                 "yearling_unclassified_sex"      
-#> [17] "young_of_year_unclassified_sex"  "juvenile_unclassified_sex"      
-#> [19] "male_unclassified_age"           "female_unclassified_age"        
-#> [21] "unclassified_life_stage_and_sex" "antler_class"                   
-#> [23] "animal_identifiable"             "animal_tagged"                  
-#> [25] "behaviour_1"                     "behaviour_2"                    
-#> [27] "behaviour_3"                     "human_use_type"                 
-#> [29] "human_transport_mode"            "temperature"                    
-#> [31] "snow_depth"                      "snow_index"                     
-#> [33] "snow_is_est"                     "snow_depth_lower"               
-#> [35] "snow_depth_upper"                "lens_obscured"                  
-#> [37] "starred"                         "needs_review"                   
-#> [39] "comment"                         "surveyor"                       
-#> [41] "trigger_mode"                    "file"                           
-#> [43] "relative_path"                   "delete_flag"                    
-#> [45] "QA_BLANK_study_area_name"        "QA_BLANK_sample_station_label"  
-#> [47] "QA_BLANK_deployment_label"       "QA_BLANK_date_time"             
-#> [49] "QA_BLANK_surveyor"               "QA_BLANK_trigger_mode"          
-#> [51] "QA_BLANK_temperature"            "QA_BLANK_episode"               
-#> [53] "QA_timelapse_lag"                "QA_wrong_tl_time"               
-#> [55] "QA_snow_outlier"
+#>  [1] "root_folder"                             
+#>  [2] "study_area_name"                         
+#>  [3] "sample_station_label"                    
+#>  [4] "deployment_label"                        
+#>  [5] "date_time"                               
+#>  [6] "episode_num"                             
+#>  [7] "episode"                                 
+#>  [8] "species"                                 
+#>  [9] "total_count_episode"                     
+#> [10] "obj_count_image"                         
+#> [11] "adult_male"                              
+#> [12] "adult_female"                            
+#> [13] "adult_unclassified_sex"                  
+#> [14] "yearling_male"                           
+#> [15] "yearling_female"                         
+#> [16] "yearling_unclassified_sex"               
+#> [17] "young_of_year_unclassified_sex"          
+#> [18] "juvenile_unclassified_sex"               
+#> [19] "male_unclassified_age"                   
+#> [20] "female_unclassified_age"                 
+#> [21] "unclassified_life_stage_and_sex"         
+#> [22] "antler_class"                            
+#> [23] "animal_identifiable"                     
+#> [24] "animal_tagged"                           
+#> [25] "behaviour_1"                             
+#> [26] "behaviour_2"                             
+#> [27] "behaviour_3"                             
+#> [28] "human_use_type"                          
+#> [29] "human_transport_mode"                    
+#> [30] "temperature"                             
+#> [31] "snow_depth"                              
+#> [32] "snow_index"                              
+#> [33] "snow_is_est"                             
+#> [34] "snow_depth_lower"                        
+#> [35] "snow_depth_upper"                        
+#> [36] "lens_obscured"                           
+#> [37] "starred"                                 
+#> [38] "needs_review"                            
+#> [39] "comment"                                 
+#> [40] "surveyor"                                
+#> [41] "trigger_mode"                            
+#> [42] "file"                                    
+#> [43] "relative_path"                           
+#> [44] "delete_flag"                             
+#> [45] "QA_species_UNMATCHED_total_count_episode"
+#> [46] "QA_total_count_episode_UNMATCHED_species"
+#> [47] "QA_sum_counts"                           
+#> [48] "QA_dup_episode"                          
+#> [49] "QA_snow_blank"
 ```
 
 ``` r
 select(image_data_qa, root_folder, file, starts_with("QA_"))
-#> # A tibble: 24 × 13
-#>    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹
-#>    <chr>         <chr>        <lgl>                    <lgl>                    
-#>  1 27_20230605   RCNX0030.JPG FALSE                    FALSE                    
-#>  2 100RECNX      RCNX0114.JPG FALSE                    FALSE                    
-#>  3 100RECNX      RCNX0118.JPG FALSE                    FALSE                    
-#>  4 21_2_20230605 RCNX0010.JPG FALSE                    FALSE                    
-#>  5 100RECNX      RCNX0261.JPG FALSE                    FALSE                    
-#>  6 100RECNX      RCNX0339.JPG FALSE                    FALSE                    
-#>  7 100RECNX      RCNX0376.JPG FALSE                    FALSE                    
-#>  8 29_2_20230605 IMG_0252.JPG FALSE                    FALSE                    
-#>  9 100RECNX      IMG_0134.JPG FALSE                    FALSE                    
-#> 10 102RECNX      RCNX0041.JPG FALSE                    FALSE                    
+#> # A tibble: 24 × 7
+#>    root_folder file  QA_species_UNMATCHED…¹ QA_total_count_episo…² QA_sum_counts
+#>    <chr>       <chr> <lgl>                  <lgl>                  <lgl>        
+#>  1 27_20230605 RCNX… TRUE                   FALSE                  TRUE         
+#>  2 100RECNX    RCNX… FALSE                  FALSE                  FALSE        
+#>  3 100RECNX    RCNX… FALSE                  FALSE                  FALSE        
+#>  4 21_2_20230… RCNX… FALSE                  FALSE                  TRUE         
+#>  5 100RECNX    RCNX… FALSE                  FALSE                  FALSE        
+#>  6 100RECNX    RCNX… FALSE                  FALSE                  FALSE        
+#>  7 100RECNX    RCNX… FALSE                  FALSE                  FALSE        
+#>  8 29_2_20230… IMG_… FALSE                  FALSE                  TRUE         
+#>  9 100RECNX    IMG_… FALSE                  FALSE                  TRUE         
+#> 10 102RECNX    RCNX… FALSE                  FALSE                  FALSE        
 #> # ℹ 14 more rows
-#> # ℹ abbreviated name: ¹​QA_BLANK_sample_station_label
-#> # ℹ 9 more variables: QA_BLANK_deployment_label <lgl>,
-#> #   QA_BLANK_date_time <lgl>, QA_BLANK_surveyor <lgl>,
-#> #   QA_BLANK_trigger_mode <lgl>, QA_BLANK_temperature <lgl>,
-#> #   QA_BLANK_episode <lgl>, QA_timelapse_lag <lgl>, QA_wrong_tl_time <lgl>,
-#> #   QA_snow_outlier <lgl>
+#> # ℹ abbreviated names: ¹​QA_species_UNMATCHED_total_count_episode,
+#> #   ²​QA_total_count_episode_UNMATCHED_species
+#> # ℹ 2 more variables: QA_dup_episode <lgl>, QA_snow_blank <lgl>
 ```
 
 ### Built-in plotting functions
@@ -664,7 +682,7 @@ sample start and end dates in the data for each deployment:
 
 ``` r
 sample_rai(image_data)
-#> # A tibble: 53 × 7
+#> # A tibble: 53 × 8
 #>    deployment_label sample_start_date sample_end_date trap_days species      
 #>    <chr>            <date>            <date>              <int> <chr>        
 #>  1 19_1_20230605    2022-11-10        2023-06-05            207 Black Bear   
@@ -678,7 +696,7 @@ sample_rai(image_data)
 #>  9 2023-01-10       2022-11-15        2023-01-10             56 Cougar       
 #> 10 2023-01-10       2022-11-15        2023-01-10             56 Roosevelt Elk
 #> # ℹ 43 more rows
-#> # ℹ 2 more variables: total_count <dbl>, rai <dbl>
+#> # ℹ 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
 ```
 
 You can set it to do a subset of species and/or deployment labels, and
@@ -693,12 +711,12 @@ sample_rai(
   sample_start_date = "2022-12-01", 
   sample_end_date = "2023-04-30"
 )
-#> # A tibble: 2 × 7
+#> # A tibble: 2 × 8
 #>   deployment_label sample_start_date sample_end_date trap_days species      
 #>   <chr>            <date>            <date>              <int> <chr>        
 #> 1 19_2_20230605    2022-12-01        2023-04-30            151 Roosevelt Elk
 #> 2 29_1_20230605    2022-12-01        2023-04-30            148 Roosevelt Elk
-#> # ℹ 2 more variables: total_count <dbl>, rai <dbl>
+#> # ℹ 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
 ```
 
 You can also calculate RAI across all deployments by setting
@@ -712,10 +730,11 @@ sample_rai(
   sample_start_date = "2022-12-01", 
   sample_end_date = "2023-04-30"
 )
-#> # A tibble: 1 × 6
-#>   sample_start_date sample_end_date trap_days species       total_count   rai
-#>   <date>            <date>              <int> <chr>               <dbl> <dbl>
-#> 1 2022-12-01        2023-04-30            151 Roosevelt Elk         146 0.967
+#> # A tibble: 1 × 7
+#>   sample_start_date sample_end_date trap_days species   n_detections total_count
+#>   <date>            <date>              <int> <chr>            <int>       <dbl>
+#> 1 2022-12-01        2023-04-30            151 Roosevel…           51         146
+#> # ℹ 1 more variable: rai <dbl>
 ```
 
 We can compare total count and RAI across species:
@@ -729,16 +748,17 @@ spp_comp <- sample_rai(
   sample_end_date = "2023-04-30"
 )
 spp_comp
-#> # A tibble: 7 × 6
-#>   sample_start_date sample_end_date trap_days species        total_count     rai
-#>   <date>            <date>              <int> <chr>                <dbl>   <dbl>
-#> 1 2022-12-01        2023-04-30            131 Avian (commen…           1 0.00763
-#> 2 2022-12-01        2023-04-30            151 Black Bear              28 0.185  
-#> 3 2022-12-01        2023-04-30            151 Cougar                   8 0.0530 
-#> 4 2022-12-01        2023-04-30            151 Mule Deer              105 0.695  
-#> 5 2022-12-01        2023-04-30            131 Other (commen…           1 0.00763
-#> 6 2022-12-01        2023-04-30            151 Pacific Marten           2 0.0132 
-#> 7 2022-12-01        2023-04-30            151 Roosevelt Elk          146 0.967
+#> # A tibble: 7 × 7
+#>   sample_start_date sample_end_date trap_days species   n_detections total_count
+#>   <date>            <date>              <int> <chr>            <int>       <dbl>
+#> 1 2022-12-01        2023-04-30            131 Avian (c…            1           1
+#> 2 2022-12-01        2023-04-30            151 Black Be…           28          28
+#> 3 2022-12-01        2023-04-30            151 Cougar               8           8
+#> 4 2022-12-01        2023-04-30            151 Mule Deer           77         105
+#> 5 2022-12-01        2023-04-30            131 Other (c…            1           1
+#> 6 2022-12-01        2023-04-30            151 Pacific …            2           2
+#> 7 2022-12-01        2023-04-30            151 Roosevel…           51         146
+#> # ℹ 1 more variable: rai <dbl>
 ```
 
 Using the [ggplot2](https://ggplot2.tidyverse.org/) package, we can plot
@@ -789,7 +809,7 @@ default, it calculates daily metrics, aggregating across deployments.
 
 ``` r
 rai_by_time(image_data)
-#> # A tibble: 2,205 × 8
+#> # A tibble: 2,205 × 9
 #>    species          study_area_name date       max_snow_index mean_temperature
 #>    <chr>            <chr>           <date>              <dbl>            <dbl>
 #>  1 Avian (comments) Test Project    2022-11-07              2             6   
@@ -803,7 +823,8 @@ rai_by_time(image_data)
 #>  9 Avian (comments) Test Project    2022-11-15              2             0.5 
 #> 10 Avian (comments) Test Project    2022-11-16              2            -1   
 #> # ℹ 2,195 more rows
-#> # ℹ 3 more variables: total_count <dbl>, trap_days <int>, rai <dbl>
+#> # ℹ 4 more variables: n_detections <int>, total_count <dbl>, trap_days <int>,
+#> #   rai <dbl>
 ```
 
 We can select a single species, and calculate daily rolling values. The
@@ -817,7 +838,7 @@ elk_roll_avg <- rai_by_time(
   roll = TRUE
 )
 elk_roll_avg
-#> # A tibble: 245 × 13
+#> # A tibble: 245 × 15
 #>    species       study_area_name date       max_snow_index mean_temperature
 #>    <chr>         <chr>           <date>              <dbl>            <dbl>
 #>  1 Roosevelt Elk Test Project    2022-11-07              2             6   
@@ -831,9 +852,10 @@ elk_roll_avg
 #>  9 Roosevelt Elk Test Project    2022-11-15              2             0.5 
 #> 10 Roosevelt Elk Test Project    2022-11-16              2            -1   
 #> # ℹ 235 more rows
-#> # ℹ 8 more variables: total_count <dbl>, trap_days <int>, rai <dbl>,
-#> #   roll_mean_max_snow <dbl>, roll_mean_temp <dbl>, roll_trap_days <int>,
-#> #   roll_count <dbl>, roll_rai <dbl>
+#> # ℹ 10 more variables: n_detections <int>, total_count <dbl>, trap_days <int>,
+#> #   rai <dbl>, roll_mean_max_snow <dbl>, roll_mean_temp <dbl>,
+#> #   roll_trap_days <int>, roll_detections <int>, roll_count <dbl>,
+#> #   roll_rai <dbl>
 
 ggplot(elk_roll_avg, aes(x = date, y = roll_rai)) + 
   geom_line(colour = "darkgreen") + 
@@ -878,7 +900,7 @@ elk_roll_avg <- rai_by_time(
   by = "date",
   species = "Roosevelt Elk",
   roll = TRUE,
-  snow_agg = mean
+  snow_agg = "mean"
 )
 
 ggplot(elk_roll_avg, aes(x = date, y = roll_mean_mean_snow)) + 
