@@ -65,7 +65,7 @@ qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRU
   dplyr::select(
     out,
     dplyr::everything(),
-    -dplyr::starts_with("QA_"), dplyr::where(~ is.logical(.x) && !any(.x))
+    -(dplyr::starts_with("QA_") & dplyr::where(~ is.logical(.x) && !any(.x)))
   )
 }
 
