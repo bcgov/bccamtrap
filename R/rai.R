@@ -66,7 +66,7 @@ sample_rai <- function(image_data,
 #' @param k the size of the rolling window. Default `7`.
 #' @param by_deployment Should it be calculated by `deployment`. Default `FALSE`
 #' @param snow_agg if `by_deployment = FALSE`, how to aggregate snow measurements
-#'   across sites. Takes an aggregation function (e.g., `mean`). Default `max`
+#'   across sites. Takes the name of an aggregation function (e.g., `"mean"`). Default `"max"`
 #'
 #' @return a data.frame of above calculated metrics
 #' @export
@@ -80,9 +80,7 @@ rai_by_time <- function(image_data,
                         deployment_label = NULL,
                         sample_start_date = NULL,
                         sample_end_date = NULL,
-                        snow_agg = max) {
-
-  snow_agg_name <- deparse(substitute(snow_agg))
+                        snow_agg = "max") {
 
   by <- match.arg(by)
   by_fmt <- switch(
@@ -149,7 +147,7 @@ rai_by_time <- function(image_data,
     dplyr::summarise(
       start_date = min(.data$date),
       end_date = max(.data$date),
-      "{snow_agg_name}_snow_index" := snow_agg(.data$snow_index, na.rm = TRUE),
+      "{snow_agg}_snow_index" := do.call(snow_agg, list(.data$snow_index, na.rm = TRUE)),
       mean_temperature = mean(.data$temperature, na.rm = TRUE),
       n_detections = sum(.data$n_detections, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
@@ -170,8 +168,8 @@ rai_by_time <- function(image_data,
         .add = TRUE
       ) %>%
       dplyr::mutate(
-        "roll_mean_{snow_agg_name}_snow" := zoo::rollmean(
-          .data[[paste0(snow_agg_name, "_snow_index")]],
+        "roll_mean_{snow_agg}_snow" := zoo::rollmean(
+          .data[[paste0(snow_agg, "_snow_index")]],
           k = k,
           fill = NA,
           na.rm = TRUE
