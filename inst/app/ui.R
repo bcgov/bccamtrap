@@ -46,12 +46,12 @@ ui <- page_sidebar(
       navset_pill(
         nav_panel(
           "Sample Station Information",
-          DTOutput("ssi_table")
+          gt_output("ssi_table")
         ),
         nav_panel(
           "Sample Station Map",
           card(
-            leafletOutput("ssi_map")
+            leafletOutput("ssi_map", height = 600)
           ),
           card(
             verbatimTextOutput("ssi_qa_spatial")
