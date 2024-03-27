@@ -306,6 +306,34 @@ function(input, output, session) {
         choices = c("Yes", "No"),
         selected = "Yes",
         inline = TRUE
+      ),
+      radioButtons(
+        "rai_time_roll",
+        "Rolling average?",
+        choices = c("Yes", "No"),
+        selected = "No",
+        inline = TRUE
+      ),
+      sliderInput(
+        "rai_time_roll_k",
+        "Size of window",
+        min = 1, max = 30,
+        value = 7,
+        step = 1
+      ),
+      selectInput(
+        "rai_time_agg_by",
+        "Aggregate by:",
+        choices = c("date", "week", "month", "year"),
+        selected = "date",
+        multiple = FALSE
+      ),
+      selectInput(
+        "rai_time_snow_agg",
+        "Snow aggregation function (across sites):",
+        choices = c("mean", "min", "max"),
+        selected = "max",
+        multiple = FALSE
       )
     )
   })
@@ -313,12 +341,16 @@ function(input, output, session) {
   rai_by_time_df <- reactive(
     rai_by_time(
       req(image_data()),
+      by = req(input$rai_time_agg_by),
+      roll = yesno_as_logical(input$rai_time_roll, FALSE),
+      k = req(input$rai_time_roll_k),
       by_species = yesno_as_logical(input$rai_time_by_species, TRUE),
       species = x_or_null(input$rai_time_species),
       by_deployment = yesno_as_logical(input$rai_time_by_deployment, FALSE),
       deployment_label = x_or_null(input$rai_time_deployment_labels),
       sample_start_date = x_or_null(input$rai_time_date_range[1]),
-      sample_end_date = x_or_null(input$rai_time_date_range[2])
+      sample_end_date = x_or_null(input$rai_time_date_range[2]),
+      snow_agg = req(input$rai_time_snow_agg)
     )
   )
 
