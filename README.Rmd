@@ -29,7 +29,7 @@ set.seed(13)
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/bcgov/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml)
-[![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+[![img](https://img.shields.io/badge/Lifecycle-Maturing-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 [![Codecov test coverage](https://codecov.io/gh/bcgov/bccamtrap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bcgov/bccamtrap?branch=main)
 <!-- badges: end -->
 
@@ -44,6 +44,7 @@ Functions for QA and validation of Camera Trap data
     v. [Sampling sessions](#sampling-sessions)
     vi. [Analysis data](#analysis-data)
     vii. [Write Data to SPI template](#write-data-to-spi-template)
+3. [Shiny](#bccamtrapp-shiny-app)
     
 
 ## Installation
@@ -738,6 +739,18 @@ fill_spi_template_ff(
   image_data,
   file = "~/Desktop/SPI_output_from_ff.xlsx"
 )
+```
+
+### bccamtrapp() Shiny App
+
+The package contains a Shiny App for interactive use of most of the package's
+functionality.
+
+Run the app with:
+
+```r
+library(bccamtrap)
+bccamtrapp()
 ```
 
 ### Project Status
