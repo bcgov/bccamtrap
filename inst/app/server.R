@@ -48,6 +48,10 @@ function(input, output, session) {
       ) %>%
       data_color(columns = spatial_outlier, method = "factor", palette = c("#1E88E5", "#D81B60")) %>%
       opt_interactive(
+        use_search = TRUE,
+        use_highlight = TRUE,
+        use_page_size_select = TRUE,
+        page_size_default = 20,
         use_resizers = TRUE,
         use_compact_mode = TRUE
       ) %>%
@@ -92,6 +96,10 @@ function(input, output, session) {
         habitat_feature ~ px(150)
       ) %>%
       opt_interactive(
+        use_search = TRUE,
+        use_highlight = TRUE,
+        use_page_size_select = TRUE,
+        page_size_default = 20,
         use_resizers = TRUE,
         use_compact_mode = TRUE
       ) %>%
@@ -132,6 +140,10 @@ function(input, output, session) {
       gt() %>%
       data_color(columns = starts_with("QA_"), method = "factor", palette = c("#1E88E5", "#D81B60")) %>%
       opt_interactive(
+        use_search = TRUE,
+        use_highlight = TRUE,
+        use_page_size_select = TRUE,
+        page_size_default = 20,
         use_resizers = TRUE,
         use_compact_mode = TRUE
       ) %>%
@@ -199,6 +211,10 @@ function(input, output, session) {
     req(sessions()) %>%
       gt() %>%
       opt_interactive(
+        use_search = TRUE,
+        use_highlight = TRUE,
+        use_page_size_select = TRUE,
+        page_size_default = 20,
         use_resizers = TRUE,
         use_compact_mode = TRUE
       )
@@ -264,6 +280,10 @@ function(input, output, session) {
     req(sample_rai_df()) %>%
       gt() %>%
       opt_interactive(
+        use_search = TRUE,
+        use_highlight = TRUE,
+        use_page_size_select = TRUE,
+        page_size_default = 20,
         use_resizers = TRUE
       ) %>%
       opt_row_striping()
@@ -358,6 +378,10 @@ function(input, output, session) {
     req(rai_by_time_df()) %>%
       gt() %>%
       opt_interactive(
+        use_search = TRUE,
+        use_highlight = TRUE,
+        use_page_size_select = TRUE,
+        page_size_default = 20,
         use_resizers = TRUE
       ) %>%
       opt_row_striping()
