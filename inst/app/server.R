@@ -27,7 +27,7 @@ function(input, output, session) {
   output$project_table <- renderTable(spi_meta$proj_info)
 
 
-# Sample station info -----------------------------------------------------
+  # Sample station info -----------------------------------------------------
 
   output$ssi_table <- render_gt({
     req(spi_meta$sample_station_info) %>%
@@ -63,12 +63,12 @@ function(input, output, session) {
     map@map
   })
 
-  output$ssi_summary <- renderText({
-    capture.output(summary(req(spi_meta$sample_station_info)), type = "message")
-  })
+  # output$ssi_summary <- renderPrint({
+  #   summary(req(spi_meta$sample_station_info))
+  # })
 
 
-# Deployments ------------------------------------------------
+  # Deployments ------------------------------------------------
 
   output$deployments_plot <- renderGirafe(
     plot_deployments(
@@ -111,7 +111,7 @@ function(input, output, session) {
   })
 
 
-# Image Data QA -----------------------------------------------------------
+  # Image Data QA -----------------------------------------------------------
 
   img_data_qa <- eventReactive(input$btn_qa_image_data, {
     qa_image_data(
@@ -155,7 +155,7 @@ function(input, output, session) {
   }) %>%
     bindCache(img_data_qa())
 
-# Deployments vs Images QA ------------------------------------------------
+  # Deployments vs Images QA ------------------------------------------------
 
   output$deployments_images_plot <- renderGirafe({
     plot_deployment_detections(
@@ -186,7 +186,7 @@ function(input, output, session) {
   })
 
 
-# Sample sessions ---------------------------------------------------------
+  # Sample sessions ---------------------------------------------------------
 
   sessions <- reactiveVal()
 
@@ -197,16 +197,16 @@ function(input, output, session) {
   output$ss_opts <- renderUI({
     x <- req(sessions())
     layout_columns(
-    dateRangeInput(
-      "ss_date_range",
-      "Session Start and End dates",
-      start = min(x$sample_start_date),
-      end = max(x$sample_end_date)
-    ),
-    downloadButton(
-      "dl_ss_btn",
-      "Download Data"
-    )
+      dateRangeInput(
+        "ss_date_range",
+        "Session Start and End dates",
+        start = min(x$sample_start_date),
+        end = max(x$sample_end_date)
+      ),
+      downloadButton(
+        "dl_ss_btn",
+        "Download Data"
+      )
     )
   })
 
@@ -248,48 +248,52 @@ function(input, output, session) {
   )
 
 
-# Analysis Data -----------------------------------------------------------
+  # Analysis Data -----------------------------------------------------------
 
 
-# Sample RAI --------------------------------------------------------------
+  # Sample RAI --------------------------------------------------------------
 
   output$sample_rai_opts <- renderUI({
     x <- req(image_data())
-    layout_columns(
-      dateRangeInput(
-        "s_rai_date_range",
-        "Session Start and End dates",
-        start = min(as.Date(x$date_time), na.rm = TRUE),
-        end = max(as.Date(x$date_time), na.rm = TRUE)
+    card(
+      layout_columns(
+        dateRangeInput(
+          "s_rai_date_range",
+          "Session Start and End dates",
+          start = min(as.Date(x$date_time), na.rm = TRUE),
+          end = max(as.Date(x$date_time), na.rm = TRUE)
+        ),
+        selectInput(
+          "s_rai_deployment_labels",
+          "Deployment Label(s)",
+          choices = unique(x$deployment_label),
+          multiple = TRUE
+        ),
+        selectInput(
+          "s_rai_species",
+          "Species",
+          choices = unique(x$species),
+          multiple = TRUE
+        )
       ),
-      selectInput(
-        "s_rai_deployment_labels",
-        "Deployment Label(s)",
-        choices = unique(x$deployment_label),
-        multiple = TRUE
-      ),
-      selectInput(
-        "s_rai_species",
-        "Species",
-        choices = unique(x$species),
-        multiple = TRUE
-      ),
-      radioButtons(
-        "s_rai_by_deployment",
-        "By Deployment?",
-        choices = c("Yes", "No"),
-        selected = "Yes",
-        inline = TRUE
-      ),
-      radioButtons(
-        "s_rai_by_species",
-        "By Species?",
-        choices = c("Yes", "No"),
-        selected = "Yes",
-        inline = TRUE
-      ),
-      downloadButton("dl_sample_rai_btn",
-                     "Download Data")
+      layout_columns(
+        downloadButton("dl_sample_rai_btn",
+                       "Download Data"),
+        radioButtons(
+          "s_rai_by_deployment",
+          "By Deployment?",
+          choices = c("Yes", "No"),
+          selected = "Yes",
+          inline = TRUE
+        ),
+        radioButtons(
+          "s_rai_by_species",
+          "By Species?",
+          choices = c("Yes", "No"),
+          selected = "Yes",
+          inline = TRUE
+        )
+      )
     )
   })
 
@@ -332,75 +336,80 @@ function(input, output, session) {
   )
 
 
-# RAI by Time -------------------------------------------------------------
+  # RAI by Time -------------------------------------------------------------
 
   output$rai_by_time_opts <- renderUI({
     x <- isolate(req(image_data()))
     card(
-    layout_column_wrap(
-      dateRangeInput(
-        "rai_time_date_range",
-        "Session Start and End dates",
-        start = min(as.Date(x$date_time), na.rm = TRUE),
-        end = max(as.Date(x$date_time), na.rm = TRUE)
+      layout_columns(
+        dateRangeInput(
+          "rai_time_date_range",
+          "Session Start & End dates",
+          start = min(as.Date(x$date_time), na.rm = TRUE),
+          end = max(as.Date(x$date_time), na.rm = TRUE)
+        ),
+        selectInput(
+          "rai_time_deployment_labels",
+          "Deployment Label(s)",
+          choices = unique(x$deployment_label),
+          multiple = TRUE
+        ),
+        selectInput(
+          "rai_time_species",
+          "Species",
+          choices = unique(x$species),
+          multiple = TRUE
+        )
       ),
-      selectInput(
-        "rai_time_deployment_labels",
-        "Deployment Label(s)",
-        choices = unique(x$deployment_label),
-        multiple = TRUE
+      layout_columns(
+        radioButtons(
+          "rai_time_roll",
+          "Rolling average?",
+          choices = c("Yes", "No"),
+          selected = "No",
+          inline = TRUE
+        ),
+        radioButtons(
+          "rai_time_by_deployment",
+          "By Deployment?",
+          choices = c("Yes", "No"),
+          selected = "No",
+          inline = TRUE
+        ),
+        radioButtons(
+          "rai_time_by_species",
+          "By Species?",
+          choices = c("Yes", "No"),
+          selected = "Yes",
+          inline = TRUE
+        )
       ),
-      selectInput(
-        "rai_time_species",
-        "Species",
-        choices = unique(x$species),
-        multiple = TRUE
-      ),
-      radioButtons(
-        "rai_time_by_deployment",
-        "By Deployment?",
-        choices = c("Yes", "No"),
-        selected = "No",
-        inline = TRUE
-      ),
-      radioButtons(
-        "rai_time_by_species",
-        "By Species?",
-        choices = c("Yes", "No"),
-        selected = "Yes",
-        inline = TRUE
-      ),
-      radioButtons(
-        "rai_time_roll",
-        "Rolling average?",
-        choices = c("Yes", "No"),
-        selected = "No",
-        inline = TRUE
-      ),
-      sliderInput(
-        "rai_time_roll_k",
-        "Size of window",
-        min = 1, max = 30,
-        value = 7,
-        step = 1
-      ),
-      selectInput(
-        "rai_time_agg_by",
-        "Aggregate by:",
-        choices = c("date", "week", "month", "year"),
-        selected = "date",
-        multiple = FALSE
-      ),
-      selectInput(
-        "rai_time_snow_agg",
-        "Snow aggregation function (across sites):",
-        choices = c("mean", "min", "max"),
-        selected = "max",
-        multiple = FALSE
+      layout_columns(
+        sliderInput(
+          "rai_time_roll_k",
+          "Size of rolling window",
+          min = 1, max = 30,
+          value = 7,
+          step = 1
+        ),
+        selectInput(
+          "rai_time_agg_by",
+          "Aggregate by:",
+          choices = c("date", "week", "month", "year"),
+          selected = "date",
+          multiple = FALSE
+        ),
+        selectInput(
+          "rai_time_snow_agg",
+          "Snow aggregation:",
+          choices = c("mean", "min", "max"),
+          selected = "max",
+          multiple = FALSE
+        )
       ),
       downloadButton("dl_rai_time_btn",
-                   "Download Data")
-    ))
+                     "Download Data")
+    )
   })
 
   rai_by_time_df <- reactive(
@@ -445,7 +454,7 @@ function(input, output, session) {
     }
   )
 
-# SPI download ------------------------------------------------------------
+  # SPI download ------------------------------------------------------------
 
   output$spi_download <- downloadHandler(
     filename = function() {
