@@ -13,6 +13,17 @@ server <- function(input, output, session) {
       spi_meta$deployments <- make_deployments(input$spi_input$datapath)
     })
 
+  observeEvent(
+    input$ff_stations_input$datapath, {
+      spi_meta$sample_station_info <- read_sample_station_csv(input$ff_stations_input$datapath) %>%
+        qa_stations_spatial()
+    })
+
+  observeEvent(
+    input$ff_deployments_input$datapath, {
+      spi_meta$deployments <- read_deployments_csv(input$ff_deployments_input$datapath)
+    })
+
   image_data <- reactive({
     req(input$image_input)
     read_image_data(
@@ -24,7 +35,7 @@ server <- function(input, output, session) {
   })
 
 
-  output$project_table <- renderTable(spi_meta$proj_info)
+  output$project_table <- renderTable(req(spi_meta$proj_info))
 
 
   # Sample station info -----------------------------------------------------
@@ -42,9 +53,9 @@ server <- function(input, output, session) {
       sf::st_drop_geometry() %>%
       gt() %>%
       cols_width(
-        sample_station_comments ~ px(300),
-        site_description_comments ~ px(400),
-        habitat_feature ~ px(150)
+        dplyr::any_of("sample_station_comments") ~ px(300),
+        dplyr::any_of("site_description_comments") ~ px(400),
+        dplyr::any_of("habitat_feature") ~ px(150)
       ) %>%
       data_color(
         columns = .data$spatial_outlier,
@@ -99,9 +110,9 @@ server <- function(input, output, session) {
       sf::st_drop_geometry() %>%
       gt() %>%
       cols_width(
-        general_sampling_comments ~ px(400),
-        site_description_comments ~ px(400),
-        habitat_feature ~ px(150)
+        dplyr::any_of("general_sampling_comments") ~ px(400),
+        dplyr::any_of("site_description_comments") ~ px(400),
+        dplyr::any_of("habitat_feature") ~ px(150)
       ) %>%
       opt_interactive(
         use_search = TRUE,
@@ -465,17 +476,32 @@ server <- function(input, output, session) {
       "SPI_submission_form.xlsx"
     },
     content = function(file) {
-      req(spi_meta$sample_station_info)
-      req(spi_meta$camera_info)
-      req(spi_meta$cam_seup_checks)
-      req(image_data)
-      fill_spi_template(
-        spi_meta$sample_station_info,
-        spi_meta$camera_info,
-        spi_meta$cam_seup_checks,
-        image_data(),
-        file
-      )
+      ssi <- req(spi_meta$sample_station_info)
+      req(image_data())
+      if (inherits(ssi, "field-form")) {
+        validate(
+          need(spi_meta$deployments, "You need to load the deployments field form"),
+          need(inherits(spi_meta$deployments, "field-form"), "Deployments do not appear to be from a field form")
+        )
+
+        fill_spi_template_ff(
+          ssi,
+          spi_meta$deployments,
+          image_data(),
+          wlrs_project_name = NULL,
+          file
+        )
+      } else {
+        req(spi_meta$camera_info)
+        req(spi_meta$cam_seup_checks)
+        fill_spi_template(
+          spi_meta$sample_station_info,
+          spi_meta$camera_info,
+          spi_meta$cam_seup_checks,
+          image_data(),
+          file
+        )
+      }
     }
   )
 

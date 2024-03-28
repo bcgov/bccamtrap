@@ -94,11 +94,11 @@ fill_spi_template <- function(sample_station_info,
 #' @return path to the output `file`
 #' @export
 fill_spi_template_ff <- function(sample_station_info,
-                              deployments,
-                              image_data = NULL,
-                              wlrs_project_name = NULL,
-                              file,
-                              template = default_spi_template()) {
+                                 deployments,
+                                 image_data = NULL,
+                                 wlrs_project_name = NULL,
+                                 file,
+                                 template = default_spi_template()) {
 
   check_sample_station_info(sample_station_info)
   stopifnot(inherits(sample_station_info, "field-form"))
