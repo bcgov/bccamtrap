@@ -4,6 +4,7 @@ library(dplyr)
 library(leaflet)
 library(gt)
 library(plotly)
+library(ggiraph)
 
 x_or_null <- function(x) {
   if (!isTruthy(x)) NULL else x

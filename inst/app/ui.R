@@ -49,7 +49,8 @@ ui <- page_sidebar(
       "img_data_download"
     )
   ),
-  navset_bar(
+  navset_tab(
+    br(),
     nav_panel(
       "Project Metadata",
       card(
@@ -108,11 +109,12 @@ ui <- page_sidebar(
           timeFormat = "%T",
           timezone = "+0000"
         )),
-        card(actionButton(
+        div(actionButton(
           "btn_qa_image_data",
           "Check!",
-          class = "btn-lg btn-success"
-        ))
+          class = "btn-lg btn-success",
+          style = "margin-top: 30px;"
+        ), class = "text-center")
       ),
       uiOutput("img_qa_summary"),
       shinycssloaders::withSpinner(
