@@ -8,12 +8,12 @@
 #' @concept shiny_app
 #'
 #' @export
-bccamtrapp <- function() {
+bccamtrapp <- function(browser = TRUE) {
   appDir <- system.file("app", package = "bccamtrap")
   if (appDir == "") {
     stop("Could not find shiny app directory. ",
          "Try re-installing `bccamtrap`.", call. = FALSE)
   }
 
-  shiny::runApp(appDir, launch.browser = TRUE)
+  shiny::runApp(appDir, launch.browser = browser)
 }
