@@ -175,7 +175,7 @@ function(input, output, session) {
   })
 
   output$ss_date_range <- renderUI({
-    x <- req(xions())
+    x <- req(sessions())
     card(dateRangeInput(
       "ss_date_range",
       "Session Start and End dates",
@@ -379,6 +379,18 @@ function(input, output, session) {
         spi_meta$camera_info,
         spi_meta$cam_seup_checks,
         image_data(),
+        file
+      )
+    }
+  )
+
+  output$img_data_download <- downloadHandler(
+    filename = function() {
+      "consolidated_image_data.csv"
+    },
+    content = function(file) {
+      write_image_data(
+        req(image_data),
         file
       )
     }

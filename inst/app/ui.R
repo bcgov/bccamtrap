@@ -1,8 +1,11 @@
 
 ui <- page_sidebar(
-  theme = bs_theme(version = 5, bootswatch = "cerulean"),
+  theme = bs_theme(version = 5, bootswatch = "sandstone"),
   title = "BC WLRS Camera Trap Data Application",
   sidebar = sidebar(
+    title = "",
+    h4("Metadata input"),
+    span(HTML("Choose either Metadata from SPI worksheet <em>OR</em> Metadata from Field Forms")),
     accordion(
       accordion_panel(
         "Metadata from SPI Worksheet",
@@ -25,20 +28,25 @@ ui <- page_sidebar(
           accept = c(".csv")
         )
       ),
-      accordion_panel(
-        "TimeLapse Image Data",
-        fileInput(
-          "image_input",
-          "Import Timelapse image data - select all files",
-          accept = c(".csv"),
-          multiple = TRUE
-        )
+      open = FALSE,
+      multiple = FALSE
       ),
-      open = c("Metadata from SPI Worksheet", "TimeLapse Image Data")
+    h4("Image Data Import"),
+    fileInput(
+      "image_input",
+      "select all files",
+      accept = c(".csv"),
+      multiple = TRUE
     ),
+    hr(),
+    h4("Data export"),
     "Write to SPI worksheet",
     downloadButton(
       "spi_download"
+    ),
+    "Download consolidated image data",
+    downloadButton(
+      "img_data_download"
     )
   ),
   navset_tab(
