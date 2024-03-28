@@ -343,7 +343,7 @@ server <- function(input, output, session) {
   # RAI by Time -------------------------------------------------------------
 
   output$rai_by_time_opts <- renderUI({
-    x <- isolate(req(image_data()))
+    x <- req(image_data())
     card(
       layout_columns(
         dateRangeInput(
