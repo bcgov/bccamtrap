@@ -34,8 +34,8 @@ Imports:
     shiny,
     tidyr,
     zoo
-URL: https://github.com/ateucher/bccamtrap, https://bcgov.github.io/bccamtrap/
-BugReports: https://github.com/ateucher/bccamtrap/issues
+URL: https://github.com/bcgov/bccamtrap, https://bcgov.github.io/bccamtrap/
+BugReports: https://github.com/bcgov/bccamtrap/issues
 Suggests: 
     DBI,
     googledrive,
