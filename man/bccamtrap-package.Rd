@@ -11,9 +11,9 @@ Allows the easy and semi-automated checking, validation, and exploration of came
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/ateucher/bccamtrap}
+  \item \url{https://github.com/bcgov/bccamtrap}
   \item \url{https://bcgov.github.io/bccamtrap/}
-  \item Report bugs at \url{https://github.com/ateucher/bccamtrap/issues}
+  \item Report bugs at \url{https://github.com/bcgov/bccamtrap/issues}
 }
 
 }

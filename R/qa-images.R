@@ -65,7 +65,7 @@ qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRU
   dplyr::select(
     out,
     dplyr::everything(),
-    -dplyr::starts_with("QA_"), dplyr::where(~ is.logical(.x) && !any(.x))
+    -(dplyr::starts_with("QA_") & dplyr::where(~ is.logical(.x) && !any(.x)))
   )
 }
 
@@ -233,9 +233,9 @@ validate_snow_data <- function(x) {
     y,
     QA_snow_blank = !.data$lens_obscured & is_blank(.data$snow_depth),
     snow_5_avg = c(
-      RcppRoll::roll_mean(
+      zoo::rollmean(
         .data$snow_depth_lower,
-        n = min(5, dplyr::n()),
+        k = min(5, dplyr::n()),
         fill = NA_real_,
         na.rm = TRUE
       )
@@ -268,7 +268,7 @@ validate_snow_data <- function(x) {
 #'
 #' @inherit plot_deployments return
 #' @export
-plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE) {
+plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE, ...) {
   x <- dplyr::filter(image_data, .data$trigger_mode == "Time Lapse")
   x$id <- seq_len(nrow(x))
   x$tooltip <- glue::glue(
@@ -303,12 +303,9 @@ plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE) 
     )
 
   if (interactive) {
-    p <- ggiraph::girafe(
-      ggobj = p,
-      width_svg = 7,
-      pointsize = 8,
-      options = list(ggiraph::opts_zoom(max = 10))
-    )
+    p <- p +
+      ggplot2::theme_minimal(base_size = 7)
+    p <- ggiraph::girafe(ggobj = p, width_svg = 8, ...)
   }
   p
 }

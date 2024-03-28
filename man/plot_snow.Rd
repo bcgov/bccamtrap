@@ -4,7 +4,7 @@
 \alias{plot_snow}
 \title{Plot snow depths across deployments}
 \usage{
-plot_snow(image_data, date_breaks = "1 month", interactive = FALSE)
+plot_snow(image_data, date_breaks = "1 month", interactive = FALSE, ...)
 }
 \arguments{
 \item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
@@ -12,9 +12,11 @@ plot_snow(image_data, date_breaks = "1 month", interactive = FALSE)
 \item{date_breaks}{How to break up the dates on the x axis. See \code{\link[scales:date_breaks]{scales::date_breaks()}}. Default \code{"1 month"}}
 
 \item{interactive}{should the plot be interactive? Default \code{FALSE}}
+
+\item{...}{passed on to \code{\link[ggiraph:girafe]{ggiraph::girafe()}} for setting options for interactive graphs}
 }
 \value{
-a \code{ggplot2} object if \code{interactive = FALSE}, a \code{plotly} object if \code{TRUE}
+a \code{ggplot2} object if \code{interactive = FALSE}, a \code{ggiraph} object if \code{TRUE}
 }
 \description{
 Plot snow depths across deployments

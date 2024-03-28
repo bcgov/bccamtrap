@@ -8,7 +8,8 @@ plot_deployments(
   deployments,
   date_breaks = "1 month",
   study_area_name = NULL,
-  interactive = FALSE
+  interactive = FALSE,
+  ...
 )
 }
 \arguments{
@@ -20,9 +21,11 @@ plot_deployments(
 already in the data in a \code{study_area_name} column, otherwise provide it here.}
 
 \item{interactive}{should the plot be interactive? Default \code{FALSE}}
+
+\item{...}{passed on to \code{\link[ggiraph:girafe]{ggiraph::girafe()}} for setting options for interactive graphs}
 }
 \value{
-a \code{ggplot2} object if \code{interactive = FALSE}, a \code{plotly} object if \code{TRUE}
+a \code{ggplot2} object if \code{interactive = FALSE}, a \code{ggiraph} object if \code{TRUE}
 }
 \description{
 Make a plot of sampling deployments. The plot indicates start and end times
