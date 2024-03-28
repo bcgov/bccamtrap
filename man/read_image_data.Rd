@@ -7,7 +7,8 @@
 read_image_data(path, pattern, recursive = FALSE, ...)
 }
 \arguments{
-\item{path}{path to directory of image files.}
+\item{path}{path to directory of image files, a single .csv file, or a character
+vector of .csv files.}
 
 \item{pattern}{an optional regular expression. Only file names which match
 the regular expression will read. Default \code{FALSE}.}

@@ -15,7 +15,7 @@ rai_by_time(
   deployment_label = NULL,
   sample_start_date = NULL,
   sample_end_date = NULL,
-  snow_agg = max
+  snow_agg = "max"
 )
 }
 \arguments{
@@ -45,7 +45,7 @@ same start date to all deployments/sessions in the data.}
 start date to all deployments/sessions in the data.}
 
 \item{snow_agg}{if \code{by_deployment = FALSE}, how to aggregate snow measurements
-across sites. Takes an aggregation function (e.g., \code{mean}). Default \code{max}}
+across sites. Takes the name of an aggregation function (e.g., \code{"mean"}). Default \code{"max"}}
 }
 \value{
 a data.frame of above calculated metrics

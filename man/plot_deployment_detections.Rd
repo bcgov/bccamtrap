@@ -8,7 +8,8 @@ plot_deployment_detections(
   deployments,
   image_data,
   date_breaks = "1 month",
-  interactive = FALSE
+  interactive = FALSE,
+  ...
 )
 }
 \arguments{
@@ -19,9 +20,11 @@ plot_deployment_detections(
 \item{date_breaks}{How to break up the dates on the x axis. See \code{\link[scales:date_breaks]{scales::date_breaks()}}. Default \code{"1 month"}}
 
 \item{interactive}{should the plot be interactive? Default \code{FALSE}}
+
+\item{...}{passed on to \code{\link[ggiraph:girafe]{ggiraph::girafe()}} for setting options for interactive graphs}
 }
 \value{
-a \code{ggplot2} object if \code{interactive = FALSE}, a \code{plotly} object if \code{TRUE}
+a \code{ggplot2} object if \code{interactive = FALSE}, a \code{ggiraph} object if \code{TRUE}
 }
 \description{
 Plot detections over sample deployments to check for misaligned time stamps

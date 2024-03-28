@@ -15,27 +15,29 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Imports: 
     bcmaps (>= 2.2.0),
+    bslib,
     cli,
     dplyr,
     ggiraph,
     ggplot2,
     glue,
+    gt,
     janitor,
+    leaflet,
     lubridate,
-    magrittr,
     mapview,
     methods,
     openxlsx2,
-    plotly,
-    RcppRoll,
     readr,
     readxl,
     rlang (>= 1.1.0),
     sf,
+    shiny,
+    shinycssloaders,
     tidyr,
     zoo
-URL: https://github.com/ateucher/bccamtrap, https://bcgov.github.io/bccamtrap/
-BugReports: https://github.com/ateucher/bccamtrap/issues
+URL: https://github.com/bcgov/bccamtrap, https://bcgov.github.io/bccamtrap/
+BugReports: https://github.com/bcgov/bccamtrap/issues
 Suggests: 
     DBI,
     googledrive,

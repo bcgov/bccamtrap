@@ -4,9 +4,8 @@
 ## usethis namespace: start
 #' @import rlang
 #' @importFrom methods setOldClass
-#' @importFrom magrittr %>%
+#' @importFrom dplyr %>%
 ## usethis namespace: end
 NULL
 
 utils::globalVariables("closest")
-

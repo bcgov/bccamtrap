@@ -122,7 +122,7 @@ test_that("rai_by_time with different agg functions", {
     species = "Roosevelt Elk",
     by_deployment = FALSE,
     roll = TRUE,
-    snow_agg = mean
+    snow_agg = "mean"
   )
 
   expect_equal(
