@@ -1,5 +1,16 @@
 
 ui <- page_sidebar(
+  tags$head(
+    tags$style(
+      HTML(".shiny-notification {
+             position:fixed;
+             top: calc(50%);
+             left: calc(50%);
+             }
+             "
+      )
+    )
+  ),
   theme = bs_theme(version = 5, bootswatch = "sandstone"),
   title = "BC WLRS Camera Trap Data Application",
   sidebar = sidebar(

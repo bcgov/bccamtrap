@@ -139,7 +139,7 @@ server <- function(input, output, session) {
 
   output$img_qa_summary <- renderUI({
     qa_data <- req(img_data_qa())
-    card(
+    div(
       h3("Images QA"),
       h5("Number of records with potential issues:"),
       p(nrow(qa_data)),
@@ -476,24 +476,39 @@ server <- function(input, output, session) {
       "SPI_submission_form.xlsx"
     },
     content = function(file) {
-      ssi <- req(spi_meta$sample_station_info)
-      if (!isTruthy(image_data())) {
-        showNotification("You need to load your image data", type = "error")
+      if (!isTruthy(spi_meta$sample_station_info)) {
+        showNotification(
+          HTML("Download Failed:<br/>You need to load your metadata"),
+          type = "error"
+        )
         req(FALSE)
       }
-      if (inherits(ssi, "field-form")) {
+      if (!isTruthy(image_data)) {
+        showNotification(
+          HTML("Download Failed:<br/>You need to load your image data"),
+          type = "error"
+        )
+        req(FALSE)
+      }
+      if (inherits(spi_meta$sample_station_info, "field-form")) {
 
         if (!isTruthy(spi_meta$deployments)) {
-          showNotification("You need to load the deployments field form", type = "error")
+          showNotification(
+            HTML("Download Failed:<br/>You need to load the deployments field form"),
+            type = "error"
+          )
           req(FALSE)
         }
         if (!inherits(spi_meta$deployments, "field-form")) {
-          showNotification("Deployments does not appear to be from a csv field form", type = "error")
+          showNotification(
+            HTML("Download Failed:<br/>Deployments does not appear to be from a csv field form"),
+            type = "error"
+          )
           req(FALSE)
         }
 
         fill_spi_template_ff(
-          ssi,
+          spi_meta$sample_station_info,
           spi_meta$deployments,
           image_data(),
           wlrs_project_name = NULL,
@@ -518,8 +533,15 @@ server <- function(input, output, session) {
       "consolidated_image_data.csv"
     },
     content = function(file) {
+      if (!isTruthy(image_data())) {
+        showNotification(
+          HTML("Download Failed:<br/>You need to load your image data"),
+          type = "error"
+        )
+        req(FALSE)
+      }
       write_image_data(
-        req(image_data),
+        image_data(),
         file
       )
     }
