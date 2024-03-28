@@ -157,11 +157,15 @@ function(input, output, session) {
 
 # Deployments vs Images QA ------------------------------------------------
 
-  output$deployments_images_plot <- renderPlotly({
+  output$deployments_images_plot <- renderGirafe({
     plot_deployment_detections(
       req(spi_meta$deployments),
       req(image_data()),
-      interactive = TRUE
+      interactive = TRUE,
+      options = list(
+        ggiraph::opts_selection(type = "none"),
+        ggiraph::opts_sizing(width = 1, rescale = TRUE)
+      )
     )
   })
 

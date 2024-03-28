@@ -10,8 +10,9 @@
 #' @param interactive should the plot be interactive? Default `FALSE`
 #' @param study_area_name Study area name for the plot. It will be used if it is
 #'   already in the data in a `study_area_name` column, otherwise provide it here.
+#' @param ... passed on to [ggiraph::girafe()] for setting options for interactive graphs
 #'
-#' @return a `ggplot2` object if `interactive = FALSE`, a `plotly` object if `TRUE`
+#' @return a `ggplot2` object if `interactive = FALSE`, a `ggiraph` object if `TRUE`
 #' @export
 plot_deployments <- function(deployments,
                              date_breaks = "1 month",
@@ -198,7 +199,7 @@ check_timelapse_times <- function(deployments, image_data) {
 #'
 #' @inherit plot_deployments return
 #' @export
-plot_deployment_detections <- function(deployments, image_data, date_breaks = "1 month", interactive = FALSE) {
+plot_deployment_detections <- function(deployments, image_data, date_breaks = "1 month", interactive = FALSE, ...) {
   check_deployments(deployments)
   check_image_data(image_data)
 
@@ -209,20 +210,33 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
   img_data_grouped <- image_data %>%
     dplyr::mutate(img_date = as.Date(.data$date_time)) %>%
     dplyr::group_by(.data$deployment_label, .data$img_date, .data$lens_obscured) %>%
-    dplyr::summarise()
+    dplyr::summarise(n = dplyr::n())
+
+  img_data_grouped$id <- seq_len(nrow(img_data_grouped))
+
+  img_data_grouped$tooltip <- glue::glue(
+    "Deployment:  {img_data_grouped$deployment_label}
+     Date:  {img_data_grouped$img_date}
+     Lens Obscured:  {img_data_grouped$lens_obscured}
+     # Photos: {img_data_grouped$n}"
+  )
+
+  deployments$id <- seq_len(nrow(deployments))
 
   p <- ggplot2::ggplot() +
-    ggplot2::geom_point(
+    ggiraph::geom_point_interactive(
       data = img_data_grouped,
       ggplot2::aes(
         x = .data$img_date,
         y = .data$deployment_label,
-        colour = .data$lens_obscured
+        colour = .data$lens_obscured,
+        data_id = .data$id,
+        tooltip = .data$tooltip
       ),
       shape = pt_symbol,
       size = 3
     ) +
-    ggplot2::geom_linerange(
+    ggiraph::geom_linerange_interactive(
       data = deployments,
       ggplot2::aes(
         xmin = .data$deployment_start_date,
@@ -234,7 +248,7 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
       position = ggplot2::position_dodge(width = 0.5)
     ) +
     ggplot2::scale_colour_manual(values = c("TRUE" = "#f7941d", "FALSE" = "#400456")) +
-    ggplot2::scale_alpha_manual(values = c("Valid" = 1, "Invalid" = 0.4)) +
+    ggplot2::scale_alpha_manual(values = c("Valid" = 1, "Invalid" = 0.3)) +
     ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
@@ -243,23 +257,9 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
     )
 
   if (interactive) {
-    p <- plotly::plotly_build(p)
-    # Hack plotly object to replace markers with text
-    p$x$data[[1]]$mode <- "text"
-    p$x$data[[1]]$hovertext <- p$x$data[[1]]$text
-    p$x$data[[1]]$text <- pt_symbol
-    p$x$data[[1]]$textfont$size <- p$x$data[[1]]$marker$size
-    p$x$data[[1]]$textfont$color <- p$x$data[[1]]$marker$color
-    p$x$data[[1]]$textfont$opacity <- p$x$data[[1]]$marker$opacity
-    p$x$data[[1]]$marker <- NULL
-
-    p$x$data[[2]]$mode <- "text"
-    p$x$data[[2]]$hovertext <- p$x$data[[2]]$text
-    p$x$data[[2]]$text <- pt_symbol
-    p$x$data[[2]]$textfont$size <- p$x$data[[2]]$marker$size
-    p$x$data[[2]]$textfont$color <- p$x$data[[2]]$marker$color
-    p$x$data[[2]]$textfont$opacity <- p$x$data[[2]]$marker$opacity
-    p$x$data[[2]]$marker <- NULL
+    p <- p +
+      ggplot2::theme_minimal(base_size = 7)
+    p <- ggiraph::girafe(ggobj = p, width_svg = 8, ...)
   }
   p
 }
@@ -270,7 +270,7 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
 #'
 #' @inherit plot_deployments return
 #' @export
-plot_diel_activity <- function(image_data, interactive = FALSE) {
+plot_diel_activity <- function(image_data, interactive = FALSE, ...) {
   plot_data <- image_data %>%
     dplyr::filter(
       !is.na(.data$species) |
@@ -287,13 +287,24 @@ plot_diel_activity <- function(image_data, interactive = FALSE) {
       total_count_episode = ifelse(is.na(.data$total_count_episode), 1, .data$total_count_episode)
     )
 
+  plot_data$id <- seq_len(nrow(plot_data))
+  plot_data$tooltip <- glue::glue(
+    "Time of day: {format(plot_data$date_time, '%T')}
+     Species: {plot_data$species}
+     Total Count: {plot_data$total_count_episode}
+     Deployment: {plot_data$deployment_label}
+    "
+  )
+
   p <- ggplot2::ggplot(plot_data) +
-    ggplot2::geom_point(
+    ggiraph::geom_point_interactive(
       ggplot2::aes(
         x = .data$time_of_day,
         y = .data$species,
         size = .data$total_count_episode,
-        group = .data$deployment_label
+        group = .data$deployment_label,
+        data_id = .data$id,
+        tooltip = .data$tooltip
       ),
       alpha = 0.3,
       colour = "#400456"
@@ -307,9 +318,9 @@ plot_diel_activity <- function(image_data, interactive = FALSE) {
     )
 
   if (interactive) {
-    p <- plotly::ggplotly(
-      p = p
-    )
+    p <- p +
+      ggplot2::theme_minimal(base_size = 7)
+    p <- ggiraph::girafe(ggobj = p, width_svg = 8, ...)
   }
   p
 }

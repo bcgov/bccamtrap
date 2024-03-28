@@ -27,7 +27,6 @@ Imports:
     mapview,
     methods,
     openxlsx2,
-    plotly,
     readr,
     readxl,
     rlang (>= 1.1.0),

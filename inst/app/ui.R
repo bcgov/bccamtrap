@@ -127,7 +127,10 @@ ui <- page_sidebar(
       "QA Deployments vs Images",
       navset_pill(
         nav_panel("Deployments vs Images Table", uiOutput("qa_deps_imgs")),
-        nav_panel("Deployments vs Images Plot", plotlyOutput("deployments_images_plot"))
+        nav_panel(
+          "Deployments vs Images Plot",
+          girafeOutput("deployments_images_plot", width = "90%", height = "90%"))
+        )
       )
     ),
     nav_panel(

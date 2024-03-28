@@ -4,15 +4,17 @@
 \alias{plot_diel_activity}
 \title{Plot daily activity of species detected by motion detection}
 \usage{
-plot_diel_activity(image_data, interactive = FALSE)
+plot_diel_activity(image_data, interactive = FALSE, ...)
 }
 \arguments{
 \item{image_data}{data.frame of class \code{image_data}, as read in by \code{\link[=read_image_data]{read_image_data()}}.}
 
 \item{interactive}{should the plot be interactive? Default \code{FALSE}}
+
+\item{...}{passed on to \code{\link[ggiraph:girafe]{ggiraph::girafe()}} for setting options for interactive graphs}
 }
 \value{
-a \code{ggplot2} object if \code{interactive = FALSE}, a \code{plotly} object if \code{TRUE}
+a \code{ggplot2} object if \code{interactive = FALSE}, a \code{ggiraph} object if \code{TRUE}
 }
 \description{
 Plot daily activity of species detected by motion detection
