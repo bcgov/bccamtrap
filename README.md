@@ -1098,6 +1098,29 @@ library(bccamtrap)
 bccamtrapp()
 ```
 
+Data is loaded, and exported, via inputs on the left-hand side. You can
+use metadata from a SPI worksheet, or from a combination of csv-based
+field forms (sample stations and deployments).
+
+Loading image data is done by selecting all image files in the dialogue
+or drag-and-drop.
+
+The various tabs are useful for data summaries, QA, and generation of
+analysis data:
+
+- “Project Metadata” and “Deployments” rely only on having input the
+  metadata files.
+
+- “QA Deployments vs Images” requires both metadata and image data
+  files, and makes sure that they are compatible.
+
+- “Image Data QA”, “Sample Sessions”, and “Analysis Data” all require
+  the image data to be loaded, but don’t require the metadata.
+
+To export to a SPI template for submission, you need to have loaded
+metadata and image data. This will write only the required fields to the
+current SPI template included in the package.
+
 ### Project Status
 
 ### Getting Help or Reporting an Issue
