@@ -6,7 +6,8 @@
 #' @import bslib
 #' @import gt
 #'
-#' @param ... passed on to [shiny::shinyApp()]
+#' @param browser Should the app be launched in the default browser? Default `TRUE`
+#' @param ... passed on to `options` in [shiny::shinyApp()]
 #'
 #' @examples
 #' \dontrun{bccamtrapp()}
@@ -14,9 +15,9 @@
 #' @concept shiny_app
 #'
 #' @export
-bccamtrapp <- function(...) {
+bccamtrapp <- function(browser = TRUE, ...) {
   shiny::addResourcePath("www", system.file("www/", package = "bccamtrap"))
-  shiny::shinyApp(ui = ui, server = server, ...)
+  shiny::shinyApp(ui = ui, server = server, options = list(launch.browser = browser, ...))
 }
 
 x_or_null <- function(x) {

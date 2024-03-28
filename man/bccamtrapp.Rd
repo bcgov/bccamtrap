@@ -4,10 +4,12 @@
 \alias{bccamtrapp}
 \title{Launch Shiny app}
 \usage{
-bccamtrapp(...)
+bccamtrapp(browser = TRUE, ...)
 }
 \arguments{
-\item{...}{passed on to \code{\link[shiny:shinyApp]{shiny::shinyApp()}}}
+\item{browser}{Should the app be launched in the default browser? Default \code{TRUE}}
+
+\item{...}{passed on to \code{options} in \code{\link[shiny:shinyApp]{shiny::shinyApp()}}}
 }
 \description{
 Interactive interface for Data import, QA, and export.
