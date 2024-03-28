@@ -16,7 +16,8 @@
 plot_deployments <- function(deployments,
                              date_breaks = "1 month",
                              study_area_name = NULL,
-                             interactive = FALSE) {
+                             interactive = FALSE,
+                             ...) {
   check_deployments(deployments)
 
   deployments <- process_invalid_deployments(deployments)
@@ -25,20 +26,30 @@ plot_deployments <- function(deployments,
     study_area_name <- deployments$study_area_name[1]
   }
 
+  deployments$id <- seq_len(nrow(deployments))
+  deployments$tooltip <- glue::glue(
+    "Deployment:  {deployments$deployment_label}
+     Start Date:  {deployments$deployment_start_date}
+     End Date:    {deployments$deployment_end_date}
+     Valid Deployment:  {deployments$valid_deployment}"
+  )
+
   p <- ggplot2::ggplot(deployments) +
-    ggplot2::geom_linerange(
+    ggiraph::geom_linerange_interactive(
       ggplot2::aes(
         xmin = .data$deployment_start_date,
         xmax = .data$deployment_end_date,
         y = .data$sample_station_label,
         group = .data$deployment_label,
-        colour = .data$valid_deployment
+        colour = .data$valid_deployment,
+        data_id = .data$id,
+        tooltip = .data$tooltip
       ),
       linewidth = 1.1,
       position = ggplot2::position_dodge(width = 0.5)
     ) +
     ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightpink")) +
-    ggplot2::geom_point(
+    ggiraph::geom_point_interactive(
       ggplot2::aes(
         x = .data$deployment_start_date,
         y = .data$sample_station_label,
@@ -49,7 +60,7 @@ plot_deployments <- function(deployments,
       shape = 19,
       colour = "#f7941d"
     ) +
-    ggplot2::geom_point(
+    ggiraph::geom_point_interactive(
       ggplot2::aes(
         x = .data$deployment_end_date,
         y = .data$sample_station_label,
@@ -71,11 +82,9 @@ plot_deployments <- function(deployments,
     )
 
   if (interactive) {
-    p <- plotly::ggplotly(
-      p = p,
-      tooltip = c("x", "y", "size", "color", "group")
-    )
-    p <- plotly::style(p, showlegend = FALSE, traces = c(1,2))
+    p <- p +
+      ggplot2::theme_minimal(base_size = 7)
+    p <- ggiraph::girafe(ggobj = p, width_svg = 8, ...)
   }
   p
 }

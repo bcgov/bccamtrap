@@ -75,7 +75,10 @@ ui <- page_sidebar(
     nav_panel(
       "Deployments",
       navset_pill(
-        nav_panel("Deployments Plot", plotlyOutput("deployments_plot")),
+        nav_panel(
+          "Deployments Plot",
+          girafeOutput("deployments_plot", width = "90%", height = "90%")
+        ),
         nav_panel("Deployments Table", gt_output("deployments_table"))
       ),
     ),

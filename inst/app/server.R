@@ -70,11 +70,15 @@ function(input, output, session) {
 
 # Deployments ------------------------------------------------
 
-  output$deployments_plot <- renderPlotly(
+  output$deployments_plot <- renderGirafe(
     plot_deployments(
       req(spi_meta$deployments),
       study_area_name = req(spi_meta$sample_station_info$study_area_name[1]),
-      interactive = TRUE
+      interactive = TRUE,
+      options = list(
+        ggiraph::opts_selection(type = "none"),
+        ggiraph::opts_sizing(width = 1, rescale = TRUE)
+      )
     )
   )
 
