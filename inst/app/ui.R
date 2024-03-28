@@ -49,7 +49,7 @@ ui <- page_sidebar(
       "img_data_download"
     )
   ),
-  navset_tab(
+  navset_bar(
     nav_panel(
       "Project Metadata",
       card(
