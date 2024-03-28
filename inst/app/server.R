@@ -186,14 +186,20 @@ function(input, output, session) {
     sessions(make_sample_sessions(req(image_data())))
   })
 
-  output$ss_date_range <- renderUI({
+  output$ss_opts <- renderUI({
     x <- req(sessions())
-    card(dateRangeInput(
+    layout_columns(
+    dateRangeInput(
       "ss_date_range",
       "Session Start and End dates",
       start = min(x$sample_start_date),
       end = max(x$sample_end_date)
-    ))
+    ),
+    downloadButton(
+      "dl_ss_btn",
+      "Download Data"
+    )
+    )
   })
 
   observeEvent(
@@ -219,6 +225,19 @@ function(input, output, session) {
         use_compact_mode = TRUE
       )
   })
+
+  output$dl_ss_btn <- downloadHandler(
+    filename = function() {
+      "sample_sessions.csv"
+    },
+    content = function(file) {
+      readr::write_csv(
+        req(sessions()),
+        file,
+        na = ""
+      )
+    }
+  )
 
 
 # Analysis Data -----------------------------------------------------------
@@ -260,7 +279,9 @@ function(input, output, session) {
         choices = c("Yes", "No"),
         selected = "Yes",
         inline = TRUE
-      )
+      ),
+      downloadButton("dl_sample_rai_btn",
+                     "Download Data")
     )
   })
 
@@ -289,11 +310,25 @@ function(input, output, session) {
       opt_row_striping()
   })
 
+  output$dl_sample_rai_btn <- downloadHandler(
+    filename = function() {
+      "sample_rai.csv"
+    },
+    content = function(file) {
+      readr::write_csv(
+        req(sample_rai_df()),
+        file,
+        na = ""
+      )
+    }
+  )
+
 
 # RAI by Time -------------------------------------------------------------
 
   output$rai_by_time_opts <- renderUI({
     x <- isolate(req(image_data()))
+    card(
     layout_column_wrap(
       dateRangeInput(
         "rai_time_date_range",
@@ -354,8 +389,10 @@ function(input, output, session) {
         choices = c("mean", "min", "max"),
         selected = "max",
         multiple = FALSE
-      )
-    )
+      ),
+      downloadButton("dl_rai_time_btn",
+                   "Download Data")
+    ))
   })
 
   rai_by_time_df <- reactive(
@@ -386,6 +423,19 @@ function(input, output, session) {
       ) %>%
       opt_row_striping()
   })
+
+  output$dl_rai_time_btn <- downloadHandler(
+    filename = function() {
+      "rai_over_time.csv"
+    },
+    content = function(file) {
+      readr::write_csv(
+        req(rai_by_time_df()),
+        file,
+        na = ""
+      )
+    }
+  )
 
 # SPI download ------------------------------------------------------------
 

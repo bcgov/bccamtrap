@@ -127,7 +127,7 @@ ui <- page_sidebar(
     ),
     nav_panel(
       "Sample Sessions",
-      uiOutput("ss_date_range"),
+      uiOutput("ss_opts"),
       gt_output("sessions_table")
     ),
     nav_panel(
