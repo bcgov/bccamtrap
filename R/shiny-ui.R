@@ -64,7 +64,7 @@ ui <- page_sidebar(
         nav_panel(
           "Sample Station Map",
           card(
-            leafletOutput("ssi_map", height = 600)
+            leaflet::leafletOutput("ssi_map", height = 600)
           ),
           # card(
           #   textOutput("ssi_summary")
@@ -77,7 +77,7 @@ ui <- page_sidebar(
       navset_pill(
         nav_panel(
           "Deployments Plot",
-          girafeOutput("deployments_plot", width = "90%", height = "90%")
+          ggiraph::girafeOutput("deployments_plot", width = "90%", height = "90%")
         ),
         nav_panel("Deployments Table", gt_output("deployments_table"))
       ),
@@ -134,7 +134,7 @@ ui <- page_sidebar(
         nav_panel("Deployments vs Images Summary", uiOutput("qa_deps_imgs")),
         nav_panel(
           "Deployments vs Images Plot",
-          girafeOutput("deployments_images_plot", width = "90%", height = "90%")
+          ggiraph::girafeOutput("deployments_images_plot", width = "90%", height = "90%")
         )
       )
     ),

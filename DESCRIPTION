@@ -23,6 +23,7 @@ Imports:
     glue,
     gt,
     janitor,
+    leaflet,
     lubridate,
     mapview,
     methods,
@@ -32,6 +33,7 @@ Imports:
     rlang (>= 1.1.0),
     sf,
     shiny,
+    shinycssloaders,
     tidyr,
     zoo
 URL: https://github.com/bcgov/bccamtrap, https://bcgov.github.io/bccamtrap/

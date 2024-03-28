@@ -4,13 +4,16 @@
 \alias{bccamtrapp}
 \title{Launch Shiny app}
 \usage{
-bccamtrapp()
+bccamtrapp(...)
+}
+\arguments{
+\item{...}{passed on to \code{\link[shiny:shinyApp]{shiny::shinyApp()}}}
 }
 \description{
-Interactive interface for Data import, QA, and esport.
+Interactive interface for Data import, QA, and export.
 }
 \examples{
-\dontrun{bccamtrap_app()}
+\dontrun{bccamtrapp()}
 
 }
 \concept{shiny_app}

@@ -1,5 +1,5 @@
 
-function(input, output, session) {
+server <- function(input, output, session) {
 
   spi_meta <- reactiveValues()
 
@@ -31,13 +31,13 @@ function(input, output, session) {
 
   output$ssi_table <- render_gt({
     req(spi_meta$sample_station_info) %>%
-      select(
-        -any_of(
+      dplyr::select(
+        -dplyr::any_of(
           c("wlrs_project_name", "study_area_name", "code")
         ),
-        -starts_with("utm"),
-        -starts_with("easting"),
-        -starts_with("northing")
+        -dplyr::starts_with("utm"),
+        -dplyr::starts_with("easting"),
+        -dplyr::starts_with("northing")
       ) %>%
       sf::st_drop_geometry() %>%
       gt() %>%
@@ -46,7 +46,11 @@ function(input, output, session) {
         site_description_comments ~ px(400),
         habitat_feature ~ px(150)
       ) %>%
-      data_color(columns = spatial_outlier, method = "factor", palette = c("#1E88E5", "#D81B60")) %>%
+      data_color(
+        columns = .data$spatial_outlier,
+        method = "factor",
+        palette = c("#1E88E5", "#D81B60")
+      ) %>%
       opt_interactive(
         use_search = TRUE,
         use_highlight = TRUE,
@@ -58,7 +62,7 @@ function(input, output, session) {
       opt_row_striping()
   })
 
-  output$ssi_map <- renderLeaflet({
+  output$ssi_map <- leaflet::renderLeaflet({
     map <- map_stations(req(spi_meta$sample_station_info))
     map@map
   })
@@ -70,7 +74,7 @@ function(input, output, session) {
 
   # Deployments ------------------------------------------------
 
-  output$deployments_plot <- renderGirafe(
+  output$deployments_plot <- ggiraph::renderGirafe(
     plot_deployments(
       req(spi_meta$deployments),
       study_area_name = req(spi_meta$sample_station_info$study_area_name[1]),
@@ -84,13 +88,13 @@ function(input, output, session) {
 
   output$deployments_table <- render_gt({
     req(spi_meta$deployments) %>%
-      select(
-        -any_of(
+      dplyr::select(
+        -dplyr::any_of(
           c("wlrs_project_name", "study_area_name", "code")
         ),
-        -starts_with("utm"),
-        -starts_with("easting"),
-        -starts_with("northing")
+        -dplyr::starts_with("utm"),
+        -dplyr::starts_with("easting"),
+        -dplyr::starts_with("northing")
       ) %>%
       sf::st_drop_geometry() %>%
       gt() %>%
@@ -136,8 +140,8 @@ function(input, output, session) {
   output$image_qa_table <- render_gt({
     qa_data <- req(img_data_qa())
     qa_data %>%
-      select(
-        -any_of(
+      dplyr::select(
+        -dplyr::any_of(
           c("wlrs_project_name", "study_area_name")
         )
       ) %>%
@@ -157,7 +161,7 @@ function(input, output, session) {
 
   # Deployments vs Images QA ------------------------------------------------
 
-  output$deployments_images_plot <- renderGirafe({
+  output$deployments_images_plot <- ggiraph::renderGirafe({
     plot_deployment_detections(
       req(spi_meta$deployments),
       req(image_data()),
