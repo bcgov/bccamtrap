@@ -479,10 +479,15 @@ server <- function(input, output, session) {
       ssi <- req(spi_meta$sample_station_info)
       req(image_data())
       if (inherits(ssi, "field-form")) {
-        validate(
-          need(spi_meta$deployments, "You need to load the deployments field form"),
-          need(inherits(spi_meta$deployments, "field-form"), "Deployments do not appear to be from a field form")
-        )
+
+          if (!isTruthy(spi_meta$deployments)) {
+            showNotification("You need to load the deployments field form", type = "error")
+            req(FALSE)
+          }
+          if (!inherits(spi_meta$deployments, "field-form")) {
+            showNotification("Deployments does not appear to be from a csv field form", type = "error")
+            req(FALSE)
+          }
 
         fill_spi_template_ff(
           ssi,
