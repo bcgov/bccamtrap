@@ -49,7 +49,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/ateucher/bccamtrap/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/bcgov/bccamtrap/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -81,6 +81,7 @@
 <li><a href="#write-data-to-spi-template">Write Data to SPI template</a></li>
 </ol>
 </li>
+<li><a href="#bccamtrapp-shiny-app">Shiny</a></li>
 </ol>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -99,7 +100,7 @@
 <p><strong>Note that example data has been obfuscated to protect the location of the projects.</strong></p>
 <p>To begin, set the paths to the project metadata file, and the folder containing the TimeLapse image files:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ateucher/bccamtrap" class="external-link">bccamtrap</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bcgov/bccamtrap" class="external-link">bccamtrap</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">metadata_path</span> <span class="op">&lt;-</span> <span class="st">"~/data/project-files/project_1_RISC_WCR_Database_Template_v20230518.xlsm"</span></span>
 <span><span class="va">data_path</span> <span class="op">&lt;-</span> <span class="st">"~/data/wc-wlrs-cam-data/camera-data/project_1/"</span></span></code></pre></div>
@@ -412,60 +413,78 @@
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">image_data_qa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qa_image_data.html">qa_image_data</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 24 55</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 24 49</span></span></code></pre></div>
 <p>We can see that this has identified 24 records with potential problems. This dataset has a number of fields starting with <code>QA_</code> which help us know which images we should have a closer look at. All of the original fields, plus any <code>QA_</code> fields that have at least one <code>TRUE</code> value are returned:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">image_data_qa</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "root_folder"                     "study_area_name"                </span></span>
-<span><span class="co">#&gt;  [3] "sample_station_label"            "deployment_label"               </span></span>
-<span><span class="co">#&gt;  [5] "date_time"                       "episode_num"                    </span></span>
-<span><span class="co">#&gt;  [7] "episode"                         "species"                        </span></span>
-<span><span class="co">#&gt;  [9] "total_count_episode"             "obj_count_image"                </span></span>
-<span><span class="co">#&gt; [11] "adult_male"                      "adult_female"                   </span></span>
-<span><span class="co">#&gt; [13] "adult_unclassified_sex"          "yearling_male"                  </span></span>
-<span><span class="co">#&gt; [15] "yearling_female"                 "yearling_unclassified_sex"      </span></span>
-<span><span class="co">#&gt; [17] "young_of_year_unclassified_sex"  "juvenile_unclassified_sex"      </span></span>
-<span><span class="co">#&gt; [19] "male_unclassified_age"           "female_unclassified_age"        </span></span>
-<span><span class="co">#&gt; [21] "unclassified_life_stage_and_sex" "antler_class"                   </span></span>
-<span><span class="co">#&gt; [23] "animal_identifiable"             "animal_tagged"                  </span></span>
-<span><span class="co">#&gt; [25] "behaviour_1"                     "behaviour_2"                    </span></span>
-<span><span class="co">#&gt; [27] "behaviour_3"                     "human_use_type"                 </span></span>
-<span><span class="co">#&gt; [29] "human_transport_mode"            "temperature"                    </span></span>
-<span><span class="co">#&gt; [31] "snow_depth"                      "snow_index"                     </span></span>
-<span><span class="co">#&gt; [33] "snow_is_est"                     "snow_depth_lower"               </span></span>
-<span><span class="co">#&gt; [35] "snow_depth_upper"                "lens_obscured"                  </span></span>
-<span><span class="co">#&gt; [37] "starred"                         "needs_review"                   </span></span>
-<span><span class="co">#&gt; [39] "comment"                         "surveyor"                       </span></span>
-<span><span class="co">#&gt; [41] "trigger_mode"                    "file"                           </span></span>
-<span><span class="co">#&gt; [43] "relative_path"                   "delete_flag"                    </span></span>
-<span><span class="co">#&gt; [45] "QA_BLANK_study_area_name"        "QA_BLANK_sample_station_label"  </span></span>
-<span><span class="co">#&gt; [47] "QA_BLANK_deployment_label"       "QA_BLANK_date_time"             </span></span>
-<span><span class="co">#&gt; [49] "QA_BLANK_surveyor"               "QA_BLANK_trigger_mode"          </span></span>
-<span><span class="co">#&gt; [51] "QA_BLANK_temperature"            "QA_BLANK_episode"               </span></span>
-<span><span class="co">#&gt; [53] "QA_timelapse_lag"                "QA_wrong_tl_time"               </span></span>
-<span><span class="co">#&gt; [55] "QA_snow_outlier"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "root_folder"                             </span></span>
+<span><span class="co">#&gt;  [2] "study_area_name"                         </span></span>
+<span><span class="co">#&gt;  [3] "sample_station_label"                    </span></span>
+<span><span class="co">#&gt;  [4] "deployment_label"                        </span></span>
+<span><span class="co">#&gt;  [5] "date_time"                               </span></span>
+<span><span class="co">#&gt;  [6] "episode_num"                             </span></span>
+<span><span class="co">#&gt;  [7] "episode"                                 </span></span>
+<span><span class="co">#&gt;  [8] "species"                                 </span></span>
+<span><span class="co">#&gt;  [9] "total_count_episode"                     </span></span>
+<span><span class="co">#&gt; [10] "obj_count_image"                         </span></span>
+<span><span class="co">#&gt; [11] "adult_male"                              </span></span>
+<span><span class="co">#&gt; [12] "adult_female"                            </span></span>
+<span><span class="co">#&gt; [13] "adult_unclassified_sex"                  </span></span>
+<span><span class="co">#&gt; [14] "yearling_male"                           </span></span>
+<span><span class="co">#&gt; [15] "yearling_female"                         </span></span>
+<span><span class="co">#&gt; [16] "yearling_unclassified_sex"               </span></span>
+<span><span class="co">#&gt; [17] "young_of_year_unclassified_sex"          </span></span>
+<span><span class="co">#&gt; [18] "juvenile_unclassified_sex"               </span></span>
+<span><span class="co">#&gt; [19] "male_unclassified_age"                   </span></span>
+<span><span class="co">#&gt; [20] "female_unclassified_age"                 </span></span>
+<span><span class="co">#&gt; [21] "unclassified_life_stage_and_sex"         </span></span>
+<span><span class="co">#&gt; [22] "antler_class"                            </span></span>
+<span><span class="co">#&gt; [23] "animal_identifiable"                     </span></span>
+<span><span class="co">#&gt; [24] "animal_tagged"                           </span></span>
+<span><span class="co">#&gt; [25] "behaviour_1"                             </span></span>
+<span><span class="co">#&gt; [26] "behaviour_2"                             </span></span>
+<span><span class="co">#&gt; [27] "behaviour_3"                             </span></span>
+<span><span class="co">#&gt; [28] "human_use_type"                          </span></span>
+<span><span class="co">#&gt; [29] "human_transport_mode"                    </span></span>
+<span><span class="co">#&gt; [30] "temperature"                             </span></span>
+<span><span class="co">#&gt; [31] "snow_depth"                              </span></span>
+<span><span class="co">#&gt; [32] "snow_index"                              </span></span>
+<span><span class="co">#&gt; [33] "snow_is_est"                             </span></span>
+<span><span class="co">#&gt; [34] "snow_depth_lower"                        </span></span>
+<span><span class="co">#&gt; [35] "snow_depth_upper"                        </span></span>
+<span><span class="co">#&gt; [36] "lens_obscured"                           </span></span>
+<span><span class="co">#&gt; [37] "starred"                                 </span></span>
+<span><span class="co">#&gt; [38] "needs_review"                            </span></span>
+<span><span class="co">#&gt; [39] "comment"                                 </span></span>
+<span><span class="co">#&gt; [40] "surveyor"                                </span></span>
+<span><span class="co">#&gt; [41] "trigger_mode"                            </span></span>
+<span><span class="co">#&gt; [42] "file"                                    </span></span>
+<span><span class="co">#&gt; [43] "relative_path"                           </span></span>
+<span><span class="co">#&gt; [44] "delete_flag"                             </span></span>
+<span><span class="co">#&gt; [45] "QA_species_UNMATCHED_total_count_episode"</span></span>
+<span><span class="co">#&gt; [46] "QA_total_count_episode_UNMATCHED_species"</span></span>
+<span><span class="co">#&gt; [47] "QA_sum_counts"                           </span></span>
+<span><span class="co">#&gt; [48] "QA_dup_episode"                          </span></span>
+<span><span class="co">#&gt; [49] "QA_snow_blank"</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">select</span><span class="op">(</span><span class="va">image_data_qa</span>, <span class="va">root_folder</span>, <span class="va">file</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">"QA_"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 24 × 13</span></span>
-<span><span class="co">#&gt;    root_folder   file         QA_BLANK_study_area_name QA_BLANK_sample_station…¹</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;        &lt;lgl&gt;                    &lt;lgl&gt;                    </span></span>
-<span><span class="co">#&gt;  1 27_20230605   RCNX0030.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  2 100RECNX      RCNX0114.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  3 100RECNX      RCNX0118.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  4 21_2_20230605 RCNX0010.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  5 100RECNX      RCNX0261.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  6 100RECNX      RCNX0339.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  7 100RECNX      RCNX0376.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  8 29_2_20230605 IMG_0252.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt;  9 100RECNX      IMG_0134.JPG FALSE                    FALSE                    </span></span>
-<span><span class="co">#&gt; 10 102RECNX      RCNX0041.JPG FALSE                    FALSE                    </span></span>
+<span><span class="co">#&gt; # A tibble: 24 × 7</span></span>
+<span><span class="co">#&gt;    root_folder file  QA_species_UNMATCHED…¹ QA_total_count_episo…² QA_sum_counts</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;lgl&gt;                  &lt;lgl&gt;                  &lt;lgl&gt;        </span></span>
+<span><span class="co">#&gt;  1 27_20230605 RCNX… TRUE                   FALSE                  TRUE         </span></span>
+<span><span class="co">#&gt;  2 100RECNX    RCNX… FALSE                  FALSE                  FALSE        </span></span>
+<span><span class="co">#&gt;  3 100RECNX    RCNX… FALSE                  FALSE                  FALSE        </span></span>
+<span><span class="co">#&gt;  4 21_2_20230… RCNX… FALSE                  FALSE                  TRUE         </span></span>
+<span><span class="co">#&gt;  5 100RECNX    RCNX… FALSE                  FALSE                  FALSE        </span></span>
+<span><span class="co">#&gt;  6 100RECNX    RCNX… FALSE                  FALSE                  FALSE        </span></span>
+<span><span class="co">#&gt;  7 100RECNX    RCNX… FALSE                  FALSE                  FALSE        </span></span>
+<span><span class="co">#&gt;  8 29_2_20230… IMG_… FALSE                  FALSE                  TRUE         </span></span>
+<span><span class="co">#&gt;  9 100RECNX    IMG_… FALSE                  FALSE                  TRUE         </span></span>
+<span><span class="co">#&gt; 10 102RECNX    RCNX… FALSE                  FALSE                  FALSE        </span></span>
 <span><span class="co">#&gt; # ℹ 14 more rows</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​QA_BLANK_sample_station_label</span></span>
-<span><span class="co">#&gt; # ℹ 9 more variables: QA_BLANK_deployment_label &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   QA_BLANK_date_time &lt;lgl&gt;, QA_BLANK_surveyor &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   QA_BLANK_trigger_mode &lt;lgl&gt;, QA_BLANK_temperature &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   QA_BLANK_episode &lt;lgl&gt;, QA_timelapse_lag &lt;lgl&gt;, QA_wrong_tl_time &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   QA_snow_outlier &lt;lgl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ abbreviated names: ¹​QA_species_UNMATCHED_total_count_episode,</span></span>
+<span><span class="co">#&gt; #   ²​QA_total_count_episode_UNMATCHED_species</span></span>
+<span><span class="co">#&gt; # ℹ 2 more variables: QA_dup_episode &lt;lgl&gt;, QA_snow_blank &lt;lgl&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -593,7 +612,7 @@
 <p>Calculate Relative Abundance Index for sample sessions using <code><a href="reference/sample_rai.html">sample_rai()</a></code>. By default, it calculates RAI per species using the sample start and end dates in the data for each deployment:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 53 × 7</span></span>
+<span><span class="co">#&gt; # A tibble: 53 × 8</span></span>
 <span><span class="co">#&gt;    deployment_label sample_start_date sample_end_date trap_days species      </span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;            &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;        </span></span>
 <span><span class="co">#&gt;  1 19_1_20230605    2022-11-10        2023-06-05            207 Black Bear   </span></span>
@@ -607,7 +626,7 @@
 <span><span class="co">#&gt;  9 2023-01-10       2022-11-15        2023-01-10             56 Cougar       </span></span>
 <span><span class="co">#&gt; 10 2023-01-10       2022-11-15        2023-01-10             56 Roosevelt Elk</span></span>
 <span><span class="co">#&gt; # ℹ 43 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 2 more variables: total_count &lt;dbl&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 3 more variables: n_detections &lt;int&gt;, total_count &lt;dbl&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
 <p>You can set it to do a subset of species and/or deployment labels, and similar to <code><a href="reference/make_sample_sessions.html">make_sample_sessions()</a></code>, set custom session start and end dates:</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span></span>
@@ -617,12 +636,12 @@
 <span>  sample_start_date <span class="op">=</span> <span class="st">"2022-12-01"</span>, </span>
 <span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 2 × 7</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 8</span></span>
 <span><span class="co">#&gt;   deployment_label sample_start_date sample_end_date trap_days species      </span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;            &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;        </span></span>
 <span><span class="co">#&gt; 1 19_2_20230605    2022-12-01        2023-04-30            151 Roosevelt Elk</span></span>
 <span><span class="co">#&gt; 2 29_1_20230605    2022-12-01        2023-04-30            148 Roosevelt Elk</span></span>
-<span><span class="co">#&gt; # ℹ 2 more variables: total_count &lt;dbl&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 3 more variables: n_detections &lt;int&gt;, total_count &lt;dbl&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
 <p>You can also calculate RAI across all deployments by setting <code>by_deployment = FALSE</code>:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span></span>
@@ -632,10 +651,11 @@
 <span>  sample_start_date <span class="op">=</span> <span class="st">"2022-12-01"</span>, </span>
 <span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 6</span></span>
-<span><span class="co">#&gt;   sample_start_date sample_end_date trap_days species       total_count   rai</span></span>
-<span><span class="co">#&gt;   &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 2022-12-01        2023-04-30            151 Roosevelt Elk         146 0.967</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 1 × 7</span></span>
+<span><span class="co">#&gt;   sample_start_date sample_end_date trap_days species   n_detections total_count</span></span>
+<span><span class="co">#&gt;   &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;            &lt;int&gt;       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 2022-12-01        2023-04-30            151 Roosevel…           51         146</span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: rai &lt;dbl&gt;</span></span></code></pre></div>
 <p>We can compare total count and RAI across species:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spp_comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sample_rai.html">sample_rai</a></span><span class="op">(</span></span>
@@ -646,16 +666,17 @@
 <span>  sample_end_date <span class="op">=</span> <span class="st">"2023-04-30"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">spp_comp</span></span>
-<span><span class="co">#&gt; # A tibble: 7 × 6</span></span>
-<span><span class="co">#&gt;   sample_start_date sample_end_date trap_days species        total_count     rai</span></span>
-<span><span class="co">#&gt;   &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;                &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 2022-12-01        2023-04-30            131 Avian (commen…           1 0.00763</span></span>
-<span><span class="co">#&gt; 2 2022-12-01        2023-04-30            151 Black Bear              28 0.185  </span></span>
-<span><span class="co">#&gt; 3 2022-12-01        2023-04-30            151 Cougar                   8 0.0530 </span></span>
-<span><span class="co">#&gt; 4 2022-12-01        2023-04-30            151 Mule Deer              105 0.695  </span></span>
-<span><span class="co">#&gt; 5 2022-12-01        2023-04-30            131 Other (commen…           1 0.00763</span></span>
-<span><span class="co">#&gt; 6 2022-12-01        2023-04-30            151 Pacific Marten           2 0.0132 </span></span>
-<span><span class="co">#&gt; 7 2022-12-01        2023-04-30            151 Roosevelt Elk          146 0.967</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 7 × 7</span></span>
+<span><span class="co">#&gt;   sample_start_date sample_end_date trap_days species   n_detections total_count</span></span>
+<span><span class="co">#&gt;   &lt;date&gt;            &lt;date&gt;              &lt;int&gt; &lt;chr&gt;            &lt;int&gt;       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 2022-12-01        2023-04-30            131 Avian (c…            1           1</span></span>
+<span><span class="co">#&gt; 2 2022-12-01        2023-04-30            151 Black Be…           28          28</span></span>
+<span><span class="co">#&gt; 3 2022-12-01        2023-04-30            151 Cougar               8           8</span></span>
+<span><span class="co">#&gt; 4 2022-12-01        2023-04-30            151 Mule Deer           77         105</span></span>
+<span><span class="co">#&gt; 5 2022-12-01        2023-04-30            131 Other (c…            1           1</span></span>
+<span><span class="co">#&gt; 6 2022-12-01        2023-04-30            151 Pacific …            2           2</span></span>
+<span><span class="co">#&gt; 7 2022-12-01        2023-04-30            151 Roosevel…           51         146</span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: rai &lt;dbl&gt;</span></span></code></pre></div>
 <p>Using the <a href="https://ggplot2.tidyverse.org/" class="external-link">ggplot2</a> package, we can plot this:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -693,7 +714,7 @@
 <p>Use <code><a href="reference/rai_by_time.html">rai_by_time()</a></code> to calculate RAI over a time window, optionally calculating statistics using a moving window aggregation. You can calculate daily statistics, or aggregate by week, month, or year. By default, it calculates daily metrics, aggregating across deployments.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span><span class="va">image_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 2,205 × 8</span></span>
+<span><span class="co">#&gt; # A tibble: 2,205 × 9</span></span>
 <span><span class="co">#&gt;    species          study_area_name date       max_snow_index mean_temperature</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;           &lt;date&gt;              &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt;  1 Avian (comments) Test Project    2022-11-07              2             6   </span></span>
@@ -707,7 +728,8 @@
 <span><span class="co">#&gt;  9 Avian (comments) Test Project    2022-11-15              2             0.5 </span></span>
 <span><span class="co">#&gt; 10 Avian (comments) Test Project    2022-11-16              2            -1   </span></span>
 <span><span class="co">#&gt; # ℹ 2,195 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 3 more variables: total_count &lt;dbl&gt;, trap_days &lt;int&gt;, rai &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 4 more variables: n_detections &lt;int&gt;, total_count &lt;dbl&gt;, trap_days &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   rai &lt;dbl&gt;</span></span></code></pre></div>
 <p>We can select a single species, and calculate daily rolling values. The default window size is 7, but it can be changed with the <code>k</code> parameter.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elk_roll_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rai_by_time.html">rai_by_time</a></span><span class="op">(</span></span>
@@ -717,7 +739,7 @@
 <span>  roll <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">elk_roll_avg</span></span>
-<span><span class="co">#&gt; # A tibble: 245 × 13</span></span>
+<span><span class="co">#&gt; # A tibble: 245 × 15</span></span>
 <span><span class="co">#&gt;    species       study_area_name date       max_snow_index mean_temperature</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;           &lt;date&gt;              &lt;dbl&gt;            &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt;  1 Roosevelt Elk Test Project    2022-11-07              2             6   </span></span>
@@ -731,9 +753,10 @@
 <span><span class="co">#&gt;  9 Roosevelt Elk Test Project    2022-11-15              2             0.5 </span></span>
 <span><span class="co">#&gt; 10 Roosevelt Elk Test Project    2022-11-16              2            -1   </span></span>
 <span><span class="co">#&gt; # ℹ 235 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 8 more variables: total_count &lt;dbl&gt;, trap_days &lt;int&gt;, rai &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   roll_mean_max_snow &lt;dbl&gt;, roll_mean_temp &lt;dbl&gt;, roll_trap_days &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   roll_count &lt;dbl&gt;, roll_rai &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; # ℹ 10 more variables: n_detections &lt;int&gt;, total_count &lt;dbl&gt;, trap_days &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   rai &lt;dbl&gt;, roll_mean_max_snow &lt;dbl&gt;, roll_mean_temp &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   roll_trap_days &lt;int&gt;, roll_detections &lt;int&gt;, roll_count &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   roll_rai &lt;dbl&gt;</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">roll_rai</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -766,7 +789,7 @@
 <span>  by <span class="op">=</span> <span class="st">"date"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"Roosevelt Elk"</span>,</span>
 <span>  roll <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  snow_agg <span class="op">=</span> <span class="va">mean</span></span>
+<span>  snow_agg <span class="op">=</span> <span class="st">"mean"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">elk_roll_avg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">roll_mean_mean_snow</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -902,6 +925,15 @@
 </div>
 </div>
 <div class="section level3">
+<h3 id="bccamtrapp-shiny-app">bccamtrapp() Shiny App<a class="anchor" aria-label="anchor" href="#bccamtrapp-shiny-app"></a>
+</h3>
+<p>The package contains a Shiny App for interactive use of most of the package’s functionality.</p>
+<p>Run the app with:</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bcgov/bccamtrap" class="external-link">bccamtrap</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/bccamtrapp.html">bccamtrapp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="project-status">Project Status<a class="anchor" aria-label="anchor" href="#project-status"></a>
 </h3>
 </div>
@@ -919,25 +951,25 @@
 <div class="section level3">
 <h3 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h3>
-<div class="sourceCode" id="cb57"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
-<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
-<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
-<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
-<span id="cb57-6"><a href="#cb57-6" tabindex="-1"></a></span>
-<span id="cb57-7"><a href="#cb57-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
-<span id="cb57-8"><a href="#cb57-8" tabindex="-1"></a></span>
-<span id="cb57-9"><a href="#cb57-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
-<span id="cb57-10"><a href="#cb57-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span id="cb57-11"><a href="#cb57-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
+<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
+<span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
+<span id="cb58-5"><a href="#cb58-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
+<span id="cb58-6"><a href="#cb58-6" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
+<span id="cb58-8"><a href="#cb58-8" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="#cb58-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
+<span id="cb58-10"><a href="#cb58-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span id="cb58-11"><a href="#cb58-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
 </div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ateucher/bccamtrap/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/ateucher/bccamtrap/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/bcgov/bccamtrap/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/bcgov/bccamtrap/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -975,8 +1007,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md" class="external-link"><img src="https://img.shields.io/badge/Lifecycle-Experimental-339999" alt="img"></a></li>
+<li><a href="https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/bcgov/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md" class="external-link"><img src="https://img.shields.io/badge/Lifecycle-Maturing-339999" alt="img"></a></li>
 <li><a href="https://app.codecov.io/gh/bcgov/bccamtrap?branch=main" class="external-link"><img src="https://codecov.io/gh/bcgov/bccamtrap/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>

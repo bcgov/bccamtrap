@@ -25,7 +25,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/ateucher/bccamtrap/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/bcgov/bccamtrap/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -38,7 +38,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Plot image timestamps over deployment periods</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ateucher/bccamtrap/blob/HEAD/R/qa-deployment-images.R" class="external-link"><code>R/qa-deployment-images.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bcgov/bccamtrap/blob/HEAD/R/qa-deployment-images.R" class="external-link"><code>R/qa-deployment-images.R</code></a></small>
       <div class="d-none name"><code>plot_deployment_detections.Rd</code></div>
     </div>
 
@@ -52,7 +52,8 @@
 <span>  <span class="va">deployments</span>,</span>
 <span>  <span class="va">image_data</span>,</span>
 <span>  date_breaks <span class="op">=</span> <span class="st">"1 month"</span>,</span>
-<span>  interactive <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  interactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -73,12 +74,16 @@
 <dt>interactive</dt>
 <dd><p>should the plot be interactive? Default <code>FALSE</code></p></dd>
 
+
+<dt>...</dt>
+<dd><p>passed on to <code><a href="https://davidgohel.github.io/ggiraph/reference/girafe.html" class="external-link">ggiraph::girafe()</a></code> for setting options for interactive graphs</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a <code>ggplot2</code> object if <code>interactive = FALSE</code>, a <code>plotly</code> object if <code>TRUE</code></p>
+<p>a <code>ggplot2</code> object if <code>interactive = FALSE</code>, a <code>ggiraph</code> object if <code>TRUE</code></p>
 
 
     </div>
