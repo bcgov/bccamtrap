@@ -9,3 +9,7 @@
 NULL
 
 utils::globalVariables("closest")
+
+ignore_unused_imports <- function() {
+  shinycssloaders::withSpinner
+}
