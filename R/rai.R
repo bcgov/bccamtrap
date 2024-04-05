@@ -1,4 +1,4 @@
-#' Calculate Relative Abundance Index (RAI)
+#' Calculate Relative Activity Index (RAI)
 #'
 #' Calculate the RAI for sample sessions and species. Optionally set start date
 #' and end date, deployment label(s), and species. You can choose to calculate

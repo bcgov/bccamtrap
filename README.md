@@ -675,9 +675,9 @@ make_sample_sessions(
 
 ### Analysis data
 
-#### Relative Abundance Index (RAI)
+#### Relative Activity Index (RAI)
 
-Calculate Relative Abundance Index for sample sessions using
+Calculate Relative Activity Index for sample sessions using
 `sample_rai()`. By default, it calculates RAI per species using the
 sample start and end dates in the data for each deployment:
 
@@ -774,7 +774,7 @@ ggplot(spp_comp, aes(x = rai, y = species)) +
   theme_classic() + 
   labs(title = "RAI of all species detected, across all deployments", 
        caption = "Numbers beside points represent total number of individuals detected",
-       x = "Relative Abundance Index", y = "Species")
+       x = "Relative Activity Index", y = "Species")
 ```
 
 <img src="man/figures/README-sample-rai4-plot-1.png" width="100%" />
@@ -796,12 +796,12 @@ ggplot(spp_comp_by_dep, aes(x = rai, y = species, colour = deployment_label)) +
   theme_classic() + 
   labs(title = "RAI of all species detected, across all deployments", 
        caption = "Numbers beside points represent total number of individuals detected",
-       x = "Relative Abundance Index", y = "Species")
+       x = "Relative Activity Index", y = "Species")
 ```
 
 <img src="man/figures/README-sample-rai-5-1.png" width="100%" />
 
-#### Relative Abundance Index (RAI) over time
+#### Relative Activity Index (RAI) over time
 
 Use `rai_by_time()` to calculate RAI over a time window, optionally
 calculating statistics using a moving window aggregation. You can
