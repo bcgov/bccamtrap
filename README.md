@@ -450,6 +450,7 @@ fields, plus any `QA_` fields that have at least one `TRUE` value are
 returned:
 
 ``` r
+# Print the names of the columns, just to see what we're working with
 names(image_data_qa)
 #>  [1] "root_folder"                             
 #>  [2] "study_area_name"                         
@@ -502,7 +503,14 @@ names(image_data_qa)
 #> [49] "QA_snow_blank"
 ```
 
+We can use functions from the [dplyr](https://dplyr.tidyverse.org)
+package to select and view just the QA columns. bccamtrap uses dplyr as
+a dependency, so it will already be installed on your system, though it
+does need to be loaded.
+
 ``` r
+library(dplyr)
+
 select(image_data_qa, root_folder, file, starts_with("QA_"))
 #> # A tibble: 24 × 7
 #>    root_folder file  QA_species_UNMATCHED…¹ QA_total_count_episo…² QA_sum_counts

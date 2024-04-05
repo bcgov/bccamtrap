@@ -341,10 +341,17 @@ images we should have a closer look at. All of the original fields, plus any `QA
 fields that have at least one `TRUE` value are returned:
 
 ```{r}
+# Print the names of the columns, just to see what we're working with
 names(image_data_qa)
 ```
 
+We can use functions from the [dplyr](https://dplyr.tidyverse.org) package to select and 
+view just the QA columns. bccamtrap uses dplyr as a dependency, so it will already be installed 
+on your system, though it does need to be loaded.
+
 ```{r}
+library(dplyr)
+
 select(image_data_qa, root_folder, file, starts_with("QA_"))
 ```
 
