@@ -32,8 +32,15 @@ You can install the development version of bccamtrap from
 [devtools](https://devtools.r-lib.org/) package (you may need to install
 it first):
 
+If don’t have devtools installed, install it:
+
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
+```
+
+Then you can install the bccamtrap package:
+
+``` r
 devtools::install_github("bcgov/bccamtrap")
 ```
 
