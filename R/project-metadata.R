@@ -179,7 +179,7 @@ cam_setup_checks_fields <- function(x) {
     general_sampling_comments = "text"
   )
 
-  col_types[intersect(names(col_types), names(x))]
+  finalize_col_spec(names(x), col_types)
 }
 
 camera_info_fields <- function(x) {
@@ -199,7 +199,7 @@ camera_info_fields <- function(x) {
     site_description_date = "text"
   )
 
-  col_types[intersect(names(col_types), names(x))]
+  finalize_col_spec(names(x), col_types)
 }
 
 sample_station_info_fields <- function(x) {
@@ -234,7 +234,24 @@ sample_station_info_fields <- function(x) {
     access_notes = "text"
   )
 
-  col_types[intersect(names(col_types), names(x))]
+  finalize_col_spec(names(x), col_types)
+  
+}
+
+finalize_col_spec <- function(data_cols, col_spec) {
+  col_names <- names(col_spec)
+  spec_miss <- setdiff(data_cols, col_names)
+  if (length(spec_miss) > 0) {
+    cli::cli_alert_warning("Unexpected column{?s} in data: {.val {spec_miss}}")
+    spec_miss <- stats::setNames("skip", spec_miss)
+  }
+  
+  data_miss <- setdiff(col_names, data_cols)
+  if (length(data_miss) > 0) {
+    cli::cli_alert_warning("Data is missing expected column{?s}: {.val {data_miss}}")
+  }
+  
+  c(col_spec[intersect(col_names, data_cols)], spec_miss)
 }
 
 
