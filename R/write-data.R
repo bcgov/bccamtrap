@@ -394,3 +394,18 @@ spp_lookup <- function(species) {
   code[is.na(code)] <- species[is.na(code)]
   unname(code)
 }
+
+#' @importFrom sf st_write
+#' @export
+st_write.deployments <- function(obj, dsn, layer, ...) {
+  obj[] <- lapply(obj, function(y) {
+    if (inherits(y, "sfc")) {
+      return(y)
+    }
+    readr::output_column(y)
+})
+  NextMethod("st_write", obj, dsn, layer, ...)
+}
+
+#' @export
+st_write.cam_setup_checks <- st_write.deployments
