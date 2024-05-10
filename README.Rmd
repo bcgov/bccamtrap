@@ -35,6 +35,12 @@ set.seed(13)
 
 Functions for QA and validation of Camera Trap data
 
+For documentation, see the [package documentation website](https://bcgov.github.io/bccamtrap/), 
+in particular the [function reference section](https://bcgov.github.io/bccamtrap/reference/index.html).
+
+This document will walk through the main points of installing and using the 
+core functionality of the package, including the bundled Shiny app.
+
 1. [Installation](#installation)
 2. [Example Usage](#example-usage)
     i. [Project and station metadata](#project-and-station-metadata)
@@ -785,6 +791,18 @@ to be loaded, but don't require the metadata.
 To export to a SPI template for submission, you need to have loaded metadata and 
 image data. This will write only the required fields to the current SPI template
 included in the package.
+
+If you experience the error "Maximum upload size exceeded", you can change the 
+`max_upload_size_mb` parameter of `bccamtrapp()` to a value greater than the 
+default of 50:
+
+```r
+bccamtrapp(max_upload_size_mb = 100)
+```
+
+The default of 50MB should be sufficient for most use-cases. If you find you
+need more than that, you may find degraded performance of the app and you should
+consider using bccamtrap functions directly in R.
 
 ### Project Status
 

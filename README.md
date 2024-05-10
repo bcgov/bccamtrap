@@ -13,6 +13,14 @@ coverage](https://codecov.io/gh/bcgov/bccamtrap/branch/main/graph/badge.svg)](ht
 
 Functions for QA and validation of Camera Trap data
 
+For documentation, see the [package documentation
+website](https://bcgov.github.io/bccamtrap/), in particular the
+[function reference
+section](https://bcgov.github.io/bccamtrap/reference/index.html).
+
+This document will walk through the main points of installing and using
+the core functionality of the package, including the bundled Shiny app.
+
 1.  [Installation](#installation)
 2.  [Example Usage](#example-usage)
     1.  [Project and station metadata](#project-and-station-metadata)
@@ -209,6 +217,7 @@ camera_setup_checks <- read_cam_setup_checks(metadata_path)
 camera_setup_checks
 ```
 
+    #> ! Data is missing expected column: "data_qc_complete"
     #> # A tibble: 43 × 31
     #>    wlrs_project_name       study_area_name sample_station_label deployment_label
     #>    <chr>                   <chr>           <chr>                <chr>           
@@ -242,6 +251,7 @@ deployments <- make_deployments(metadata_path)
 deployments
 ```
 
+    #> ! Data is missing expected column: "data_qc_complete"
     #> Simple feature collection with 28 features and 62 fields
     #> Geometry type: POINT
     #> Dimension:     XY
@@ -1135,6 +1145,18 @@ analysis data:
 To export to a SPI template for submission, you need to have loaded
 metadata and image data. This will write only the required fields to the
 current SPI template included in the package.
+
+If you experience the error “Maximum upload size exceeded”, you can
+change the `max_upload_size_mb` parameter of `bccamtrapp()` to a value
+greater than the default of 50:
+
+``` r
+bccamtrapp(max_upload_size_mb = 100)
+```
+
+The default of 50MB should be sufficient for most use-cases. If you find
+you need more than that, you may find degraded performance of the app
+and you should consider using bccamtrap functions directly in R.
 
 ### Project Status
 
