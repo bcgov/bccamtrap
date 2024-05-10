@@ -4,10 +4,12 @@
 \alias{bccamtrapp}
 \title{Launch Shiny app}
 \usage{
-bccamtrapp(browser = TRUE, ...)
+bccamtrapp(browser = TRUE, max_upload_size_mb = 50, ...)
 }
 \arguments{
 \item{browser}{Should the app be launched in the default browser? Default \code{TRUE}}
+
+\item{max_upload_size_mb}{The maximum file size able to load into the app, in MB. Default \code{50}.}
 
 \item{...}{passed on to \code{options} in \code{\link[shiny:shinyApp]{shiny::shinyApp()}}}
 }
