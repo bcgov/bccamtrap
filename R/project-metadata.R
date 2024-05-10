@@ -365,57 +365,60 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
   lat_col <- paste0("latitude_", type, "_dd")
   lon_col <- paste0("longitude_", type, "_dd")
 
-  # Make a data.frame of rows with utm data, and another with lat lons
-  x_utm <- dplyr::filter(
+  x <- sf::st_as_sf(
     x,
-    !is.na(.data[[zone_col]]),
-    !is.na(.data[[easting_col]]),
-    !is.na(.data[[northing_col]])
-  )
-
-  x_ll <- dplyr::filter(
-    x,
-    !is.na(.data[[lat_col]]),
-    !is.na(.data[[lon_col]])
+    geometry = sf::st_sfc(
+      lapply(seq_len(nrow(x)), function(x) sf::st_point()),
+      crs = "EPSG:4326"
+    ),
+    remove = FALSE
   )
 
   # Convert the utms to sf
-  if (nrow(x_utm) > 0) {
+  utm_rows <- !is.na(x[[zone_col]]) & !is.na(x[[easting_col]]) & !is.na(x[[northing_col]])
+  if (any(utm_rows)) {
+
     x_utm <- bcmaps::utm_convert(
-      x_utm,
+      sf::st_drop_geometry(x[utm_rows, ]),
       easting = easting_col,
       northing = northing_col,
       zone = zone_col,
       crs = "EPSG:4326",
       xycols = FALSE
     )
+
+    # update the columns in x with geom from utms
+    sf::st_geometry(x[utm_rows, ]) <- sf::st_geometry(x_utm)
   }
 
   # convert the lat/lons to sf
-  if (nrow(x_ll) > 0) {
+  ll_rows <- !is.na(x[[lat_col]]) & !is.na(x[[lon_col]])
+  if (any(ll_rows)) {
+    if (any(x[[lat_col]][!is.na(x[[lat_col]])] < 0) ||
+        any(x[[lon_col]][!is.na(x[[lon_col]])] > 0)) {
+      cli::cli_warn("It looks like you have latitude and longitude columns switched.")
+    }
     x_ll <- sf::st_as_sf(
-      x_ll,
+      sf::st_drop_geometry(x[ll_rows, ]),
       coords = c(lon_col, lat_col),
       crs = "EPSG:4326",
       remove = FALSE
     )
+    # If all rows have good lat/lon data, just use that
+    if (nrow(x_ll) == nrow(x)) {
+      return(x_ll)
+    }
+
+    # update the columns in x with geom from lat/lons
+    # prefer lats and lons, so we overwrite those from utms if they are there
+    sf::st_geometry(x[ll_rows, ]) <- sf::st_geometry(x_ll)
   }
 
-  n_invalid_rows <- nrow(x) - (nrow(x_utm) + nrow(x_ll))
-
-  if (n_invalid_rows > 0) {
+  if (any(sf::st_is_empty(x))) {
     cli::cli_warn("Data has entries with missing or invalid UTMs or Lat/Lon values")
   }
 
-  # recombine
-  res <- dplyr::bind_rows(Filter(\(x) nrow(x) > 0, list(x_utm, x_ll)))
-
-  # bcmaps::utm_convert v2.2.0 doesn't restore classes properly
-  # https://github.com/bcgov/bcmaps/issues/143
-  if (dplyr::is.tbl(x) && !dplyr::is.tbl(res)) {
-    class(res) <- c("sf", "tbl_df", "tbl", "data.frame")
-  }
-  res
+  x
 }
 
 add_project_name_from_spi_sheet <- function(path, data) {
