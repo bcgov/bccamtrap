@@ -63,6 +63,8 @@
 <!-- badges: start -->
 
 <p>Functions for QA and validation of Camera Trap data</p>
+<p>For documentation, see the <a href="https://bcgov.github.io/bccamtrap/">package documentation website</a>, in particular the <a href="https://bcgov.github.io/bccamtrap/reference/index.html">function reference section</a>.</p>
+<p>This document will walk through the main points of installing and using the core functionality of the package, including the bundled Shiny app.</p>
 <ol style="list-style-type: decimal">
 <li><a href="#installation">Installation</a></li>
 <li>
@@ -215,26 +217,27 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">camera_setup_checks</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_cam_setup_checks.html">read_cam_setup_checks</a></span><span class="op">(</span><span class="va">metadata_path</span><span class="op">)</span></span>
 <span><span class="va">camera_setup_checks</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 × 31</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name       study_area_name sample_station_label deployment_label</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                   &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Roose… Test Project    19_1                 &lt;NA&gt;            </span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Roose… Test Project    19_2                 &lt;NA&gt;            </span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Roose… Test Project    20                   &lt;NA&gt;            </span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Roose… Test Project    21_1                 &lt;NA&gt;            </span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Roose… Test Project    21_2                 &lt;NA&gt;            </span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Roose… Test Project    24                   &lt;NA&gt;            </span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Roose… Test Project    25                   &lt;NA&gt;            </span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Roose… Test Project    26                   &lt;NA&gt;            </span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Roose… Test Project    27                   &lt;NA&gt;            </span></span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Roose… Test Project    28                   &lt;NA&gt;            </span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; # ℹ 33 more rows</span></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 27 more variables: camera_label &lt;chr&gt;, surveyors &lt;chr&gt;,</span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; #   date_time_checked &lt;dttm&gt;, sampling_start &lt;dttm&gt;, sampling_end &lt;dttm&gt;,</span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; #   total_visit_or_deployment_time &lt;dbl&gt;, unit_of_total_time_code &lt;chr&gt;,</span></span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt; #   visit_type &lt;chr&gt;, camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; #   batteries_changed &lt;chr&gt;, number_of_photos &lt;dbl&gt;, quiet_period_s &lt;chr&gt;,</span></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt; #   trigger_sensitivity &lt;chr&gt;, trigger_timing_s &lt;dbl&gt;, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#&gt; ! Data is missing expected column: "data_qc_complete"</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 43 × 31</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name       study_area_name sample_station_label deployment_label</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                   &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Roose… Test Project    19_1                 &lt;NA&gt;            </span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Roose… Test Project    19_2                 &lt;NA&gt;            </span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Roose… Test Project    20                   &lt;NA&gt;            </span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Roose… Test Project    21_1                 &lt;NA&gt;            </span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Roose… Test Project    21_2                 &lt;NA&gt;            </span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Roose… Test Project    24                   &lt;NA&gt;            </span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Roose… Test Project    25                   &lt;NA&gt;            </span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Roose… Test Project    26                   &lt;NA&gt;            </span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Roose… Test Project    27                   &lt;NA&gt;            </span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Roose… Test Project    28                   &lt;NA&gt;            </span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 33 more rows</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; # ℹ 27 more variables: camera_label &lt;chr&gt;, surveyors &lt;chr&gt;,</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; #   date_time_checked &lt;dttm&gt;, sampling_start &lt;dttm&gt;, sampling_end &lt;dttm&gt;,</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt; #   total_visit_or_deployment_time &lt;dbl&gt;, unit_of_total_time_code &lt;chr&gt;,</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; #   visit_type &lt;chr&gt;, camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt; #   batteries_changed &lt;chr&gt;, number_of_photos &lt;dbl&gt;, quiet_period_s &lt;chr&gt;,</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt; #   trigger_sensitivity &lt;chr&gt;, trigger_timing_s &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="deployments">Deployments<a class="anchor" aria-label="anchor" href="#deployments"></a>
@@ -243,31 +246,32 @@
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deployments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_deployments.html">make_deployments</a></span><span class="op">(</span><span class="va">metadata_path</span><span class="op">)</span></span>
 <span><span class="va">deployments</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 28 features and 62 fields</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; Geometry type: POINT</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -130.3966 ymin: 52.92087 xmax: -129.569 ymax: 52.96732</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 57</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name       study_area_name sample_station_label deployment_label</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                   &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Roose… Test Project    19_1                 19_1_20230605   </span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Roose… Test Project    19_2                 19_2_20230605   </span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Roose… Test Project    20                   20_20230605     </span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Roose… Test Project    21_1                 21_20230605     </span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Roose… Test Project    21_2                 21_2_20230605   </span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Roose… Test Project    24                   24_20230708     </span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Roose… Test Project    25                   25_20230710     </span></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Roose… Test Project    26                   26_20230710     </span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Roose… Test Project    27                   27_20230605     </span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Roose… Test Project    28                   28_20230605     </span></span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 53 more variables: camera_label &lt;chr&gt;, surveyors &lt;chr&gt;,</span></span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; #   date_time_checked &lt;dttm&gt;, sampling_end &lt;dttm&gt;,</span></span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; #   total_visit_or_deployment_time &lt;dbl&gt;, unit_of_total_time_code &lt;chr&gt;,</span></span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; #   visit_type &lt;chr&gt;, camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; #   batteries_changed &lt;chr&gt;, number_of_photos &lt;dbl&gt;, quiet_period_s &lt;chr&gt;,</span></span>
-<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; #   trigger_sensitivity &lt;chr&gt;, trigger_timing_s &lt;dbl&gt;, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">#&gt; ! Data is missing expected column: "data_qc_complete"</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 28 features and 62 fields</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; Geometry type: POINT</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -130.3966 ymin: 52.92087 xmax: -129.569 ymax: 52.96732</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 57</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;    wlrs_project_name       study_area_name sample_station_label deployment_label</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;                   &lt;chr&gt;           &lt;chr&gt;                &lt;chr&gt;           </span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt;  1 2022 - ongoing - Roose… Test Project    19_1                 19_1_20230605   </span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt;  2 2022 - ongoing - Roose… Test Project    19_2                 19_2_20230605   </span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt;  3 2022 - ongoing - Roose… Test Project    20                   20_20230605     </span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;  4 2022 - ongoing - Roose… Test Project    21_1                 21_20230605     </span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt;  5 2022 - ongoing - Roose… Test Project    21_2                 21_2_20230605   </span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt;  6 2022 - ongoing - Roose… Test Project    24                   24_20230708     </span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt;  7 2022 - ongoing - Roose… Test Project    25                   25_20230710     </span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt;  8 2022 - ongoing - Roose… Test Project    26                   26_20230710     </span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt;  9 2022 - ongoing - Roose… Test Project    27                   27_20230605     </span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; 10 2022 - ongoing - Roose… Test Project    28                   28_20230605     </span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 53 more variables: camera_label &lt;chr&gt;, surveyors &lt;chr&gt;,</span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; #   date_time_checked &lt;dttm&gt;, sampling_end &lt;dttm&gt;,</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; #   total_visit_or_deployment_time &lt;dbl&gt;, unit_of_total_time_code &lt;chr&gt;,</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; #   visit_type &lt;chr&gt;, camera_status_on_arrival &lt;chr&gt;, battery_level &lt;chr&gt;,</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; #   batteries_changed &lt;chr&gt;, number_of_photos &lt;dbl&gt;, quiet_period_s &lt;chr&gt;,</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt; #   trigger_sensitivity &lt;chr&gt;, trigger_timing_s &lt;dbl&gt;, …</span></span></code></pre></div>
 <p>There is a handy <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for this as well:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">deployments</span><span class="op">)</span></span>
@@ -944,6 +948,10 @@
 <li><p>“Image Data QA”, “Sample Sessions”, and “Analysis Data” all require the image data to be loaded, but don’t require the metadata.</p></li>
 </ul>
 <p>To export to a SPI template for submission, you need to have loaded metadata and image data. This will write only the required fields to the current SPI template included in the package.</p>
+<p>If you experience the error “Maximum upload size exceeded”, you can change the <code>max_upload_size_mb</code> parameter of <code><a href="reference/bccamtrapp.html">bccamtrapp()</a></code> to a value greater than the default of 50:</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/bccamtrapp.html">bccamtrapp</a></span><span class="op">(</span>max_upload_size_mb <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+<p>The default of 50MB should be sufficient for most use-cases. If you find you need more than that, you may find degraded performance of the app and you should consider using bccamtrap functions directly in R.</p>
 </div>
 <div class="section level3">
 <h3 id="project-status">Project Status<a class="anchor" aria-label="anchor" href="#project-status"></a>
@@ -963,17 +971,17 @@
 <div class="section level3">
 <h3 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h3>
-<div class="sourceCode" id="cb59"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
-<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a></span>
-<span id="cb59-3"><a href="#cb59-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
-<span id="cb59-4"><a href="#cb59-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
-<span id="cb59-5"><a href="#cb59-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
-<span id="cb59-6"><a href="#cb59-6" tabindex="-1"></a></span>
-<span id="cb59-7"><a href="#cb59-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
-<span id="cb59-8"><a href="#cb59-8" tabindex="-1"></a></span>
-<span id="cb59-9"><a href="#cb59-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
-<span id="cb59-10"><a href="#cb59-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span id="cb59-11"><a href="#cb59-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a>Copyright <span class="dv">2024</span> Province of British Columbia</span>
+<span id="cb60-2"><a href="#cb60-2" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" tabindex="-1"></a>Licensed under the Apache License, Version <span class="fl">2.0</span> (the <span class="sc">&amp;</span>quot;License<span class="sc">&amp;</span>quot;);</span>
+<span id="cb60-4"><a href="#cb60-4" tabindex="-1"></a>you may not use this file except <span class="cf">in</span> compliance with the License.</span>
+<span id="cb60-5"><a href="#cb60-5" tabindex="-1"></a>You may obtain a copy of the License at</span>
+<span id="cb60-6"><a href="#cb60-6" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="#cb60-7" tabindex="-1"></a>http<span class="sc">:</span><span class="er">//</span>www.apache.org<span class="sc">/</span>licenses<span class="sc">/</span>LICENSE<span class="fl">-2.0</span></span>
+<span id="cb60-8"><a href="#cb60-8" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="#cb60-9" tabindex="-1"></a>Unless required by applicable law or agreed to <span class="cf">in</span> writing, software distributed under the License is distributed on an <span class="sc">&amp;</span>quot;AS IS<span class="sc">&amp;</span>quot; BASIS,</span>
+<span id="cb60-10"><a href="#cb60-10" tabindex="-1"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span id="cb60-11"><a href="#cb60-11" tabindex="-1"></a>See the License <span class="cf">for</span> the specific language governing permissions and limitations under the License.</span></code></pre></div>
 </div>
 </div>
 </div>
