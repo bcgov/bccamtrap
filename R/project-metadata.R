@@ -235,7 +235,7 @@ sample_station_info_fields <- function(x) {
   )
 
   finalize_col_spec(names(x), col_types)
-  
+
 }
 
 finalize_col_spec <- function(data_cols, col_spec) {
@@ -245,12 +245,12 @@ finalize_col_spec <- function(data_cols, col_spec) {
     cli::cli_alert_warning("Unexpected column{?s} in data: {.val {spec_miss}}")
     spec_miss <- stats::setNames("skip", spec_miss)
   }
-  
+
   data_miss <- setdiff(col_names, data_cols)
   if (length(data_miss) > 0) {
     cli::cli_alert_warning("Data is missing expected column{?s}: {.val {data_miss}}")
   }
-  
+
   c(col_spec[intersect(col_names, data_cols)], spec_miss)
 }
 
@@ -297,7 +297,7 @@ excel_to_date <- function(x) {
   out_dt[] <- NA_real_
 
   # Fill in the elements from above
-  out_dt <- out_dateish
+  out_dt[] <- out_dateish
   out_dt[numberish] <- out_numberish
   lubridate::as_datetime(out_dt)
 }
@@ -323,8 +323,9 @@ excel_to_time <- function(x) {
 excel_origin <- function() "1899-12-30"
 
 combine_date_time <- function(dt, tm) {
+  dt_char <- format(dt, "%Y-%m-%d")
   time_char <- format(tm, "%H:%M:%S")
-  lubridate::ymd_hms(paste(as.character(dt), time_char), quiet = TRUE)
+  lubridate::ymd_hms(paste(dt_char, time_char), quiet = TRUE, truncated = 3)
 }
 
 #' Convert Sample Station Info or Camera Info to a spatial `sf` boject
