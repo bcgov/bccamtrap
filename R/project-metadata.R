@@ -375,7 +375,9 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
   )
 
   # Convert the utms to sf
-  utm_rows <- !is.na(x[[zone_col]]) & !is.na(x[[easting_col]]) & !is.na(x[[northing_col]])
+  utm_rows <- !is.na(x[[zone_col]]) &
+    !is.na(x[[easting_col]]) &
+    !is.na(x[[northing_col]])
   if (any(utm_rows)) {
 
     x_utm <- bcmaps::utm_convert(
