@@ -103,6 +103,7 @@ test_that("rai_by_time with different agg functions", {
     6.7
   )
 
+
   rai_rolltest2 <- rai_by_time(
     imgs2,
     by = "date",
@@ -128,6 +129,20 @@ test_that("rai_by_time with different agg functions", {
   expect_equal(
     round(mean(rai_rolltest3$roll_mean_mean_snow, na.rm = TRUE), 3),
     1.697
+  )
+
+  # set different trap days standardization. #34
+  rai_rolltest4 <- rai_by_time(
+    imgs2,
+    by = "date",
+    species = "Roosevelt Elk",
+    by_deployment = FALSE,
+    roll = TRUE,
+    rai_days = 1
+  )
+  expect_equal(
+    round(mean(rai_rolltest4$roll_rai, na.rm = TRUE), 3),
+    0.067
   )
 })
 
