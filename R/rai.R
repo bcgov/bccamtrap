@@ -25,7 +25,6 @@ sample_rai <- function(image_data,
                        by_species = TRUE,
                        sample_start_date = NULL,
                        sample_end_date = NULL) {
-
   dat <- prep_rai(
     image_data,
     deployment_label,
@@ -50,7 +49,6 @@ sample_rai <- function(image_data,
   )
 
   dplyr::relocate(out, dplyr::any_of("species"), .before = "n_detections")
-
 }
 
 #' Calculate RAI over a window of time, optionally rolling
@@ -67,6 +65,7 @@ sample_rai <- function(image_data,
 #' @param by_deployment Should it be calculated by `deployment`. Default `FALSE`
 #' @param snow_agg if `by_deployment = FALSE`, how to aggregate snow measurements
 #'   across sites. Takes the name of an aggregation function (e.g., `"mean"`). Default `"max"`
+#' @param rai_days Number of trap days by which RAI is standardized. Default. `100`
 #'
 #' @return a data.frame of above calculated metrics
 #' @export
@@ -80,11 +79,10 @@ rai_by_time <- function(image_data,
                         deployment_label = NULL,
                         sample_start_date = NULL,
                         sample_end_date = NULL,
-                        snow_agg = "max") {
-
+                        snow_agg = "max",
+                        rai_days = 100) {
   by <- match.arg(by)
-  by_fmt <- switch(
-    by,
+  by_fmt <- switch(by,
     "date" = "%Y-%m-%d",
     "week" = "%Y-W-%V",
     "month" = "%Y-%m",
@@ -104,11 +102,11 @@ rai_by_time <- function(image_data,
   dat <- dat %>%
     dplyr::mutate(date = as.Date(.data$date_time)) %>%
     dplyr::group_by(
-    .data$deployment_label,
-    .data$species,
-    .data$date,
-    .add = TRUE
-  )
+      .data$deployment_label,
+      .data$species,
+      .data$date,
+      .add = TRUE
+    )
 
   dat <- dplyr::summarise(
     dat,
@@ -152,7 +150,7 @@ rai_by_time <- function(image_data,
       n_detections = sum(.data$n_detections, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
       trap_days = dplyr::n_distinct(.data$deployment_label),
-      rai = .data$total_count / .data$trap_days,
+      rai = .data$total_count / .data$trap_days * rai_days,
       .groups = "drop"
     )
 
@@ -178,14 +176,16 @@ rai_by_time <- function(image_data,
         roll_trap_days = zoo::rollsum(.data$trap_days, k = k, fill = NA, na.rm = TRUE),
         roll_detections = zoo::rollsum(.data$n_detections, k = k, fill = NA, na.rm = TRUE),
         roll_count = zoo::rollsum(.data$total_count, k = k, fill = NA, na.rm = TRUE),
-        roll_rai = .data$roll_count / .data$roll_trap_days
+        roll_rai = .data$roll_count / .data$roll_trap_days * rai_days
       )
   }
   dplyr::ungroup(dat)
 }
 
 filter_if_not_null <- function(data, var, env = rlang::current_env()) {
-  if (is.null(var)) return(data)
+  if (is.null(var)) {
+    return(data)
+  }
   varname <- deparse(substitute(var, env = env))
   if (!all(var %in% data[[varname]])) {
     cli::cli_abort("{.val {var}} is not a valid value in {.var {varname}}")
@@ -251,22 +251,20 @@ add_groups <- function(x, by_deployment, by_species) {
 }
 
 complete_daily_counts <- function(x) {
-    tidyr::complete(
-      x,
-      tidyr::nesting(
-        # .data pronoun doesn't work inside nesting, so need this
-        # awkward data-masking syntax
-        !!rlang::sym("study_area_name"),
-        !!rlang::sym("sample_station_label"),
-        !!rlang::sym("deployment_label"),
-        !!rlang::sym("date"),
-        !!rlang::sym("snow_index"),
-        !!rlang::sym("temperature")
-      ),
-      !!rlang::sym("species"),
-      fill = list(n_detections = 0, total_count = 0)
-    ) %>%
+  tidyr::complete(
+    x,
+    tidyr::nesting(
+      # .data pronoun doesn't work inside nesting, so need this
+      # awkward data-masking syntax
+      !!rlang::sym("study_area_name"),
+      !!rlang::sym("sample_station_label"),
+      !!rlang::sym("deployment_label"),
+      !!rlang::sym("date"),
+      !!rlang::sym("snow_index"),
+      !!rlang::sym("temperature")
+    ),
+    !!rlang::sym("species"),
+    fill = list(n_detections = 0, total_count = 0)
+  ) %>%
     dplyr::ungroup()
 }
-
-
