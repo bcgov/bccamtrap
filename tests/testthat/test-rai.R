@@ -99,8 +99,8 @@ test_that("rai_by_time with different agg functions", {
   )
 
   expect_equal(
-    round(mean(rai_rolltest1$roll_rai, na.rm = TRUE), 3),
-    0.067
+    round(mean(rai_rolltest1$roll_rai, na.rm = TRUE), 1),
+    6.7
   )
 
   rai_rolltest2 <- rai_by_time(
