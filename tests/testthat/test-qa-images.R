@@ -52,12 +52,18 @@ test_that("validate_counts", {
   )
 
   expect_snapshot(
-    validate_counts(d, cols = c("adult_male", "adult_female"),
-                    exclude_human_use = FALSE)
+    validate_counts(
+      d,
+      cols = c("adult_male", "adult_female"),
+      exclude_human_use = FALSE
+    )
   )
   expect_snapshot(
-    validate_counts(d, cols = c("adult_male", "adult_female"),
-                    exclude_human_use = TRUE)
+    validate_counts(
+      d,
+      cols = c("adult_male", "adult_female"),
+      exclude_human_use = TRUE
+    )
   )
 })
 
@@ -65,7 +71,12 @@ test_that("find_dup_episodes", {
   d <- data.frame(
     episode = c("3:1|17", "4:1|17", "3:2|17", "4:1|17"),
     "deployment_label" = c("a", "b", "a", "c"),
-    "date_time" = as.Date(c("2024-03-09", "2024-03-10", "2024-03-11", "2024-03-12")),
+    "date_time" = as.Date(c(
+      "2024-03-09",
+      "2024-03-10",
+      "2024-03-11",
+      "2024-03-12"
+    )),
     "file" = c("x", 'y', "z", "zz"),
     "species" = c("p", "q", "p", "s")
   )
@@ -74,7 +85,11 @@ test_that("find_dup_episodes", {
 
 test_that("valideate_tl_time", {
   d <- data.frame(
-    date_time = lubridate::as_datetime(c("2020-01-01 12:00:00", "2020-01-02 00:00:00", "2020-01-03 18:27:45")),
+    date_time = lubridate::as_datetime(c(
+      "2020-01-01 12:00:00",
+      "2020-01-02 00:00:00",
+      "2020-01-03 18:27:45"
+    )),
     trigger_mode = c("Time Lapse", "Time Lapse", "Motion")
   )
 
@@ -83,10 +98,9 @@ test_that("valideate_tl_time", {
 })
 
 test_that("validate_timestamp_order", {
- # TODO
+  # TODO
 })
 
 test_that("validate_snow_data", {
- # TODO
+  # TODO
 })
-

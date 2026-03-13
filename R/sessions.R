@@ -93,7 +93,8 @@ make_deployments <- function(path, as_sf = TRUE) {
   csc$deployment_start_date <- as.Date(csc$deployment_start)
 
   ci_ss <- dplyr::left_join(
-    ss, ci,
+    ss,
+    ci,
     by = c("wlrs_project_name", "study_area_name", "sample_station_label")
   )
 
@@ -126,15 +127,18 @@ make_deployment_validity_columns <- function(x) {
     deployment_duration_days = lubridate::interval(
       as.Date(.data$deployment_start),
       as.Date(.data$deployment_end)
-    ) / lubridate::ddays(1),
+    ) /
+      lubridate::ddays(1),
     deployment_duration_valid = !is.na(.data$deployment_duration_days) &
       !is.na(.data$deployment_end) &
       if ("sampling_end" %in% names(x)) {
         !is.na(.data$sampling_end)
       } else {
-        TRUE
-      } &
-      .data$deployment_duration_days > 0
+        {
+          TRUE
+        } &
+          .data$deployment_duration_days > 0
+      }
   )
   dplyr::relocate(
     x,
@@ -160,18 +164,29 @@ make_deployment_validity_columns <- function(x) {
 #'
 #' @return a data.frame of class `sample_sessions` with one row (sample session) per deployment
 #' @export
-make_sample_sessions <- function(image_data, sample_start_date = NULL, sample_end_date = NULL) {
-
+make_sample_sessions <- function(
+  image_data,
+  sample_start_date = NULL,
+  sample_end_date = NULL
+) {
   dat <- dplyr::mutate(
     image_data,
-    trigger_mode = ifelse(grepl("^[Mm]", .data$trigger_mode), "motion", "timelapse")
+    trigger_mode = ifelse(
+      grepl("^[Mm]", .data$trigger_mode),
+      "motion",
+      "timelapse"
+    )
   )
 
   dat <- filter_start_end(dat, sample_start_date, sample_end_date)
 
   dat <- dplyr::group_by(
     dat,
-    dplyr::across(c("study_area_name", "sample_station_label", "deployment_label"))
+    dplyr::across(c(
+      "study_area_name",
+      "sample_station_label",
+      "deployment_label"
+    ))
   )
 
   out <- dplyr::summarize(

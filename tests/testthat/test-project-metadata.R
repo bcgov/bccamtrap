@@ -3,12 +3,15 @@ test_that("read_project_info works", {
   pi2 <- read_project_info(test_meta_file2)
   expect_s3_class(pi1, c("project_info", "data.frame"))
   expect_s3_class(pi2, c("project_info", "data.frame"))
-  expect_named(pi1, c(
-    "spi_project_id",
-    "project_name",
-    "survey_name",
-    "survey_intensity_code"
-  ))
+  expect_named(
+    pi1,
+    c(
+      "spi_project_id",
+      "project_name",
+      "survey_name",
+      "survey_intensity_code"
+    )
+  )
   expect_equal(names(pi1), names(pi2))
 })
 
@@ -59,13 +62,24 @@ test_that("read_cam_setup_checks works", {
 
 test_that("to_sf works", {
   x <- data.frame(
-    "sample_station_label" = c(1,2,3,4,5),
-    "utm_zone_sample_station" = rep(10,5),
+    "sample_station_label" = c(1, 2, 3, 4, 5),
+    "utm_zone_sample_station" = rep(10, 5),
     "easting_sample_station" = c(324249, 324885, 327421, 321769, 311450),
     "northing_sample_station" = c(5547908, 5551272, 5553009, 5561515, 5544809),
-    "latitude_sample_station_dd" = c(50.0575, 50.0879, 50.1042, 50.179, 50.0257),
-    "longitude_sample_station_dd" = c(-125.4553, -125.4480, -125.4134, -125.4963,
-                                      -125.6324)
+    "latitude_sample_station_dd" = c(
+      50.0575,
+      50.0879,
+      50.1042,
+      50.179,
+      50.0257
+    ),
+    "longitude_sample_station_dd" = c(
+      -125.4553,
+      -125.4480,
+      -125.4134,
+      -125.4963,
+      -125.6324
+    )
   )
 
   expect_silent(ret <- to_sf.sample_station_info(x, subclass = "spi-sheet"))
@@ -110,4 +124,3 @@ test_that("to_sf works", {
   expect_equal(nrow(ret6), nrow(x))
   expect_false(all(sf::st_is_empty(ret6)))
 })
-

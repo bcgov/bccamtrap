@@ -41,7 +41,6 @@ read_project_info <- function(path, ...) {
 #' @return a `data.frame` of station information, as an `sf` object if specified.
 #' @export
 read_sample_station_info <- function(path, as_sf = TRUE, ...) {
-
   sheet <- "Sample Station Information"
   header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 0)
   col_types <- sample_station_info_fields(header)
@@ -76,7 +75,6 @@ read_sample_station_info <- function(path, as_sf = TRUE, ...) {
 #' @return a `data.frame` of station information, as an `sf` object if specified.
 #' @export
 read_camera_info <- function(path, as_sf = TRUE, ...) {
-
   sheet <- "Camera Information"
   header <- read_sheet_impl_(path, sheet, col_types = "text", n_max = 0)
   col_types <- camera_info_fields(header)
@@ -235,7 +233,6 @@ sample_station_info_fields <- function(x) {
   )
 
   finalize_col_spec(names(x), col_types)
-
 }
 
 finalize_col_spec <- function(data_cols, col_spec) {
@@ -248,7 +245,9 @@ finalize_col_spec <- function(data_cols, col_spec) {
 
   data_miss <- setdiff(col_names, data_cols)
   if (length(data_miss) > 0) {
-    cli::cli_alert_warning("Data is missing expected column{?s}: {.val {data_miss}}")
+    cli::cli_alert_warning(
+      "Data is missing expected column{?s}: {.val {data_miss}}"
+    )
   }
 
   c(col_spec[intersect(col_names, data_cols)], spec_miss)
@@ -263,8 +262,14 @@ parse_cam_setup_checks_fields <- function(x) {
       c("time_checked", "start_time", "end_time", "timelapse_time"),
       .fns = excel_to_time
     ),
-    date_time_checked = combine_date_time(.data$date_checked, .data$time_checked),
-    sampling_start = combine_date_time(.data$sampling_start_date, .data$start_time),
+    date_time_checked = combine_date_time(
+      .data$date_checked,
+      .data$time_checked
+    ),
+    sampling_start = combine_date_time(
+      .data$sampling_start_date,
+      .data$start_time
+    ),
     sampling_end = combine_date_time(.data$sampling_end_date, .data$end_time),
     .after = "surveyors"
   )
@@ -273,8 +278,14 @@ parse_cam_setup_checks_fields <- function(x) {
 
   dplyr::select(
     ret,
-    -c("date_checked", "time_checked", "sampling_start_date", "start_time",
-                   "sampling_end_date", "end_time")
+    -c(
+      "date_checked",
+      "time_checked",
+      "sampling_start_date",
+      "start_time",
+      "sampling_end_date",
+      "end_time"
+    )
   )
 }
 
@@ -357,7 +368,6 @@ to_sf.sample_station_info <- function(x, ...) {
 }
 
 to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
-
   type <- match.arg(type)
   zone_col <- paste0("utm_zone_", type)
   easting_col <- paste0("easting_", type)
@@ -379,7 +389,6 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
     !is.na(x[[easting_col]]) &
     !is.na(x[[northing_col]])
   if (any(utm_rows)) {
-
     x_utm <- bcmaps::utm_convert(
       sf::st_drop_geometry(x[utm_rows, ]),
       easting = easting_col,
@@ -396,9 +405,13 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
   # convert the lat/lons to sf
   ll_rows <- !is.na(x[[lat_col]]) & !is.na(x[[lon_col]])
   if (any(ll_rows)) {
-    if (any(x[[lat_col]][!is.na(x[[lat_col]])] < 0) ||
-        any(x[[lon_col]][!is.na(x[[lon_col]])] > 0)) {
-      cli::cli_warn("It looks like you have latitude and longitude columns switched.")
+    if (
+      any(x[[lat_col]][!is.na(x[[lat_col]])] < 0) ||
+        any(x[[lon_col]][!is.na(x[[lon_col]])] > 0)
+    ) {
+      cli::cli_warn(
+        "It looks like you have latitude and longitude columns switched."
+      )
     }
     x_ll <- sf::st_as_sf(
       sf::st_drop_geometry(x[ll_rows, ]),
@@ -417,7 +430,9 @@ to_sf_impl_ <- function(x, type = c("camera", "sample_station")) {
   }
 
   if (any(sf::st_is_empty(x))) {
-    cli::cli_warn("Data has entries with missing or invalid UTMs or Lat/Lon values")
+    cli::cli_warn(
+      "Data has entries with missing or invalid UTMs or Lat/Lon values"
+    )
   }
 
   x
