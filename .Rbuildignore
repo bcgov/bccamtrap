@@ -11,3 +11,5 @@
 ^docs$
 ^pkgdown$
 ^bccamtrap\.code-workspace$
+^[.]?air[.]toml$
+^\.vscode$
