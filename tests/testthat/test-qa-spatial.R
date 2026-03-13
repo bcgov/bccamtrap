@@ -20,8 +20,21 @@ test_that("find_dist_outliers works", {
   expect_false(all(find_dist_outliers(ssi_sf2)))
   expect_equal(
     find_dist_outliers(ssi_sf1, dist_thresh = 3000),
-    c(TRUE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE,
-      FALSE, FALSE)
+    c(
+      TRUE,
+      FALSE,
+      FALSE,
+      TRUE,
+      TRUE,
+      FALSE,
+      FALSE,
+      FALSE,
+      TRUE,
+      FALSE,
+      FALSE,
+      FALSE,
+      FALSE
+    )
   )
 })
 
@@ -29,7 +42,8 @@ test_that("map_stations works", {
   ssi_sf1 <- read_sample_station_info(test_meta_file1)
   ssi_sf2 <- read_sample_station_info(test_meta_file2)
   withr::with_options(
-    list(mapviewViewerSuppress = FALSE), {
+    list(mapviewViewerSuppress = FALSE),
+    {
       expect_s4_class(map_stations(ssi_sf1), "mapview")
       expect_s4_class(map_stations(ssi_sf2), "mapview")
     }

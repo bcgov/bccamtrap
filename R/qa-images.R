@@ -21,7 +21,12 @@
 #' @return input data frame with additional `QA_*` columns appended, and
 #'   subset only to rows where a QA issue was flagged.
 #' @export
-qa_image_data <- function(image_data, exclude_human_use = TRUE, check_snow = TRUE, tl_time = "12:00:00") {
+qa_image_data <- function(
+  image_data,
+  exclude_human_use = TRUE,
+  check_snow = TRUE,
+  tl_time = "12:00:00"
+) {
   check_image_data(image_data)
 
   image_data <- find_blanks(image_data)
@@ -98,25 +103,26 @@ find_unmatched <- function(x, y, z, exclude_human_use) {
   x
 }
 
-validate_counts <- function(x,
-                            cols = c(
-                              "adult_male",
-                              "adult_female",
-                              "adult_unclassified_sex",
-                              "yearling_male",
-                              "yearling_female",
-                              "yearling_unclassified_sex",
-                              "young_of_year_unclassified_sex",
-                              "juvenile_unclassified_sex",
-                              "male_unclassified_age",
-                              "female_unclassified_age",
-                              "unclassified_life_stage_and_sex"
-                            ), exclude_human_use) {
+validate_counts <- function(
+  x,
+  cols = c(
+    "adult_male",
+    "adult_female",
+    "adult_unclassified_sex",
+    "yearling_male",
+    "yearling_female",
+    "yearling_unclassified_sex",
+    "young_of_year_unclassified_sex",
+    "juvenile_unclassified_sex",
+    "male_unclassified_age",
+    "female_unclassified_age",
+    "unclassified_life_stage_and_sex"
+  ),
+  exclude_human_use
+) {
   x <- dplyr::mutate(
     x,
-    sum_counts = rowSums(dplyr::pick(dplyr::all_of(cols)),
-                         na.rm = TRUE
-    ),
+    sum_counts = rowSums(dplyr::pick(dplyr::all_of(cols)), na.rm = TRUE),
     QA_sum_counts = is_true_vec(
       .data$sum_counts != .data$total_count_episode |
         .data$sum_counts > 0 & is.na(.data$total_count_episode)
@@ -131,7 +137,6 @@ validate_counts <- function(x,
 }
 
 find_dup_episodes <- function(x) {
-
   extract_ep_num <- function(x) {
     vapply(
       strsplit(x, "[^0-9]"),
@@ -149,14 +154,18 @@ find_dup_episodes <- function(x) {
   cols <- c("episode_num", "deployment_label", "date_time", "file", "species")
 
   y <- dplyr::select(x, dplyr::all_of(cols))
-  y <- janitor::get_dupes(y, dplyr::all_of(c("episode_num", "deployment_label", "species")))
+  y <- janitor::get_dupes(
+    y,
+    dplyr::all_of(c("episode_num", "deployment_label", "species"))
+  )
   y <- dplyr::filter(
     y,
     dplyr::if_all(dplyr::all_of(cols), \(x) !is.na(x))
   )
 
   x <- dplyr::left_join(
-    x, y,
+    x,
+    y,
     by = cols
   )
 
@@ -168,12 +177,12 @@ find_dup_episodes <- function(x) {
 }
 
 validate_timestamp_order <- function(x) {
+  group_cols <- c("study_area_name", "sample_station_label", "deployment_label")
 
-  group_cols <- c("study_area_name",
-                  "sample_station_label",
-                  "deployment_label")
-
-  x <- dplyr::arrange(x, dplyr::across(dplyr::all_of(c(group_cols, "date_time"))))
+  x <- dplyr::arrange(
+    x,
+    dplyr::across(dplyr::all_of(c(group_cols, "date_time")))
+  )
 
   y <- dplyr::filter(
     x,
@@ -192,7 +201,8 @@ validate_timestamp_order <- function(x) {
   )
 
   x <- dplyr::left_join(
-    x, y,
+    x,
+    y,
     by = c(group_cols, "date_time", "file")
   )
 
@@ -205,7 +215,7 @@ validate_timestamp_order <- function(x) {
 }
 
 validate_tl_time <- function(x, tl_time) {
-  if (is.na(lubridate::ymd_hms(paste("2020-01-01",  tl_time), quiet = TRUE))) {
+  if (is.na(lubridate::ymd_hms(paste("2020-01-01", tl_time), quiet = TRUE))) {
     cli::cli_abort("{.var tl_time} must be in the format 'HH:MM:SS'")
   }
 
@@ -219,15 +229,22 @@ validate_tl_time <- function(x, tl_time) {
 validate_snow_data <- function(x) {
   x <- dplyr::arrange(x, .data$date_time)
 
-  group_cols <- c("study_area_name",
-                  "sample_station_label",
-                  "deployment_label")
+  group_cols <- c("study_area_name", "sample_station_label", "deployment_label")
 
   y <- dplyr::filter(x, .data$trigger_mode == "Time Lapse")
-  y <- dplyr::select(y, dplyr::all_of(
-    c(group_cols, "date_time", "file", "lens_obscured", "snow_depth",
-      "snow_depth_lower")
-  ))
+  y <- dplyr::select(
+    y,
+    dplyr::all_of(
+      c(
+        group_cols,
+        "date_time",
+        "file",
+        "lens_obscured",
+        "snow_depth",
+        "snow_depth_lower"
+      )
+    )
+  )
 
   y <- dplyr::mutate(
     y,
@@ -244,20 +261,27 @@ validate_snow_data <- function(x) {
       !is.na(.data$snow_5_avg) &
       abs(.data$snow_depth_lower) > 0 &
       (sign(.data$snow_depth_lower) != sign(.data$snow_5_avg) |
-         abs(.data$snow_depth_lower) > 5 * abs(.data$snow_5_avg)),
+        abs(.data$snow_depth_lower) > 5 * abs(.data$snow_5_avg)),
     .by = "deployment_label"
   )
 
-  y <- dplyr::select(y, -dplyr::any_of("lens_obscured"), -dplyr::starts_with("snow"))
+  y <- dplyr::select(
+    y,
+    -dplyr::any_of("lens_obscured"),
+    -dplyr::starts_with("snow")
+  )
 
   ret <- dplyr::left_join(
-    x, y,
+    x,
+    y,
     by = setdiff(names(y), c("QA_snow_blank", "QA_snow_outlier"))
   )
 
   dplyr::mutate(
     ret,
-    dplyr::across(dplyr::starts_with("QA_snow"), \(x) ifelse(is.na(x), FALSE, x))
+    dplyr::across(dplyr::starts_with("QA_snow"), \(x) {
+      ifelse(is.na(x), FALSE, x)
+    })
   )
 }
 
@@ -268,7 +292,12 @@ validate_snow_data <- function(x) {
 #'
 #' @inherit plot_deployments return
 #' @export
-plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE, ...) {
+plot_snow <- function(
+  image_data,
+  date_breaks = "1 month",
+  interactive = FALSE,
+  ...
+) {
   x <- dplyr::filter(image_data, .data$trigger_mode == "Time Lapse")
   x$id <- seq_len(nrow(x))
   x$tooltip <- glue::glue(
@@ -287,7 +316,7 @@ plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE, 
       size = 0.5
     ) +
     ggiraph::geom_point_interactive(
-      mapping  = ggplot2::aes(
+      mapping = ggplot2::aes(
         data_id = .data$id,
         tooltip = .data$tooltip
       ),
@@ -298,8 +327,13 @@ plot_snow <- function(image_data, date_breaks = "1 month", interactive = FALSE, 
     ggplot2::theme_bw() +
     ggplot2::theme(strip.text = ggplot2::element_text(size = 10)) +
     ggplot2::labs(
-      title = paste0("Snow depths at ", image_data$study_area_name[1], " Deployments"),
-      x = "Date", y = "Snow Depth Index"
+      title = paste0(
+        "Snow depths at ",
+        image_data$study_area_name[1],
+        " Deployments"
+      ),
+      x = "Date",
+      y = "Snow Depth Index"
     )
 
   if (interactive) {

@@ -38,15 +38,19 @@ summary.sample_station_info <- function(object, ...) {
   )
   table_print_helper(object$station_status)
   cli::cat_line("")
-  cli::cli_alert_info("Set dates: Between {.val {range(object$set_date, na.rm = TRUE)}}")
+  cli::cli_alert_info(
+    "Set dates: Between {.val {range(object$set_date, na.rm = TRUE)}}"
+  )
   cli::cat_line("")
-  cli::cli_alert_warning("Run {.code map_stations(object)} to view stations on a map.")
+  cli::cli_alert_warning(
+    "Run {.code map_stations(object)} to view stations on a map."
+  )
 }
 
 #' @export
 summary.deployments <- function(object, ...) {
   study_area_name <- if ("study_area_name" %in% names(object)) {
-  object$study_area_name[1]
+    object$study_area_name[1]
   } else {
     ""
   }
@@ -63,7 +67,7 @@ summary.deployments <- function(object, ...) {
   )
   if (sum(n_invalid_samples) > 0) {
     cli::cli_alert_danger(
-    "There {?is/are} {.val {n_invalid_samples}} invalid deployment{?s}."
+      "There {?is/are} {.val {n_invalid_samples}} invalid deployment{?s}."
     )
   }
   cli::cli_alert_info(
@@ -71,8 +75,9 @@ summary.deployments <- function(object, ...) {
   )
   table_print_helper(object$camera_status_on_arrival)
 
-  if (!"number_of_photos" %in% names(object))
+  if (!"number_of_photos" %in% names(object)) {
     return(invisible(object))
+  }
 
   n_photos_range <- range(object$number_of_photos, na.rm = TRUE)
   cli::cli_alert_info(c(
@@ -128,7 +133,7 @@ summary.image_data <- function(object, ...) {
     "Run {.fn qa_deployment_images} to crosscheck images with deployments."
   )
 
-    cli::cat_line("")
+  cli::cat_line("")
   cli::cli_alert_warning(
     "Run {.fn qa_image_data} to run various QA checks."
   )

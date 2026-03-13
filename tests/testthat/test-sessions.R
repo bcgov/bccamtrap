@@ -31,8 +31,14 @@ test_that("make_sample_sessions()", {
     sample_end_date = "2023-02-05"
   )
 
-  expect_true(all(sessions_diff_start_end$sample_start_date >= lubridate::as_datetime("2022-12-16")))
-  expect_true(all(sessions_diff_start_end$sample_end_date <= lubridate::as_datetime("2023-02-05")))
+  expect_true(all(
+    sessions_diff_start_end$sample_start_date >=
+      lubridate::as_datetime("2022-12-16")
+  ))
+  expect_true(all(
+    sessions_diff_start_end$sample_end_date <=
+      lubridate::as_datetime("2023-02-05")
+  ))
   expect_snapshot(sessions_diff_start_end)
 
   imgs2 <- read_image_data(test_dir_2)

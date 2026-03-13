@@ -8,11 +8,13 @@
 #'
 #' @return a data.frame (sf object if `as_sf = TRUE`) containing sample station csv contents
 #' @export
-read_sample_station_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
-
+read_sample_station_csv <- function(
+  path,
+  wlrs_project_name = NULL,
+  as_sf = TRUE
+) {
   spec <- sample_station_csv_spec("readr_spec")
   ssi <- readr::read_csv(path, col_types = spec, lazy = TRUE)
-
 
   spi_names <- invert(sample_station_csv_spec("spi_name"))
   ssi <- dplyr::rename(ssi, dplyr::any_of(spi_names))
@@ -44,13 +46,15 @@ read_deployments_csv <- function(path, wlrs_project_name = NULL, as_sf = TRUE) {
   spec <- deployments_csv_spec("readr_spec")
   deployments <- readr::read_csv(path, col_types = spec, lazy = TRUE)
 
-
   spi_names <- invert(deployments_csv_spec("spi_name"))
   deployments <- dplyr::select(deployments, dplyr::any_of(spi_names))
 
   if (!is.null(wlrs_project_name)) {
     check_project_name(deployments, wlrs_project_name)
-    deployments <- dplyr::filter(deployments, .data$wlrs_project_name %in% wlrs_project_name)
+    deployments <- dplyr::filter(
+      deployments,
+      .data$wlrs_project_name %in% wlrs_project_name
+    )
   }
 
   if (as_sf) {
@@ -201,7 +205,7 @@ deployments_csv_spec <- function(what = c("readr_spec", "spi_name")) {
     SD_Removed_Check = list(
       readr_spec = readr::col_character(),
       spi_name = "sd_removed_check"
-      ),# logical
+    ), # logical
     GlobalID = list(
       readr_spec = readr::col_skip(),
       spi_name = "globalid"
@@ -346,13 +350,23 @@ sample_station_csv_spec <- function(what = c("readr_spec", "spi_name")) {
   unlist(compact(ret))
 }
 
-check_project_name <- function(data, project_name, project_name_col = "wlrs_project_name",
-                               arg = rlang::caller_arg(project_name), call = rlang::caller_env()) {
-  if (is.null(project_name)) return(invisible(FALSE))
+check_project_name <- function(
+  data,
+  project_name,
+  project_name_col = "wlrs_project_name",
+  arg = rlang::caller_arg(project_name),
+  call = rlang::caller_env()
+) {
+  if (is.null(project_name)) {
+    return(invisible(FALSE))
+  }
   projects <- unique(data[[project_name_col]])
   if (!project_name %in% projects) {
-    cli::cli_abort("{.arg {arg}} is not present in the data. Choose one of: {.val {projects}}",
-                   arg = arg, call = call)
+    cli::cli_abort(
+      "{.arg {arg}} is not present in the data. Choose one of: {.val {projects}}",
+      arg = arg,
+      call = call
+    )
   }
   invisible(TRUE)
 }

@@ -39,13 +39,14 @@ write_image_data <- function(image_data, file, na = "", ...) {
 #'
 #' @return path to the output `file`
 #' @export
-fill_spi_template <- function(sample_station_info,
-                              camera_info,
-                              camera_setup_checks,
-                              image_data,
-                              file,
-                              template = default_spi_template()) {
-
+fill_spi_template <- function(
+  sample_station_info,
+  camera_info,
+  camera_setup_checks,
+  image_data,
+  file,
+  template = default_spi_template()
+) {
   check_sample_station_info(sample_station_info)
   check_camera_info(camera_info)
   check_cam_setup_checks(camera_setup_checks)
@@ -93,18 +94,21 @@ fill_spi_template <- function(sample_station_info,
 #'
 #' @return path to the output `file`
 #' @export
-fill_spi_template_ff <- function(sample_station_info,
-                                 deployments,
-                                 image_data = NULL,
-                                 wlrs_project_name = NULL,
-                                 file,
-                                 template = default_spi_template()) {
-
+fill_spi_template_ff <- function(
+  sample_station_info,
+  deployments,
+  image_data = NULL,
+  wlrs_project_name = NULL,
+  file,
+  template = default_spi_template()
+) {
   check_sample_station_info(sample_station_info)
   stopifnot(inherits(sample_station_info, "field-form"))
   check_deployments(deployments)
   stopifnot(inherits(deployments, "field-form"))
-  if (!is.null(image_data)) check_image_data(image_data)
+  if (!is.null(image_data)) {
+    check_image_data(image_data)
+  }
   check_name(file)
 
   if (!tools::file_ext(file) %in% c("xls", "xlsx", "xlsm")) {
@@ -115,13 +119,13 @@ fill_spi_template_ff <- function(sample_station_info,
     check_project_name(sample_station_info, wlrs_project_name)
     sample_station_info <- dplyr::filter(
       sample_station_info,
-      .data$wlrs_project_name %in% {{wlrs_project_name}}
+      .data$wlrs_project_name %in% {{ wlrs_project_name }}
     )
 
     check_project_name(deployments, wlrs_project_name)
     deployments <- dplyr::filter(
       deployments,
-      .data$wlrs_project_name %in% {{wlrs_project_name}}
+      .data$wlrs_project_name %in% {{ wlrs_project_name }}
     )
   }
 
@@ -178,10 +182,12 @@ fill_spi_template_ff <- function(sample_station_info,
 #' write_to_spi_sheet(image_data, "my_spi_submission.xlsx", Surveyor = surveyor,
 #'    `Survey Observation Photos` = file)
 #' }
-write_to_spi_sheet <- function(x,
-                               file,
-                               ...,
-                               template = default_spi_template()) {
+write_to_spi_sheet <- function(
+  x,
+  file,
+  ...,
+  template = default_spi_template()
+) {
   UseMethod("write_to_spi_sheet")
 }
 
@@ -191,10 +197,12 @@ write_to_spi_sheet.default <- function(x, file, ..., template) {
 }
 
 #' @export
-write_to_spi_sheet.sample_station_info <- function(x,
-                                                   file,
-                                                   ...,
-                                                   template = default_spi_template()) {
+write_to_spi_sheet.sample_station_info <- function(
+  x,
+  file,
+  ...,
+  template = default_spi_template()
+) {
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -205,10 +213,12 @@ write_to_spi_sheet.sample_station_info <- function(x,
 }
 
 #' @export
-write_to_spi_sheet.camera_info <- function(x,
-                                           file,
-                                           ...,
-                                           template = default_spi_template()) {
+write_to_spi_sheet.camera_info <- function(
+  x,
+  file,
+  ...,
+  template = default_spi_template()
+) {
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -219,10 +229,12 @@ write_to_spi_sheet.camera_info <- function(x,
 }
 
 #' @export
-write_to_spi_sheet.cam_setup_checks <- function(x,
-                                                file,
-                                                ...,
-                                                template = default_spi_template()) {
+write_to_spi_sheet.cam_setup_checks <- function(
+  x,
+  file,
+  ...,
+  template = default_spi_template()
+) {
   write_to_spi_sheet_impl_(
     x,
     file,
@@ -233,13 +245,17 @@ write_to_spi_sheet.cam_setup_checks <- function(x,
 }
 
 #' @export
-write_to_spi_sheet.image_data <- function(x,
-                                          file,
-                                          ...,
-                                          template = default_spi_template()) {
+write_to_spi_sheet.image_data <- function(
+  x,
+  file,
+  ...,
+  template = default_spi_template()
+) {
   if (!"camera_label" %in% names(x)) {
-    cli::cli_abort("{.var camera_label} must be present in {.var x}.
-                   Use {.fn merge_deployment_images}")
+    cli::cli_abort(
+      "{.var camera_label} must be present in {.var x}.
+                   Use {.fn merge_deployment_images}"
+    )
   }
 
   write_to_spi_sheet_impl_(
@@ -251,11 +267,13 @@ write_to_spi_sheet.image_data <- function(x,
   )
 }
 
-write_to_spi_sheet_ff <- function(sample_station_info,
-                                  deployments,
-                                  file,
-                                  ...,
-                                  template = default_spi_template()) {
+write_to_spi_sheet_ff <- function(
+  sample_station_info,
+  deployments,
+  file,
+  ...,
+  template = default_spi_template()
+) {
   deployments <- dplyr::left_join(
     deployments,
     sf::st_drop_geometry(sample_station_info),
@@ -283,13 +301,15 @@ write_to_spi_sheet_ff <- function(sample_station_info,
   )
 }
 
-write_to_spi_sheet_impl_ <- function(x,
-                                     output_file,
-                                     sheet,
-                                     dep_start_col = "sampling_start",
-                                     dep_end_col = "sampling_end",
-                                     ...,
-                                     template = default_spi_template()) {
+write_to_spi_sheet_impl_ <- function(
+  x,
+  output_file,
+  sheet,
+  dep_start_col = "sampling_start",
+  dep_end_col = "sampling_end",
+  ...,
+  template = default_spi_template()
+) {
   wb <- openxlsx2::wb_load(template)
 
   sheets <- wb$get_sheet_names()
@@ -318,7 +338,7 @@ write_to_spi_sheet_impl_ <- function(x,
 
   invalid_columns <- setdiff(
     c(names(default_columns), names(other_columns)),
-      template_colnames
+    template_colnames
   )
   if (length(invalid_columns) > 0) {
     cli::cli_abort("Column{?s} {.var {invalid_columns}} not in template.")
@@ -376,16 +396,19 @@ get_default_columns <- function(x, sheet, dep_start_col, dep_end_col) {
 
 lat_from_sf <- function(x) {
   x <- sf::st_transform(x, 4326)
-  sf::st_coordinates(x)[,2]
+  sf::st_coordinates(x)[, 2]
 }
 
 lon_from_sf <- function(x) {
   x <- sf::st_transform(x, 4326)
-  sf::st_coordinates(x)[,1]
+  sf::st_coordinates(x)[, 1]
 }
 
 default_spi_template <- function() {
-  system.file("GENERIC_wildlife_camera_template_v2021.xlsm", package = "bccamtrap")
+  system.file(
+    "GENERIC_wildlife_camera_template_v2021.xlsm",
+    package = "bccamtrap"
+  )
 }
 
 spp_lookup <- function(species) {

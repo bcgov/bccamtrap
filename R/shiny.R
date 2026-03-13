@@ -19,9 +19,16 @@
 bccamtrapp <- function(browser = TRUE, max_upload_size_mb = 50, ...) {
   shiny::addResourcePath("www", system.file("www/", package = "bccamtrap"))
 
-  withr::with_options(list(shiny.maxRequestSize = max_upload_size_mb*1024^2), {
-    shiny::runApp(list(ui = ui, server = server), launch.browser = browser, ...)
-  })
+  withr::with_options(
+    list(shiny.maxRequestSize = max_upload_size_mb * 1024^2),
+    {
+      shiny::runApp(
+        list(ui = ui, server = server),
+        launch.browser = browser,
+        ...
+      )
+    }
+  )
 }
 
 x_or_null <- function(x) {
@@ -29,6 +36,8 @@ x_or_null <- function(x) {
 }
 
 yesno_as_logical <- function(x, default) {
-  if (is.null(x) || length(x) == 0) return(default)
+  if (is.null(x) || length(x) == 0) {
+    return(default)
+  }
   x == "Yes"
 }

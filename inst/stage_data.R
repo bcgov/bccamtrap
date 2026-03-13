@@ -32,7 +32,13 @@ for (i in seq_len(n_files)) {
   if (length(proj_file) > 1) {
     stop("More than one project file found in ", f)
   }
-  unzip(f, files = proj_file, exdir = proj_file_path, junkpaths = TRUE, overwrite = TRUE)
+  unzip(
+    f,
+    files = proj_file,
+    exdir = proj_file_path,
+    junkpaths = TRUE,
+    overwrite = TRUE
+  )
 
   data_files <- # grep(
     # "merged", # Don't include the merged one, only the originals
@@ -42,7 +48,13 @@ for (i in seq_len(n_files)) {
   # )
   dirname <- unique(sub("^([a-zA-Z]{1,30})(_.+)", "\\1", data_files))
   data_dir <- dir_create(path(cam_data_path, dirname))
-  unzip(f, files = data_files, exdir = data_dir, junkpaths = TRUE, overwrite = TRUE)
+  unzip(
+    f,
+    files = data_files,
+    exdir = data_dir,
+    junkpaths = TRUE,
+    overwrite = TRUE
+  )
 }
 
 proj_files <- dir_ls(proj_file_path, recurse = TRUE)
