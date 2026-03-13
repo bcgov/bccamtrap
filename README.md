@@ -5,10 +5,10 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/bcgov/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ateucher/bccamtrap/actions/workflows/R-CMD-check.yaml)
 [![img](https://img.shields.io/badge/Lifecycle-Maturing-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 [![Codecov test
 coverage](https://codecov.io/gh/bcgov/bccamtrap/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bcgov/bccamtrap?branch=main)
+[![R-CMD-check](https://github.com/bcgov/bccamtrap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bcgov/bccamtrap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Functions for QA and validation of Camera Trap data
@@ -157,8 +157,8 @@ summary(sample_stations)
 #> └─────────────────────┘
 #> ℹ 18 sample stations in 21 locations.
 #> ℹ Summary of station distances (m):
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-#>     5.08  4247.81  8712.00 11935.96 14562.39 55516.29
+#>      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+#>     5.078  4247.811  8712.001 11935.958 14562.387 55516.285
 #> ✖ Detected 1 potential spatial outlier.
 #> ℹ Station status summary:
 #> Camera Active  Camera Moved 
@@ -173,9 +173,11 @@ possible data errors:
 
 ``` r
 map_stations(sample_stations)
+#> systemfonts and textshaping have been compiled with different versions of Freetype. Because of this, textshaping will not use the font cache provided by systemfonts
+#> Google Chrome was not found. Try setting the `CHROMOTE_CHROME` environment variable to the executable of a Chromium-based browser, such as Google Chrome, Chromium or Brave.
 ```
 
-<img src="man/figures/README-map-stations-1.png" width="100%" />
+<img src="man/figures/README-map-stations-1.png" alt="" width="100%" />
 
 #### Camera Information:
 
@@ -189,7 +191,7 @@ camera_info
     #> Simple feature collection with 21 features and 14 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -125.5219 ymin: 49.28703 xmax: -125.2213 ymax: 49.34728
+    #> Bounding box:  xmin: NA ymin: NA xmax: NA ymax: NA
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 21 × 9
     #>    wlrs_project_name         study_area_name parent_sample_statio…¹ camera_label
@@ -255,7 +257,7 @@ deployments
     #> Simple feature collection with 28 features and 62 fields
     #> Geometry type: POINT
     #> Dimension:     XY
-    #> Bounding box:  xmin: -130.3966 ymin: 52.92087 xmax: -129.569 ymax: 52.96732
+    #> Bounding box:  xmin: -124.3165 ymin: 48.17038 xmax: -123.5766 ymax: 48.23407
     #> Geodetic CRS:  WGS 84
     #> # A tibble: 28 × 57
     #>    wlrs_project_name       study_area_name sample_station_label deployment_label
@@ -305,7 +307,7 @@ library(mapview)
 mapview(deployments, zcol = "sample_station_label")
 ```
 
-<img src="man/figures/README-mapview-deployments-1.png" width="100%" />
+<img src="man/figures/README-mapview-deployments-1.png" alt="" width="100%" />
 
 ### Project Metadata: Field Form CSV files
 
@@ -407,7 +409,7 @@ images_with_metadata
 #> Simple feature collection with 11833 features and 102 fields (with 1208 geometries empty)
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: -130.3966 ymin: 52.92237 xmax: -129.569 ymax: 52.96732
+#> Bounding box:  xmin: -124.3165 ymin: 48.17382 xmax: -123.5766 ymax: 48.23407
 #> Geodetic CRS:  WGS 84
 #> # A tibble: 11,833 × 97
 #>    root_folder deployment_label date_time           episode species
@@ -567,7 +569,7 @@ ran out of batteries etc.). You can make static or interactive plots:
 plot_deployments(deployments, date_breaks = "2 months")
 ```
 
-<img src="man/figures/README-plot-deployments-1.png" width="100%" />
+<img src="man/figures/README-plot-deployments-1.png" alt="" width="100%" />
 
 ``` r
 # plot_deployments(deployments, interactive = TRUE, date_breaks = "2 months")
@@ -580,11 +582,18 @@ We can plot the recorded snow depths across deployments using the
 
 ``` r
 plot_snow(image_data, date_breaks = "2 months")
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> ℹ The deprecated feature was likely used in the ggiraph package.
+#>   Please report the issue at <https://github.com/davidgohel/ggiraph/issues>.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 #> Warning: Removed 109 rows containing missing values or values outside the scale range
 #> (`geom_interactive_point()`).
 ```
 
-<img src="man/figures/README-plot-snow-1.png" width="100%" />
+<img src="man/figures/README-plot-snow-1.png" alt="" width="100%" />
 
 ``` r
 # plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)
@@ -602,7 +611,7 @@ entry errors.
 plot_deployment_detections(deployments, image_data, date_breaks = "2 months")
 ```
 
-<img src="man/figures/README-plot-detections-1.png" width="100%" />
+<img src="man/figures/README-plot-detections-1.png" alt="" width="100%" />
 
 ``` r
 # plot_deployment_detections(deployments, image_data, interactive = TRUE, date_breaks = "2 months")
@@ -616,7 +625,7 @@ We can plot the patterns of daily detections by species:
 plot_diel_activity(image_data)
 ```
 
-<img src="man/figures/README-plot-diel-1.png" width="100%" />
+<img src="man/figures/README-plot-diel-1.png" alt="" width="100%" />
 
 ``` r
 # plot_diel_activity(image_data, interactive = TRUE)
@@ -668,8 +677,8 @@ You can set custom start and end dates for your sample session as well:
 
 ``` r
 make_sample_sessions(
-  image_data, 
-  sample_start_date = "2022-12-01", 
+  image_data,
+  sample_start_date = "2022-12-01",
   sample_end_date = "2023-04-30"
 )
 ```
@@ -731,10 +740,10 @@ dates:
 
 ``` r
 sample_rai(
-  image_data, 
-  species = "Roosevelt Elk", 
+  image_data,
+  species = "Roosevelt Elk",
   deployment_label = c("19_2_20230605", "29_1_20230605"),
-  sample_start_date = "2022-12-01", 
+  sample_start_date = "2022-12-01",
   sample_end_date = "2023-04-30"
 )
 #> # A tibble: 2 × 8
@@ -750,10 +759,10 @@ You can also calculate RAI across all deployments by setting
 
 ``` r
 sample_rai(
-  image_data, 
-  species = "Roosevelt Elk", 
+  image_data,
+  species = "Roosevelt Elk",
   by_deployment = FALSE,
-  sample_start_date = "2022-12-01", 
+  sample_start_date = "2022-12-01",
   sample_end_date = "2023-04-30"
 )
 #> # A tibble: 1 × 7
@@ -767,10 +776,10 @@ We can compare total count and RAI across species:
 
 ``` r
 spp_comp <- sample_rai(
-  image_data, 
+  image_data,
   by_deployment = FALSE,
   by_species = TRUE,
-  sample_start_date = "2022-12-01", 
+  sample_start_date = "2022-12-01",
   sample_end_date = "2023-04-30"
 )
 spp_comp
@@ -793,38 +802,44 @@ this:
 ``` r
 library(ggplot2)
 
-ggplot(spp_comp, aes(x = rai, y = species)) + 
-  geom_point(colour = "darkgreen") + 
+ggplot(spp_comp, aes(x = rai, y = species)) +
+  geom_point(colour = "darkgreen") +
   geom_text(aes(label = total_count), nudge_x = 0.05, nudge_y = 0.1) +
-  theme_classic() + 
-  labs(title = "RAI of all species detected, across all deployments", 
-       caption = "Numbers beside points represent total number of individuals detected",
-       x = "Relative Activity Index", y = "Species")
+  theme_classic() +
+  labs(
+    title = "RAI of all species detected, across all deployments",
+    caption = "Numbers beside points represent total number of individuals detected",
+    x = "Relative Activity Index",
+    y = "Species"
+  )
 ```
 
-<img src="man/figures/README-sample-rai4-plot-1.png" width="100%" />
+<img src="man/figures/README-sample-rai4-plot-1.png" alt="" width="100%" />
 
 We can group by deployment to compare across deployments:
 
 ``` r
 spp_comp_by_dep <- sample_rai(
-  image_data, 
+  image_data,
   by_deployment = TRUE,
   by_species = TRUE,
-  sample_start_date = "2022-12-01", 
+  sample_start_date = "2022-12-01",
   sample_end_date = "2023-04-30"
 )
 
-ggplot(spp_comp_by_dep, aes(x = rai, y = species, colour = deployment_label)) + 
-  geom_point() + 
+ggplot(spp_comp_by_dep, aes(x = rai, y = species, colour = deployment_label)) +
+  geom_point() +
   geom_text(aes(label = total_count), nudge_x = 0.01, nudge_y = 0.1) +
-  theme_classic() + 
-  labs(title = "RAI of all species detected, across all deployments", 
-       caption = "Numbers beside points represent total number of individuals detected",
-       x = "Relative Activity Index", y = "Species")
+  theme_classic() +
+  labs(
+    title = "RAI of all species detected, across all deployments",
+    caption = "Numbers beside points represent total number of individuals detected",
+    x = "Relative Activity Index",
+    y = "Species"
+  )
 ```
 
-<img src="man/figures/README-sample-rai-5-1.png" width="100%" />
+<img src="man/figures/README-sample-rai-5-1.png" alt="" width="100%" />
 
 #### Relative Activity Index (RAI) over time
 
@@ -858,7 +873,7 @@ default window size is 7, but it can be changed with the `k` parameter.
 
 ``` r
 elk_roll_avg <- rai_by_time(
-  image_data, 
+  image_data,
   by = "date",
   species = "Roosevelt Elk",
   roll = TRUE
@@ -883,38 +898,38 @@ elk_roll_avg
 #> #   roll_trap_days <int>, roll_detections <int>, roll_count <dbl>,
 #> #   roll_rai <dbl>
 
-ggplot(elk_roll_avg, aes(x = date, y = roll_rai)) + 
-  geom_line(colour = "darkgreen") + 
-  theme_classic() + 
+ggplot(elk_roll_avg, aes(x = date, y = roll_rai)) +
+  geom_line(colour = "darkgreen") +
+  theme_classic() +
   labs(
-    title = "Rolling seven day average of Elk RAI", 
-    x = "Date", 
+    title = "Rolling seven day average of Elk RAI",
+    x = "Date",
     y = "7 day rolling average RAI"
   )
 #> Warning: Removed 6 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 ```
 
-<img src="man/figures/README-rai-by-time2-1.png" width="100%" />
+<img src="man/figures/README-rai-by-time2-1.png" alt="" width="100%" />
 
 Since the data returned by `rai_by_time` also includes snow and
 temperature data, we can plot these, and then compare RAI to these
 environment variables:
 
 ``` r
-ggplot(elk_roll_avg, aes(x = date, y = roll_mean_max_snow)) + 
-  geom_line(colour = "darkblue") + 
-  theme_classic() + 
+ggplot(elk_roll_avg, aes(x = date, y = roll_mean_max_snow)) +
+  geom_line(colour = "darkblue") +
+  theme_classic() +
   labs(
-    title = "Rolling seven day average of average maximum snow index across sites", 
-    x = "Date", 
+    title = "Rolling seven day average of average maximum snow index across sites",
+    x = "Date",
     y = "7 day rolling average of maximum snow index"
   )
 #> Warning: Removed 6 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 ```
 
-<img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-27-1.png" alt="" width="100%" />
 
 We can change the way snow measurements are aggregated across sites when
 `by_deployment = FALSE`. By default it uses `max`, but we can set it to
@@ -922,37 +937,40 @@ any aggregation function, like `mean`:
 
 ``` r
 elk_roll_avg <- rai_by_time(
-  image_data, 
+  image_data,
   by = "date",
   species = "Roosevelt Elk",
   roll = TRUE,
   snow_agg = "mean"
 )
 
-ggplot(elk_roll_avg, aes(x = date, y = roll_mean_mean_snow)) + 
-  geom_line(colour = "darkblue") + 
-  theme_classic() + 
+ggplot(elk_roll_avg, aes(x = date, y = roll_mean_mean_snow)) +
+  geom_line(colour = "darkblue") +
+  theme_classic() +
   labs(
-    title = "Rolling seven day average of mean snow index across sites", 
-    x = "Date", 
+    title = "Rolling seven day average of mean snow index across sites",
+    x = "Date",
     y = "7 day rolling average of mean snow index"
   )
 #> Warning: Removed 6 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 ```
 
-<img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-28-1.png" alt="" width="100%" />
 
 And we can compare Elk activity to snow levels:
 
 ``` r
-ggplot(elk_roll_avg, aes(x = roll_mean_mean_snow, y = roll_rai, colour = mean_temperature)) + 
-  geom_point() + 
-  scale_colour_viridis_c(option = "inferno") + 
-  theme_classic() + 
+ggplot(
+  elk_roll_avg,
+  aes(x = roll_mean_mean_snow, y = roll_rai, colour = mean_temperature)
+) +
+  geom_point() +
+  scale_colour_viridis_c(option = "inferno") +
+  theme_classic() +
   labs(
-    title = "Rolling seven day average of Elk RAI compared to Snow Index", 
-    x = "7 day rolling average of mean Snow Index across sites", 
+    title = "Rolling seven day average of Elk RAI compared to Snow Index",
+    x = "7 day rolling average of mean Snow Index across sites",
     y = "7 day rolling average RAI",
     colour = "Temperature"
   )
@@ -960,24 +978,24 @@ ggplot(elk_roll_avg, aes(x = roll_mean_mean_snow, y = roll_rai, colour = mean_te
 #> (`geom_point()`).
 ```
 
-<img src="man/figures/README-unnamed-chunk-29-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-29-1.png" alt="" width="100%" />
 
 And temperature:
 
 ``` r
-ggplot(elk_roll_avg, aes(x = roll_mean_temp, y = roll_rai)) + 
-  geom_point() + 
-  theme_classic() + 
+ggplot(elk_roll_avg, aes(x = roll_mean_temp, y = roll_rai)) +
+  geom_point() +
+  theme_classic() +
   labs(
-    title = "Rolling seven day average of Elk RAI compared to Temperature", 
-    x = "7 day rolling average of mean temperature across sites", 
+    title = "Rolling seven day average of Elk RAI compared to Temperature",
+    x = "7 day rolling average of mean temperature across sites",
     y = "7 day rolling average RAI"
   )
 #> Warning: Removed 6 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```
 
-<img src="man/figures/README-unnamed-chunk-30-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-30-1.png" alt="" width="100%" />
 
 We can compare raw counts vs snow depth across deployments. Note that
 for daily counts (`by = "date"`) when `by_deployment = TRUE`, the
@@ -986,18 +1004,21 @@ we can just compare raw counts:
 
 ``` r
 elk_rai_by_dep <- rai_by_time(
-  image_data, 
+  image_data,
   by = "date",
   species = "Roosevelt Elk",
   by_deployment = TRUE
 )
 
-ggplot(elk_rai_by_dep, aes(x = snow_index, y = total_count, colour = deployment_label)) + 
-  facet_wrap(vars(deployment_label)) + 
+ggplot(
+  elk_rai_by_dep,
+  aes(x = snow_index, y = total_count, colour = deployment_label)
+) +
+  facet_wrap(vars(deployment_label)) +
   geom_point()
 ```
 
-<img src="man/figures/README-unnamed-chunk-31-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-31-1.png" alt="" width="100%" />
 
 If we want to compare the RAI of two species, we can specify them in the
 `species` argument, and colour our plot by species (if we left the
@@ -1006,49 +1027,49 @@ visually very busy).
 
 ``` r
 all_spp_roll_avg <- rai_by_time(
-  image_data, 
+  image_data,
   by = "date",
   species = c("Roosevelt Elk", "Cougar"),
   by_species = TRUE,
   roll = TRUE
-  )
+)
 
-ggplot(all_spp_roll_avg, aes(x = date, y = roll_rai, colour = species)) + 
-  geom_line() + 
-  theme_classic() + 
+ggplot(all_spp_roll_avg, aes(x = date, y = roll_rai, colour = species)) +
+  geom_line() +
+  theme_classic() +
   labs(
-    title = "Rolling seven day average of RAI for Cougar and Elk", 
-    x = "Date", 
+    title = "Rolling seven day average of RAI for Cougar and Elk",
+    x = "Date",
     y = "7 day rolling average RAI"
   )
 #> Warning: Removed 12 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 ```
 
-<img src="man/figures/README-rai-by-time3-1.png" width="100%" />
+<img src="man/figures/README-rai-by-time3-1.png" alt="" width="100%" />
 
 Here we use it to compare the total monthly activity by all species
 among all deployments:
 
 ``` r
 total_rai_by_month <- rai_by_time(
-  image_data, 
+  image_data,
   by = "month",
   by_species = FALSE,
   by_deployment = TRUE
-  )
+)
 
-ggplot(total_rai_by_month, aes(x = month, y = rai, fill = deployment_label)) + 
-  geom_col(position = "dodge") + 
-  theme_classic() + 
+ggplot(total_rai_by_month, aes(x = month, y = rai, fill = deployment_label)) +
+  geom_col(position = "dodge") +
+  theme_classic() +
   labs(
-    title = "Monthly RAI of all species", 
-    x = "Month", 
+    title = "Monthly RAI of all species",
+    x = "Month",
     y = "RAI"
   )
 ```
 
-<img src="man/figures/README-rai-by-time4-1.png" width="100%" />
+<img src="man/figures/README-rai-by-time4-1.png" alt="" width="100%" />
 
 ### Write Data to SPI template
 
@@ -1063,7 +1084,7 @@ manually.
 ``` r
 fill_spi_template(
   sample_stations,
-  camera_info, 
+  camera_info,
   camera_setup_checks,
   image_data,
   file = "~/Desktop/SPI_output.xlsx"
