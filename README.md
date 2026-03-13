@@ -582,15 +582,6 @@ We can plot the recorded snow depths across deployments using the
 
 ``` r
 plot_snow(image_data, date_breaks = "2 months")
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> ℹ The deprecated feature was likely used in the ggiraph package.
-#>   Please report the issue at <https://github.com/davidgohel/ggiraph/issues>.
-#> This warning is displayed once per session.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: Removed 109 rows containing missing values or values outside the scale range
-#> (`geom_interactive_point()`).
 ```
 
 <img src="man/figures/README-plot-snow-1.png" alt="" width="100%" />

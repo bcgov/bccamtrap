@@ -391,7 +391,7 @@ plot_deployments(deployments, date_breaks = "2 months")
 We can plot the recorded snow depths across deployments using the `plot_snow()`
 function with our image data:
 
-```{r, plot-snow}
+```{r, plot-snow, warning = FALSE}
 plot_snow(image_data, date_breaks = "2 months")
 # plot_snow(image_data, date_breaks = "2 months", interactive = TRUE)
 ```
