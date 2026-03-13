@@ -94,6 +94,7 @@ rai_by_time <- function(image_data,
 
   effort <- make_effort(image_data)
 
+  # browser()
   dat <- filter_if_not_null(image_data, species)
   # TODO: Should we filter so there are no NA species? #19
 
@@ -149,7 +150,7 @@ rai_by_time <- function(image_data,
       mean_temperature = mean(.data$temperature, na.rm = TRUE),
       n_detections = sum(.data$n_detections, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
-      trap_days = dplyr::n_distinct(.data$deployment_label),
+      trap_days = sum(.data$trap_days, na.rm = TRUE),
       rai = .data$total_count / .data$trap_days * rai_days,
       .groups = "drop"
     )
@@ -227,7 +228,8 @@ make_effort <- function(image_data) {
   ) %>%
     dplyr::mutate(
       date = as.Date(.data$date_time),
-      snow_index = ifelse(is.na(.data$snow_index), 0, .data$snow_index)
+      snow_index = ifelse(is.na(.data$snow_index), 0, .data$snow_index),
+      trap_days = 1
     ) %>%
     dplyr::select(
       "study_area_name",
@@ -235,7 +237,8 @@ make_effort <- function(image_data) {
       "deployment_label",
       "date",
       "snow_index",
-      "temperature"
+      "temperature",
+      "trap_days"
     ) %>%
     dplyr::distinct()
 }
@@ -261,7 +264,8 @@ complete_daily_counts <- function(x) {
       !!rlang::sym("deployment_label"),
       !!rlang::sym("date"),
       !!rlang::sym("snow_index"),
-      !!rlang::sym("temperature")
+      !!rlang::sym("temperature"),
+      !!rlang::sym("trap_days")
     ),
     !!rlang::sym("species"),
     fill = list(n_detections = 0, total_count = 0)
