@@ -1,28 +1,40 @@
-
 server <- function(input, output, session) {
-
   spi_meta <- reactiveValues()
 
   observeEvent(
-    input$spi_input$datapath, {
+    input$spi_input$datapath,
+    {
       spi_meta$proj_info <- read_project_info(input$spi_input$datapath)
-      spi_meta$sample_station_info <- read_sample_station_info(input$spi_input$datapath) %>%
+      spi_meta$sample_station_info <- read_sample_station_info(
+        input$spi_input$datapath
+      ) %>%
         qa_stations_spatial()
       spi_meta$camera_info <- read_camera_info(input$spi_input$datapath)
-      spi_meta$cam_seup_checks <- read_cam_setup_checks(input$spi_input$datapath)
+      spi_meta$cam_seup_checks <- read_cam_setup_checks(
+        input$spi_input$datapath
+      )
       spi_meta$deployments <- make_deployments(input$spi_input$datapath)
-    })
+    }
+  )
 
   observeEvent(
-    input$ff_stations_input$datapath, {
-      spi_meta$sample_station_info <- read_sample_station_csv(input$ff_stations_input$datapath) %>%
+    input$ff_stations_input$datapath,
+    {
+      spi_meta$sample_station_info <- read_sample_station_csv(
+        input$ff_stations_input$datapath
+      ) %>%
         qa_stations_spatial()
-    })
+    }
+  )
 
   observeEvent(
-    input$ff_deployments_input$datapath, {
-      spi_meta$deployments <- read_deployments_csv(input$ff_deployments_input$datapath)
-    })
+    input$ff_deployments_input$datapath,
+    {
+      spi_meta$deployments <- read_deployments_csv(
+        input$ff_deployments_input$datapath
+      )
+    }
+  )
 
   image_data <- reactive({
     req(input$image_input)
@@ -34,9 +46,7 @@ server <- function(input, output, session) {
     )
   })
 
-
   output$project_table <- renderTable(req(spi_meta$proj_info))
-
 
   # Sample station info -----------------------------------------------------
 
@@ -82,7 +92,6 @@ server <- function(input, output, session) {
   #   summary(req(spi_meta$sample_station_info))
   # })
 
-
   # Deployments ------------------------------------------------
 
   output$deployments_plot <- ggiraph::renderGirafe(
@@ -125,7 +134,6 @@ server <- function(input, output, session) {
       opt_row_striping()
   })
 
-
   # Image Data QA -----------------------------------------------------------
 
   img_data_qa <- eventReactive(input$btn_qa_image_data, {
@@ -157,7 +165,11 @@ server <- function(input, output, session) {
         )
       ) %>%
       gt() %>%
-      data_color(columns = starts_with("QA_"), method = "factor", palette = c("#1E88E5", "#D81B60")) %>%
+      data_color(
+        columns = starts_with("QA_"),
+        method = "factor",
+        palette = c("#1E88E5", "#D81B60")
+      ) %>%
       opt_interactive(
         use_search = TRUE,
         use_highlight = TRUE,
@@ -195,11 +207,12 @@ server <- function(input, output, session) {
       p(paste0(out$img_dep_labels_not_in_deployments, collapse = ", ")),
       h5("Deployment labels not in images:"),
       p(paste0(out$deployment_dep_labels_not_in_images, collapse = ", ")),
-      h5("Image records with different timelapse time than indicated in deployments:"),
+      h5(
+        "Image records with different timelapse time than indicated in deployments:"
+      ),
       p(paste0(out$mismatched_timelapse_image_times, collapse = ", "))
     )
   })
-
 
   # Sample sessions ---------------------------------------------------------
 
@@ -262,9 +275,7 @@ server <- function(input, output, session) {
     }
   )
 
-
   # Analysis Data -----------------------------------------------------------
-
 
   # Sample RAI --------------------------------------------------------------
 
@@ -292,8 +303,7 @@ server <- function(input, output, session) {
         )
       ),
       layout_columns(
-        downloadButton("dl_sample_rai_btn",
-                       "Download Data"),
+        downloadButton("dl_sample_rai_btn", "Download Data"),
         radioButtons(
           "s_rai_by_deployment",
           "By Deployment?",
@@ -350,7 +360,6 @@ server <- function(input, output, session) {
     }
   )
 
-
   # RAI by Time -------------------------------------------------------------
 
   output$rai_by_time_opts <- renderUI({
@@ -403,7 +412,8 @@ server <- function(input, output, session) {
         sliderInput(
           "rai_time_roll_k",
           "Size of rolling window",
-          min = 1, max = 30,
+          min = 1,
+          max = 30,
           value = 7,
           step = 1
         ),
@@ -422,8 +432,7 @@ server <- function(input, output, session) {
           multiple = FALSE
         )
       ),
-      downloadButton("dl_rai_time_btn",
-                     "Download Data")
+      downloadButton("dl_rai_time_btn", "Download Data")
     )
   })
 
@@ -491,17 +500,20 @@ server <- function(input, output, session) {
         req(FALSE)
       }
       if (inherits(spi_meta$sample_station_info, "field-form")) {
-
         if (!isTruthy(spi_meta$deployments)) {
           showNotification(
-            HTML("Download Failed:<br/>You need to load the deployments field form"),
+            HTML(
+              "Download Failed:<br/>You need to load the deployments field form"
+            ),
             type = "error"
           )
           req(FALSE)
         }
         if (!inherits(spi_meta$deployments, "field-form")) {
           showNotification(
-            HTML("Download Failed:<br/>Deployments does not appear to be from a csv field form"),
+            HTML(
+              "Download Failed:<br/>Deployments does not appear to be from a csv field form"
+            ),
             type = "error"
           )
           req(FALSE)

@@ -17,7 +17,7 @@ as.cam_setup_checks <- function(x, ...) {
 as.deployments <- function(x, subclass, ...) {
   structure(
     x,
-    class = c("deployments", subclass,  setdiff(class(x), "cam_setup_checks")),
+    class = c("deployments", subclass, setdiff(class(x), "cam_setup_checks")),
     ...
   )
 }
@@ -39,66 +39,114 @@ methods::setOldClass(c("sample_station_info", "sf"))
 methods::setOldClass(c("sample_sessions", "sf"))
 
 ## Checkers
-check_project_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_project_info <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "project_info")) {
-    cli::cli_abort("{.arg {arg}} must be a 'project_info' object, a result of {.fn read_project_info}",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be a 'project_info' object, a result of {.fn read_project_info}",
+      arg = arg,
+      call = call
+    )
   }
 }
 
-check_sample_station_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_sample_station_info <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "sample_station_info")) {
-    cli::cli_abort("{.arg {arg}} must be a 'sample_station_info' object, a result of {.fn read_sample_station_info}",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be a 'sample_station_info' object, a result of {.fn read_sample_station_info}",
+      arg = arg,
+      call = call
+    )
   }
 }
 
-check_camera_info <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_camera_info <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "camera_info")) {
-    cli::cli_abort("{.arg {arg}} must be a 'camera_info' object, a result of {.fn read_camera_info}",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be a 'camera_info' object, a result of {.fn read_camera_info}",
+      arg = arg,
+      call = call
+    )
   }
 }
 
-check_cam_setup_checks <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_cam_setup_checks <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "cam_setup_checks")) {
-    cli::cli_abort("{.arg {arg}} must be a 'cam_setup_checks' object, a result of {.fn read_cam_setup_checks}",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be a 'cam_setup_checks' object, a result of {.fn read_cam_setup_checks}",
+      arg = arg,
+      call = call
+    )
   }
 }
 
-check_deployments <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_deployments <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "deployments")) {
-    cli::cli_abort("{.arg {arg}} must be a 'deployments' object, a result of {.fn make_deployments}",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be a 'deployments' object, a result of {.fn make_deployments}",
+      arg = arg,
+      call = call
+    )
   }
 }
 
-check_sample_sessions <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_sample_sessions <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "sample_sessions")) {
-    cli::cli_abort("{.arg {arg}} must be a 'sample_sessions' object, a result of {.fn make_sample_sessions}",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be a 'sample_sessions' object, a result of {.fn make_sample_sessions}",
+      arg = arg,
+      call = call
+    )
   }
 }
 
-check_image_data <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_image_data <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "image_data")) {
-    cli::cli_abort("{.arg {arg}} must be a 'image_data' object.",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be a 'image_data' object.",
+      arg = arg,
+      call = call
+    )
   }
 }
 
-check_is_sf <- function(x, arg = rlang::caller_arg(x), call = rlang::caller_env()) {
+check_is_sf <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
   if (!inherits(x, "sf")) {
-    cli::cli_abort("{.arg {arg}} must be an 'sf' object, a result of {.fn read_image_data}",
-                   arg = arg,
-                   call = call)
+    cli::cli_abort(
+      "{.arg {arg}} must be an 'sf' object, a result of {.fn read_image_data}",
+      arg = arg,
+      call = call
+    )
   }
 }

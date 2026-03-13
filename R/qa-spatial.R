@@ -27,8 +27,11 @@
 #' @return the input data.frame, with a new `logical` column `spatial_outlier` appended.
 #' @seealso [map_stations()]
 #' @export
-qa_stations_spatial <- function(stations, quant_thresh = 0.9, dist_thresh = NULL) {
-
+qa_stations_spatial <- function(
+  stations,
+  quant_thresh = 0.9,
+  dist_thresh = NULL
+) {
   check_sample_station_info(stations)
   check_is_sf(stations)
 
@@ -39,7 +42,7 @@ qa_stations_spatial <- function(stations, quant_thresh = 0.9, dist_thresh = NULL
       cli::pluralize(
         "Station{?s} {outlier_station} appea{?rs/r} to be very far away from other stations.
         Please check {?its/their} coordinates."
-        ),
+      ),
       wrap = TRUE
     )
   }
@@ -57,7 +60,6 @@ qa_stations_spatial <- function(stations, quant_thresh = 0.9, dist_thresh = NULL
 #' @seealso [qa_stations_spatial()]
 #' @export
 map_stations <- function(stations) {
-
   check_sample_station_info(stations)
   check_is_sf(stations)
 
@@ -72,12 +74,19 @@ map_stations <- function(stations) {
       "Esri.WorldImagery",
       setdiff(mapview::mapviewGetOption("basemaps"), "Esri.WorldImagery")
     ),
-    layer.name = paste0(stations$study_area_name[1], if (has_outlier_col) ": Outliers"),
+    layer.name = paste0(
+      stations$study_area_name[1],
+      if (has_outlier_col) ": Outliers"
+    ),
     label = stations$sample_station_label
   )
 }
 
-find_dist_outliers <- function(stations, quant_thresh = 0.9, dist_thresh = NULL) {
+find_dist_outliers <- function(
+  stations,
+  quant_thresh = 0.9,
+  dist_thresh = NULL
+) {
   dist <- distances(stations)
   # TODO: This may be better if look at distances between one station and the
   # next (i.e., minimum distance) rather than distances of all stations to a

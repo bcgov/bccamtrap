@@ -20,7 +20,10 @@ library(DBI)
 library(RSQLite)
 library(jsonlite)
 
-con <- DBI::dbConnect(RSQLite::SQLite(), "data-raw/RISC_WCR_ImageLabelling_Template_v20230518.1.tdb")
+con <- DBI::dbConnect(
+  RSQLite::SQLite(),
+  "data-raw/RISC_WCR_ImageLabelling_Template_v20230518.1.tdb"
+)
 
 # dbListTables(con)
 

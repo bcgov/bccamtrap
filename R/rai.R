@@ -18,14 +18,15 @@
 #' @return a data.frame of RAI, by deployment label and species (if `by_species
 #'   = TRUE`)
 #' @export
-sample_rai <- function(image_data,
-                       deployment_label = NULL,
-                       species = NULL,
-                       by_deployment = TRUE,
-                       by_species = TRUE,
-                       sample_start_date = NULL,
-                       sample_end_date = NULL) {
-
+sample_rai <- function(
+  image_data,
+  deployment_label = NULL,
+  species = NULL,
+  by_deployment = TRUE,
+  by_species = TRUE,
+  sample_start_date = NULL,
+  sample_end_date = NULL
+) {
   dat <- prep_rai(
     image_data,
     deployment_label,
@@ -45,12 +46,12 @@ sample_rai <- function(image_data,
     trap_days = max(.data$trap_days, na.rm = TRUE),
     n_detections = sum(!is.na(.data$species), na.rm = TRUE),
     total_count = sum(.data$total_count_episode, na.rm = TRUE),
-    rai = sum(.data$total_count, na.rm = TRUE) / max(.data$trap_days, na.rm = TRUE),
+    rai = sum(.data$total_count, na.rm = TRUE) /
+      max(.data$trap_days, na.rm = TRUE),
     .groups = "drop"
   )
 
   dplyr::relocate(out, dplyr::any_of("species"), .before = "n_detections")
-
 }
 
 #' Calculate RAI over a window of time, optionally rolling
@@ -70,18 +71,19 @@ sample_rai <- function(image_data,
 #'
 #' @return a data.frame of above calculated metrics
 #' @export
-rai_by_time <- function(image_data,
-                        by = c("date", "week", "month", "year"),
-                        roll = FALSE,
-                        k = 7,
-                        by_species = TRUE,
-                        species = NULL,
-                        by_deployment = FALSE,
-                        deployment_label = NULL,
-                        sample_start_date = NULL,
-                        sample_end_date = NULL,
-                        snow_agg = "max") {
-
+rai_by_time <- function(
+  image_data,
+  by = c("date", "week", "month", "year"),
+  roll = FALSE,
+  k = 7,
+  by_species = TRUE,
+  species = NULL,
+  by_deployment = FALSE,
+  deployment_label = NULL,
+  sample_start_date = NULL,
+  sample_end_date = NULL,
+  snow_agg = "max"
+) {
   by <- match.arg(by)
   by_fmt <- switch(
     by,
@@ -104,11 +106,11 @@ rai_by_time <- function(image_data,
   dat <- dat %>%
     dplyr::mutate(date = as.Date(.data$date_time)) %>%
     dplyr::group_by(
-    .data$deployment_label,
-    .data$species,
-    .data$date,
-    .add = TRUE
-  )
+      .data$deployment_label,
+      .data$species,
+      .data$date,
+      .add = TRUE
+    )
 
   dat <- dplyr::summarise(
     dat,
@@ -124,7 +126,9 @@ rai_by_time <- function(image_data,
 
   dat <- complete_daily_counts(dat)
 
-  if (by == "date" && !isTRUE(roll) && isTRUE(by_deployment) && isTRUE(by_species)) {
+  if (
+    by == "date" && !isTRUE(roll) && isTRUE(by_deployment) && isTRUE(by_species)
+  ) {
     # This is what we've made so far - a data frame, by deployment, date,
     # and species, of snow, temperature, and species counts
     return(dat)
@@ -147,7 +151,10 @@ rai_by_time <- function(image_data,
     dplyr::summarise(
       start_date = min(.data$date),
       end_date = max(.data$date),
-      "{snow_agg}_snow_index" := do.call(snow_agg, list(.data$snow_index, na.rm = TRUE)),
+      "{snow_agg}_snow_index" := do.call(
+        snow_agg,
+        list(.data$snow_index, na.rm = TRUE)
+      ),
       mean_temperature = mean(.data$temperature, na.rm = TRUE),
       n_detections = sum(.data$n_detections, na.rm = TRUE),
       total_count = sum(.data$total_count, na.rm = TRUE),
@@ -174,10 +181,30 @@ rai_by_time <- function(image_data,
           fill = NA,
           na.rm = TRUE
         ),
-        roll_mean_temp = zoo::rollmean(.data$mean_temperature, k = k, fill = NA, na.rm = TRUE),
-        roll_trap_days = zoo::rollsum(.data$trap_days, k = k, fill = NA, na.rm = TRUE),
-        roll_detections = zoo::rollsum(.data$n_detections, k = k, fill = NA, na.rm = TRUE),
-        roll_count = zoo::rollsum(.data$total_count, k = k, fill = NA, na.rm = TRUE),
+        roll_mean_temp = zoo::rollmean(
+          .data$mean_temperature,
+          k = k,
+          fill = NA,
+          na.rm = TRUE
+        ),
+        roll_trap_days = zoo::rollsum(
+          .data$trap_days,
+          k = k,
+          fill = NA,
+          na.rm = TRUE
+        ),
+        roll_detections = zoo::rollsum(
+          .data$n_detections,
+          k = k,
+          fill = NA,
+          na.rm = TRUE
+        ),
+        roll_count = zoo::rollsum(
+          .data$total_count,
+          k = k,
+          fill = NA,
+          na.rm = TRUE
+        ),
         roll_rai = .data$roll_count / .data$roll_trap_days
       )
   }
@@ -185,7 +212,9 @@ rai_by_time <- function(image_data,
 }
 
 filter_if_not_null <- function(data, var, env = rlang::current_env()) {
-  if (is.null(var)) return(data)
+  if (is.null(var)) {
+    return(data)
+  }
   varname <- deparse(substitute(var, env = env))
   if (!all(var %in% data[[varname]])) {
     cli::cli_abort("{.val {var}} is not a valid value in {.var {varname}}")
@@ -193,14 +222,20 @@ filter_if_not_null <- function(data, var, env = rlang::current_env()) {
   dplyr::filter(data, .data[[varname]] %in% var)
 }
 
-prep_rai <- function(image_data,
-                     deployment_label,
-                     species,
-                     by_deployment,
-                     by_species,
-                     sample_start_date,
-                     sample_end_date) {
-  sessions <- make_sample_sessions(image_data, sample_start_date, sample_end_date)
+prep_rai <- function(
+  image_data,
+  deployment_label,
+  species,
+  by_deployment,
+  by_species,
+  sample_start_date,
+  sample_end_date
+) {
+  sessions <- make_sample_sessions(
+    image_data,
+    sample_start_date,
+    sample_end_date
+  )
 
   dat <- dplyr::right_join(
     sessions,
@@ -251,22 +286,20 @@ add_groups <- function(x, by_deployment, by_species) {
 }
 
 complete_daily_counts <- function(x) {
-    tidyr::complete(
-      x,
-      tidyr::nesting(
-        # .data pronoun doesn't work inside nesting, so need this
-        # awkward data-masking syntax
-        !!rlang::sym("study_area_name"),
-        !!rlang::sym("sample_station_label"),
-        !!rlang::sym("deployment_label"),
-        !!rlang::sym("date"),
-        !!rlang::sym("snow_index"),
-        !!rlang::sym("temperature")
-      ),
-      !!rlang::sym("species"),
-      fill = list(n_detections = 0, total_count = 0)
-    ) %>%
+  tidyr::complete(
+    x,
+    tidyr::nesting(
+      # .data pronoun doesn't work inside nesting, so need this
+      # awkward data-masking syntax
+      !!rlang::sym("study_area_name"),
+      !!rlang::sym("sample_station_label"),
+      !!rlang::sym("deployment_label"),
+      !!rlang::sym("date"),
+      !!rlang::sym("snow_index"),
+      !!rlang::sym("temperature")
+    ),
+    !!rlang::sym("species"),
+    fill = list(n_detections = 0, total_count = 0)
+  ) %>%
     dplyr::ungroup()
 }
-
-

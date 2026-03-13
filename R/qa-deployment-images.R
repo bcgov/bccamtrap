@@ -14,11 +14,13 @@
 #'
 #' @return a `ggplot2` object if `interactive = FALSE`, a `ggiraph` object if `TRUE`
 #' @export
-plot_deployments <- function(deployments,
-                             date_breaks = "1 month",
-                             study_area_name = NULL,
-                             interactive = FALSE,
-                             ...) {
+plot_deployments <- function(
+  deployments,
+  date_breaks = "1 month",
+  study_area_name = NULL,
+  interactive = FALSE,
+  ...
+) {
   check_deployments(deployments)
 
   deployments <- process_invalid_deployments(deployments)
@@ -49,7 +51,9 @@ plot_deployments <- function(deployments,
       linewidth = 1.1,
       position = ggplot2::position_dodge(width = 0.5)
     ) +
-    ggplot2::scale_colour_manual(values = c("Valid" = "black", "Invalid" = "lightpink")) +
+    ggplot2::scale_colour_manual(
+      values = c("Valid" = "black", "Invalid" = "lightpink")
+    ) +
     ggiraph::geom_point_interactive(
       ggplot2::aes(
         x = .data$deployment_start_date,
@@ -78,7 +82,10 @@ plot_deployments <- function(deployments,
     ggplot2::theme_bw() +
     ggplot2::labs(
       title = paste0("Camera Deployments at ", study_area_name),
-      x = "Date", y = "Sample Station", size = "Valid Session", shape = "Valid Session",
+      x = "Date",
+      y = "Sample Station",
+      size = "Valid Session",
+      shape = "Valid Session",
       colour = "Valid Session"
     )
 
@@ -94,13 +101,20 @@ process_invalid_deployments <- function(deployments) {
   deployments$deployment_start_date <- as.Date(deployments$deployment_start)
   deployments$deployment_end_date <- as.Date(deployments$deployment_end)
 
-  invalid_rows <- is.na(deployments$deployment_end) & !deployments$deployment_duration_valid
+  invalid_rows <- is.na(deployments$deployment_end) &
+    !deployments$deployment_duration_valid
 
   if ("date_time_checked" %in% names(deployments)) {
-    deployments$deployment_end_date[invalid_rows] <- as.Date(deployments$date_time_checked)[invalid_rows]
+    deployments$deployment_end_date[invalid_rows] <- as.Date(
+      deployments$date_time_checked
+    )[invalid_rows]
   }
 
-  deployments$valid_deployment <- ifelse(deployments$deployment_duration_valid, "Valid", "Invalid")
+  deployments$valid_deployment <- ifelse(
+    deployments$deployment_duration_valid,
+    "Valid",
+    "Invalid"
+  )
   deployments
 }
 
@@ -133,8 +147,7 @@ qa_deployment_images <- function(deployments, image_data) {
       "There is a mismatch in {.var timelapse_time} in {.arg {rlang::caller_arg(deployments)}}",
       "and {.var date_time} in {.arg {rlang::caller_arg(image_data)}} for ",
       "timelapse images in the following deployments: {.val {bad_tl_times}}."
-    )
-    )
+    ))
   }
 
   if (length(intersect(s_dep_labs, i_dep_labs)) == 0) {
@@ -170,8 +183,10 @@ qa_deployment_images <- function(deployments, image_data) {
 }
 
 check_timelapse_times <- function(deployments, image_data) {
-  image_data <- image_data[grepl("^[Tt]", image_data$trigger_mode),
-                           c("deployment_label", "date_time")]
+  image_data <- image_data[
+    grepl("^[Tt]", image_data$trigger_mode),
+    c("deployment_label", "date_time")
+  ]
 
   image_data$time <- format(image_data$date_time, "%H:%M:%S")
 
@@ -199,7 +214,13 @@ check_timelapse_times <- function(deployments, image_data) {
 #'
 #' @inherit plot_deployments return
 #' @export
-plot_deployment_detections <- function(deployments, image_data, date_breaks = "1 month", interactive = FALSE, ...) {
+plot_deployment_detections <- function(
+  deployments,
+  image_data,
+  date_breaks = "1 month",
+  interactive = FALSE,
+  ...
+) {
   check_deployments(deployments)
   check_image_data(image_data)
 
@@ -209,7 +230,11 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
 
   img_data_grouped <- image_data %>%
     dplyr::mutate(img_date = as.Date(.data$date_time)) %>%
-    dplyr::group_by(.data$deployment_label, .data$img_date, .data$lens_obscured) %>%
+    dplyr::group_by(
+      .data$deployment_label,
+      .data$img_date,
+      .data$lens_obscured
+    ) %>%
     dplyr::summarise(n = dplyr::n())
 
   img_data_grouped$id <- seq_len(nrow(img_data_grouped))
@@ -247,13 +272,21 @@ plot_deployment_detections <- function(deployments, image_data, date_breaks = "1
       linewidth = 0.8,
       position = ggplot2::position_dodge(width = 0.5)
     ) +
-    ggplot2::scale_colour_manual(values = c("TRUE" = "#f7941d", "FALSE" = "#400456")) +
+    ggplot2::scale_colour_manual(
+      values = c("TRUE" = "#f7941d", "FALSE" = "#400456")
+    ) +
     ggplot2::scale_alpha_manual(values = c("Valid" = 1, "Invalid" = 0.3)) +
     ggplot2::scale_x_date(date_breaks = date_breaks) +
     ggplot2::theme_bw() +
     ggplot2::labs(
-      title = paste0("Camera Deployments and detections at ", deployments$study_area_name[1]),
-      x = "Date", y = "Deployment Label" , colour = "Lens Obscured", alpha = "Valid Deployment"
+      title = paste0(
+        "Camera Deployments and detections at ",
+        deployments$study_area_name[1]
+      ),
+      x = "Date",
+      y = "Deployment Label",
+      colour = "Lens Obscured",
+      alpha = "Valid Deployment"
     )
 
   if (interactive) {
@@ -281,10 +314,16 @@ plot_diel_activity <- function(image_data, interactive = FALSE, ...) {
       .data$trigger_mode == "Motion Detection"
     ) %>%
     dplyr::mutate(
-      time_of_day = (lubridate::hour(.data$date_time) * 60 +
-                       lubridate::minute(.data$date_time) +
-                       lubridate::second(.data$date_time)) / 60,
-      total_count_episode = ifelse(is.na(.data$total_count_episode), 1, .data$total_count_episode)
+      time_of_day = (lubridate::hour(.data$date_time) *
+        60 +
+        lubridate::minute(.data$date_time) +
+        lubridate::second(.data$date_time)) /
+        60,
+      total_count_episode = ifelse(
+        is.na(.data$total_count_episode),
+        1,
+        .data$total_count_episode
+      )
     )
 
   plot_data$id <- seq_len(nrow(plot_data))
@@ -311,7 +350,10 @@ plot_diel_activity <- function(image_data, interactive = FALSE, ...) {
     ) +
     ggplot2::theme_bw() +
     ggplot2::labs(
-      title = paste0("Daily activity of different species at ", image_data$study_area_name[1]),
+      title = paste0(
+        "Daily activity of different species at ",
+        image_data$study_area_name[1]
+      ),
       x = "Time of Day (hours)",
       y = "Species*",
       caption = "*NA usually denotes human activity"
@@ -337,8 +379,12 @@ plot_diel_activity <- function(image_data, interactive = FALSE, ...) {
 #'
 #' @return `data.frame` of class `image_data`, with `deployment` columns attached
 #' @export
-merge_deployments_images <- function(deployments, image_data, drop_unjoined = FALSE, as_sf = TRUE) {
-
+merge_deployments_images <- function(
+  deployments,
+  image_data,
+  drop_unjoined = FALSE,
+  as_sf = TRUE
+) {
   qa_deployment_images(deployments, image_data)
 
   if (!as_sf) {

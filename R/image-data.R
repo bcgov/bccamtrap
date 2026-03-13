@@ -68,24 +68,35 @@ check_template <- function(files) {
   }
 
   if (length(template) > 1) {
-    cli::cli_warn("More than one image labelling template found in
-                  {.path {dirname(files)[1]}}: {.str {template}}")
+    cli::cli_warn(
+      "More than one image labelling template found in
+                  {.path {dirname(files)[1]}}: {.str {template}}"
+    )
   }
   template
 }
 
 read_one_image_csv <- function(path, template, ...) {
-    col_names <- strsplit(readLines(path, n = 1), ",")[[1]]
-    col_spec <- image_file_cols(template, col_names)
-    df <- readr::read_csv(path, col_types = col_spec, name_repair = "unique_quiet", ...)
-    reconcile_date_time_fields(df, path)
+  col_names <- strsplit(readLines(path, n = 1), ",")[[1]]
+  col_spec <- image_file_cols(template, col_names)
+  df <- readr::read_csv(
+    path,
+    col_types = col_spec,
+    name_repair = "unique_quiet",
+    ...
+  )
+  reconcile_date_time_fields(df, path)
 }
 
 reconcile_date_time_fields <- function(df, path) {
-  if ("DateTime" %in% names(df)) return(df)
+  if ("DateTime" %in% names(df)) {
+    return(df)
+  }
 
   if (!("Date" %in% names(df) && "Time" %in% names(df))) {
-    cli::cli_abort("{.path {path}}: File must have either DateTime, or Date and Time columns")
+    cli::cli_abort(
+      "{.path {path}}: File must have either DateTime, or Date and Time columns"
+    )
   }
 
   df$DateTime <- lubridate::parse_date_time(paste(df$Date, df$Time), "dbY HMS")
@@ -173,8 +184,14 @@ make_snow_range_cols <- function(x) {
     ),
     snow_index = bin_snow_depths(.data$snow_depth_lower)
   )
-    dplyr::relocate(x, "snow_index", "snow_is_est", "snow_depth_lower", "snow_depth_upper",
-                    .after = "snow_depth")
+  dplyr::relocate(
+    x,
+    "snow_index",
+    "snow_is_est",
+    "snow_depth_lower",
+    "snow_depth_upper",
+    .after = "snow_depth"
+  )
 }
 
 standardize_trigger_mode <- function(x) {
@@ -192,8 +209,13 @@ standardize_trigger_mode <- function(x) {
 }
 
 bin_snow_depths <- function(x) {
-  out <- cut(x, breaks = c(0,5,15,30,60,120), labels = FALSE,
-      include.lowest = TRUE, right = FALSE)
+  out <- cut(
+    x,
+    breaks = c(0, 5, 15, 30, 60, 120),
+    labels = FALSE,
+    include.lowest = TRUE,
+    right = FALSE
+  )
   out[x == 0] <- 0
   out[x >= 120] <- 6
   out
