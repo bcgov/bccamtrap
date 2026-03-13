@@ -85,7 +85,27 @@ read_one_image_csv <- function(path, template, ...) {
     name_repair = "unique_quiet",
     ...
   )
+
+  df <- drop_empty_unnamed_cols(df)
+
+  if (length(setdiff(names(df), names(col_spec$cols))) > 0) {
+    cli::cli_warn(
+      "File {.path {path}} has unexpected columns: {.str {setdiff(names(df), names(col_spec$cols))}}"
+    )
+  }
   reconcile_date_time_fields(df, path)
+}
+
+drop_empty_unnamed_cols <- function(df) {
+  # Drop auto-generated column names (e.g. `...41`) that arise from trailing
+  # commas in CSV, but only when the column contains no data.
+  auto_named <- grep("^[.]{3}[0-9]+$", names(df), value = TRUE)
+  empty_auto <- auto_named[vapply(
+    df[auto_named],
+    \(col) all(is.na(col)),
+    logical(1)
+  )]
+  df[, !names(df) %in% empty_auto, drop = FALSE]
 }
 
 reconcile_date_time_fields <- function(df, path) {
@@ -107,7 +127,7 @@ reconcile_date_time_fields <- function(df, path) {
 
 image_file_cols <- function(template, names) {
   all_col_names <- list(
-    v20230518 = readr::cols_only(
+    v20230518 = readr::cols(
       RootFolder = readr::col_character(),
       Study_Area_Name = readr::col_character(),
       Sample_Station_Label = readr::col_character(),
@@ -156,7 +176,7 @@ image_file_cols <- function(template, names) {
   col_types <- all_col_names[[template]]
 
   # Subset to match the names in the data
-  col_types$cols <- col_types$cols[names]
+  col_types$cols <- col_types$cols[intersect(names, names(col_types$cols))]
   col_types
 }
 

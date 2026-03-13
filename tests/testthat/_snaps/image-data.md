@@ -466,6 +466,19 @@
       Error in `read_image_data()`:
       ! Directory 'foofydir' does not exist
 
+# read_one_image_csv() warns when file has extra named columns
+
+    Code
+      read_one_image_csv(f, "v20230518")
+    Condition
+      Warning:
+      File '<tempfile>' has unexpected columns: "Extra_Col"
+    Output
+      # A tibble: 1 x 3
+        RootFolder DateTime            Extra_Col
+        <chr>      <dttm>              <chr>    
+      1 /root      2023-01-01 12:00:00 foo      
+
 # check_template() works
 
     Code

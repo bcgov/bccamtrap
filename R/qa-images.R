@@ -66,12 +66,16 @@ qa_image_data <- function(
     dplyr::if_any(dplyr::starts_with("QA"))
   )
 
+  # Identify QA_ columns that are all FALSE (no issues flagged)
   # and drop QA columns with no issues
-  dplyr::select(
-    out,
-    dplyr::everything(),
-    -(dplyr::starts_with("QA_") & dplyr::where(~ is.logical(.x) && !any(.x)))
-  )
+  qa_cols <- grep("^QA_", names(out), value = TRUE)
+  empty_qa_cols <- qa_cols[vapply(
+    out[qa_cols],
+    \(x) is.logical(x) && !any(x, na.rm = TRUE),
+    logical(1)
+  )]
+
+  dplyr::select(out, -dplyr::any_of(empty_qa_cols))
 }
 
 find_blanks <- function(x) {

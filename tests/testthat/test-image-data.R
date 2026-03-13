@@ -1,6 +1,7 @@
 test_that("read_image_data() works", {
   imgs_1 <- read_image_data(test_dir_1)
   imgs_2 <- read_image_data(test_dir_2)
+
   expect_s3_class(imgs_1, c("image_data", "tbl"))
   expect_s3_class(imgs_2, c("image_data", "tbl"))
   expect_equal(ncol(imgs_1), 43)
@@ -23,6 +24,47 @@ test_that("read_image_data() fails appropriately", {
   # Empty directory
   dir <- withr::local_tempdir()
   expect_error(read_image_data(dir))
+})
+
+test_that("read_one_image_csv() warns when file has extra named columns", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "RootFolder,DateTime,Extra_Col",
+      "/root,2023-01-01 12:00:00,foo"
+    ),
+    f
+  )
+  expect_snapshot(
+    read_one_image_csv(f, "v20230518"),
+    transform = \(x) gsub(f, "<tempfile>", x, fixed = TRUE)
+  )
+})
+
+test_that("read_one_image_csv() retains extra named columns in output", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "RootFolder,DateTime,Extra_Col",
+      "/root,2023-01-01 12:00:00,foo"
+    ),
+    f
+  )
+  result <- suppressWarnings(read_one_image_csv(f, "v20230518"))
+  expect_contains(names(result), "Extra_Col")
+})
+
+test_that("read_one_image_csv() silently drops empty unnamed columns (trailing commas)", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "RootFolder,DateTime,",
+      "/root,2023-01-01 12:00:00,"
+    ),
+    f
+  )
+  result <- read_one_image_csv(f, "v20230518")
+  expect_equal(names(result), c("RootFolder", "DateTime"))
 })
 
 test_that("check_template() works", {
