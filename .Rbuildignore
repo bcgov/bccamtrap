@@ -6,3 +6,8 @@
 ^README\.Rmd$
 ^\.github$
 ^data-raw$
+^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^bccamtrap\.code-workspace$

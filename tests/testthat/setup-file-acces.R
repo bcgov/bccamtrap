@@ -16,8 +16,8 @@
 
 googledrive::drive_auth(path = Sys.getenv("GDRIVE_AUTH_TOKEN"))
 
-drv1 <- googledrive::drive_get(id = "1JC_zaIuazGThq7fxnCPZ0wVhv7tIytFs")
-drv2 <- googledrive::drive_get(id = "127MSPa03Pcgrd8P5tvyAUgFmd7BX_nKS")
+drv1 <- googledrive::drive_get(id = "1JC_zaIuazGThq7fxnCPZ0wVhv7tIytFs") # MC
+drv2 <- googledrive::drive_get(id = "1EY559-jrhrkazFsJ8AoKH0OBewRfdsPq") # TA
 
 test_dir <- withr::local_tempdir(
   pattern = "bccamtrap_test",
@@ -54,3 +54,11 @@ file.remove(merged_2)
 test_files_2 <- setdiff(test_files_2, merged_2)
 test_meta_file2 <- grep(".xls[xm]?$", test_files_2, value = TRUE)
 
+
+drv3 <- googledrive::drive_get(id = "1XArm3JspluuIRn48tgjWH56lUWQX8Mju") # BD image data
+test_bd_img_csv_gd <- googledrive::drive_download(
+  drv3,
+  path = file.path(test_dir, drv3$name),
+  overwrite = TRUE
+)
+test_bd_img_csv <- test_bd_img_csv_gd$local_path

@@ -2,8 +2,14 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom dplyr .data
+#' @import rlang
+#' @importFrom methods setOldClass
+#' @importFrom dplyr %>%
 ## usethis namespace: end
 NULL
 
 utils::globalVariables("closest")
+
+ignore_unused_imports <- function() {
+  shinycssloaders::withSpinner
+}

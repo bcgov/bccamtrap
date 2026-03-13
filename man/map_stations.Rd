@@ -13,9 +13,9 @@ map_stations(stations)
 a mapview object
 }
 \description{
-If the input data.frame has been run through \code{\link[=check_stations_spatial]{check_stations_spatial()}},
+If the input data.frame has been run through \code{\link[=qa_stations_spatial]{qa_stations_spatial()}},
 potential spatial outliers will be visually flagged.
 }
 \seealso{
-\code{\link[=check_stations_spatial]{check_stations_spatial()}}
+\code{\link[=qa_stations_spatial]{qa_stations_spatial()}}
 }
