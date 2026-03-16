@@ -9,6 +9,9 @@
 #' @param pattern an optional regular expression. Only file names which match
 #'   the regular expression will read. Default `FALSE`.
 #' @param recursive should files found within subfolders of `path` also be read?
+#' @param template path to a "`.tdb`" TimeLapse Template file. Optional; if not provided,
+#' the function will attempt to identify the appropriate internal template
+#' based on the file names in `path`.
 #' @param ... arguments passed on to [readr::read_csv()]
 #'
 #' @return a `data.frame` of Timelapse image data from the files found in `path`
@@ -41,7 +44,7 @@ read_image_data <- function(
     cli::cli_abort("No appropriate files found in {.path {path}}")
   }
 
-  template <- check_template(path)
+  template <- template %||% check_template(path)
 
   df_list <- lapply(path, read_one_image_csv, template = template, ...)
 
@@ -84,11 +87,15 @@ check_template <- function(files) {
     )
   }
 
-  pkg_templates <- fs::dir_ls(system.file(
-    "extdata",
-    "timelapse-templates",
-    package = "bccamtrap"
-  ))
+  pkg_templates <- list.files(
+    system.file(
+      "extdata",
+      "timelapse-templates",
+      package = "bccamtrap"
+    ),
+    pattern = "\\.tdb$",
+    full.names = TRUE
+  )
 
   template_tdb <- grep(template, pkg_templates, value = TRUE)
 

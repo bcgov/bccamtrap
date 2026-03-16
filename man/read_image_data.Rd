@@ -4,7 +4,7 @@
 \alias{read_image_data}
 \title{Read image data from a collection of csvs from TimeLapse}
 \usage{
-read_image_data(path, pattern, recursive = FALSE, ...)
+read_image_data(path, pattern, recursive = FALSE, template = NULL, ...)
 }
 \arguments{
 \item{path}{path to directory of image files, a single .csv file, or a character
@@ -14,6 +14,10 @@ vector of .csv files.}
 the regular expression will read. Default \code{FALSE}.}
 
 \item{recursive}{should files found within subfolders of \code{path} also be read?}
+
+\item{template}{path to a "\code{.tdb}" TimeLapse Template file. Optional; if not provided,
+the function will attempt to identify the appropriate internal template
+based on the file names in \code{path}.}
 
 \item{...}{arguments passed on to \code{\link[readr:read_delim]{readr::read_csv()}}}
 }
