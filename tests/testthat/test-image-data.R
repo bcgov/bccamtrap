@@ -36,7 +36,7 @@ test_that("read_one_image_csv() warns when file has extra named columns", {
     f
   )
   expect_snapshot(
-    read_one_image_csv(f, "v20230518"),
+    read_one_image_csv(f, master_template_path()),
     transform = \(x) gsub(f, "<tempfile>", x, fixed = TRUE)
   )
 })
@@ -50,7 +50,7 @@ test_that("read_one_image_csv() retains extra named columns in output", {
     ),
     f
   )
-  result <- suppressWarnings(read_one_image_csv(f, "v20230518"))
+  result <- suppressWarnings(read_one_image_csv(f, master_template_path()))
   expect_contains(names(result), "Extra_Col")
 })
 
@@ -63,19 +63,8 @@ test_that("read_one_image_csv() silently drops empty unnamed columns (trailing c
     ),
     f
   )
-  result <- read_one_image_csv(f, "v20230518")
+  result <- read_one_image_csv(f, master_template_path())
   expect_equal(names(result), c("RootFolder", "DateTime"))
-})
-
-test_that("check_template() works", {
-  files <- "dirname/123_Template_v12345678.csv"
-  expect_equal(check_template(files), "v12345678")
-  files <- c(
-    files,
-    "dirname/f123_Template_v87654321.csv"
-  )
-  expect_snapshot(check_template(files))
-  expect_snapshot(check_template("temp_foobar.csv"), error = TRUE)
 })
 
 test_that("bin_snow_depths() works", {
