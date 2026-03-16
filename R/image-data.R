@@ -191,6 +191,10 @@ make_snow_range_cols <- function(x) {
 }
 
 standardize_trigger_mode <- function(x) {
+  if (!"trigger_mode" %in% names(x)) {
+    return(x)
+  }
+
   x$trigger_mode <- dplyr::case_when(
     x$trigger_mode == "M" ~ "Motion Detection",
     x$trigger_mode == "T" ~ "Time Lapse",

@@ -67,6 +67,24 @@ test_that("read_one_image_csv() silently drops empty unnamed columns (trailing c
   expect_equal(names(result), c("RootFolder", "DateTime"))
 })
 
+test_that("manually supplied template works", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "StudyAreaName,DeploymentLabel,DateTime,Temperature,Adult_Female",
+      "A,Dep123,2023-01-01 12:00:00,16,5"
+    ),
+    f
+  )
+  template_path <- system.file(
+    "extdata",
+    "timelapse-templates",
+    "TimelapseTemplate_Elk_Wallows_v1.tdb",
+    package = "bccamtrap"
+  )
+  result <- read_image_data(f, template = template_path)
+})
+
 test_that("bin_snow_depths() works", {
   expect_equal(
     bin_snow_depths(c(
