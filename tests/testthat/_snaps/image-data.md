@@ -48,7 +48,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["numeric"]
+          "value": ["integer"]
         },
         {
           "type": "character",
@@ -278,7 +278,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["numeric"]
+          "value": ["integer"]
         },
         {
           "type": "character",
@@ -469,31 +469,13 @@
 # read_one_image_csv() warns when file has extra named columns
 
     Code
-      read_one_image_csv(f, "v20230518")
+      read_one_image_csv(f, master_template_path())
     Condition
       Warning:
-      File '<tempfile>' has unexpected columns: "Extra_Col"
+      The following columns are in the data but not in the template: "RootFolder" and "Extra_Col". They will be read as character types; please cast to the appropriate type if necessary.
     Output
       # A tibble: 1 x 3
         RootFolder DateTime            Extra_Col
         <chr>      <dttm>              <chr>    
       1 /root      2023-01-01 12:00:00 foo      
-
-# check_template() works
-
-    Code
-      check_template(files)
-    Condition
-      Warning:
-      More than one image labelling template found in 'dirname': "v12345678" and "v87654321"
-    Output
-      [1] "v12345678" "v87654321"
-
----
-
-    Code
-      check_template("temp_foobar.csv")
-    Condition
-      Error in `check_template()`:
-      ! No recognized Timelapse template in filenames
 

@@ -17,7 +17,7 @@
        9 B4_20230517      2022-12-16        2023-05-17            143 Roosevelt Elk
       10 C1_20230517      2022-12-17        2023-05-17            145 Black Bear   
       # i 19 more rows
-      # i 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
+      # i 3 more variables: n_detections <int>, total_count <int>, rai <dbl>
 
 ---
 
@@ -31,7 +31,7 @@
       2 A4_20230517      2022-12-16        2023-05-17            153 Mule Deer    
       3 A4_20230517      2022-12-16        2023-05-17            153 Roosevelt Elk
       4 A4_20230517      2022-12-16        2023-05-17            153 Unknown      
-      # i 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
+      # i 3 more variables: n_detections <int>, total_count <int>, rai <dbl>
 
 ---
 
@@ -51,7 +51,7 @@
        8 D2_20230517      2022-11-28        2023-05-17            164 Roosevelt Elk
        9 D3_20230517      2022-11-28        2023-05-17            161 Roosevelt Elk
       10 D5_20230517      2022-12-16        2023-05-17            152 Roosevelt Elk
-      # i 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
+      # i 3 more variables: n_detections <int>, total_count <int>, rai <dbl>
 
 ---
 
@@ -60,7 +60,7 @@
     Output
       # A tibble: 1 x 6
         sample_start_date sample_end_date trap_days n_detections total_count   rai
-        <date>            <date>              <int>        <int>       <dbl> <dbl>
+        <date>            <date>              <int>        <int>       <int> <dbl>
       1 2022-11-28        2023-05-17            166          175         300  1.81
 
 ---
@@ -70,7 +70,7 @@
     Output
       # A tibble: 7 x 7
         sample_start_date sample_end_date trap_days species   n_detections total_count
-        <date>            <date>              <int> <chr>            <int>       <dbl>
+        <date>            <date>              <int> <chr>            <int>       <int>
       1 2022-11-28        2023-05-17            164 Avian (c~            1           1
       2 2022-12-16        2023-05-17            153 Beaver               1           1
       3 2022-12-16        2023-05-17            152 Black Be~            2           2
@@ -99,7 +99,7 @@
        9 D2_20230517      2022-11-28        2023-05-17            164           19
       10 D3_20230517      2022-11-28        2023-05-17            161           11
       11 D5_20230517      2022-12-16        2023-05-17            152            9
-      # i 2 more variables: total_count <dbl>, rai <dbl>
+      # i 2 more variables: total_count <int>, rai <dbl>
 
 ---
 
@@ -124,7 +124,7 @@
       13 D3_20230517      2022-12-16        2023-02-05             48 Mule Deer    
       14 D3_20230517      2022-12-16        2023-02-05             48 Roosevelt Elk
       15 D5_20230517      2022-12-16        2023-02-05             52 Mule Deer    
-      # i 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
+      # i 3 more variables: n_detections <int>, total_count <int>, rai <dbl>
 
 ---
 
@@ -136,7 +136,7 @@
         deployment_label sample_start_date sample_end_date trap_days species      
         <chr>            <date>            <date>              <int> <chr>        
       1 19_1_20230605    2022-12-16        2023-02-05             52 Roosevelt Elk
-      # i 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
+      # i 3 more variables: n_detections <int>, total_count <int>, rai <dbl>
 
 # rai_by_time works
 
@@ -145,7 +145,7 @@
     Output
       # A tibble: 1,368 x 8
          species   date       max_snow_index mean_temperature n_detections total_count
-         <chr>     <date>              <dbl>            <dbl>        <int>       <dbl>
+         <chr>     <date>              <dbl>            <dbl>        <int>       <int>
        1 Avian (c~ 2022-11-28              1             3               0           0
        2 Avian (c~ 2022-11-29              1            -3.67            0           0
        3 Avian (c~ 2022-11-30              2            -3.5             0           0
@@ -166,7 +166,7 @@
     Output
       # A tibble: 2,205 x 8
          species   date       max_snow_index mean_temperature n_detections total_count
-         <chr>     <date>              <dbl>            <dbl>        <int>       <dbl>
+         <chr>     <date>              <dbl>            <dbl>        <int>       <int>
        1 Avian (c~ 2022-11-07              2             6               0           0
        2 Avian (c~ 2022-11-08              2            -1.75            0           0
        3 Avian (c~ 2022-11-09              2            -3.25            0           0
@@ -187,7 +187,7 @@
     Output
       # A tibble: 2,496 x 8
          species   date       max_snow_index mean_temperature n_detections total_count
-         <chr>     <date>              <dbl>            <dbl>        <int>       <dbl>
+         <chr>     <date>              <dbl>            <dbl>        <int>       <int>
        1 Black Be~ 2020-10-02              0               15            0           0
        2 Black Be~ 2020-10-03              0               12            0           0
        3 Black Be~ 2020-10-04              0               11            0           0
@@ -209,7 +209,7 @@
     Output
       # A tibble: 156 x 8
          species   date       max_snow_index mean_temperature n_detections total_count
-         <chr>     <date>              <dbl>            <dbl>        <int>       <dbl>
+         <chr>     <date>              <dbl>            <dbl>        <int>       <int>
        1 Mule Deer 2022-12-16              3           -2                1           1
        2 Mule Deer 2022-12-17              3           -2.18             0           0
        3 Mule Deer 2022-12-18              3           -3.91             0           0
@@ -231,7 +231,7 @@
     Output
       # A tibble: 52 x 8
          species   date       max_snow_index mean_temperature n_detections total_count
-         <chr>     <date>              <dbl>            <dbl>        <int>       <dbl>
+         <chr>     <date>              <dbl>            <dbl>        <int>       <int>
        1 Roosevel~ 2022-12-16              4               -1            0           0
        2 Roosevel~ 2022-12-17              4               -1            0           0
        3 Roosevel~ 2022-12-18              4               -1            0           0
@@ -252,7 +252,7 @@
     Output
       # A tibble: 171 x 7
          date       max_snow_index mean_temperature n_detections total_count trap_days
-         <date>              <dbl>            <dbl>        <int>       <dbl>     <int>
+         <date>              <dbl>            <dbl>        <int>       <int>     <int>
        1 2022-11-28              1             3               0           1         1
        2 2022-11-29              1            -3.67            1           1         3
        3 2022-11-30              2            -3.5             0           0         2
@@ -286,7 +286,7 @@
        9 COU_AlberniInlet_1_20~ 2021-12-20          0          -4 Mule D~            0
       10 COU_AlberniInlet_1_20~ 2021-12-20          0          -4 <NA>               0
       # i 272 more rows
-      # i 1 more variable: total_count <dbl>
+      # i 1 more variable: total_count <int>
 
 ---
 
@@ -308,9 +308,9 @@
        9 Roosevelt Elk 2023-W-01 2023-01-02 2023-01-08              5           1.68  
       10 Roosevelt Elk 2023-W-02 2023-01-09 2023-01-15              5           2.89  
       # i 26 more rows
-      # i 10 more variables: n_detections <int>, total_count <dbl>, trap_days <int>,
+      # i 10 more variables: n_detections <int>, total_count <int>, trap_days <int>,
       #   rai <dbl>, roll_mean_max_snow <dbl>, roll_mean_temp <dbl>,
-      #   roll_trap_days <int>, roll_detections <int>, roll_count <dbl>,
+      #   roll_trap_days <int>, roll_detections <int>, roll_count <int>,
       #   roll_rai <dbl>
 
 ---
@@ -335,7 +335,7 @@
       11 COU_AlberniInlet_1_2021_2~ <NA>    2021  2021-01-01 2021-12-31              0
       12 COU_AlberniInlet_1_2021_2~ <NA>    2022  2022-01-01 2022-09-12              0
       # i 11 more variables: mean_temperature <dbl>, n_detections <int>,
-      #   total_count <dbl>, trap_days <int>, rai <dbl>, roll_mean_max_snow <lgl>,
+      #   total_count <int>, trap_days <int>, rai <dbl>, roll_mean_max_snow <lgl>,
       #   roll_mean_temp <lgl>, roll_trap_days <lgl>, roll_detections <lgl>,
       #   roll_count <lgl>, roll_rai <dbl>
 
@@ -347,7 +347,7 @@
     Output
       # A tibble: 88 x 6
          roll_mean_max_snow roll_mean_temp roll_trap_days roll_detections roll_count
-                      <dbl>          <dbl>          <int>           <int>      <dbl>
+                      <dbl>          <dbl>          <int>           <int>      <int>
        1                 NA          NA                NA              NA         NA
        2                 NA          NA                NA              NA         NA
        3                 NA          NA                NA              NA         NA
