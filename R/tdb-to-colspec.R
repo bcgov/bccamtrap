@@ -5,12 +5,7 @@ tdb_to_colspec <- function(tdb, col_names = NULL) {
   # Master template has more specific field type mapping, so
   # use it to fill in any character fields in the template that might
   # have better-defined types in the master template
-  master_template <- system.file(
-    "extdata",
-    "timelapse-templates",
-    "!RISC_WCR_MasterTemplateFieldPicklist_DONOTEDIT_20250109.tdb",
-    package = "bccamtrap"
-  ) |>
+  master_template <- master_template_path() |>
     parse_tdb() |>
     map_tdb_types_to_colspec(names(template_list), warn_missing = FALSE)
 
@@ -19,7 +14,7 @@ tdb_to_colspec <- function(tdb, col_names = NULL) {
     template_list
   )
 
-  do.call(readr::cols_only, template_list)
+  do.call(readr::cols, template_list)
 }
 
 parse_tdb <- function(tdb) {
@@ -80,15 +75,13 @@ map_tdb_types_to_colspec <- function(
     type_map[[field$type]] %||% readr::col_character()
   })
 
-  names(col_spec_list) <- names(tdb_template)
-
   if (!is.null(col_names)) {
-    missing_cols <- setdiff(names(col_spec_list), col_names)
+    missing_cols <- setdiff(col_names, names(col_spec_list))
 
     if (length(missing_cols) > 0) {
       if (warn_missing) {
         cli::cli_warn(
-          "The following columns are in the data but not in the template: {.str {missing_cols}}. They will be read with guessed types.",
+          "The following columns are in the data but not in the template: {.str {missing_cols}}. They will be read as character types; please cast to the appropriate type if necessary.",
           class = "tdb_colspec_warning"
         )
       }
@@ -101,5 +94,28 @@ map_tdb_types_to_colspec <- function(
     col_names <- names(col_spec_list)
   }
 
-  col_spec_list[intersect(names(col_spec_list), col_names)]
+  col_spec_list <- col_spec_list[intersect(names(col_spec_list), col_names)]
+
+  override_types(col_spec_list)
+}
+
+master_template_path <- function() {
+  system.file(
+    "extdata",
+    "timelapse-templates",
+    "!RISC_WCR_MasterTemplateFieldPicklist_DONOTEDIT_20250109.tdb",
+    package = "bccamtrap"
+  )
+}
+
+override_types <- function(col_spec_list) {
+  # Override types for specific columns based on column name pattern
+  for (col in names(col_spec_list)) {
+    if (col == "Temperature") {
+      col_spec_list[[col]] <- readr::col_number()
+    } else if (col == "Obj_Count_Image") {
+      col_spec_list[[col]] <- readr::col_integer()
+    }
+  }
+  col_spec_list
 }
