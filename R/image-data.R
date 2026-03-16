@@ -74,27 +74,31 @@ check_template <- function(files) {
     cli::cli_warn("Unrecognized Timelapse template in filenames")
   }
 
-  if (length(template) > 1) {
-    cli::cli_warn(
-      "More than one image labelling template found in
-                  {.path {dirname(files)[1]}}: {.str {template}}"
-    )
-  }
-
   pkg_templates <- fs::dir_ls(system.file(
     "extdata",
     "timelapse-templates",
     package = "bccamtrap"
   ))
 
-  template_tdb <- grep(template, pkg_templates, value = TRUE)
+  # If more than one template matches, use the one with the latest version
+  # number, and warn about it
+  template_tdb <- sort(grep(template, pkg_templates, value = TRUE))
 
-  template_tdb
+  if (length(template_tdb) > 1) {
+    cli::cli_warn(
+      "More than one image labelling template found in
+                  {.path {dirname(files)[1]}}: {.str {template}}. 
+                  Using {.path {template_tdb[length(template_tdb)]}}."
+    )
+  }
+
+  template_tdb[length(template_tdb)]
 }
 
 read_one_image_csv <- function(path, template, ...) {
   col_names <- strsplit(readLines(path, n = 1), ",")[[1]]
   col_spec <- tdb_to_colspec(template, col_names)
+
   df <- readr::read_csv(
     path,
     col_types = col_spec,
