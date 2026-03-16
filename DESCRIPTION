@@ -19,6 +19,7 @@ Imports:
     bcmaps (>= 2.2.0),
     bslib,
     cli,
+    DBI,
     dplyr,
     ggiraph,
     ggplot2,
@@ -33,6 +34,7 @@ Imports:
     readr,
     readxl,
     rlang (>= 1.1.0),
+    RSQLite,
     sf,
     shiny,
     shinycssloaders,
@@ -40,11 +42,9 @@ Imports:
     withr,
     zoo
 Suggests: 
-    DBI,
     googledrive,
     jsonlite,
-    RSQLite,
-    testthat (>= 3.0.0),
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

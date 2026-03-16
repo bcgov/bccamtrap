@@ -13,7 +13,13 @@
 #'
 #' @return a `data.frame` of Timelapse image data from the files found in `path`
 #' @export
-read_image_data <- function(path, pattern, recursive = FALSE, ...) {
+read_image_data <- function(
+  path,
+  pattern,
+  recursive = FALSE,
+  template = NULL,
+  ...
+) {
   if (!all(file.exists(path))) {
     cli::cli_abort("Directory {.path {path}} does not exist")
   }
@@ -55,7 +61,8 @@ check_template <- function(files) {
   # fileInput() are random, we assign the csv files vector names from the original
   # filenames, and use those here to find the template
   files <- names(files) %||% files
-  pattern <- ".+Template_(v[0-9]{8}.*)\\.csv$"
+  pattern <- ".+Template_(.+)\\.csv$"
+
   if (!any(grepl(pattern, files))) {
     cli::cli_abort("No recognized Timelapse template in filenames")
   }
@@ -73,12 +80,21 @@ check_template <- function(files) {
                   {.path {dirname(files)[1]}}: {.str {template}}"
     )
   }
-  template
+
+  pkg_templates <- fs::dir_ls(system.file(
+    "extdata",
+    "timelapse-templates",
+    package = "bccamtrap"
+  ))
+
+  template_tdb <- grep(template, pkg_templates, value = TRUE)
+
+  template_tdb
 }
 
 read_one_image_csv <- function(path, template, ...) {
   col_names <- strsplit(readLines(path, n = 1), ",")[[1]]
-  col_spec <- image_file_cols(template, col_names)
+  col_spec <- tdb_to_colspec(template, col_names)
   df <- readr::read_csv(
     path,
     col_types = col_spec,
@@ -123,61 +139,6 @@ reconcile_date_time_fields <- function(df, path) {
   df$Date <- NULL
   df$Time <- NULL
   df
-}
-
-image_file_cols <- function(template, names) {
-  all_col_names <- list(
-    v20230518 = readr::cols(
-      RootFolder = readr::col_character(),
-      Study_Area_Name = readr::col_character(),
-      Sample_Station_Label = readr::col_character(),
-      Deployment_Label = readr::col_character(),
-      Date = readr::col_character(),
-      Time = readr::col_character(),
-      DateTime = readr::col_datetime(),
-      Episode = readr::col_character(),
-      Species = readr::col_character(),
-      Total_Count_Episode = readr::col_double(),
-      Obj_Count_Image = readr::col_integer(),
-      Adult_Male = readr::col_integer(),
-      Adult_Female = readr::col_integer(),
-      Adult_Unclassified_Sex = readr::col_integer(),
-      Yearling_Male = readr::col_integer(),
-      Yearling_Female = readr::col_integer(),
-      Yearling_Unclassified_Sex = readr::col_integer(),
-      Young_of_Year_Unclassified_Sex = readr::col_integer(),
-      Juvenile_Unclassified_Sex = readr::col_integer(),
-      Male_Unclassified_Age = readr::col_integer(),
-      Female_Unclassified_Age = readr::col_integer(),
-      Unclassified_Life_Stage_and_Sex = readr::col_integer(),
-      Antler_Class = readr::col_character(),
-      Animal_Identifiable = readr::col_logical(),
-      Animal_Tagged = readr::col_logical(),
-      Behaviour_1 = readr::col_character(),
-      Behaviour_2 = readr::col_character(),
-      Behaviour_3 = readr::col_character(),
-      Human_Use_Type = readr::col_character(),
-      Human_Transport_Mode = readr::col_character(),
-      Temperature = readr::col_number(),
-      Snow_Depth = readr::col_character(),
-      Lens_Obscured = readr::col_logical(),
-      Starred = readr::col_logical(),
-      Needs_Review = readr::col_logical(),
-      Comment = readr::col_character(),
-      Surveyor = readr::col_character(),
-      Trigger_Mode = readr::col_character(),
-      File = readr::col_character(),
-      RelativePath = readr::col_character(),
-      DeleteFlag = readr::col_logical()
-    )
-  )
-
-  # Get the cols that match the template
-  col_types <- all_col_names[[template]]
-
-  # Subset to match the names in the data
-  col_types$cols <- col_types$cols[intersect(names, names(col_types$cols))]
-  col_types
 }
 
 make_snow_range_cols <- function(x) {
