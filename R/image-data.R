@@ -181,6 +181,10 @@ image_file_cols <- function(template, names) {
 }
 
 make_snow_range_cols <- function(x) {
+  if (!"snow_depth" %in% names(x)) {
+    return(x)
+  }
+
   x <- dplyr::mutate(
     x,
     snow_is_est = grepl("Est", .data$snow_depth),
@@ -242,6 +246,10 @@ bin_snow_depths <- function(x) {
 }
 
 fill_snow_values <- function(x) {
+  if (!"snow_depth" %in% names(x)) {
+    return(x)
+  }
+
   snow_vals <- dplyr::filter(
     x,
     !is.na(.data$snow_depth),
