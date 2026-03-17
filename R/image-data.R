@@ -55,6 +55,7 @@ read_image_data <- function(
   df <- standardize_trigger_mode(df)
   df <- fill_snow_values(df)
   df <- make_snow_range_cols(df)
+  df <- check_add_total_count_episode(df)
 
   as.image_data(df)
 }
@@ -266,4 +267,33 @@ fill_snow_values <- function(x) {
   x$snow_depth[is.na(x$snow_depth)] <- x$snow_depth_src[is.na(x$snow_depth)]
 
   dplyr::select(x, , -"date", -"snow_depth_src")
+}
+
+check_add_total_count_episode <- function(df) {
+  if ("total_count_episode" %in% names(df)) {
+    return(df)
+  }
+
+  cols <- c(
+    "adult_male",
+    "adult_female",
+    "adult_unclassified_sex",
+    "yearling_male",
+    "yearling_female",
+    "yearling_unclassified_sex",
+    "young_of_year_unclassified_sex",
+    "juvenile_unclassified_sex",
+    "male_unclassified_age",
+    "female_unclassified_age",
+    "unclassified_life_stage_and_sex"
+  )
+
+  df |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      total_count_episode = sum(
+        dplyr::c_across(dplyr::any_of(cols)),
+        na.rm = TRUE
+      )
+    )
 }
