@@ -9,10 +9,14 @@ tdb_to_colspec <- function(tdb, col_names = NULL) {
     parse_tdb() |>
     map_tdb_types_to_colspec(names(template_list), warn_missing = FALSE)
 
-  template_list <- utils::modifyList(
-    master_template[intersect(names(master_template), names(template_list))],
-    template_list
-  )
+  # For columns present in both templates, only let the master template
+  # override when the current mapped type is a generic character column.
+  overlapping <- intersect(names(master_template), names(template_list))
+  for (nm in overlapping) {
+    if (inherits(template_list[[nm]], "collector_character")) {
+      template_list[[nm]] <- master_template[[nm]]
+    }
+  }
 
   do.call(readr::cols, template_list)
 }
