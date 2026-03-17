@@ -126,7 +126,7 @@ validate_counts <- function(
 ) {
   x <- dplyr::mutate(
     x,
-    sum_counts = rowSums(dplyr::pick(dplyr::all_of(cols)), na.rm = TRUE),
+    sum_counts = rowSums(dplyr::pick(dplyr::any_of(cols)), na.rm = TRUE),
     QA_sum_counts = is_true_vec(
       .data$sum_counts != .data$total_count_episode |
         .data$sum_counts > 0 & is.na(.data$total_count_episode)
