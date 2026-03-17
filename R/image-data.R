@@ -57,7 +57,7 @@ read_image_data <- function(
   df <- make_snow_range_cols(df)
   df <- check_add_total_count_episode(df)
 
-  as.image_data(df)
+  as.image_data(df, template = basename(template))
 }
 
 check_template <- function(files, template = NULL) {
