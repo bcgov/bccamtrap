@@ -85,6 +85,10 @@ test_that("manually supplied template works", {
   result <- read_image_data(f, template = template_path)
 })
 
+test_that("invalid template errors correctly", {
+  expect_snapshot(check_template("Template_5.csv"), error = TRUE)
+})
+
 test_that("bin_snow_depths() works", {
   expect_equal(
     bin_snow_depths(c(

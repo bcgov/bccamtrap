@@ -71,25 +71,25 @@ check_template <- function(files) {
   }
 
   templates <- gsub(pattern, "\\1", files)
-  template <- unique(templates)
+  templates <- unique(templates)
 
-  if (length(template) == 0) {
-    cli::cli_warn("Unrecognized Timelapse template in filenames")
-  }
-
-  if (length(template) > 1) {
+  if (length(templates) > 1) {
     # use the one with the latest version number
-    template <- sort(template)[length(template)]
+    template <- sort(templates)[length(templates)]
     cli::cli_warn(
       "More than one image labelling template found in
-                  {.path {dirname(files)[1]}}: {.str {template}}. 
-                  Using {.path {template}}."
+      {.path {dirname(files)[1]}}: {.str {templates}}. 
+      Using {.path {template}}."
     )
   }
 
   pkg_templates <- get_package_templates()
 
   template_tdb <- grep(template, pkg_templates, value = TRUE)
+
+  if (length(template_tdb) == 0) {
+    cli::cli_abort("Unrecognized Timelapse template in filenames")
+  }
 
   template_tdb[length(template_tdb)]
 }

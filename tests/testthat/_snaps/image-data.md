@@ -479,3 +479,11 @@
         <chr>      <dttm>              <chr>    
       1 /root      2023-01-01 12:00:00 foo      
 
+# invalid template errors correctly
+
+    Code
+      check_template("Template_5.csv")
+    Condition
+      Error in `check_template()`:
+      ! No recognized Timelapse template in filenames
+
