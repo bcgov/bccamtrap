@@ -71,7 +71,7 @@ test_that("manually supplied template works", {
   f <- withr::local_tempfile(fileext = ".csv")
   writeLines(
     c(
-      "StudyAreaName,DeploymentLabel,DateTime,Temperature,Adult_Female",
+      "Study_Area_Name,Deployment_Label,DateTime,Temperature,Adult_Female",
       "A,Dep123,2023-01-01 12:00:00,16,5"
     ),
     f

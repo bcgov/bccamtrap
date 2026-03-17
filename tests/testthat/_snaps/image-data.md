@@ -472,7 +472,7 @@
       read_one_image_csv(f, master_template_path())
     Condition
       Warning:
-      The following columns are in the data but not in the template: "RootFolder" and "Extra_Col". They will be read as character types; please cast to the appropriate type if necessary.
+      The following columns are in the data but not in the template: "Extra_Col". They will be read as character types; please cast to the appropriate type if necessary.
     Output
       # A tibble: 1 x 3
         RootFolder DateTime            Extra_Col

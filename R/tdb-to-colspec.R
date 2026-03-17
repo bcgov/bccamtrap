@@ -80,10 +80,14 @@ map_tdb_types_to_colspec <- function(
 
     if (length(missing_cols) > 0) {
       if (warn_missing) {
-        cli::cli_warn(
-          "The following columns are in the data but not in the template: {.str {missing_cols}}. They will be read as character types; please cast to the appropriate type if necessary.",
-          class = "tdb_colspec_warning"
-        )
+        ok_missing_cols <- c("RootFolder", "Date", "Time")
+        warn_cols <- setdiff(missing_cols, ok_missing_cols)
+        if (length(warn_cols) > 0) {
+          cli::cli_warn(
+            "The following columns are in the data but not in the template: {.str {warn_cols}}.
+            They will be read as character types; please cast to the appropriate type if necessary.",
+          )
+        }
       }
 
       for (col in missing_cols) {
