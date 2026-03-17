@@ -464,7 +464,7 @@
       read_image_data("foofydir")
     Condition
       Error in `read_image_data()`:
-      ! Directory 'foofydir' does not exist
+      ! Path(s) 'foofydir' do not exist
 
 # read_one_image_csv() warns when file has extra named columns
 
