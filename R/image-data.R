@@ -34,7 +34,7 @@ read_image_data <- function(
   ...
 ) {
   if (!all(file.exists(path))) {
-    cli::cli_abort("Directory {.path {path}} does not exist")
+    cli::cli_abort("Path(s) {.path {path}} do not exist")
   }
 
   if (!any(grepl("\\.csv$", path))) {
@@ -106,7 +106,7 @@ check_template <- function(files, template = NULL) {
 
   pkg_templates <- get_package_templates()
 
-  template_tdb <- grep(template, pkg_templates, value = TRUE)
+  template_tdb <- grep(template, pkg_templates, value = TRUE, fixed = TRUE)
 
   if (length(template_tdb) == 0) {
     cli::cli_abort("Unrecognized Timelapse template in filenames")
@@ -279,7 +279,7 @@ fill_snow_values <- function(x) {
 
   x$snow_depth[is.na(x$snow_depth)] <- x$snow_depth_src[is.na(x$snow_depth)]
 
-  dplyr::select(x, , -"date", -"snow_depth_src")
+  dplyr::select(x, -"date", -"snow_depth_src")
 }
 
 check_add_total_count_episode <- function(df) {
