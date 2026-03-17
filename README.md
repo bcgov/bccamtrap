@@ -343,10 +343,9 @@ image_data
 
 **2. Interactive picklist**
 
-If your filenames don’t contain a template identifier (e.g. the files
-were uploaded via the Shiny app and renamed), `read_image_data()` will
-present an interactive menu of the bundled templates to choose from when
-run in an interactive R session:
+If your filenames don’t contain a template identifier,
+`read_image_data()` will present an interactive menu of the bundled
+templates to choose from when run in an interactive R session:
 
 ``` r
 image_data <- read_image_data(data_path)
