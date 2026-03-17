@@ -331,12 +331,6 @@ clean_timelapse_video_data <- function(df) {
   df |>
     dplyr::mutate(file_type = file_ext) |>
     dplyr::filter(
-      # Take out rows where the file is not a video and trigger mode is time lapse
-      # !(file_type == "image" &
-      #   .data$trigger_mode == "Time Lapse"),
-      # Take out rows where the file is not a video and episode is NA
-      # !(file_type == "image" &
-      #   is.na(.data$episode))
       (.data$file_type == "video" & !is.na(.data$episode)) |
         .data$trigger_mode == "Time Lapse"
     ) |>
