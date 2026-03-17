@@ -2,7 +2,15 @@
 #'
 #' In addition to reading in the data, this function copies snow depth data
 #' from the timelapse photo for each day into the motion photos for that day,
-#' to facilitate analysis.
+#' to facilitate analysis. It also does basic standardization of trigger mode values,
+#' creates numeric snow depth columns, and checks for the presence of a
+#' total_count_episode column, adding one if missing. If the data has separate
+#' Date and Time columns instead of a combined DateTime column,
+#' these will be reconciled into a single DateTime column. All column names are
+#' standardized to snake_case.
+#'
+#' For wallow data, this also removes static images (both timelapse and motion activated),
+#' and only keeps the video records.
 #'
 #' @param path path to directory of image files, a single .csv file, or a character
 #'   vector of .csv files.
@@ -14,7 +22,9 @@
 #' based on the file names in `path`.
 #' @param ... arguments passed on to [readr::read_csv()]
 #'
-#' @return a `data.frame` of Timelapse image data from the files found in `path`
+#' @return a `data.frame` of Timelapse image data from the files found in `path`.
+#' The data.frame will have an "image_data" class, and an attribute "template"
+#' with the name of the template used to read the data.
 #' @export
 read_image_data <- function(
   path,
