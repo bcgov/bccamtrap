@@ -89,7 +89,7 @@ map_tdb_types_to_colspec <- function(
         if (length(warn_cols) > 0) {
           cli::cli_warn(
             "The following columns are in the data but not in the template: {.str {warn_cols}}.
-            They will be read as character types; please cast to the appropriate type if necessary.",
+            They will be read as character types; please cast to the appropriate type if necessary."
           )
         }
       }
