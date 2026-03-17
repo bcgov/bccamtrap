@@ -52,6 +52,7 @@ read_image_data <- function(
   df <- janitor::clean_names(df)
   df <- dplyr::relocate(df, "date_time", .after = "deployment_label")
 
+  df <- clean_timelapse_video_data(df)
   df <- standardize_trigger_mode(df)
   df <- fill_snow_values(df)
   df <- make_snow_range_cols(df)
@@ -224,7 +225,9 @@ standardize_trigger_mode <- function(x) {
     x$trigger_mode == "T" ~ "Time Lapse",
     .default = x$trigger_mode
   )
-  if (!all(x$trigger_mode %in% c("Motion Detection", "Time Lapse"))) {
+  if (
+    !all(x$trigger_mode %in% c("Motion Detection", "Time Lapse", NA_character_))
+  ) {
     cli::cli_abort(
       "Unexpected values found in {.var trigger_mode} column."
     )
@@ -274,7 +277,19 @@ check_add_total_count_episode <- function(df) {
     return(df)
   }
 
-  cols <- c(
+  df |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      total_count_episode = sum(
+        dplyr::c_across(dplyr::any_of(animal_count_cols())),
+        na.rm = TRUE
+      )
+    ) |>
+    dplyr::ungroup()
+}
+
+animal_count_cols <- function() {
+  c(
     "adult_male",
     "adult_female",
     "adult_unclassified_sex",
@@ -287,13 +302,33 @@ check_add_total_count_episode <- function(df) {
     "female_unclassified_age",
     "unclassified_life_stage_and_sex"
   )
+}
+
+clean_timelapse_video_data <- function(df) {
+  file_ext <- tolower(tools::file_ext(df$file))
+  if (length(unique(file_ext)) %in% 0:1 && !anyNA(df$trigger_mode)) {
+    # should be just videos, not blank lines where trigger mode
+    return(df)
+  }
 
   df |>
-    dplyr::rowwise() |>
+    dplyr::mutate(file_ext = file_ext) |>
+    dplyr::filter(
+      # Take out rows where the file is not a video and trigger mode is time lapse
+      !(tolower(.data$file_ext) %in%
+        c("jpg", "jpeg", "png") &
+        .data$trigger_mode == "Time Lapse"),
+      # Take out rows where the file is not a video and episode is NA
+      !(tolower(.data$file_ext) %in%
+        c("jpg", "jpeg", "png") &
+        is.na(.data$episode))
+    ) |>
     dplyr::mutate(
-      total_count_episode = sum(
-        dplyr::c_across(dplyr::any_of(cols)),
-        na.rm = TRUE
+      trigger_mode = ifelse(
+        is.na(.data$trigger_mode),
+        "Motion Detection",
+        .data$trigger_mode
       )
-    )
+    ) |>
+    dplyr::select(-"file_ext")
 }

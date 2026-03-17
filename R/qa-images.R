@@ -109,19 +109,7 @@ find_unmatched <- function(x, y, z, exclude_human_use) {
 
 validate_counts <- function(
   x,
-  cols = c(
-    "adult_male",
-    "adult_female",
-    "adult_unclassified_sex",
-    "yearling_male",
-    "yearling_female",
-    "yearling_unclassified_sex",
-    "young_of_year_unclassified_sex",
-    "juvenile_unclassified_sex",
-    "male_unclassified_age",
-    "female_unclassified_age",
-    "unclassified_life_stage_and_sex"
-  ),
+  cols = animal_count_cols(),
   exclude_human_use
 ) {
   x <- dplyr::mutate(
