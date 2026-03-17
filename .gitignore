@@ -7,3 +7,6 @@
 .Rprofile
 docs
 .claude
+
+/.quarto/
+**/*.quarto_ipynb
