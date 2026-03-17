@@ -316,21 +316,26 @@ animal_count_cols <- function() {
 
 clean_timelapse_video_data <- function(df) {
   file_ext <- tolower(tools::file_ext(df$file))
+
+  img_file_types <- c("jpg", "jpeg", "png")
+  video_file_types <- c("mp4", "avi", "mov", "mkv", "wmv")
+
+  file_ext[file_ext %in% img_file_types] <- "image"
+  file_ext[file_ext %in% video_file_types] <- "video"
+
   if (length(unique(file_ext)) %in% 0:1 && !anyNA(df$trigger_mode)) {
     # should be just videos, not blank lines where trigger mode
     return(df)
   }
 
   df |>
-    dplyr::mutate(file_ext = file_ext) |>
+    dplyr::mutate(file_type = file_ext) |>
     dplyr::filter(
       # Take out rows where the file is not a video and trigger mode is time lapse
-      !(tolower(.data$file_ext) %in%
-        c("jpg", "jpeg", "png") &
+      !(file_type == "image" &
         .data$trigger_mode == "Time Lapse"),
       # Take out rows where the file is not a video and episode is NA
-      !(tolower(.data$file_ext) %in%
-        c("jpg", "jpeg", "png") &
+      !(file_type == "image" &
         is.na(.data$episode))
     ) |>
     dplyr::mutate(
@@ -340,5 +345,5 @@ clean_timelapse_video_data <- function(df) {
         .data$trigger_mode
       )
     ) |>
-    dplyr::select(-"file_ext")
+    dplyr::select(-"file_type")
 }
