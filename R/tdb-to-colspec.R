@@ -118,8 +118,7 @@ get_package_templates <- function() {
 master_template_path <- function() {
   templates <- get_package_templates()
   templates[
-    basename(templates) ==
-      "!RISC_WCR_MasterTemplateFieldPicklist_DONOTEDIT_20250109.tdb"
+    basename(templates) == "RISC_WCR_MasterTemplateFieldPicklist_20250109.tdb"
   ]
 }
 

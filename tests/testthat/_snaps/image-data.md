@@ -487,3 +487,11 @@
       Error in `check_template()`:
       ! No recognized Timelapse template in filenames
 
+# interactive template menu with no selection errors
+
+    Code
+      check_template("no_template_in_name.csv")
+    Condition
+      Error in `choose_package_template()`:
+      ! No template selected
+

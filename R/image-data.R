@@ -74,6 +74,9 @@ check_template <- function(files, template = NULL) {
   pattern <- ".+Template_(.+)\\.csv$"
 
   if (!any(grepl(pattern, files))) {
+    if (rlang::is_interactive()) {
+      return(choose_package_template())
+    }
     cli::cli_abort("No recognized Timelapse template in filenames")
   }
 
@@ -98,6 +101,28 @@ check_template <- function(files, template = NULL) {
   }
 
   template_tdb[length(template_tdb)]
+}
+
+choose_package_template <- function(error_call = rlang::caller_env()) {
+  pkg_templates <- get_package_templates()
+  # Exclude the master picklist, which is not a labelling template
+  pkg_templates <- pkg_templates[
+    !grepl("MasterTemplateFieldPicklist", basename(pkg_templates))
+  ]
+
+  names <- tools::file_path_sans_ext(basename(pkg_templates))
+  title <- cli::format_inline(
+    "No Timelapse template found in filenames. Which template do you want to use? (0 to exit)"
+  )
+  choice <- utils::menu(
+    choices = cli::style_bold(names),
+    title = title
+  )
+  if (choice == 0L) {
+    cli::cli_abort("No template selected", call = error_call)
+  }
+
+  pkg_templates[[choice]]
 }
 
 read_one_image_csv <- function(path, template, ...) {

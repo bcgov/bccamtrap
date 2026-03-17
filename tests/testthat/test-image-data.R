@@ -89,6 +89,28 @@ test_that("invalid template errors correctly", {
   expect_snapshot(check_template("Template_5.csv"), error = TRUE)
 })
 
+test_that("interactive template menu returns selected template", {
+  pkg_templates <- get_package_templates()
+  pkg_templates <- pkg_templates[
+    !grepl("MasterTemplateFieldPicklist", basename(pkg_templates))
+  ]
+  local_mocked_bindings(
+    choose_package_template = function(...) pkg_templates[[1]]
+  )
+  withr::local_options(rlang_interactive = TRUE)
+  expect_equal(check_template("no_template_in_name.csv"), pkg_templates[[1]])
+})
+
+test_that("interactive template menu with no selection errors", {
+  local_mocked_bindings(
+    choose_package_template = function(...) {
+      cli::cli_abort("No template selected")
+    }
+  )
+  withr::local_options(rlang_interactive = TRUE)
+  expect_snapshot(check_template("no_template_in_name.csv"), error = TRUE)
+})
+
 test_that("bin_snow_depths() works", {
   expect_equal(
     bin_snow_depths(c(
