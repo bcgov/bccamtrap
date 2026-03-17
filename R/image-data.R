@@ -87,15 +87,7 @@ check_template <- function(files) {
     )
   }
 
-  pkg_templates <- list.files(
-    system.file(
-      "extdata",
-      "timelapse-templates",
-      package = "bccamtrap"
-    ),
-    pattern = "\\.tdb$",
-    full.names = TRUE
-  )
+  pkg_templates <- get_package_templates()
 
   template_tdb <- grep(template, pkg_templates, value = TRUE)
 

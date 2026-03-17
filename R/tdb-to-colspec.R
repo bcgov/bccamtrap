@@ -103,13 +103,24 @@ map_tdb_types_to_colspec <- function(
   override_types(col_spec_list)
 }
 
-master_template_path <- function() {
-  system.file(
-    "extdata",
-    "timelapse-templates",
-    "!RISC_WCR_MasterTemplateFieldPicklist_DONOTEDIT_20250109.tdb",
-    package = "bccamtrap"
+get_package_templates <- function() {
+  list.files(
+    system.file(
+      "extdata",
+      "timelapse-templates",
+      package = "bccamtrap"
+    ),
+    pattern = "\\.tdb$",
+    full.names = TRUE
   )
+}
+
+master_template_path <- function() {
+  templates <- get_package_templates()
+  templates[
+    basename(templates) ==
+      "!RISC_WCR_MasterTemplateFieldPicklist_DONOTEDIT_20250109.tdb"
+  ]
 }
 
 override_types <- function(col_spec_list) {
