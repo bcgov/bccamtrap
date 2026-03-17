@@ -44,7 +44,7 @@ read_image_data <- function(
     cli::cli_abort("No appropriate files found in {.path {path}}")
   }
 
-  template <- template %||% check_template(path)
+  template <- check_template(path, template)
 
   df_list <- lapply(path, read_one_image_csv, template = template, ...)
 
@@ -59,7 +59,14 @@ read_image_data <- function(
   as.image_data(df)
 }
 
-check_template <- function(files) {
+check_template <- function(files, template = NULL) {
+  if (!is.null(template)) {
+    if (!file.exists(template)) {
+      cli::cli_abort("Provided template {.path {template}} does not exist")
+    }
+    return(template)
+  }
+
   # This is an escape hatch for shiny - since the file names assigned from
   # fileInput() are random, we assign the csv files vector names from the original
   # filenames, and use those here to find the template
@@ -70,12 +77,11 @@ check_template <- function(files) {
     cli::cli_abort("No recognized Timelapse template in filenames")
   }
 
-  templates <- gsub(pattern, "\\1", files)
-  templates <- unique(templates)
+  templates <- unique(gsub(pattern, "\\1", files))
+  template <- sort(templates)[length(templates)]
 
   if (length(templates) > 1) {
     # use the one with the latest version number
-    template <- sort(templates)[length(templates)]
     cli::cli_warn(
       "More than one image labelling template found in
       {.path {dirname(files)[1]}}: {.str {templates}}. 
