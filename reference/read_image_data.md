@@ -1,13 +1,12 @@
 # Read image data from a collection of csvs from TimeLapse
 
-In addition to reading in the data, this function copies snow depth data
-from the timelapse photo for each day into the motion photos for that
-day, to facilitate analysis. It also does basic standardization of
-trigger mode values, creates numeric snow depth columns, and checks for
-the presence of a total_count_episode column, adding one if missing. If
-the data has separate Date and Time columns instead of a combined
-DateTime column, these will be reconciled into a single DateTime column.
-All column names are standardized to snake_case.
+This function reads in image data from a directory of csv files, or a
+character vector of csv file paths. It attempts to identify the
+appropriate TimeLapse template to use based on the file names, but a
+specific template can also be provided. The function does some basic
+standardization and cleaning of the data, and returns a data.frame with
+an "image_data" class and an attribute "template" with the name of the
+template used to read the data.
 
 ## Usage
 
@@ -50,5 +49,21 @@ The data.frame will have an "image_data" class, and an attribute
 
 ## Details
 
-For wallow data, this also removes static images (both timelapse and
-motion activated), and only keeps the video records.
+In addition to reading in the data, this function also:
+
+- does basic standardization of trigger mode values,
+
+- creates numeric snow depth columns,
+
+- checks for the presence of a `total_count_episode` column, adding one
+  if missing,
+
+- standardizes column names to snake_case.
+
+- If the data has separate `Date` and `Time` columns instead of a
+  combined `DateTime` column, these will be reconciled into a single
+  `DateTime` column.
+
+For wallow data, this also removes motion-activated static images, and
+only keeps the motion-activated video records and the time-lapse static
+image records.
