@@ -4,7 +4,7 @@
 \alias{read_image_data}
 \title{Read image data from a collection of csvs from TimeLapse}
 \usage{
-read_image_data(path, pattern, recursive = FALSE, ...)
+read_image_data(path, pattern, recursive = FALSE, template = NULL, ...)
 }
 \arguments{
 \item{path}{path to directory of image files, a single .csv file, or a character
@@ -15,13 +15,28 @@ the regular expression will read. Default \code{FALSE}.}
 
 \item{recursive}{should files found within subfolders of \code{path} also be read?}
 
+\item{template}{path to a "\code{.tdb}" TimeLapse Template file. Optional; if not provided,
+the function will attempt to identify the appropriate internal template
+based on the file names in \code{path}.}
+
 \item{...}{arguments passed on to \code{\link[readr:read_delim]{readr::read_csv()}}}
 }
 \value{
-a \code{data.frame} of Timelapse image data from the files found in \code{path}
+a \code{data.frame} of Timelapse image data from the files found in \code{path}.
+The data.frame will have an "image_data" class, and an attribute "template"
+with the name of the template used to read the data.
 }
 \description{
 In addition to reading in the data, this function copies snow depth data
 from the timelapse photo for each day into the motion photos for that day,
-to facilitate analysis.
+to facilitate analysis. It also does basic standardization of trigger mode values,
+creates numeric snow depth columns, and checks for the presence of a
+total_count_episode column, adding one if missing. If the data has separate
+Date and Time columns instead of a combined DateTime column,
+these will be reconciled into a single DateTime column. All column names are
+standardized to snake_case.
+}
+\details{
+For wallow data, this also removes static images (both timelapse and motion activated),
+and only keeps the video records.
 }

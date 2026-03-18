@@ -14,17 +14,19 @@ URL: https://github.com/bcgov/bccamtrap,
     https://bcgov.github.io/bccamtrap/
 BugReports: https://github.com/bcgov/bccamtrap/issues
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1.0)
 Imports: 
     bcmaps (>= 2.2.0),
     bslib,
     cli,
+    DBI,
     dplyr,
     ggiraph,
     ggplot2,
     glue,
     gt,
     janitor,
+    jsonlite,
     leaflet,
     lubridate,
     mapview,
@@ -33,6 +35,7 @@ Imports:
     readr,
     readxl,
     rlang (>= 1.1.0),
+    RSQLite,
     sf,
     shiny,
     shinycssloaders,
@@ -40,12 +43,9 @@ Imports:
     withr,
     zoo
 Suggests: 
-    DBI,
     googledrive,
-    jsonlite,
-    RSQLite,
-    testthat (>= 3.0.0),
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3

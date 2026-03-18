@@ -22,8 +22,13 @@ as.deployments <- function(x, subclass, ...) {
   )
 }
 
-as.image_data <- function(x, ...) {
-  structure(x, class = c("image_data", class(x)), ...)
+as.image_data <- function(x, template, ...) {
+  structure(
+    x,
+    class = c("image_data", class(x)),
+    template = template,
+    ...
+  )
 }
 
 as.sample_sessions <- function(x, ...) {

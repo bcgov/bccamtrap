@@ -201,7 +201,7 @@
                   3371             1740 
     Message
       i 71 images with lens obscured.
-      i 0 images starred.
+      i 14 images starred.
       ! 0 images flagged for review.
       i Dates are between 2022-11-28 and 2023-05-17.
       i Temperatures are between -14 and 27 C.
@@ -238,7 +238,7 @@
                   8657             3176 
     Message
       i 117 images with lens obscured.
-      i 4 images starred.
+      i 25 images starred.
       ! 4 images flagged for review.
       i Dates are between 2022-11-07 and 2023-07-10.
       i Temperatures are between -10 and 37 C.

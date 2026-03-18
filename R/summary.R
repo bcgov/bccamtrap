@@ -98,35 +98,51 @@ summary.image_data <- function(object, ...) {
     "{.val {length(unique(object$sample_station_label))}} sample stations."
   ))
 
-  cli::cli_alert_info("Image counts by trigger mode:")
-  table_print_helper(object$trigger_mode)
+  if ("trigger_mode" %in% names(object)) {
+    cli::cli_alert_info("Image counts by trigger mode:")
+    table_print_helper(object$trigger_mode)
+  }
 
-  cli::cli_alert_info(
-    "{.val {sum(object$lens_obscured, na.rm = TRUE)}} images with lens obscured."
-  )
+  if ("lens_obscured" %in% names(object)) {
+    cli::cli_alert_info(
+      "{.val {sum(object$lens_obscured, na.rm = TRUE)}} images with lens obscured."
+    )
+  }
 
-  cli::cli_alert_info(
-    "{.val {sum(object$needs_review, na.rm = TRUE)}} images starred."
-  )
+  if ("starred" %in% names(object)) {
+    cli::cli_alert_info(
+      "{.val {sum(object$starred, na.rm = TRUE)}} images starred."
+    )
+  }
 
-  cli::cli_alert_warning(
-    "{.val {sum(object$needs_review, na.rm = TRUE)}} images flagged for review."
-  )
+  if ("needs_review" %in% names(object)) {
+    cli::cli_alert_warning(
+      "{.val {sum(object$needs_review, na.rm = TRUE)}} images flagged for review."
+    )
+  }
 
-  cli::cli_alert_info(
-    "Dates are between {.val {range(as.Date(object$date_time), na.rm = TRUE)}}."
-  )
+  if ("date_time" %in% names(object)) {
+    cli::cli_alert_info(
+      "Dates are between {.val {range(as.Date(object$date_time), na.rm = TRUE)}}."
+    )
+  }
 
-  cli::cli_alert_info(
-    "Temperatures are between {.val {range(object$temperature, na.rm = TRUE)}} C."
-  )
+  if ("temperature" %in% names(object)) {
+    cli::cli_alert_info(
+      "Temperatures are between {.val {range(object$temperature, na.rm = TRUE)}} C."
+    )
+  }
 
-  cli::cli_alert_info(
-    "Snow depths are between {.val {range(object$snow_depth_lower, na.rm = TRUE)}} cm."
-  )
+  if ("snow_depth_lower" %in% names(object)) {
+    cli::cli_alert_info(
+      "Snow depths are between {.val {range(object$snow_depth_lower, na.rm = TRUE)}} cm."
+    )
+  }
 
-  cli::cli_alert_info("Species counts:")
-  table_print_helper(object$species)
+  if ("species" %in% names(object)) {
+    cli::cli_alert_info("Species counts:")
+    table_print_helper(object$species)
+  }
 
   cli::cat_line("")
   cli::cli_alert_warning(

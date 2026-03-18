@@ -1,6 +1,7 @@
 test_that("read_image_data() works", {
   imgs_1 <- read_image_data(test_dir_1)
   imgs_2 <- read_image_data(test_dir_2)
+
   expect_s3_class(imgs_1, c("image_data", "tbl"))
   expect_s3_class(imgs_2, c("image_data", "tbl"))
   expect_equal(ncol(imgs_1), 43)
@@ -25,15 +26,89 @@ test_that("read_image_data() fails appropriately", {
   expect_error(read_image_data(dir))
 })
 
-test_that("check_template() works", {
-  files <- "dirname/123_Template_v12345678.csv"
-  expect_equal(check_template(files), "v12345678")
-  files <- c(
-    files,
-    "dirname/f123_Template_v87654321.csv"
+test_that("read_one_image_csv() warns when file has extra named columns", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "RootFolder,DateTime,Extra_Col",
+      "/root,2023-01-01 12:00:00,foo"
+    ),
+    f
   )
-  expect_snapshot(check_template(files))
-  expect_snapshot(check_template("temp_foobar.csv"), error = TRUE)
+  expect_snapshot(
+    read_one_image_csv(f, master_template_path()),
+    transform = \(x) gsub(f, "<tempfile>", x, fixed = TRUE)
+  )
+})
+
+test_that("read_one_image_csv() retains extra named columns in output", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "RootFolder,DateTime,Extra_Col",
+      "/root,2023-01-01 12:00:00,foo"
+    ),
+    f
+  )
+  result <- suppressWarnings(read_one_image_csv(f, master_template_path()))
+  expect_contains(names(result), "Extra_Col")
+})
+
+test_that("read_one_image_csv() silently drops empty unnamed columns (trailing commas)", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "RootFolder,DateTime,",
+      "/root,2023-01-01 12:00:00,"
+    ),
+    f
+  )
+  result <- read_one_image_csv(f, master_template_path())
+  expect_equal(names(result), c("RootFolder", "DateTime"))
+})
+
+test_that("manually supplied template works", {
+  f <- withr::local_tempfile(fileext = ".csv")
+  writeLines(
+    c(
+      "Study_Area_Name,Deployment_Label,DateTime,Temperature,Adult_Female",
+      "A,Dep123,2023-01-01 12:00:00,16,5"
+    ),
+    f
+  )
+  template_path <- system.file(
+    "extdata",
+    "timelapse-templates",
+    "TimelapseTemplate_Elk_Wallows_v1.tdb",
+    package = "bccamtrap"
+  )
+  result <- read_image_data(f, template = template_path)
+})
+
+test_that("invalid template errors correctly", {
+  expect_snapshot(check_template("Template_5.csv"), error = TRUE)
+})
+
+test_that("interactive template menu returns selected template", {
+  pkg_templates <- get_package_templates()
+  pkg_templates <- pkg_templates[
+    !grepl("MasterTemplateFieldPicklist", basename(pkg_templates))
+  ]
+  local_mocked_bindings(
+    choose_package_template = function(...) pkg_templates[[1]]
+  )
+  withr::local_options(rlang_interactive = TRUE)
+  expect_equal(check_template("no_template_in_name.csv"), pkg_templates[[1]])
+})
+
+test_that("interactive template menu with no selection errors", {
+  local_mocked_bindings(
+    choose_package_template = function(...) {
+      cli::cli_abort("No template selected")
+    }
+  )
+  withr::local_options(rlang_interactive = TRUE)
+  expect_snapshot(check_template("no_template_in_name.csv"), error = TRUE)
 })
 
 test_that("bin_snow_depths() works", {

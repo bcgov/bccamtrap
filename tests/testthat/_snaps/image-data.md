@@ -48,7 +48,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["numeric"]
+          "value": ["integer"]
         },
         {
           "type": "character",
@@ -278,7 +278,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["numeric"]
+          "value": ["integer"]
         },
         {
           "type": "character",
@@ -464,23 +464,34 @@
       read_image_data("foofydir")
     Condition
       Error in `read_image_data()`:
-      ! Directory 'foofydir' does not exist
+      ! Path(s) 'foofydir' do not exist
 
-# check_template() works
+# read_one_image_csv() warns when file has extra named columns
 
     Code
-      check_template(files)
+      read_one_image_csv(f, master_template_path())
     Condition
       Warning:
-      More than one image labelling template found in 'dirname': "v12345678" and "v87654321"
+      The following columns are in the data but not in the template: "Extra_Col". They will be read as character types; please cast to the appropriate type if necessary.
     Output
-      [1] "v12345678" "v87654321"
+      # A tibble: 1 x 3
+        RootFolder DateTime            Extra_Col
+        <chr>      <dttm>              <chr>    
+      1 /root      2023-01-01 12:00:00 foo      
 
----
+# invalid template errors correctly
 
     Code
-      check_template("temp_foobar.csv")
+      check_template("Template_5.csv")
     Condition
       Error in `check_template()`:
       ! No recognized Timelapse template in filenames
+
+# interactive template menu with no selection errors
+
+    Code
+      check_template("no_template_in_name.csv")
+    Condition
+      Error in `choose_package_template()`:
+      ! No template selected
 

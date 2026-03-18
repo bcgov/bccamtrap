@@ -678,7 +678,7 @@
       10 McKay Lake      D3                   D3_20230517      2022-11-28       
       11 McKay Lake      D5                   D5_20230517      2022-12-16       
       # i 11 more variables: sample_end_date <date>, n_photos <int>,
-      #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
+      #   n_photos_spp_id <int>, n_species <int>, n_individuals <int>,
       #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
       #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
       #   trap_days <int>
@@ -703,7 +703,7 @@
       10 McKay Lake      D3                   D3_20230517      2022-12-16       
       11 McKay Lake      D5                   D5_20230517      2022-12-16       
       # i 11 more variables: sample_end_date <date>, n_photos <int>,
-      #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
+      #   n_photos_spp_id <int>, n_species <int>, n_individuals <int>,
       #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
       #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
       #   trap_days <int>
@@ -734,7 +734,7 @@
       16 Taylor River    31                   31_20230605      2023-01-25       
       17 Taylor River    35                   35_20230708      2022-11-18       
       # i 11 more variables: sample_end_date <date>, n_photos <int>,
-      #   n_photos_spp_id <int>, n_species <int>, n_individuals <dbl>,
+      #   n_photos_spp_id <int>, n_species <int>, n_individuals <int>,
       #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
       #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
       #   trap_days <int>

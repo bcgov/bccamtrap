@@ -13,3 +13,4 @@
 ^bccamtrap\.code-workspace$
 ^[.]?air[.]toml$
 ^\.vscode$
+^\.claude$

@@ -281,13 +281,52 @@ deployments <- read_deployments_csv("path-to-deployments.csv")
 
 ### Image data
 
-We can read in an entire directory of image data from multiple csv files, as long
-as they all follow the same TimeLapse template. Currently it is expected that
-they follow the `v20230518` template.
+Read in an entire directory of image data from multiple csv files using
+`read_image_data()`. The function needs to know which TimeLapse template
+was used to label the images so it can parse the columns correctly. There
+are three ways to specify the template:
+
+**1. Template name in the filenames (default)**
+
+If your csv filenames contain a TimeLapse template identifier - for example
+`Camera01_Template_Ungulate_General_v2.csv` - `read_image_data()` will detect
+it automatically and select the matching bundled template:
 
 ```{r}
 #| eval: false
 image_data <- read_image_data(data_path)
+image_data
+```
+
+**2. Interactive picklist**
+
+If your filenames don't contain a template identifier, `read_image_data()` will present an
+interactive menu of the bundled templates to choose from when run in an
+interactive R session:
+
+```r
+image_data <- read_image_data(data_path)
+#> No Timelapse template found in filenames. Which template do you want to use? (0 to exit)
+#>
+#> 1: RISC_WCR_ImageLabelling_Template_v20230518.1
+#> 2: RISC_WCR_ImageLabelling_Template_v20230518.2
+#> 3: TimelapseTemplate_Elk_Migration_v1
+#> 4: TimelapseTemplate_Elk_Wallows_v1
+#> 5: TimelapseTemplate_Ungulate_General_v1
+#> 6: TimelapseTemplate_Ungulate_General_v2
+#>
+#> Selection:
+```
+
+**3. Supply a template file directly**
+
+Pass the path to any `.tdb` TimeLapse template file via the `template` argument.
+This is useful when working with a custom or newer template not yet bundled with
+the package:
+
+```{r}
+#| eval: false
+image_data <- read_image_data(data_path, template = "path/to/MyTemplate.tdb")
 image_data
 ```
 

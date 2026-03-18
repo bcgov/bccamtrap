@@ -66,12 +66,16 @@ qa_image_data <- function(
     dplyr::if_any(dplyr::starts_with("QA"))
   )
 
+  # Identify QA_ columns that are all FALSE (no issues flagged)
   # and drop QA columns with no issues
-  dplyr::select(
-    out,
-    dplyr::everything(),
-    -(dplyr::starts_with("QA_") & dplyr::where(~ is.logical(.x) && !any(.x)))
-  )
+  qa_cols <- grep("^QA_", names(out), value = TRUE)
+  empty_qa_cols <- qa_cols[vapply(
+    out[qa_cols],
+    \(x) is.logical(x) && !any(x, na.rm = TRUE),
+    logical(1)
+  )]
+
+  dplyr::select(out, -dplyr::any_of(empty_qa_cols))
 }
 
 find_blanks <- function(x) {
@@ -105,24 +109,12 @@ find_unmatched <- function(x, y, z, exclude_human_use) {
 
 validate_counts <- function(
   x,
-  cols = c(
-    "adult_male",
-    "adult_female",
-    "adult_unclassified_sex",
-    "yearling_male",
-    "yearling_female",
-    "yearling_unclassified_sex",
-    "young_of_year_unclassified_sex",
-    "juvenile_unclassified_sex",
-    "male_unclassified_age",
-    "female_unclassified_age",
-    "unclassified_life_stage_and_sex"
-  ),
+  cols = animal_count_cols(),
   exclude_human_use
 ) {
   x <- dplyr::mutate(
     x,
-    sum_counts = rowSums(dplyr::pick(dplyr::all_of(cols)), na.rm = TRUE),
+    sum_counts = rowSums(dplyr::pick(dplyr::any_of(cols)), na.rm = TRUE),
     QA_sum_counts = is_true_vec(
       .data$sum_counts != .data$total_count_episode |
         .data$sum_counts > 0 & is.na(.data$total_count_episode)
