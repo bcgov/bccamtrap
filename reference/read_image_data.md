@@ -2,12 +2,17 @@
 
 In addition to reading in the data, this function copies snow depth data
 from the timelapse photo for each day into the motion photos for that
-day, to facilitate analysis.
+day, to facilitate analysis. It also does basic standardization of
+trigger mode values, creates numeric snow depth columns, and checks for
+the presence of a total_count_episode column, adding one if missing. If
+the data has separate Date and Time columns instead of a combined
+DateTime column, these will be reconciled into a single DateTime column.
+All column names are standardized to snake_case.
 
 ## Usage
 
 ``` r
-read_image_data(path, pattern, recursive = FALSE, ...)
+read_image_data(path, pattern, recursive = FALSE, template = NULL, ...)
 ```
 
 ## Arguments
@@ -26,6 +31,12 @@ read_image_data(path, pattern, recursive = FALSE, ...)
 
   should files found within subfolders of `path` also be read?
 
+- template:
+
+  path to a "`.tdb`" TimeLapse Template file. Optional; if not provided,
+  the function will attempt to identify the appropriate internal
+  template based on the file names in `path`.
+
 - ...:
 
   arguments passed on to
@@ -33,4 +44,11 @@ read_image_data(path, pattern, recursive = FALSE, ...)
 
 ## Value
 
-a `data.frame` of Timelapse image data from the files found in `path`
+a `data.frame` of Timelapse image data from the files found in `path`.
+The data.frame will have an "image_data" class, and an attribute
+"template" with the name of the template used to read the data.
+
+## Details
+
+For wallow data, this also removes static images (both timelapse and
+motion activated), and only keeps the video records.

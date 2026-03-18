@@ -328,12 +328,53 @@ deployments <- read_deployments_csv("path-to-deployments.csv")
 
 ### Image data
 
-We can read in an entire directory of image data from multiple csv
-files, as long as they all follow the same TimeLapse template. Currently
-it is expected that they follow the `v20230518` template.
+Read in an entire directory of image data from multiple csv files using
+[`read_image_data()`](https://bcgov.github.io/bccamtrap/reference/read_image_data.md).
+The function needs to know which TimeLapse template was used to label
+the images so it can parse the columns correctly. There are three ways
+to specify the template:
+
+**1. Template name in the filenames (default)**
+
+If your csv filenames contain a TimeLapse template identifier - for
+example `Camera01_Template_Ungulate_General_v2.csv` -
+[`read_image_data()`](https://bcgov.github.io/bccamtrap/reference/read_image_data.md)
+will detect it automatically and select the matching bundled template:
 
 ``` r
 image_data <- read_image_data(data_path)
+image_data
+```
+
+**2. Interactive picklist**
+
+If your filenames don’t contain a template identifier,
+[`read_image_data()`](https://bcgov.github.io/bccamtrap/reference/read_image_data.md)
+will present an interactive menu of the bundled templates to choose from
+when run in an interactive R session:
+
+``` r
+image_data <- read_image_data(data_path)
+#> No Timelapse template found in filenames. Which template do you want to use? (0 to exit)
+#>
+#> 1: RISC_WCR_ImageLabelling_Template_v20230518.1
+#> 2: RISC_WCR_ImageLabelling_Template_v20230518.2
+#> 3: TimelapseTemplate_Elk_Migration_v1
+#> 4: TimelapseTemplate_Elk_Wallows_v1
+#> 5: TimelapseTemplate_Ungulate_General_v1
+#> 6: TimelapseTemplate_Ungulate_General_v2
+#>
+#> Selection:
+```
+
+**3. Supply a template file directly**
+
+Pass the path to any `.tdb` TimeLapse template file via the `template`
+argument. This is useful when working with a custom or newer template
+not yet bundled with the package:
+
+``` r
+image_data <- read_image_data(data_path, template = "path/to/MyTemplate.tdb")
 image_data
 ```
 
@@ -353,7 +394,7 @@ image_data
 #> 10 100RECNX    Test Project    19_1                 19_1_20230605   
 #> # ℹ 11,823 more rows
 #> # ℹ 39 more variables: date_time <dttm>, episode <chr>, species <chr>,
-#> #   total_count_episode <dbl>, obj_count_image <int>, adult_male <int>,
+#> #   total_count_episode <int>, obj_count_image <int>, adult_male <int>,
 #> #   adult_female <int>, adult_unclassified_sex <int>, yearling_male <int>,
 #> #   yearling_female <int>, yearling_unclassified_sex <int>,
 #> #   young_of_year_unclassified_sex <int>, juvenile_unclassified_sex <int>,
@@ -375,7 +416,7 @@ summary(image_data)
 #> Motion Detection       Time Lapse 
 #>             8657             3176
 #> ℹ 117 images with lens obscured.
-#> ℹ 4 images starred.
+#> ℹ 25 images starred.
 #> ! 4 images flagged for review.
 #> ℹ Dates are between 2022-11-07 and 2023-07-10.
 #> ℹ Temperatures are between -10 and 37 C.
@@ -434,7 +475,7 @@ images_with_metadata
 #>  9 100RECNX    19_1_20230605    2022-11-14 12:00:00 5:1|1   <NA>   
 #> 10 100RECNX    19_1_20230605    2022-11-15 12:00:00 6:1|1   <NA>   
 #> # ℹ 11,823 more rows
-#> # ℹ 92 more variables: total_count_episode <dbl>, obj_count_image <int>,
+#> # ℹ 92 more variables: total_count_episode <int>, obj_count_image <int>,
 #> #   adult_male <int>, adult_female <int>, adult_unclassified_sex <int>,
 #> #   yearling_male <int>, yearling_female <int>,
 #> #   yearling_unclassified_sex <int>, young_of_year_unclassified_sex <int>,
@@ -674,7 +715,7 @@ make_sample_sessions(image_data)
 #> 15 2023-01-10       2022-11-15        2023-01-10           197               8
 #> 16 31_20230605      2023-01-25        2023-06-05           382              15
 #> 17 35_20230708      2022-11-18        2023-07-08           261               3
-#> # ℹ 8 more variables: n_species <int>, n_individuals <dbl>,
+#> # ℹ 8 more variables: n_species <int>, n_individuals <int>,
 #> #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
 #> #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
 #> #   trap_days <int>
@@ -710,7 +751,7 @@ make_sample_sessions(
 #> 14 2023-01-10       2022-12-01        2023-01-10            95               4
 #> 15 31_20230605      2023-01-25        2023-04-30           311               8
 #> 16 35_20230708      2022-12-01        2023-04-30           152               0
-#> # ℹ 8 more variables: n_species <int>, n_individuals <dbl>,
+#> # ℹ 8 more variables: n_species <int>, n_individuals <int>,
 #> #   n_motion_photos <int>, n_motion_photos_lens_obscured <int>,
 #> #   n_tl_photos <int>, n_tl_photos_lens_obscured <int>, sample_gaps <lgl>,
 #> #   trap_days <int>
@@ -741,7 +782,7 @@ sample_rai(image_data)
 #>  9 2023-01-10       2022-11-15        2023-01-10             56 Cougar       
 #> 10 2023-01-10       2022-11-15        2023-01-10             56 Roosevelt Elk
 #> # ℹ 43 more rows
-#> # ℹ 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
+#> # ℹ 3 more variables: n_detections <int>, total_count <int>, rai <dbl>
 ```
 
 You can set it to do a subset of species and/or deployment labels, and
@@ -762,7 +803,7 @@ sample_rai(
 #>   <chr>            <date>            <date>              <int> <chr>        
 #> 1 19_2_20230605    2022-12-01        2023-04-30            151 Roosevelt Elk
 #> 2 29_1_20230605    2022-12-01        2023-04-30            148 Roosevelt Elk
-#> # ℹ 3 more variables: n_detections <int>, total_count <dbl>, rai <dbl>
+#> # ℹ 3 more variables: n_detections <int>, total_count <int>, rai <dbl>
 ```
 
 You can also calculate RAI across all deployments by setting
@@ -778,7 +819,7 @@ sample_rai(
 )
 #> # A tibble: 1 × 7
 #>   sample_start_date sample_end_date trap_days species   n_detections total_count
-#>   <date>            <date>              <int> <chr>            <int>       <dbl>
+#>   <date>            <date>              <int> <chr>            <int>       <int>
 #> 1 2022-12-01        2023-04-30            151 Roosevel…           51         146
 #> # ℹ 1 more variable: rai <dbl>
 ```
@@ -796,7 +837,7 @@ spp_comp <- sample_rai(
 spp_comp
 #> # A tibble: 7 × 7
 #>   sample_start_date sample_end_date trap_days species   n_detections total_count
-#>   <date>            <date>              <int> <chr>            <int>       <dbl>
+#>   <date>            <date>              <int> <chr>            <int>       <int>
 #> 1 2022-12-01        2023-04-30            131 Avian (c…            1           1
 #> 2 2022-12-01        2023-04-30            151 Black Be…           28          28
 #> 3 2022-12-01        2023-04-30            151 Cougar               8           8
@@ -877,7 +918,7 @@ rai_by_time(image_data)
 #>  9 Avian (comments) Test Project    2022-11-15              2             0.5 
 #> 10 Avian (comments) Test Project    2022-11-16              2            -1   
 #> # ℹ 2,195 more rows
-#> # ℹ 4 more variables: n_detections <int>, total_count <dbl>, trap_days <int>,
+#> # ℹ 4 more variables: n_detections <int>, total_count <int>, trap_days <int>,
 #> #   rai <dbl>
 ```
 
@@ -906,9 +947,9 @@ elk_roll_avg
 #>  9 Roosevelt Elk Test Project    2022-11-15              2             0.5 
 #> 10 Roosevelt Elk Test Project    2022-11-16              2            -1   
 #> # ℹ 235 more rows
-#> # ℹ 10 more variables: n_detections <int>, total_count <dbl>, trap_days <int>,
+#> # ℹ 10 more variables: n_detections <int>, total_count <int>, trap_days <int>,
 #> #   rai <dbl>, roll_mean_max_snow <dbl>, roll_mean_temp <dbl>,
-#> #   roll_trap_days <int>, roll_detections <int>, roll_count <dbl>,
+#> #   roll_trap_days <int>, roll_detections <int>, roll_count <int>,
 #> #   roll_rai <dbl>
 
 ggplot(elk_roll_avg, aes(x = date, y = roll_rai)) +
@@ -942,7 +983,7 @@ ggplot(elk_roll_avg, aes(x = date, y = roll_mean_max_snow)) +
 #> (`geom_line()`).
 ```
 
-![](reference/figures/README-unnamed-chunk-27-1.png)
+![](reference/figures/README-unnamed-chunk-28-1.png)
 
 We can change the way snow measurements are aggregated across sites when
 `by_deployment = FALSE`. By default it uses `max`, but we can set it to
@@ -969,7 +1010,7 @@ ggplot(elk_roll_avg, aes(x = date, y = roll_mean_mean_snow)) +
 #> (`geom_line()`).
 ```
 
-![](reference/figures/README-unnamed-chunk-28-1.png)
+![](reference/figures/README-unnamed-chunk-29-1.png)
 
 And we can compare Elk activity to snow levels:
 
@@ -991,7 +1032,7 @@ ggplot(
 #> (`geom_point()`).
 ```
 
-![](reference/figures/README-unnamed-chunk-29-1.png)
+![](reference/figures/README-unnamed-chunk-30-1.png)
 
 And temperature:
 
@@ -1008,7 +1049,7 @@ ggplot(elk_roll_avg, aes(x = roll_mean_temp, y = roll_rai)) +
 #> (`geom_point()`).
 ```
 
-![](reference/figures/README-unnamed-chunk-30-1.png)
+![](reference/figures/README-unnamed-chunk-31-1.png)
 
 We can compare raw counts vs snow depth across deployments. Note that
 for daily counts (`by = "date"`) when `by_deployment = TRUE`, the
@@ -1031,7 +1072,7 @@ ggplot(
   geom_point()
 ```
 
-![](reference/figures/README-unnamed-chunk-31-1.png)
+![](reference/figures/README-unnamed-chunk-32-1.png)
 
 If we want to compare the RAI of two species, we can specify them in the
 `species` argument, and colour our plot by species (if we left the
