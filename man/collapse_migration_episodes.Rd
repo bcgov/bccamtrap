@@ -7,7 +7,7 @@
 collapse_migration_episodes(df, migration_map)
 }
 \arguments{
-\item{df}{a data frame of image data, read in with \code{read_image_data()}.}
+\item{df}{a data frame of migration image data, read in with \code{read_image_data()}.}
 
 \item{migration_map}{A small data.frame defining the upstream
 direction(s) of travel for each sample station. Valid upstream values are:
@@ -21,7 +21,7 @@ Columns must include:
 \value{
 a data frame with motion detection events collapsed into 1 row per
 episode, and summary information about each episode (e.g. duration, number
-of triggers, total count).
+of triggers, total count, direction of travel, ...).
 }
 \description{
 Collapse motion detection events into episodes
