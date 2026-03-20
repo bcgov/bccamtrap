@@ -5,6 +5,12 @@
 - [`bccamtrapp()`](https://bcgov.github.io/bccamtrap/reference/bccamtrapp.md)
   : Launch Shiny app
 
+- [`collapse_migration_episodes()`](https://bcgov.github.io/bccamtrap/reference/collapse_migration_episodes.md)
+  : Collapse motion detection events into episodes
+
+- [`collapse_wallow_episodes()`](https://bcgov.github.io/bccamtrap/reference/collapse_wallow_episodes.md)
+  : Collapse Wallow Episodes
+
 - [`fill_spi_template()`](https://bcgov.github.io/bccamtrap/reference/fill_spi_template.md)
   : Write all data to a new SPI submission file
 
